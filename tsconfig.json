@@ -3,21 +3,23 @@
     "baseUrl": ".",
     "paths": {
       "#assets": [
-        "assets/_index.ts"
+        "src/assets/_index.ts"
       ],
       "#assets/*": [
-        "assets/*"
+        "src/assets/*"
       ],
       "#components": [
-        "components/_index.ts"
+        "src/components/_index.ts"
       ],
       "#styles/*": [
-        "styles/*"
+        "src/styles/*"
       ],
       "#lib/*": [
         "lib/*"
       ],
-      "#types": ["types/_index.ts"]
+      "#types": [
+        "src/types/_index.ts"
+      ]
     },
     "target": "es5",
     "lib": [

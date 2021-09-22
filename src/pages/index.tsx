@@ -1,8 +1,8 @@
 import Head from 'next/head';
 import Image from 'next/image';
 
-import { Section } from '#components';
-import { VercelLogo } from '#assets';
+import { Section } from 'src/components/_index';
+import { VercelLogo } from 'src/assets/_index';
 import styles from '#styles/Home.module.scss';
 
 import type { NextPage } from 'next';
