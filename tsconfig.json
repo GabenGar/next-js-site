@@ -1,0 +1,48 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "#assets": [
+        "assets/_index.ts"
+      ],
+      "#assets/*": [
+        "assets/*"
+      ],
+      "#components": [
+        "components/_index.ts"
+      ],
+      "#styles/*": [
+        "styles/*"
+      ],
+      "#lib/*": [
+        "lib/*"
+      ],
+      "#types": ["types/_index.ts"]
+    },
+    "target": "es5",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve"
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
