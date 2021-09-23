@@ -10,7 +10,7 @@ export function useClassName(...classNames: Array<string | undefined>): string {
   useEffect(() => {
     const newClassName = classNames.filter((str) => str && String(str)).join(" ");
     changeClassName(newClassName);
-  });
+  }, [className]);
 
   return className;
 }
