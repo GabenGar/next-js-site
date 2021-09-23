@@ -1,8 +1,16 @@
+import { useState, useEffect } from "react";
+
 /**
- * TODO: make it an actual hook.
+ * @param classNames A list of strings
+ * @returns `className` string
  */
-export function useClassName(classNames: Array<string | undefined>): string {
-  const className = classNames.filter((str) => str && String(str)).join(" ");
+export function useClassName(...classNames: Array<string | undefined>): string {
+  const [className, changeClassName] = useState("");
+
+  useEffect(() => {
+    const newClassName = classNames.filter((str) => str && String(str)).join(" ");
+    changeClassName(newClassName);
+  });
 
   return className;
 }

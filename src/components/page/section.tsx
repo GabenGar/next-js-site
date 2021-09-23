@@ -7,7 +7,7 @@ interface Props extends BaseProps<HTMLElement> {
 }
 
 export function Section({ children, className, ...blockProps }: Props) {
-  const blockClass = useClassName([styles.block, className]);
+  const blockClass = useClassName(styles.block, className);
   
   return (<section
     className={blockClass} {...blockProps}
