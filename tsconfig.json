@@ -11,11 +11,17 @@
       "#components": [
         "src/components/_index.ts"
       ],
+      "#components/page": [
+        "src/components/page/_index.ts"
+      ],
       "#styles/*": [
         "src/styles/*"
       ],
-      "#lib/*": [
-        "lib/*"
+      "#lib": [
+        "src/lib/_index.ts"
+      ],
+      "#lib/hooks": [
+        "src/lib/hooks/_index.ts"
       ],
       "#types": [
         "src/types/_index.ts"

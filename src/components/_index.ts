@@ -1,2 +1,3 @@
-export { Layout } from "./layout";
-export { Section } from "./section";
+export { ComponentOne } from "./component1";
+export { ComponentTwo } from "./component2";
+export { ComponentThree } from "./component3";

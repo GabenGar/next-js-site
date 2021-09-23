@@ -1,4 +1,4 @@
-import { Layout } from 'src/components/_index';
+import { Layout } from '#components/page';
 import '#styles/globals.scss';
 
 import type { AppProps } from 'next/app';

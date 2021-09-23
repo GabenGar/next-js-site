@@ -1,8 +1,10 @@
 import styles from "./layout.module.scss";
 
-import type { FC } from "react";
+import type { PropsWithChildren } from "react";
 
-export const Layout: FC = ({ children }) => {
+interface Props {}
+
+export function Layout({ children }: PropsWithChildren<Props>) {
   return (<>
     <header>
     </header>
