@@ -7,7 +7,7 @@ interface Props extends BaseProps<HTMLDivElement> {
 }
 
 export function ComponentOne({ className, ...blockProps }: Props) {
-  const blockClass = useClassName([styles.block, className])
+  const blockClass = useClassName(styles.block, className)
   return (<div className={blockClass} {...blockProps}>
     Component 1
   </div>)
