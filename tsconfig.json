@@ -14,6 +14,15 @@
       "#components/page": [
         "src/components/page/_index.ts"
       ],
+      "#components/fancy": [
+        "src/components/fancy/_index.ts"
+      ],
+      "#components/cards": [
+        "src/components/cards/_index.ts"
+      ],
+      "#components/frontend-mentor": [
+        "src/components/frontend-mentor/_index.ts"
+      ],
       "#styles/*": [
         "src/styles/*"
       ],

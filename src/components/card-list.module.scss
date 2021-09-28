@@ -1,0 +1,23 @@
+@use "../styles/variables/sass" as *;
+
+.block {
+  position: relative;
+}
+
+.list {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: stretch;
+  gap: $size-normal;
+
+  &_mobile {
+    --local-card-width: $width-mobile;
+  }
+
+  & > * {
+    flex: 0 1 var(--local-card-width);
+  }
+
+  
+}

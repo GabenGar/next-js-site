@@ -1,6 +1,11 @@
-import type { DetailedHTMLProps, HTMLAttributes } from "react";
+import type { DetailedHTMLProps, HTMLAttributes, PropsWithChildren } from "react";
 
 /**
- * Base `props` for all components.
+ * Generic props for rootless components.
  */
-export interface BaseProps<DOMInterface> extends DetailedHTMLProps<HTMLAttributes<DOMInterface>, DOMInterface> {}
+export interface BaseProps extends PropsWithChildren<{}> { }
+
+/**
+ * Accepts all props related to the DOM interface of the root component.
+ */
+export interface ElementProps<DOMInterface> extends DetailedHTMLProps<HTMLAttributes<DOMInterface>, DOMInterface> { }

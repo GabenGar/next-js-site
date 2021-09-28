@@ -1,2 +1,4 @@
-export { Layout } from "./layout";
+export { BaseLayout } from "./layout/_index";
 export { Section } from "./section";
+export { Header } from "./header";
+export { Heading } from "./heading";

@@ -1,13 +1,14 @@
 :root {
-  --test-color: hsl(0, 100%, 40%);
+  
   // base colours
-  --colour0-primary: hsl(0, 0%, 5%);
+  --colour0-primary: hsl(0, 0%, 10%);
+  --colour0-primary-transparent: hsl(0, 0%, 10%, 60%);
   --colour0-secondary: hsl(0, 0%, 30%);
-  --colour0-tertiary: hsla(0, 0%, 40%);
-  --colour0-primary-transparent: hsl(0, 0%, 5%, 60%);
   --colour0-secondary-transparent: hsla(0, 0%, 30%, 40%);
+  --colour0-tertiary: hsla(0, 0%, 40%);
   --colour0-tertiary-transparent: hsla(0, 0%, 40%, 40%);
-  --colour1-primary: hsl(0, 0%, 100%);
+  --colour1-primary: hsl(0, 0%, 95%);
+  --colour1-primary-transparent: hsla(0, 0%, 100%, 50%);
   --colour1-secondary: hsl(0, 0%, 90%);
   --colour1-secondary-transparent: hsla(0, 0%, 90%, 50%);
   --colour1-tertiary: hsla(0, 0%, 80%);
