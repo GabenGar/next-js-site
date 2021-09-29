@@ -12,12 +12,12 @@
   gap: $size-normal;
 
   &_mobile {
-    --local-card-width: $width-mobile;
+    --local-card-width: #{$width-mobile};
   }
 
   & > * {
     flex: 0 1 var(--local-card-width);
   }
 
-  
+
 }

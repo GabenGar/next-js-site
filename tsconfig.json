@@ -32,6 +32,9 @@
       "#lib/hooks": [
         "src/lib/hooks/_index.ts"
       ],
+      "#lib/util": [
+        "src/lib/util/_index.ts"
+      ],
       "#types": [
         "src/types/_index.ts"
       ]

@@ -1,1 +1,2 @@
-export { BaseLayout } from "./base";
+export { BaseLayout, } from "./base";
+export { RESTCountries } from "./frontend-mentor/index";
