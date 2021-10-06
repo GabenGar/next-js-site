@@ -10,12 +10,14 @@
   "footer"
   ;
   overflow: hidden;
-
+  background-color: var(--colour1-primary);
+  border-radius: 10px;
+  border: $size-thin solid transparent;
   transition-property: border, box-shadow;
   transition-duration: var(--duration-global);
 
   & > * {
-    padding: $size-small; 
+    padding: $size-small;
   }
 
   &:hover,

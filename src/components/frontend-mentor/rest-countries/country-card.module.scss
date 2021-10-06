@@ -1,3 +1,26 @@
-.block {}
+.block {
+}
 
-.title {}
+.title {
+}
+
+.spellings {
+  color: var(--colour0-secondary);
+}
+
+.spelling {
+}
+
+.stat {
+  & > * {
+    display: inline;
+  }
+
+  & > dt {
+    font-weight: bold;
+
+    &::after {
+      content: ": ";
+    }
+  }
+}

@@ -15,7 +15,7 @@ export function CardList({ children, className, ...blockProps }: Props) {
   const [layout, changeLayout] = useState(layouts.mobile);
   const blockClass = useClassName(styles.block, className);
   const listClass = useClassName(styles.list, layout);
-  
+
   return (<div className={blockClass} {...blockProps}>
     <div className={listClass}>
       {children}
