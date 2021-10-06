@@ -37,6 +37,9 @@
       ],
       "#types": [
         "src/types/_index.ts"
+      ],
+      "#types/*": [
+        "src/types/*.ts"
       ]
     },
     "target": "es5",

@@ -6,10 +6,10 @@ import { RESTCountries as Layout } from "#components/page"
 import styles from "./index.module.scss";
 
 import type { NextPage } from "next";
-import type { RESTCountries } from "#types";
+import type { API } from "#types/frontend-mentor/rest-countries";
 
 export default function RESTCountriesPage() {
-  const { data, error } = useSWR<RESTCountries.API.Country>("https://restcountries.com/v3.1/all", fetcher);
+  const { data, error } = useSWR<API.Country>("https://restcountries.com/v3.1/all", fetcher);
 
 
   if (error) {return <div>failed to load</div>}
