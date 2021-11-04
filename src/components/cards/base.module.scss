@@ -17,7 +17,7 @@
   transition-duration: var(--duration-global);
 
   & > * {
-    padding: $size-small;
+    padding: $size-normal;
   }
 
   &:hover,
@@ -29,14 +29,17 @@
 .header {
   grid-area: header;
   align-self: flex-start;
+  padding-bottom: $size-small;
 }
 
 .body {
   grid-area: body;
   align-self: center;
+  padding: $size-small $size-normal;
 }
 
 .footer {
   grid-area: footer;
   align-self: flex-end;
+  padding-top: $size-small;
 }

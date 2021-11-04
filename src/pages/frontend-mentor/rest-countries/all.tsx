@@ -10,12 +10,19 @@ import styles from "./index.module.scss";
 
 import type { NextPage } from "next";
 import type { API } from "#types/frontend-mentor/rest-countries";
+import { useState } from "react";
+
+const limit = 25;
 
 export default function RESTCountriesPage() {
   const { data, error } = useSWR<API.Country[]>(
     "https://restcountries.com/v3.1/all",
     fetcher
   );
+  const [currentPage, changeCurrentPage] = useState(1);
+  const [currentCountries, changeCurrentCountries] = useState<API.Country[]>([])
+
+
 
   if (error) {
     return <div>failed to load</div>;
@@ -30,8 +37,9 @@ export default function RESTCountriesPage() {
         <title>All Countries</title>
         <meta name="description" content="All Countries" />
       </Head>
+
       <CardList>
-        {data.slice(0, 1).map((country) => (
+        {data.slice().map((country) => (
           <CountryCard key={country.cca3} country={country} />
         ))}
       </CardList>

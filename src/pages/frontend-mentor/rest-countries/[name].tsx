@@ -4,14 +4,8 @@ import { useRouter } from "next/router";
 import { restCountries as fetcher } from "#api/rest-countries";
 import { CardList } from "#components";
 import { Section } from "#components/page";
-import {
-  Picture,
-  Anchour,
-  DescriptionList,
-  DescriptionSection,
-  DescriptionTerm,
-  DescriptionDetails,
-} from "#components/fancy";
+import { Picture, Anchour } from "#components/fancy";
+import { DL, DLSection, DD, DT } from "#components/fancy/dl";
 import { RESTCountries as Layout } from "#components/page";
 import styles from "./index.module.scss";
 
@@ -52,15 +46,14 @@ export default function RESTCountriesPage() {
               <Picture src={country.coatOfArms.png} />
             </Anchour>
           </div>
-          <DescriptionList>
-            <DescriptionSection>
-              <DescriptionTerm>Capital</DescriptionTerm>
-              <DescriptionDetails>{country.capital}</DescriptionDetails>{" "}
-              {"("}
-              <DescriptionDetails>{country.capitalInfo.latlng[0]}</DescriptionDetails>{" "}
-              <DescriptionDetails>{country.capitalInfo.latlng[1]}</DescriptionDetails>
+          <DL>
+            <DLSection>
+              <DT>Capital</DT>
+              <DD>{country.capital}</DD> {"("}
+              <DD>{country.capitalInfo.latlng[0]}</DD>{" "}
+              <DD>{country.capitalInfo.latlng[1]}</DD>
               {")"}
-            </DescriptionSection>
+            </DLSection>
 
             {/* <DescriptionSection>
               <DescriptionTerm>Other names</DescriptionTerm>
@@ -74,165 +67,152 @@ export default function RESTCountriesPage() {
                 <DescriptionDetails>No other names</DescriptionDetails>
               )}
             </DescriptionSection> */}
-          </DescriptionList>
+          </DL>
         </header>
         <section>
-          <DescriptionList>
-            <DescriptionSection>
-              <DescriptionTerm>Region</DescriptionTerm>
-              <DescriptionDetails className={styles.region}>
-                {country.region}
-              </DescriptionDetails>{" "}
-              <DescriptionDetails>({country.subregion})</DescriptionDetails>
-            </DescriptionSection>
+          <DL>
+            <DLSection>
+              <DT>Region</DT>
+              <DD className={styles.region}>{country.region}</DD>{" "}
+              <DD>({country.subregion})</DD>
+            </DLSection>
 
-            <DescriptionSection>
-              <DescriptionTerm>Continents</DescriptionTerm>
+            <DLSection>
+              <DT>Continents</DT>
               {country.continents.map((continent) => (
-                <DescriptionDetails key={continent}>{continent}</DescriptionDetails>
+                <DD key={continent}>{continent}</DD>
               ))}
-            </DescriptionSection>
+            </DLSection>
 
-            <DescriptionSection>
-              <DescriptionTerm>Area</DescriptionTerm>
-              <DescriptionDetails>{country.area}</DescriptionDetails>
-            </DescriptionSection>
+            <DLSection>
+              <DT>Area</DT>
+              <DD>{country.area}</DD>
+            </DLSection>
 
-            <DescriptionSection>
-              <DescriptionTerm>Timezones</DescriptionTerm>
+            <DLSection>
+              <DT>Timezones</DT>
               {country.timezones.map((tz) => (
-                <DescriptionDetails key={tz}>{tz}</DescriptionDetails>
+                <DD key={tz}>{tz}</DD>
               ))}
-            </DescriptionSection>
+            </DLSection>
 
-            <DescriptionSection>
-              <DescriptionTerm>Coordinates</DescriptionTerm>
-              <DescriptionDetails>{country.latlng[0]}</DescriptionDetails>{" "}
-              <DescriptionDetails>{country.latlng[1]}</DescriptionDetails>
-            </DescriptionSection>
+            <DLSection>
+              <DT>Coordinates</DT>
+              <DD>{country.latlng[0]}</DD> <DD>{country.latlng[1]}</DD>
+            </DLSection>
 
-            <DescriptionSection>
-              <DescriptionTerm>Landlocked</DescriptionTerm>
-              <DescriptionDetails>
-                {country.landlocked ? "yes" : "no"}
-              </DescriptionDetails>
-            </DescriptionSection>
+            <DLSection>
+              <DT>Landlocked</DT>
+              <DD>{country.landlocked ? "yes" : "no"}</DD>
+            </DLSection>
 
-            <DescriptionSection>
-              <DescriptionTerm>Maps</DescriptionTerm>
+            <DLSection>
+              <DT>Maps</DT>
               {Object.entries(country.maps).map(([service, link]) => (
-                <DescriptionDetails key={service.toLowerCase()}>
+                <DD key={service.toLowerCase()}>
                   <Anchour href={link}>{service}</Anchour>
-                </DescriptionDetails>
+                </DD>
               ))}
-            </DescriptionSection>
+            </DLSection>
 
-            <DescriptionSection>
-              <DescriptionTerm>Week start</DescriptionTerm>
-              <DescriptionDetails>{country.startOfWeek}</DescriptionDetails>
-            </DescriptionSection>
+            <DLSection>
+              <DT>Week start</DT>
+              <DD>{country.startOfWeek}</DD>
+            </DLSection>
 
-            <DescriptionSection>
-              <DescriptionTerm>Population</DescriptionTerm>
-              <DescriptionDetails>{country.population}</DescriptionDetails>
-            </DescriptionSection>
+            <DLSection>
+              <DT>Population</DT>
+              <DD>{country.population}</DD>
+            </DLSection>
 
-            <DescriptionSection>
-              <DescriptionTerm>Status</DescriptionTerm>
-              <DescriptionDetails>{country.status}</DescriptionDetails>
-            </DescriptionSection>
+            <DLSection>
+              <DT>Status</DT>
+              <DD>{country.status}</DD>
+            </DLSection>
 
-            <DescriptionSection>
-              <DescriptionTerm>Languages</DescriptionTerm>
+            <DLSection>
+              <DT>Languages</DT>
               {Object.entries(country.languages).map(([code, lang]) => (
                 <>
-                  <DescriptionDetails key={code}>{lang}</DescriptionDetails>{" "}
+                  <DD key={code}>{lang}</DD>{" "}
                 </>
               ))}
-            </DescriptionSection>
+            </DLSection>
 
-            <DescriptionSection>
-              <DescriptionTerm>Independency Status</DescriptionTerm>
+            <DLSection>
+              <DT>Independency Status</DT>
               {country.independent ? (
-                <DescriptionDetails>Independent</DescriptionDetails>
+                <DD>Independent</DD>
               ) : (
-                <DescriptionDetails>Not independent</DescriptionDetails>
+                <DD>Not independent</DD>
               )}
-            </DescriptionSection>
+            </DLSection>
 
-            <DescriptionSection>
-              <DescriptionTerm>UN membership</DescriptionTerm>
-              {country.unMember ? (
-                <DescriptionDetails>UN member</DescriptionDetails>
-              ) : (
-                <DescriptionDetails>Not a UN member</DescriptionDetails>
-              )}
-            </DescriptionSection>
+            <DLSection>
+              <DT>UN membership</DT>
+              {country.unMember ? <DD>UN member</DD> : <DD>Not a UN member</DD>}
+            </DLSection>
 
-            <DescriptionSection>
-              <DescriptionTerm>Currencies</DescriptionTerm>
+            <DLSection>
+              <DT>Currencies</DT>
               {Object.entries(country.currencies).map(([id, currency]) => (
-                <DescriptionDetails key={id}>
+                <DD key={id}>
                   {currency.name} ({currency.symbol})
-                </DescriptionDetails>
+                </DD>
               ))}
-            </DescriptionSection>
-          </DescriptionList>
+            </DLSection>
+          </DL>
         </section>
         <footer>
-          <DescriptionList>
-            <DescriptionSection>
-              <DescriptionTerm>Top Level Domain</DescriptionTerm>
-              <DescriptionDetails>
+          <DL>
+            <DLSection>
+              <DT>Top Level Domain</DT>
+              <DD>
                 <code>{country.tld}</code>
-              </DescriptionDetails>
-            </DescriptionSection>
+              </DD>
+            </DLSection>
 
-            <DescriptionSection className={styles.codes}>
-              <DescriptionTerm className={styles.codesTerm}>
-                Codes
-              </DescriptionTerm>
-              <DescriptionDetails>
-                <DescriptionList>
-                  <DescriptionSection>
-                    <DescriptionTerm>cca2</DescriptionTerm>
-                    <DescriptionDetails>{country.cca2}</DescriptionDetails>
-                  </DescriptionSection>
-                  <DescriptionSection>
-                    <DescriptionTerm>cca3</DescriptionTerm>
-                    <DescriptionDetails>{country.cca3}</DescriptionDetails>
-                  </DescriptionSection>
-                  <DescriptionSection>
-                    <DescriptionTerm>ccn2</DescriptionTerm>
-                    <DescriptionDetails>{country.ccn3}</DescriptionDetails>
-                  </DescriptionSection>
-                  <DescriptionSection>
-                    <DescriptionTerm>cioc</DescriptionTerm>
-                    <DescriptionDetails>{country.cioc}</DescriptionDetails>
-                  </DescriptionSection>
-                  <DescriptionSection>
-                    <DescriptionTerm>fifa</DescriptionTerm>
-                    <DescriptionDetails>{country.fifa}</DescriptionDetails>
-                  </DescriptionSection>
-                </DescriptionList>
-              </DescriptionDetails>
-            </DescriptionSection>
+            <DLSection className={styles.codes}>
+              <DT className={styles.codesTerm}>Codes</DT>
+              <DD>
+                <DL>
+                  <DLSection>
+                    <DT>cca2</DT>
+                    <DD>{country.cca2}</DD>
+                  </DLSection>
+                  <DLSection>
+                    <DT>cca3</DT>
+                    <DD>{country.cca3}</DD>
+                  </DLSection>
+                  <DLSection>
+                    <DT>ccn2</DT>
+                    <DD>{country.ccn3}</DD>
+                  </DLSection>
+                  <DLSection>
+                    <DT>cioc</DT>
+                    <DD>{country.cioc}</DD>
+                  </DLSection>
+                  <DLSection>
+                    <DT>fifa</DT>
+                    <DD>{country.fifa}</DD>
+                  </DLSection>
+                </DL>
+              </DD>
+            </DLSection>
 
-            <DescriptionSection>
-              <DescriptionTerm>Borders</DescriptionTerm>
+            <DLSection>
+              <DT>Borders</DT>
               {country.borders ? (
                 country.borders.map((border) => (
                   <>
-                    <DescriptionDetails key={border}>
-                      {border}
-                    </DescriptionDetails>{" "}
+                    <DD key={border}>{border}</DD>{" "}
                   </>
                 ))
               ) : (
-                <DescriptionDetails>No borders</DescriptionDetails>
+                <DD>No borders</DD>
               )}
-            </DescriptionSection>
-          </DescriptionList>
+            </DLSection>
+          </DL>
         </footer>
       </article>
       <ul>

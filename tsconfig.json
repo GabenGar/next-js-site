@@ -18,6 +18,9 @@
       "#components/fancy": [
         "src/components/fancy/_index.ts"
       ],
+      "#components/fancy/dl": [
+        "src/components/fancy/dl/_index.ts"
+      ],
       "#components/cards": [
         "src/components/cards/_index.ts"
       ],
