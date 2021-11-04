@@ -4,14 +4,17 @@ export namespace API {
     area: number
     borders: string[]
     capital: string[]
+    capitalInfo: Country.Capital
     cca2: string
     cca3: string
     ccn3: string
     cioc: string
+    fifa: string
     currencies: { [name: string]: Country.Currency }
     demonyms: { [name: string]: Country.Demonym }
     flag: string
-    flags: { svg: string, png: string; }
+    flags: { svg: string, png: string }
+    coatOfArms: { svg: string, png: string }
     idd: Country.IDD
     independent: boolean
     landlocked: boolean
@@ -26,9 +29,15 @@ export namespace API {
     tld: string[]
     translations: { [name: string]: Country.Translation }
     unMember: boolean
+    timezones: string[]
+    continents: string[]
+    startOfWeek: string
   }
 
   namespace Country {
+    export interface Capital {
+      latlng: [number, number]
+    }
     export interface Currency {
       name: string
       symbol: string

@@ -1,0 +1,18 @@
+.flag {
+  text-align: center;
+
+  & > * {
+    max-width: 20em;
+  }
+}
+
+.region {
+  margin-right: 0;
+}
+
+.codes {
+
+  &Term {
+    display: block;
+  }
+}

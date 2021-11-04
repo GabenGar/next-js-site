@@ -6,7 +6,7 @@ import { Section } from "#components/page";
 import type { NextPage } from "next";
 
 const Home: NextPage = () => {
-  
+
   return (<Section heading="Next.JS site">
     <Head>
       <title>Next.JS site</title>
