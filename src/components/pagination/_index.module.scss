@@ -1,0 +1,53 @@
+@use "../../styles/variables/sass" as *;
+
+.block {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+}
+
+// .info {
+// }
+
+// .currentMin {
+// }
+
+// .currentMax {
+// }
+
+// .totalCount {
+// }
+
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  justify-items: center;
+  align-items: center;
+  gap: 1em;
+}
+
+.page {
+  border-radius: 5px;
+  border: $size-nano solid var(--colour0-secondary);
+
+  &:disabled {
+    --local-colour2-primary: var(--colour1-tertiary);
+    --local-colour2-secondary: var(--colour1-tertiary);
+
+    font-weight: bold;
+    border-color: transparent;
+    box-shadow: none;
+    cursor: default;
+  }
+}
+
+.currentPage {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  min-height: 44px;
+  min-width: 44px;
+  background-color: var(--colour1-primary);
+  border: $size-nano solid var(--colour0-primary);
+  padding: $size-small;
+}

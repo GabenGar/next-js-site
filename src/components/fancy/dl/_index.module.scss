@@ -1,16 +1,17 @@
 @use "../../../styles/variables/sass" as *;
 
-.block {}
+// .block {
+// }
 
-.section {
-}
+// .section {
+// }
 
 .term {
   display: inline;
   font-weight: bold;
 
   &::after {
-    content: ': ';
+    content: ": ";
   }
 }
 

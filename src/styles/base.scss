@@ -158,6 +158,9 @@ select {
 button {
   cursor: pointer;
 
+  &:disabled {
+    cursor: not-allowed;
+  }
   // prevents onclick events from firing on children
   & > * {
     pointer-events: none;

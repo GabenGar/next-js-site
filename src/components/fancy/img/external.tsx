@@ -8,7 +8,6 @@ interface Props extends ElementProps<HTMLSpanElement> {
   srcSet?: string;
   alt?: string;
   isLazy?: boolean;
-  isFullSize?: boolean;
 }
 
 export function Picture({
@@ -16,15 +15,10 @@ export function Picture({
   alt = "",
   srcSet = src,
   isLazy = true,
-  isFullSize = false,
   className,
   ...blockProps
 }: Props) {
-  const blockClass = useClassName(
-    styles.block,
-    className,
-    isFullSize ? styles.block_fullSize : undefined
-  );
+  const blockClass = useClassName(styles.block, className);
   return (
     <span className={blockClass} {...blockProps}>
       <picture className={styles.picture}>

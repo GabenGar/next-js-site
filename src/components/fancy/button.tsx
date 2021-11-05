@@ -1,15 +1,22 @@
 import { useClassName } from "#lib/hooks";
 import styles from "./button.module.scss";
 
-import type { ElementProps } from "#types";
+import type { ButtonProps } from "#types";
 
-interface Props extends ElementProps<HTMLButtonElement> {
-}
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface Props extends ButtonProps {}
 
-export function Button({ children, className, ...blockProps }: Props) {
+export function Button({
+  children,
+  className,
+  type = "button",
+  ...blockProps
+}: Props) {
   const blockClass = useClassName(styles.block, className);
 
-  return (<button className={blockClass} {...blockProps}>
-    {children}
-  </button>);
+  return (
+    <button className={blockClass} type={type} {...blockProps}>
+      {children}
+    </button>
+  );
 }

@@ -1,16 +1,15 @@
 import Head from "next/head";
 import useSWR from "swr";
+import { useEffect, useState } from "react";
 import { restCountries as fetcher } from "#api/rest-countries";
-import { CardList } from "#components";
+import { CardList, Pagination } from "#components";
 import { Section } from "#components/page";
 import { RESTCountries as Layout } from "#components/page";
-import { LocalAnchour } from "#components/fancy";
 import { CountryCard } from "#components/frontend-mentor";
 import styles from "./index.module.scss";
 
 import type { NextPage } from "next";
 import type { API } from "#types/frontend-mentor/rest-countries";
-import { useState } from "react";
 
 const limit = 25;
 
@@ -20,9 +19,17 @@ export default function RESTCountriesPage() {
     fetcher
   );
   const [currentPage, changeCurrentPage] = useState(1);
-  const [currentCountries, changeCurrentCountries] = useState<API.Country[]>([])
+  const [currentCountries, changeCurrentCountries] = useState<API.Country[]>(
+    []
+  );
 
-
+  useEffect(() => {
+    if (data?.length) {
+      const currentRange = [(currentPage - 1) * limit, currentPage * limit]
+      const countries = data.slice(...currentRange);
+      changeCurrentCountries(() => countries)
+    }
+  }, [data, currentPage]);
 
   if (error) {
     return <div>failed to load</div>;
@@ -37,9 +44,9 @@ export default function RESTCountriesPage() {
         <title>All Countries</title>
         <meta name="description" content="All Countries" />
       </Head>
-
+      <Pagination currentPage={currentPage} totalCount={data.length} />
       <CardList>
-        {data.slice().map((country) => (
+        {currentCountries.map((country) => (
           <CountryCard key={country.cca3} country={country} />
         ))}
       </CardList>

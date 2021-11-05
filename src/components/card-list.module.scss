@@ -10,6 +10,7 @@
   justify-content: center;
   align-items: stretch;
   gap: $size-normal;
+  padding: $size-normal 0;
 
   &_mobile {
     --local-card-width: #{$width-mobile};

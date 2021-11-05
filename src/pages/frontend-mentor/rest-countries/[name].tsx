@@ -2,7 +2,7 @@ import Head from "next/head";
 import useSWR from "swr";
 import { useRouter } from "next/router";
 import { restCountries as fetcher } from "#api/rest-countries";
-import { CardList } from "#components";
+import { ImageLink } from "#components";
 import { Section } from "#components/page";
 import { Picture, Anchour } from "#components/fancy";
 import { DL, DLSection, DD, DT } from "#components/fancy/dl";
@@ -36,16 +36,18 @@ export default function RESTCountriesPage() {
       </Head>
       <article>
         <header>
-          <div className={styles.flag}>
-            <Anchour href={country.flags.svg}>
-              <Picture src={country.flags.png} />
-            </Anchour>
-          </div>
-          <div className={styles.flag}>
-            <Anchour href={country.coatOfArms.svg}>
-              <Picture src={country.coatOfArms.png} />
-            </Anchour>
-          </div>
+          <ImageLink
+            href={country.flags.svg}
+            src={country.flags.png}
+            className={styles.flag}
+            isLazy={false}
+          />
+          <ImageLink
+            href={country.coatOfArms.svg}
+            src={country.coatOfArms.png}
+            className={styles.flag}
+            isLazy={false}
+          />
           <DL>
             <DLSection>
               <DT>Capital</DT>
@@ -55,18 +57,16 @@ export default function RESTCountriesPage() {
               {")"}
             </DLSection>
 
-            {/* <DescriptionSection>
-              <DescriptionTerm>Other names</DescriptionTerm>
+            <DLSection>
+              <DT>Other names</DT>
               {country.altSpellings ? (
                 country.altSpellings.map((spelling) => (
-                  <DescriptionDetails key={spelling}>
-                    {spelling}
-                  </DescriptionDetails>
+                  <DD key={spelling}>{spelling}</DD>
                 ))
               ) : (
-                <DescriptionDetails>No other names</DescriptionDetails>
+                <DD>No other names</DD>
               )}
-            </DescriptionSection> */}
+            </DLSection>
           </DL>
         </header>
         <section>
