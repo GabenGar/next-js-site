@@ -5,15 +5,14 @@ import styles from "./template.module.scss";
 import type { ElementProps } from "#types";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface Props extends ElementProps<HTMLElement> {
-}
+interface Props extends ElementProps<HTMLElement> {}
 
 function Template({ children, className, ...blockProps }: Props) {
   const blockClass = useClassName(styles.block, className);
 
-  return (<section
-    className={blockClass} {...blockProps}
-  >
-    {children}
-  </section>);
+  return (
+    <section className={blockClass} {...blockProps}>
+      {children}
+    </section>
+  );
 }

@@ -21,6 +21,12 @@
       "#components/fancy/dl": [
         "src/components/fancy/dl/_index.ts"
       ],
+      "#components/fancy/form": [
+        "src/components/fancy/form/_index.ts"
+      ],
+      "#components/fancy/input": [
+        "src/components/fancy/input/_index.ts"
+      ],
       "#components/cards": [
         "src/components/cards/_index.ts"
       ],

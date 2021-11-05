@@ -20,7 +20,7 @@
 
 .buttons {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(5, auto);
   justify-items: center;
   align-items: center;
   gap: 1em;
@@ -42,12 +42,37 @@
 }
 
 .currentPage {
+  position: relative;
+  z-index: 1;
   display: grid;
   justify-items: center;
   align-items: center;
   min-height: 44px;
   min-width: 44px;
+  max-width: var(--local-max-width, 4em);
   background-color: var(--colour1-primary);
   border: $size-nano solid var(--colour0-primary);
-  padding: $size-small;
+  padding: 0;
+  border: 0;
+
+  &:focus-within {
+    & .submit {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+}
+
+.number {
+  text-align: center;
+}
+
+.submit {
+  position: absolute;
+  top: calc(100% + #{$size-small});
+  visibility: hidden;
+  opacity: 0;
+
+  transition-property: opacity, visibility;
+  transition-duration: var(--duration-global);
 }

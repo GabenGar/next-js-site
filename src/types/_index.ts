@@ -1,2 +1,9 @@
-export type { ElementProps, BaseProps, ButtonProps } from "./base-props";
+export type {
+  ElementProps,
+  BaseProps,
+  ButtonProps,
+  FormProps,
+  InputProps,
+  LabelProps,
+} from "./base-props";
 export type { Challenge } from "./frontend-mentor";
