@@ -1,4 +1,15 @@
-.block {}
+@use "../../../styles/variables/sass" as *;
+
+.block {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $size-normal;
+  max-width: $width-mobile;
+  border-radius: 15px;
+  border: $size-thin solid var(--colour0-tertiary);
+  padding: $size-small;
+  margin: 0 auto;
+}
 
 .section {
   padding: 0;
@@ -7,9 +18,11 @@
 }
 
 .label {
-
+  display: inline-block;
+  font-weight: bold;
+  padding: $size-thin 0;
 }
 
 .submit {
-
+  width: 100%;
 }

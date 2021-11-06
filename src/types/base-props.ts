@@ -7,7 +7,9 @@ import type {
   InputHTMLAttributes,
   LabelHTMLAttributes,
   FieldsetHTMLAttributes,
-  AnchorHTMLAttributes
+  AnchorHTMLAttributes,
+  OptionHTMLAttributes,
+  SelectHTMLAttributes,
 } from "react";
 
 /**
@@ -21,10 +23,11 @@ export interface BaseProps extends PropsWithChildren<Record<string, unknown>> {}
 export interface ElementProps<DOMInterface>
   extends DetailedHTMLProps<HTMLAttributes<DOMInterface>, DOMInterface> {}
 
-export interface AnchourProps extends DetailedHTMLProps<
-AnchorHTMLAttributes<HTMLAnchorElement>,
-HTMLAnchorElement
-> {}
+export interface AnchourProps
+  extends DetailedHTMLProps<
+    AnchorHTMLAttributes<HTMLAnchorElement>,
+    HTMLAnchorElement
+  > {}
 
 export interface ButtonProps
   extends DetailedHTMLProps<
@@ -54,4 +57,16 @@ export interface FieldSetProps
   extends DetailedHTMLProps<
     FieldsetHTMLAttributes<HTMLFieldSetElement>,
     HTMLFieldSetElement
+  > {}
+
+export interface OptionProps
+  extends DetailedHTMLProps<
+    OptionHTMLAttributes<HTMLOptionElement>,
+    HTMLOptionElement
+  > {}
+
+export interface SelectProps
+  extends DetailedHTMLProps<
+    SelectHTMLAttributes<HTMLSelectElement>,
+    HTMLSelectElement
   > {}

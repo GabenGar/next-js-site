@@ -6,6 +6,8 @@ export type {
   InputProps,
   LabelProps,
   FieldSetProps,
-  AnchourProps
+  AnchourProps,
+  OptionProps,
+  SelectProps
 } from "./base-props";
 export type { Challenge } from "./frontend-mentor";
