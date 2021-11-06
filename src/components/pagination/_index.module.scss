@@ -49,13 +49,15 @@
   align-items: center;
   min-height: 44px;
   min-width: 44px;
-  max-width: var(--local-max-width, 4em);
-  background-color: var(--colour1-primary);
+  max-width: calc(calc(#{$size-small} * 2) + var(--local-max-width, 4em));
+  background-color: var(--colour1-primary-transparent);
   border: $size-nano solid var(--colour0-primary);
   padding: 0;
   border: 0;
 
   &:focus-within {
+    & .minus,
+    & .plus,
     & .submit {
       visibility: visible;
       opacity: 1;
@@ -65,6 +67,31 @@
 
 .number {
   text-align: center;
+  appearance: textfield;
+
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+}
+
+.minus {
+  position: absolute;
+  right: calc(100% + #{$size-normal});
+  visibility: hidden;
+  opacity: 0;
+
+  transition-property: opacity, visibility;
+  transition-duration: var(--duration-global);
+}
+
+.plus {
+  position: absolute;
+  left: calc(100% + #{$size-normal});
+  visibility: hidden;
+  opacity: 0;
+
+  transition-property: opacity, visibility;
+  transition-duration: var(--duration-global);
 }
 
 .submit {

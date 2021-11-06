@@ -6,6 +6,7 @@ export interface InitArg {
 
 export interface State {
   currentPage: number;
+  currentSelection: number
   currentCountMin: number;
   currentCountMax: number;
   limit: number;
@@ -15,11 +16,12 @@ export interface State {
 
 export interface Action {
   type: number;
-  payload: any;
+  payload: number;
 }
 
 export const ACTIONS = {
   GOTO: 1,
+  SELECT: 2,
 };
 
 export function paginationReducer(state: State, action: Action): State {
@@ -28,8 +30,15 @@ export function paginationReducer(state: State, action: Action): State {
       return {
         ...state,
         currentPage: action.payload,
+        currentSelection: action.payload,
         currentCountMin: (action.payload - 1) * state.limit,
         currentCountMax: action.payload * state.limit,
+      };
+    }
+    case ACTIONS.SELECT: {
+      return {
+        ...state,
+        currentSelection: action.payload
       };
     }
     default:
@@ -43,6 +52,7 @@ export function initState({ currentPage, limit, totalCount }: InitArg): State {
     totalCount,
     totalPages: Math.trunc(totalCount / limit) + 1,
     currentPage: currentPage,
+    currentSelection: currentPage,
     currentCountMin: (currentPage - 1) * limit,
     currentCountMax: currentPage * limit,
   };
@@ -51,6 +61,13 @@ export function initState({ currentPage, limit, totalCount }: InitArg): State {
 export function gotoPage(page: number) {
   return {
     type: ACTIONS.GOTO,
+    payload: page,
+  };
+}
+
+export function selectPage(page: number) {
+  return {
+    type: ACTIONS.SELECT,
     payload: page,
   };
 }

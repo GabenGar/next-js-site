@@ -61,7 +61,7 @@ export function Pagination({
             state.currentPage - 1 <= 1 ? undefined : state.currentPage - 1
           }
         />
-        <CurrentPage currentPage={state.currentPage} />
+        <CurrentPage state={state} dispatch={dispatch}/>
         <PageButton
           pageNumber={
             state.currentPage + 1 >= state.totalPages

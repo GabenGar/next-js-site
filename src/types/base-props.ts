@@ -5,7 +5,8 @@ import type {
   ButtonHTMLAttributes,
   FormHTMLAttributes,
   InputHTMLAttributes,
-  LabelHTMLAttributes
+  LabelHTMLAttributes,
+  FieldsetHTMLAttributes,
 } from "react";
 
 /**
@@ -44,7 +45,14 @@ export interface InputProps
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface LabelProps
-extends DetailedHTMLProps<
-  LabelHTMLAttributes<HTMLLabelElement>,
-  HTMLLabelElement
-> {}
+  extends DetailedHTMLProps<
+    LabelHTMLAttributes<HTMLLabelElement>,
+    HTMLLabelElement
+  > {}
+
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface FieldSetProps
+  extends DetailedHTMLProps<
+    FieldsetHTMLAttributes<HTMLFieldSetElement>,
+    HTMLFieldSetElement
+  > {}
