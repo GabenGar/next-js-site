@@ -76,9 +76,6 @@ export default function RESTCountriesPage({
         <title>All Countries</title>
         <meta name="description" content="All Countries" />
       </Head>
-      <ul>
-        <li>Filter countries by region</li>
-      </ul>
 
       <Form className={styles.search} onSubmit={handleSearch}>
         <TextSection id="country-search" name="country-name">

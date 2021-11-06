@@ -4,29 +4,31 @@ import { useRouter } from "next/router";
 import { restCountries as fetcher } from "#api/rest-countries";
 import { ImageLink } from "#components";
 import { Section } from "#components/page";
-import { Picture, Anchour } from "#components/fancy";
+import { Anchour } from "#components/fancy";
 import { DL, DLSection, DD, DT } from "#components/fancy/dl";
 import { RESTCountries as Layout } from "#components/page";
-import styles from "./index.module.scss";
+import styles from "./[name].module.scss";
 
-import type { NextPage } from "next";
+import type {
+  GetServerSideProps,
+  InferGetServerSidePropsType,
+  NextPage,
+} from "next";
+import type { ParsedUrlQuery } from "querystring";
 import type { API } from "#types/frontend-mentor/rest-countries";
 
-export default function RESTCountriesPage() {
-  const router = useRouter();
-  const { name: countryName } = router.query;
-  const { data, error } = useSWR<API.Country[]>(
-    `https://restcountries.com/v3.1/name/${countryName}`,
-    fetcher
-  );
+interface Props {
+  country: API.Country;
+}
 
-  if (error) {
-    return <div>failed to load</div>;
-  }
-  if (!data) {
-    return <div>loading...</div>;
-  }
-  const country = data[0];
+interface Params extends ParsedUrlQuery {
+  name: string;
+}
+
+export default function RESTCountriesCountryDetail({
+  country,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const countryName = country.name.official;
 
   return (
     <Section heading={`Detailed Info for ${countryName} ${country.flag}`}>
@@ -222,6 +224,25 @@ export default function RESTCountriesPage() {
   );
 }
 
-RESTCountriesPage.getLayout = function getLayout(page: NextPage) {
+RESTCountriesCountryDetail.getLayout = function getLayout(page: NextPage) {
   return <Layout>{page}</Layout>;
+};
+
+export const getServerSideProps: GetServerSideProps<Props, Params> = async (
+  context
+) => {
+  // https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-0.html#non-null-assertion-operator
+  const { name } = context.params!;
+  const response = await fetch(`https://restcountries.com/v3.1/name/${name}`);
+  const countries: API.Country[] = await response.json();
+
+  if (!countries) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: { country: countries[0] },
+  };
 };
