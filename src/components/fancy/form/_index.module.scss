@@ -5,7 +5,8 @@
   grid-template-columns: 1fr;
   gap: $size-normal;
   max-width: $width-mobile;
-  border-radius: 15px;
+  background-color: var(--colour1-secondary);
+  border-radius: 10px;
   border: $size-thin solid var(--colour0-tertiary);
   padding: $size-small;
   margin: 0 auto;

@@ -151,7 +151,10 @@ label {
 }
 
 select {
-  color: var(--colour0-primary);
+  cursor: pointer;
+}
+
+option {
   cursor: pointer;
 }
 

@@ -3,6 +3,15 @@
 
 .block {
   @include mixin.form-input();
+  background-color: var(--colour1-primary);
+
+  transition-duration: var(--duration-global);
+  transition-property: background-color;
+
+  &:hover {
+  }
+  &:focus {
+  }
 }
 
 .number {
@@ -11,6 +20,23 @@
 .text {
 }
 
-.select {}
+.select {
+  @include mixin.form-input();
+  line-height: 100%;
+  color: var(--colour0-primary);
+  background-color: var(--colour1-primary);
+  // magical number to center the text in FF
+  padding-top: 0.7em;
+  transition-duration: var(--duration-global);
+  transition-property: background-color;
 
-.option {}
+  &:hover {
+  }
+  &:focus {
+  }
+}
+
+.option {
+  @include mixin.form-input();
+  background-color: var(--colour1-primary);
+}

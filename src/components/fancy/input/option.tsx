@@ -6,7 +6,7 @@ import type { OptionProps } from "#types";
 interface Props extends OptionProps {}
 
 export function Option({ className, children, ...blockProps }: Props) {
-  const blockClass = useClassName(styles.block, className);
+  const blockClass = useClassName(styles.option, className);
 
   return (
     <option className={blockClass} {...blockProps}>

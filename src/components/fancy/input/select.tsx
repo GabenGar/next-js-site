@@ -6,7 +6,7 @@ import type { SelectProps } from "#types";
 interface Props extends SelectProps {}
 
 export function Select({ className, children, ...blockProps }: Props) {
-  const blockClass = useClassName(styles.block, className);
+  const blockClass = useClassName(styles.select, className);
 
   return (
     <select className={blockClass} {...blockProps}>

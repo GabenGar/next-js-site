@@ -1,7 +1,13 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import { CardList, Pagination } from "#components";
-import { Form, SubmitSection, TextSection } from "#components/fancy/form";
+import {
+  Form,
+  SubmitSection,
+  TextSection,
+  SelectSection,
+} from "#components/fancy/form";
+import { Option } from "#components/fancy/input";
 import { Section, RESTCountries as Layout } from "#components/page";
 import { CountryCard } from "#components/frontend-mentor";
 import styles from "./all.module.scss";
@@ -45,11 +51,16 @@ export default function RESTCountriesPage({
     event.preventDefault();
 
     const form = event.target as HTMLFormElement;
-    const name = ( // @ts-expect-error `elements` can be accessed by `name`
-      form.elements["country-name"] as HTMLInputElement
-    ).value.toLowerCase();
-    const filteredByName = countries.filter((country) =>
-      country.name.common.toLowerCase().includes(name)
+    const name =
+      // @ts-expect-error `elements` can be accessed by `name`
+      (form.elements["country-name"] as HTMLInputElement).value.toLowerCase();
+    const region =
+      // @ts-expect-error same
+      (form.elements["country-region"] as HTMLSelectElement).value;
+    const filteredByName = countries.filter(
+      (country) =>
+        country.name.common.toLowerCase().includes(name) &&
+        (region ? country.region === region : true)
     );
     filterCountries(() => filteredByName);
     changeCurrentPage(() => 1);
@@ -73,6 +84,20 @@ export default function RESTCountriesPage({
         <TextSection id="country-search" name="country-name">
           Name:
         </TextSection>
+        <SelectSection
+          id="country-region"
+          label={"Region:"}
+          name="country-region"
+        >
+          <Option key="" value="">
+            All
+          </Option>
+          {regions.map((region) => (
+            <Option key={region} value={region}>
+              {region}
+            </Option>
+          ))}
+        </SelectSection>
         <SubmitSection>Search</SubmitSection>
       </Form>
 
