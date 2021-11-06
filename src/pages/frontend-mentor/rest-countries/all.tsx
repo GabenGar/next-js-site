@@ -8,33 +8,42 @@ import { RESTCountries as Layout } from "#components/page";
 import { CountryCard } from "#components/frontend-mentor";
 import styles from "./index.module.scss";
 
-import type { NextPage } from "next";
+import type {
+  NextPage,
+  GetServerSideProps,
+  InferGetServerSidePropsType,
+} from "next";
 import type { API } from "#types/frontend-mentor/rest-countries";
 
-const limit = 25;
+interface Props {
+  countries: API.Country[];
+}
 
-export default function RESTCountriesPage() {
-  const { data, error } = useSWR<API.Country[]>(
-    "https://restcountries.com/v3.1/all",
-    fetcher
-  );
+const limit = 25;
+export default function RESTCountriesPage({
+  countries,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const [currentPage, changeCurrentPage] = useState(1);
   const [currentCountries, changeCurrentCountries] = useState<API.Country[]>(
     []
   );
 
   useEffect(() => {
-    if (data?.length) {
-      const currentRange = [(currentPage - 1) * limit, currentPage * limit]
-      const countries = data.slice(...currentRange);
-      changeCurrentCountries(() => countries)
-    }
-  }, [data, currentPage]);
+    const currentRange = [(currentPage - 1) * limit, currentPage * limit];
+    const slicedCountries = countries.slice(...currentRange);
+    changeCurrentCountries(() => slicedCountries);
+  }, [countries, currentPage]);
 
-  if (error) {
-    return <div>failed to load</div>;
-  }
-  if (!data) {
+  // if (error) {
+  //   return (
+  //     <div>
+  //       <p>Failed to Load</p>
+  //       <p>Error message:</p>
+  //       <pre>{JSON.stringify(error, null, 2)}</pre>
+  //     </div>
+  //   );
+  // }
+  if (!countries) {
     return <div>loading...</div>;
   }
 
@@ -44,7 +53,11 @@ export default function RESTCountriesPage() {
         <title>All Countries</title>
         <meta name="description" content="All Countries" />
       </Head>
-      <Pagination currentPage={currentPage} totalCount={data.length} />
+      <Pagination
+        changeCurrentPage={changeCurrentPage}
+        currentPage={currentPage}
+        totalCount={countries.length}
+      />
       <CardList>
         {currentCountries.map((country) => (
           <CountryCard key={country.cca3} country={country} />
@@ -56,4 +69,21 @@ export default function RESTCountriesPage() {
 
 RESTCountriesPage.getLayout = function getLayout(page: NextPage) {
   return <Layout>{page}</Layout>;
+};
+
+export const getServerSideProps: GetServerSideProps<Props> = async (
+  context
+) => {
+  const response = await fetch("https://restcountries.com/v3.1/all");
+  const countries: API.Country[] = await response.json();
+
+  if (!countries) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: { countries },
+  };
 };

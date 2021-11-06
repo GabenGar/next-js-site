@@ -5,19 +5,25 @@ import { CurrentPage } from "./current-page";
 import { PageButton } from "./page";
 import styles from "./_index.module.scss";
 
-import type { MouseEvent as ReactMouseEvent } from "react";
+import type {
+  MouseEvent as ReactMouseEvent,
+  Dispatch,
+  SetStateAction,
+} from "react";
 import type { ElementProps } from "#types";
 
 export interface Props extends ElementProps<HTMLDivElement> {
   currentPage: number;
   totalCount: number;
   limit?: number;
+  changeCurrentPage: Dispatch<SetStateAction<number>>;
 }
 
 export function Pagination({
   currentPage = 1,
   totalCount,
   limit = 25,
+  changeCurrentPage,
   className,
   ...blockProps
 }: Props) {
@@ -42,6 +48,7 @@ export function Pagination({
     ) {
       const pageNumber = Number(button.value);
       dispatch(gotoPage(pageNumber));
+      changeCurrentPage(pageNumber);
     }
   }
 
@@ -61,7 +68,11 @@ export function Pagination({
             state.currentPage - 1 <= 1 ? undefined : state.currentPage - 1
           }
         />
-        <CurrentPage state={state} dispatch={dispatch}/>
+        <CurrentPage
+          changeCurrentPage={changeCurrentPage}
+          state={state}
+          dispatch={dispatch}
+        />
         <PageButton
           pageNumber={
             state.currentPage + 1 >= state.totalPages

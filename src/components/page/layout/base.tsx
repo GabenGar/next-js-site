@@ -3,16 +3,9 @@ import styles from "./base.module.scss";
 import type { BaseProps } from "#types";
 
 interface Props extends BaseProps {
-  isSkeleton?: boolean;
 }
 
-export function BaseLayout({ isSkeleton, children }: Props) {
-
-  if (isSkeleton) {
-    return (<>
-      {children}
-    </>);
-  }
+export function BaseLayout({ children }: Props) {
 
   return (<>
     <header className={styles.header}>

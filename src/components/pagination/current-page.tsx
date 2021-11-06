@@ -1,4 +1,3 @@
-import { Dispatch } from "react";
 import { useClassName } from "#lib/hooks";
 import { Button } from "#components/fancy";
 import { Form, FormSection, SubmitButton } from "#components/fancy/form";
@@ -6,18 +5,19 @@ import { NumberInput } from "#components/fancy/input";
 import { Action, State, gotoPage, selectPage } from "./reducer";
 import styles from "./_index.module.scss";
 
-import type { FormEvent, CSSProperties } from "react";
+import type { FormEvent, CSSProperties, Dispatch, SetStateAction } from "react";
 import type { ElementProps } from "#types";
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface Props extends ElementProps<HTMLFormElement> {
   state: State;
   dispatch: Dispatch<Action>;
+  changeCurrentPage: Dispatch<SetStateAction<number>>;
 }
 
 export function CurrentPage({
   state,
   dispatch,
+  changeCurrentPage,
   className,
   ...blockProps
 }: Props) {
@@ -26,6 +26,7 @@ export function CurrentPage({
   function switchPage(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     dispatch(gotoPage(state.currentSelection));
+    changeCurrentPage(state.currentSelection);
   }
 
   return (
@@ -46,8 +47,10 @@ export function CurrentPage({
           max={state.totalPages}
           step={1}
           value={state.currentSelection}
-          // strictly to plea error handler
-          onChange={()=>{/**/}}
+          //pleasing error handler
+          onChange={() => {
+            /**/
+          }}
         />
       </FormSection>
       <FormSection

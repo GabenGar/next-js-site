@@ -1,10 +1,25 @@
+@use "../../../../styles/variables/sass" as *;
+
 .header {
-  text-align: center;
+}
+
+.navigation {
+
+}
+
+.list {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: $size-normal;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .main {
 }
 
 .footer {
-  text-align: center;
 }

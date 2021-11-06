@@ -47,10 +47,11 @@ export function paginationReducer(state: State, action: Action): State {
 }
 
 export function initState({ currentPage, limit, totalCount }: InitArg): State {
+  const totalPages = Math.ceil(totalCount / limit);
   return {
     limit,
     totalCount,
-    totalPages: Math.trunc(totalCount / limit) + 1,
+    totalPages: totalPages >= 1 ? totalPages : 1,
     currentPage: currentPage,
     currentSelection: currentPage,
     currentCountMin: (currentPage - 1) * limit,

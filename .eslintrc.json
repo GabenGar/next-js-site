@@ -9,6 +9,7 @@
     "prettier"
   ],
   "rules": {
-
+    // it's a-okay to creaye empty interfaces with a different name for alias purposes
+    "@typescript-eslint/no-empty-interface": "off"
   }
 }

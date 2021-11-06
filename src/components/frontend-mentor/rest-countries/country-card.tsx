@@ -36,6 +36,10 @@ export function CountryCard({ country, className, ...blockProps }: Props) {
             <DD>{country.area}</DD>
           </DLSection>
           <DLSection>
+            <DT>Population</DT>
+            <DD>{country.population}</DD>
+          </DLSection>
+          <DLSection>
             <DT>Currencies</DT>
             {country.currencies &&
               Object.entries(country.currencies).map(([name, currency]) => (
