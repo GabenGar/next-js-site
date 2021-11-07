@@ -7,11 +7,35 @@
   padding: $size-normal 0;
 }
 
-.flag {
-  display: block;
+.images {
   max-width: 20em;
   margin: 0 auto;
 }
+
+.list {
+  position: relative;
+  overflow-x: hidden;
+}
+
+.image {
+  position: absolute;
+  visibility: hidden;
+  opacity: 0;
+
+  transition-duration: var(--duration-global);
+  transition-property: visibility, opacity;
+
+  &_shown {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+.buttons {
+  display: flex;
+  flex-flow: row nowrap;
+}
+.button {}
 
 .capital {
   &::after {

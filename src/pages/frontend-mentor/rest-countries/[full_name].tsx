@@ -2,9 +2,10 @@ import Head from "next/head";
 import { countriesByCodes, countryByName } from "#api/rest-countries";
 import { ImageLink, CardList } from "#components";
 import { Section, RESTCountries as Layout } from "#components/page";
-import { Anchour } from "#components/fancy";
+import { Anchour, Button } from "#components/fancy";
 import { DL, DLSection, DD, DT } from "#components/fancy/dl";
 import { CountryCard } from "#components/frontend-mentor";
+import { buttonClicked } from "#lib/util";
 import styles from "./[full_name].module.scss";
 
 import type {
@@ -12,6 +13,7 @@ import type {
   InferGetServerSidePropsType,
   NextPage,
 } from "next";
+import type { MouseEvent } from "react";
 import type { ParsedUrlQuery } from "querystring";
 import type { Country } from "#api/rest-countries";
 
@@ -30,6 +32,32 @@ export default function RESTCountriesCountryDetail({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const countryName = country.name.official;
 
+  function switchImage(
+    event: MouseEvent<HTMLDivElement, globalThis.MouseEvent>
+  ) {
+    event.stopPropagation();
+    const button = buttonClicked(event, styles.button);
+
+    if (
+      !button ||
+      (!button.previousElementSibling && !button.nextElementSibling)
+    ) {
+      return;
+    }
+
+    const shownImage = event.currentTarget.querySelector(
+      styles.image_shown
+    ) as HTMLElement;
+    const nextImage = (
+      button.value == "previous"
+        ? button.previousElementSibling
+        : button.nextElementSibling
+    ) as HTMLElement;
+
+    shownImage.classList.remove(styles.image_shown);
+    nextImage.classList.add(styles.image_shown);
+  }
+
   return (
     <Section heading={`${countryName}`}>
       <Head>
@@ -38,18 +66,37 @@ export default function RESTCountriesCountryDetail({
       </Head>
       <article className={styles.info}>
         <header>
-          <ImageLink
-            href={country.flags.svg}
-            src={country.flags.png}
-            className={styles.flag}
-            isLazy={false}
-          />
-          <ImageLink
-            href={country.coatOfArms.svg}
-            src={country.coatOfArms.png}
-            className={styles.flag}
-            isLazy={false}
-          />
+          <div className={styles.images} onClick={switchImage}>
+            <div className={styles.list}>
+              <figure className={`${styles.image} ${styles.image_shown}`}>
+                <figcaption>Flag</figcaption>
+                <ImageLink
+                  href={country.flags.svg}
+                  src={country.flags.png}
+                  className={styles.flag}
+                  isLazy={false}
+                />
+              </figure>
+              <figure className={styles.image}>
+                <figcaption>Coat of Arms</figcaption>
+                <ImageLink
+                  href={country.coatOfArms.svg}
+                  src={country.coatOfArms.png}
+                  className={styles.flag}
+                  isLazy={false}
+                />
+              </figure>
+            </div>
+            <div className={styles.buttons}>
+              <Button className={styles.button} value="previous">
+                Previous
+              </Button>
+              <Button className={styles.button} value="next">
+                Next
+              </Button>
+            </div>
+          </div>
+
           <DL>
             {country?.capital && (
               <DLSection>

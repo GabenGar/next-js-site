@@ -1,0 +1,13 @@
+@use "../../styles/variables/sass" as *;
+
+.block {
+  display: grid;
+}
+
+.buttons {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: $size-normal;
+}
