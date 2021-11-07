@@ -1,15 +1,15 @@
+import { Country } from "#api/rest-countries";
 import { useClassName } from "#lib/hooks";
 import { ImageLink } from "#components";
 import { CardBase, CardHeader, CardBody, CardFooter } from "#components/cards";
 import { LocalAnchour } from "#components/fancy";
 import { DL, DLSection, DT, DD } from "#components/fancy/dl";
-import { API } from "#types/frontend-mentor/rest-countries";
 import styles from "./country-card.module.scss";
 
 import type { ElementProps } from "#types";
 
 interface Props extends ElementProps<HTMLElement> {
-  country: API.Country;
+  country: Country;
 }
 
 export function CountryCard({ country, className, ...blockProps }: Props) {
@@ -26,7 +26,7 @@ export function CountryCard({ country, className, ...blockProps }: Props) {
         />
       </CardHeader>
       <CardBody>
-        <DL>
+        <DL className={styles.details}>
           <DLSection>
             <DT>Capital</DT>
             <DD>{country.capital}</DD>
@@ -53,8 +53,8 @@ export function CountryCard({ country, className, ...blockProps }: Props) {
       <CardFooter>
         <LocalAnchour
           href={{
-            pathname: "/frontend-mentor/rest-countries/[name]",
-            query: { name: country.name.common },
+            pathname: "/frontend-mentor/rest-countries/[full_name]",
+            query: { full_name: country.name.official },
           }}
         >
           Detailed Information

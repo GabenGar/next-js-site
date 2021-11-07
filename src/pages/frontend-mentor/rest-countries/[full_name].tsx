@@ -1,13 +1,11 @@
 import Head from "next/head";
-import useSWR from "swr";
-import { useRouter } from "next/router";
-import { restCountries as fetcher } from "#api/rest-countries";
-import { ImageLink } from "#components";
-import { Section } from "#components/page";
+import { countriesByCodes, countryByName } from "#api/rest-countries";
+import { ImageLink, CardList } from "#components";
+import { Section, RESTCountries as Layout } from "#components/page";
 import { Anchour } from "#components/fancy";
 import { DL, DLSection, DD, DT } from "#components/fancy/dl";
-import { RESTCountries as Layout } from "#components/page";
-import styles from "./[name].module.scss";
+import { CountryCard } from "#components/frontend-mentor";
+import styles from "./[full_name].module.scss";
 
 import type {
   GetServerSideProps,
@@ -15,28 +13,30 @@ import type {
   NextPage,
 } from "next";
 import type { ParsedUrlQuery } from "querystring";
-import type { API } from "#types/frontend-mentor/rest-countries";
+import type { Country } from "#api/rest-countries";
 
 interface Props {
-  country: API.Country;
+  country: Country;
+  borderCountries: Country[];
 }
 
 interface Params extends ParsedUrlQuery {
-  name: string;
+  full_name: string;
 }
 
 export default function RESTCountriesCountryDetail({
   country,
+  borderCountries,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const countryName = country.name.official;
 
   return (
-    <Section heading={`Detailed Info for ${countryName} ${country.flag}`}>
+    <Section heading={`${countryName}`}>
       <Head>
         <title>Detailed Info for {countryName}</title>
         <meta name="description" content={`Detailed info for ${countryName}`} />
       </Head>
-      <article>
+      <article className={styles.info}>
         <header>
           <ImageLink
             href={country.flags.svg}
@@ -51,13 +51,19 @@ export default function RESTCountriesCountryDetail({
             isLazy={false}
           />
           <DL>
-            <DLSection>
-              <DT>Capital</DT>
-              <DD>{country.capital}</DD> {"("}
-              <DD>{country.capitalInfo.latlng[0]}</DD>{" "}
-              <DD>{country.capitalInfo.latlng[1]}</DD>
-              {")"}
-            </DLSection>
+            {country?.capital && (
+              <DLSection>
+                <DT>Capital</DT>
+                <DD className={styles.capital}>{country.capital}</DD> (
+                <DD className={styles.capital}>
+                  {country.capitalInfo?.latlng[0]}
+                </DD>{" "}
+                <DD className={styles.capital}>
+                  {country.capitalInfo?.latlng[1]}
+                </DD>
+                )
+              </DLSection>
+            )}
 
             <DLSection>
               <DT>Other names</DT>
@@ -75,8 +81,9 @@ export default function RESTCountriesCountryDetail({
           <DL>
             <DLSection>
               <DT>Region</DT>
-              <DD className={styles.region}>{country.region}</DD>{" "}
-              <DD>({country.subregion})</DD>
+              <DD className={styles.region}>
+                <span>{country.region}</span> (<span>{country.subregion}</span>)
+              </DD>
             </DLSection>
 
             <DLSection>
@@ -118,13 +125,17 @@ export default function RESTCountriesCountryDetail({
             </DLSection>
 
             <DLSection>
-              <DT>Week start</DT>
-              <DD>{country.startOfWeek}</DD>
+              <DT>Population</DT>
+              <DD>{country.population}</DD>
             </DLSection>
 
             <DLSection>
-              <DT>Population</DT>
-              <DD>{country.population}</DD>
+              <DT>Week start</DT>
+              <DD>
+                {country.startOfWeek !== "turday"
+                  ? country.startOfWeek
+                  : `Sa${country.startOfWeek}`}
+              </DD>
             </DLSection>
 
             <DLSection>
@@ -169,13 +180,15 @@ export default function RESTCountriesCountryDetail({
           <DL>
             <DLSection>
               <DT>Top Level Domain</DT>
-              <DD>
-                <code>{country.tld}</code>
-              </DD>
+              {country.tld.map((tld) => (
+                <DD key={tld}>
+                  <code>{tld}</code>
+                </DD>
+              ))}
             </DLSection>
 
             <DLSection className={styles.codes}>
-              <DT className={styles.codesTerm}>Codes</DT>
+              <DT className={styles.codes_term}>Codes</DT>
               <DD>
                 <DL>
                   <DLSection>
@@ -187,7 +200,7 @@ export default function RESTCountriesCountryDetail({
                     <DD>{country.cca3}</DD>
                   </DLSection>
                   <DLSection>
-                    <DT>ccn2</DT>
+                    <DT>ccn3</DT>
                     <DD>{country.ccn3}</DD>
                   </DLSection>
                   <DLSection>
@@ -201,25 +214,22 @@ export default function RESTCountriesCountryDetail({
                 </DL>
               </DD>
             </DLSection>
-
-            <DLSection>
-              <DT>Borders</DT>
-              {country.borders ? (
-                country.borders.map((border) => (
-                  <>
-                    <DD key={border}>{border}</DD>{" "}
-                  </>
-                ))
-              ) : (
-                <DD>No borders</DD>
-              )}
-            </DLSection>
           </DL>
+          <h2>Borders</h2>
+          {borderCountries ? (
+            <>
+              <p>A total of {borderCountries.length} bordering countries.</p>
+              <CardList>
+                {borderCountries.map((country) => (
+                  <CountryCard key={country.cca3} country={country} />
+                ))}
+              </CardList>
+            </>
+          ) : (
+            <p>No borders</p>
+          )}
         </footer>
       </article>
-      <ul>
-        <li>- Click through to the border countries on the detail page</li>
-      </ul>
     </Section>
   );
 }
@@ -232,17 +242,18 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (
   context
 ) => {
   // https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-0.html#non-null-assertion-operator
-  const { name } = context.params!;
-  const response = await fetch(`https://restcountries.com/v3.1/name/${name}`);
-  const countries: API.Country[] = await response.json();
+  const { full_name } = context.params!;
+  const country = await countryByName(full_name, true);
 
-  if (!countries) {
+  if (!country) {
     return {
       notFound: true,
     };
   }
 
+  const borderCountries = await countriesByCodes(country.borders);
+
   return {
-    props: { country: countries[0] },
+    props: { country, borderCountries },
   };
 };

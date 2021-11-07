@@ -1,7 +1,10 @@
 @use "../../../styles/variables/sass" as *;
 
-// .block {
-// }
+.block {
+  background-color: var(--colour1-primary);
+  border-radius: 10px;
+  padding: $size-normal;
+}
 
 // .section {
 // }
@@ -26,5 +29,9 @@
     &::after {
       content: none;
     }
+  }
+
+  & .block {
+    padding: 0 0 0 calc(#{$size-normal} * 2)
   }
 }
