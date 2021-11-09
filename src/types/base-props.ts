@@ -33,3 +33,5 @@ export interface OptionProps
 
 export interface SelectProps
   extends ComponentPropsWithoutRef<"select"> {}
+
+export interface DescriptionListProps extends ComponentPropsWithoutRef<"dl"> {}

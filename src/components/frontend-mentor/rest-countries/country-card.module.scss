@@ -4,8 +4,11 @@
 // }
 
 .flag {
+  --local-colour2-secondary: var(--colour1-secondary-transparent);
   width: 100%;
   height: 10em;
+  background-color: var(--local-colour2-secondary);
+  padding: $size-little;
 }
 
 // .title {

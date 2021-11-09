@@ -1,11 +1,10 @@
 import Head from "next/head";
 import { countriesByCodes, countryByName } from "#api/rest-countries";
-import { ImageLink, CardList, ImageCarousel } from "#components";
+import { CardList, ImageCarousel } from "#components";
 import { Section, RESTCountries as Layout } from "#components/page";
-import { Anchour, Button, FigCaption, Figure } from "#components/fancy";
+import { Anchour } from "#components/fancy";
 import { DL, DLSection, DD, DT } from "#components/fancy/dl";
 import { CountryCard } from "#components/frontend-mentor";
-import { buttonClicked } from "#lib/util";
 import styles from "./[full_name].module.scss";
 
 import type {
@@ -13,7 +12,6 @@ import type {
   InferGetServerSidePropsType,
   NextPage,
 } from "next";
-import type { MouseEvent } from "react";
 import type { ParsedUrlQuery } from "querystring";
 import type { Country } from "#api/rest-countries";
 

@@ -10,6 +10,9 @@
 .images {
   max-width: 20em;
   margin: 0 auto;
+  background-color: var(--colour1-secondary-transparent);
+  border-radius: 10px;
+  padding: $size-normal;
 }
 
 .capital {

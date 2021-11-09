@@ -6,9 +6,9 @@ import { LocalAnchour } from "#components/fancy";
 import { DL, DLSection, DT, DD } from "#components/fancy/dl";
 import styles from "./country-card.module.scss";
 
-import type { ElementProps } from "#types";
+import type { BaseProps } from "#types";
 
-interface Props extends ElementProps<HTMLElement> {
+interface Props extends BaseProps {
   country: Country;
 }
 

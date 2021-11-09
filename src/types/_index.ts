@@ -10,5 +10,6 @@ export type {
   SelectProps,
   DivProps,
   RootlessProps,
+  DescriptionListProps
 } from "./base-props";
 export type { Challenge } from "./frontend-mentor";
