@@ -2,19 +2,19 @@ import { useClassName } from "#lib/hooks";
 import { Anchour } from "#components/fancy";
 import styles from "./_index.module.scss";
 
-import type { ElementProps } from "#types";
+import type { AnchourProps } from "#types";
 
-interface Props extends ElementProps<HTMLAnchorElement> {
-  href: string;
+interface Props extends AnchourProps {
   src: string;
+  href?: string;
   alt?: string;
   srcSet?: string;
   isLazy?: boolean;
 }
 
 export function ImageLink({
-  href,
   src,
+  href = src,
   alt = "",
   srcSet = src,
   isLazy = true,

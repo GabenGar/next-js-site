@@ -1,9 +1,9 @@
 import { useClassName } from "#lib/hooks";
 import styles from "./_index.module.scss";
 
-import type { ElementProps } from "#types";
+import type { DivProps } from "#types";
 
-interface Props extends ElementProps<HTMLDivElement> {}
+interface Props extends DivProps {}
 
 export function DescriptionSection({
   children,

@@ -5,11 +5,12 @@ import type { BaseProps } from "#types";
 
 interface Props extends BaseProps {}
 
-export function DescriptionTerm({ children, className, ...blockProps }: Props) {
-  const blockClass = useClassName(styles.term, className);
+export function Figure({ children, className, ...blockProps }: Props) {
+  const blockClass = useClassName(styles.block, className);
+
   return (
-    <dt className={blockClass} {...blockProps}>
+    <figure className={blockClass} {...blockProps}>
       {children}
-    </dt>
+    </figure>
   );
 }

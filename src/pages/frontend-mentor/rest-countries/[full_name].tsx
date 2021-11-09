@@ -1,8 +1,8 @@
 import Head from "next/head";
 import { countriesByCodes, countryByName } from "#api/rest-countries";
-import { ImageLink, CardList } from "#components";
+import { ImageLink, CardList, ImageCarousel } from "#components";
 import { Section, RESTCountries as Layout } from "#components/page";
-import { Anchour, Button } from "#components/fancy";
+import { Anchour, Button, FigCaption, Figure } from "#components/fancy";
 import { DL, DLSection, DD, DT } from "#components/fancy/dl";
 import { CountryCard } from "#components/frontend-mentor";
 import { buttonClicked } from "#lib/util";
@@ -31,32 +31,14 @@ export default function RESTCountriesCountryDetail({
   borderCountries,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const countryName = country.name.official;
-
-  function switchImage(
-    event: MouseEvent<HTMLDivElement, globalThis.MouseEvent>
-  ) {
-    event.stopPropagation();
-    const button = buttonClicked(event, styles.button);
-
-    if (
-      !button ||
-      (!button.previousElementSibling && !button.nextElementSibling)
-    ) {
-      return;
-    }
-
-    const shownImage = event.currentTarget.querySelector(
-      styles.image_shown
-    ) as HTMLElement;
-    const nextImage = (
-      button.value == "previous"
-        ? button.previousElementSibling
-        : button.nextElementSibling
-    ) as HTMLElement;
-
-    shownImage.classList.remove(styles.image_shown);
-    nextImage.classList.add(styles.image_shown);
-  }
+  const images = [
+    { src: country.flags.png, href: country.flags.svg, caption: "Flag" },
+    {
+      src: country.coatOfArms.png,
+      href: country.coatOfArms.svg,
+      caption: "Coat of Arms",
+    },
+  ];
 
   return (
     <Section heading={`${countryName}`}>
@@ -66,36 +48,7 @@ export default function RESTCountriesCountryDetail({
       </Head>
       <article className={styles.info}>
         <header>
-          <div className={styles.images} onClick={switchImage}>
-            <div className={styles.list}>
-              <figure className={`${styles.image} ${styles.image_shown}`}>
-                <figcaption>Flag</figcaption>
-                <ImageLink
-                  href={country.flags.svg}
-                  src={country.flags.png}
-                  className={styles.flag}
-                  isLazy={false}
-                />
-              </figure>
-              <figure className={styles.image}>
-                <figcaption>Coat of Arms</figcaption>
-                <ImageLink
-                  href={country.coatOfArms.svg}
-                  src={country.coatOfArms.png}
-                  className={styles.flag}
-                  isLazy={false}
-                />
-              </figure>
-            </div>
-            <div className={styles.buttons}>
-              <Button className={styles.button} value="previous">
-                Previous
-              </Button>
-              <Button className={styles.button} value="next">
-                Next
-              </Button>
-            </div>
-          </div>
+          <ImageCarousel images={images} className={styles.images} />
 
           <DL>
             {country?.capital && (

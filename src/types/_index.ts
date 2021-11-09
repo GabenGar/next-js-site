@@ -1,5 +1,4 @@
 export type {
-  ElementProps,
   BaseProps,
   ButtonProps,
   FormProps,
@@ -8,6 +7,8 @@ export type {
   FieldSetProps,
   AnchourProps,
   OptionProps,
-  SelectProps
+  SelectProps,
+  DivProps,
+  RootlessProps,
 } from "./base-props";
 export type { Challenge } from "./frontend-mentor";

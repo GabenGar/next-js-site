@@ -3,9 +3,9 @@ import { Header } from "./header";
 import { Heading } from "./heading";
 import styles from "./section.module.scss";
 
-import type { ElementProps } from "#types";
+import type { BaseProps } from "#types";
 
-interface Props extends ElementProps<HTMLElement> {
+interface Props extends BaseProps {
   heading?: string;
 }
 

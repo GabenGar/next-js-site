@@ -2,6 +2,27 @@
 
 .block {
   display: grid;
+
+
+}
+
+.images {
+  display: grid;
+  grid-template-areas: "image";
+}
+
+.image {
+  grid-area: image;
+  visibility: hidden;
+  opacity: 0;
+
+  transition-duration: var(--duration-global);
+  transition-property: opacity, visibility;
+
+  &_shown {
+    visibility: visible;
+    opacity: 1;
+  }
 }
 
 .buttons {
@@ -10,4 +31,9 @@
   justify-content: space-between;
   align-items: center;
   gap: $size-normal;
+  padding: $size-small;
+}
+
+.button {
+  flex: 0 0 6em;
 }

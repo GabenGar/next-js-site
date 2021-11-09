@@ -1,2 +1,1 @@
-export {}
-// export { ImageCarousel } from "./base";
+export { ImageCarousel } from "./base";
