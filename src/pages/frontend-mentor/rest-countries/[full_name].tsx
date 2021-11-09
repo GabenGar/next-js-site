@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { countriesByCodes, countryByName } from "#api/rest-countries";
-import { CardList, ImageCarousel } from "#components";
+import { CardList, ImageCarousel, FancyNumber, FancyArea } from "#components";
 import { Section, RESTCountries as Layout } from "#components/page";
 import { Anchour } from "#components/fancy";
 import { DL, DLSection, DD, DT } from "#components/fancy/dl";
@@ -93,7 +93,9 @@ export default function RESTCountriesCountryDetail({
 
             <DLSection>
               <DT>Area</DT>
-              <DD>{country.area}</DD>
+              <DD>
+                <FancyArea number={country.area} />
+              </DD>
             </DLSection>
 
             <DLSection>
@@ -124,7 +126,9 @@ export default function RESTCountriesCountryDetail({
 
             <DLSection>
               <DT>Population</DT>
-              <DD>{country.population}</DD>
+              <DD>
+                <FancyNumber number={country.population} />
+              </DD>
             </DLSection>
 
             <DLSection>

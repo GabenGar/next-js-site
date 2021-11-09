@@ -1,6 +1,6 @@
 import { Country } from "#api/rest-countries";
 import { useClassName } from "#lib/hooks";
-import { ImageLink } from "#components";
+import { ImageLink, FancyNumber, FancyArea } from "#components";
 import { CardBase, CardHeader, CardBody, CardFooter } from "#components/cards";
 import { LocalAnchour } from "#components/fancy";
 import { DL, DLSection, DT, DD } from "#components/fancy/dl";
@@ -33,11 +33,13 @@ export function CountryCard({ country, className, ...blockProps }: Props) {
           </DLSection>
           <DLSection>
             <DT>Area</DT>
-            <DD>{country.area}</DD>
+            <DD>
+              <FancyArea number={country.area} />
+            </DD>
           </DLSection>
           <DLSection>
             <DT>Population</DT>
-            <DD>{country.population}</DD>
+            <DD><FancyNumber number={country.population}/></DD>
           </DLSection>
           <DLSection>
             <DT>Currencies</DT>
