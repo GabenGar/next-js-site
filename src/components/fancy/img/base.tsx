@@ -8,5 +8,5 @@ interface Props extends ImgProps {}
 export function IMG({ className, ...blockProps }: Props) {
   const blockClass = useClassName(styles.image, className);
 
-  return <img className={blockClass} {...blockProps} />;
+  return <img className={blockClass} {...blockProps}/>;
 }

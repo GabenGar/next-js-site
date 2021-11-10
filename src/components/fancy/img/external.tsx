@@ -4,7 +4,7 @@ import { Picture } from "./picture";
 import { IMG } from "./base";
 import styles from "./_index.module.scss";
 
-import { SyntheticEvent } from "react";
+import type { SyntheticEvent } from "react";
 import type { SpanProps } from "#types";
 
 interface Props extends SpanProps {

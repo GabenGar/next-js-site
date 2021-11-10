@@ -18,7 +18,7 @@ import type { Country } from "#api/rest-countries";
 
 interface Props {
   country: Country;
-  borderCountries: Country[];
+  borderCountries?: Country[];
 }
 
 interface Params extends ParsedUrlQuery {
@@ -257,7 +257,9 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (
     };
   }
 
-  const borderCountries = await countriesByCodes(country.borders);
+  const borderCountries = country.borders.length
+    ? await countriesByCodes(country.borders)
+    : undefined;
 
   return {
     props: { country, borderCountries },

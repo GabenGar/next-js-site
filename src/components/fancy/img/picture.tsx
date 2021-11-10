@@ -6,10 +6,10 @@ import type { BaseProps } from "#types";
 
 interface Props extends BaseProps {}
 
-export function Picture({ className, ...blockProps }: Props) {
+export function Picture({ children, className, ...blockProps }: Props) {
   const blockClass = useClassName(styles.picture, className);
 
   return <picture className={blockClass} {...blockProps}>
-    <IMG />
+    {children}
   </picture>;
 }

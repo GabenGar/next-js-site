@@ -1,2 +1,2 @@
-export { FancyImageExternal as Picture } from "./external";
+export { FancyImageExternal } from "./external";
 export { LocalPicture } from "./local";
