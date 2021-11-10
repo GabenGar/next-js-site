@@ -5,6 +5,7 @@ import { Section, RESTCountries as Layout } from "#components/page";
 import { Anchour } from "#components/fancy";
 import { DL, DLSection, DD, DT } from "#components/fancy/dl";
 import { CountryCard } from "#components/frontend-mentor";
+import { isObjectEmpty } from "#lib/util";
 import styles from "./[full_name].module.scss";
 
 import type {
@@ -31,12 +32,15 @@ export default function RESTCountriesCountryDetail({
   const countryName = country.name.official;
   const images = [
     { src: country.flags.png, href: country.flags.svg, caption: "Flag" },
-    {
+  ];
+
+  if (!isObjectEmpty(country.coatOfArms)) {
+    images.push({
       src: country.coatOfArms.png,
       href: country.coatOfArms.svg,
       caption: "Coat of Arms",
-    },
-  ];
+    });
+  }
 
   return (
     <Section heading={`${countryName}`}>

@@ -34,7 +34,7 @@ export function ImageCarousel({ images, className, ...blockProps }: Props) {
       <div className={styles.images}>
         {images.map((image, index) => (
           <Figure
-            key={image.src}
+            key={index}
             className={useClassList(
               styles.image,
               index === currentImage ? styles.image_shown : undefined
@@ -50,17 +50,19 @@ export function ImageCarousel({ images, className, ...blockProps }: Props) {
         ))}
       </div>
 
-      <div className={styles.buttons}>
-        <Button className={styles.button} onClick={prev}>
-          Previous
-        </Button>
-        <span>
-          <span>{currentImage + 1}</span> / <span>{images.length}</span>
-        </span>
-        <Button className={styles.button} onClick={next}>
-          Next
-        </Button>
-      </div>
+      {images.length > 1 && (
+        <div className={styles.buttons}>
+          <Button className={styles.button} onClick={prev}>
+            Previous
+          </Button>
+          <span>
+            <span>{currentImage + 1}</span> / <span>{images.length}</span>
+          </span>
+          <Button className={styles.button} onClick={next}>
+            Next
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

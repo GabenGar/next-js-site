@@ -13,7 +13,7 @@ export interface Country {
   demonyms: { [name: string]: Demonym };
   flag: string;
   flags: { svg: string; png: string };
-  coatOfArms: { svg: string; png: string };
+  coatOfArms: { svg: string; png: string } | Record<string,never>;
   idd: IDD;
   independent: boolean;
   landlocked: boolean;
