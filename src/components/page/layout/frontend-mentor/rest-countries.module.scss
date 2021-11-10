@@ -1,6 +1,12 @@
 @use "../../../../styles/variables/sass" as *;
 
 .header {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: $size-normal;
+  background-color: var(--colour1-secondary-transparent);
 }
 
 .navigation {
@@ -22,4 +28,5 @@
 }
 
 .footer {
+  background-color: var(--colour1-secondary-transparent);
 }

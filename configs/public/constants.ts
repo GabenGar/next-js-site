@@ -46,8 +46,15 @@ const ES_UNITS = {
   yard: "yard",
   year: "year",
 }
+
+const THEMES = {
+  DARK: "dark",
+  LIGHT: "light",
+};
+
 export const CONSTANTS = {
-  ES_UNITS
+  ES_UNITS,
+  THEMES
 }
 
 Object.freeze(CONSTANTS)

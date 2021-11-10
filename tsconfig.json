@@ -22,6 +22,7 @@
       "#lib": ["src/lib/_index.ts"],
       "#lib/number-formatter": ["src/lib/number-formatter/_index.ts"],
       "#lib/hooks": ["src/lib/hooks/_index.ts"],
+      "#lib/store": ["src/lib/store/_index.ts"],
       "#lib/util": ["src/lib/util/_index.ts"],
       "#types": ["src/types/_index.ts"],
     },
