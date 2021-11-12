@@ -9,6 +9,7 @@ import type { RootlessProps } from "#types";
 interface Props extends RootlessProps {}
 
 const { THEMES } = CONSTANTS;
+const repoURL = `${ENV_VARS.REPOSITORY}/tree/fm-rest/src/pages/frontend-mentor/rest-countries`
 
 export function RESTCountries({ children }: Props) {
   const [currentTheme, switchCurrentTheme] = useState("");
@@ -51,7 +52,7 @@ export function RESTCountries({ children }: Props) {
       <main className={styles.main}>{children}</main>
 
       <footer className={styles.footer}>
-        <Anchour href={ENV_VARS.REPOSITORY}>Source code</Anchour>
+        <Anchour href={repoURL}>Source code</Anchour>
       </footer>
     </>
   );
