@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { CONSTANTS } from "#configs/public";
-import { LocalAnchour, Button } from "#components/fancy";
+import { CONSTANTS, ENV_VARS } from "#configs/public";
+import { LocalAnchour, Button, Anchour } from "#components/fancy";
 import styles from "./rest-countries.module.scss";
 
 import { MouseEvent as RMouseEvent } from "react";
@@ -19,10 +19,7 @@ export function RESTCountries({ children }: Props) {
   }, []);
 
   function switchTheme(event: RMouseEvent<HTMLButtonElement, MouseEvent>) {
-    const nextTheme =
-      currentTheme === THEMES.DARK
-        ? THEMES.LIGHT
-        : THEMES.DARK;
+    const nextTheme = currentTheme === THEMES.DARK ? THEMES.LIGHT : THEMES.DARK;
 
     document.documentElement.dataset.theme = nextTheme;
     switchCurrentTheme(nextTheme);
@@ -53,7 +50,9 @@ export function RESTCountries({ children }: Props) {
 
       <main className={styles.main}>{children}</main>
 
-      <footer className={styles.footer}>REST Footer</footer>
+      <footer className={styles.footer}>
+        <Anchour href={ENV_VARS.REPOSITORY}>Source code</Anchour>
+      </footer>
     </>
   );
 }

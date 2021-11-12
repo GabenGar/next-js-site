@@ -7,6 +7,9 @@
   align-items: center;
   gap: $size-normal;
   background-color: var(--colour1-secondary-transparent);
+
+  transition-duration: var(--duration-global);
+  transition-property: color, background-color;
 }
 
 .navigation {
@@ -25,8 +28,13 @@
 }
 
 .main {
+  transition-duration: var(--duration-global);
+  transition-property: color, background-color;
 }
 
 .footer {
   background-color: var(--colour1-secondary-transparent);
+
+  transition-duration: var(--duration-global);
+  transition-property: color, background-color;
 }

@@ -1,5 +1,7 @@
-const NODE_ENV = process.env.NODE_ENV
+import { initEnvVars } from "#lib/util";
 
-export const ENV_VARS = {
-  NODE_ENV
-}
+const NODE_ENV = process.env.NODE_ENV;
+
+export const ENV_VARS = initEnvVars({
+  NODE_ENV,
+});

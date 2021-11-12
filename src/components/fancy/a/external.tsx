@@ -3,7 +3,9 @@ import styles from "./_index.module.scss";
 
 import type { AnchourProps } from "#types";
 
-interface Props extends AnchourProps {}
+interface Props extends AnchourProps {
+  href: string;
+}
 
 export function Anchour({ href, children, className, ...blockProps }: Props) {
   const blockClass = useClassName(styles.block, className);
