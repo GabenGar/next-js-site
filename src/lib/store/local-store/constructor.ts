@@ -1,15 +1,15 @@
 import { DERIVED_VARS } from "#configs/public";
 import { storeItems, legacyStoreItems, createdItems } from "./base";
 
-import type { LocalStore, onChangeCallback } from "./types";
+import type { LocalStore, OnChangeCallback } from "./types";
 
 export function init() {
   window.addEventListener("storage", (event) => {
     // `Storage.clear()` is called
     if (event.key === null) {
-      location.reload()
+      location.reload();
     }
-  })
+  });
 }
 
 export function isAvailable() {
@@ -45,7 +45,11 @@ export function createStore(name: string): LocalStore {
 
   createdItems.add(name);
 
-  return [getValue(name), setValue(name), onValueChange(name)]
+  return {
+    get: getValue(name),
+    set: setValue(name),
+    onChange: onValueChange(name),
+  };
 }
 
 function getValue(name: string) {
@@ -73,7 +77,7 @@ function setValue(name: string) {
 }
 
 function onValueChange(name: string) {
-  return (callback: onChangeCallback) => {
+  return (callback: OnChangeCallback) => {
     window.addEventListener("storage", (event) => {
       if (event.key === name) {
         callback(event.oldValue, event.newValue);

@@ -3,4 +3,8 @@ export {
   isAvailable as isLocalStoreAvailable,
   init as initLocalStorage,
 } from "./constructor";
-export type { LocalStore, onChangeCallback } from "./types";
+export {
+  legacyStoreItems as legacyLocalStoreitems,
+  storeItems as localStoreItems,
+} from "./base";
+export type { LocalStore, OnChangeCallback as onChangeCallback } from "./types";

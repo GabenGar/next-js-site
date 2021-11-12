@@ -1,5 +1,11 @@
 import { useEffect, useState } from "react";
-import { CONSTANTS, ENV_VARS } from "#configs/public";
+import { ENV_VARS } from "#configs/public";
+import {
+  AVAILABLE_THEMES,
+  defaultTheme,
+  setCurrentTheme,
+  getCurrentTheme,
+} from "#lib/theme";
 import { LocalAnchour, Button, Anchour } from "#components/fancy";
 import styles from "./rest-countries.module.scss";
 
@@ -8,22 +14,24 @@ import type { RootlessProps } from "#types";
 
 interface Props extends RootlessProps {}
 
-const { THEMES } = CONSTANTS;
-const repoURL = `${ENV_VARS.REPOSITORY}/tree/fm-rest/src/pages/frontend-mentor/rest-countries`
+const repoURL = `${ENV_VARS.REPOSITORY}/tree/fm-rest/src/pages/frontend-mentor/rest-countries`;
 
 export function RESTCountries({ children }: Props) {
   const [currentTheme, switchCurrentTheme] = useState("");
 
   // doing this because nextjs server is upset over `document`
   useEffect(() => {
-    switchCurrentTheme(document.documentElement.dataset.theme!);
+    switchCurrentTheme(() => getCurrentTheme());
   }, []);
 
   function switchTheme(event: RMouseEvent<HTMLButtonElement, MouseEvent>) {
-    const nextTheme = currentTheme === THEMES.DARK ? THEMES.LIGHT : THEMES.DARK;
+    const nextTheme =
+      currentTheme === AVAILABLE_THEMES.DARK
+        ? AVAILABLE_THEMES.LIGHT
+        : AVAILABLE_THEMES.DARK;
 
-    document.documentElement.dataset.theme = nextTheme;
-    switchCurrentTheme(nextTheme);
+    switchCurrentTheme(() => nextTheme);
+    setCurrentTheme(nextTheme);
   }
 
   return (
@@ -46,7 +54,11 @@ export function RESTCountries({ children }: Props) {
             </li>
           </ul>
         </nav>
-        <Button onClick={switchTheme}>{currentTheme}</Button>
+        <Button onClick={switchTheme}>
+          {currentTheme === AVAILABLE_THEMES.LIGHT
+            ? AVAILABLE_THEMES.DARK
+            : AVAILABLE_THEMES.LIGHT}
+        </Button>
       </header>
 
       <main className={styles.main}>{children}</main>

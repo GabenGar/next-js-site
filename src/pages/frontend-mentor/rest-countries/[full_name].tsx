@@ -153,7 +153,7 @@ export default function RESTCountriesCountryDetail({
               <DT>Languages</DT>
               {Object.entries(country.languages).map(([code, lang]) => (
                 <>
-                  <DD key={code}>{lang}</DD>{" "}
+                  <DD key={code + lang}>{lang}</DD>{" "}
                 </>
               ))}
             </DLSection>

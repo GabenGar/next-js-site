@@ -47,14 +47,8 @@ const ES_UNITS = {
   year: "year",
 }
 
-const THEMES = {
-  DARK: "dark",
-  LIGHT: "light",
-};
-
 export const CONSTANTS = {
-  ES_UNITS,
-  THEMES
+  ES_UNITS
 }
 
 Object.freeze(CONSTANTS)
