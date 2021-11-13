@@ -1,19 +1,29 @@
-import { createLocalStore, localStoreItems, LocalStore } from "#lib/store";
+import {
+  createCookieStore,
+  createLocalStore,
+  localStoreItems,
+  cookieKeys,
+} from "#lib/store";
+import type { LocalStore, CookieStore } from "#lib/store";
 
 export const AVAILABLE_THEMES = {
   DARK: "dark",
   LIGHT: "light",
 };
 export const defaultTheme = AVAILABLE_THEMES.LIGHT;
-let store: LocalStore;
+let store: { cookie: CookieStore; local: LocalStore };
 
 export function init() {
-  store = createLocalStore(localStoreItems.theme);
+  store = {
+    cookie: createCookieStore(cookieKeys.theme),
+    local: createLocalStore(localStoreItems.theme),
+  };
   setCurrentTheme(getCurrentTheme());
 }
 
 export function getCurrentTheme() {
-  const currentTheme = store.get() || document.documentElement.dataset.theme;
+  const currentTheme =
+    store.cookie.get() || store.local.get() || document.documentElement.dataset.theme;
 
   if (!currentTheme) {
     const isSwitched = setCurrentTheme(defaultTheme);
@@ -29,7 +39,7 @@ export function getCurrentTheme() {
 }
 
 export function setCurrentTheme(theme: string) {
-  const isSet = store.set(theme);
+  const isSet = store.cookie.set(theme) && store.local.set(theme);
 
   if (!isSet) {
     return false;
