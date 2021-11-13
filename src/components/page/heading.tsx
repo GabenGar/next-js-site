@@ -1,15 +1,16 @@
 import { useClassName } from "#lib/hooks";
-import styles from "./heading.module.scss";
+import styles from "./_index.module.scss";
 
-import type { ElementProps } from "#types";
+import type { HeadingProps } from "#types";
 
-interface Props extends ElementProps<HTMLHeadingElement> {
-}
+interface Props extends HeadingProps {}
 
 export function Heading({ children, className, ...blockProps }: Props) {
   const blockClass = useClassName(styles.block, className);
 
-  return (<h1 className={blockClass} {...blockProps}>
-    {children}
-  </h1>);
+  return (
+    <h1 className={blockClass} {...blockProps}>
+      {children}
+    </h1>
+  );
 }

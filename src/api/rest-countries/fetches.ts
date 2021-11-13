@@ -39,3 +39,14 @@ export async function countriesByCodes(codes: string[]) {
   const countries: Country[] = await response.json();
   return countries;
 }
+
+export async function countriesByRegion(region: string) {
+  const response = await baseFetch(
+    `/v3.1/region/${region}`,
+    {
+      method: "GET",
+    },
+  );
+  const countries: Country[] = await response.json();
+  return countries;
+}

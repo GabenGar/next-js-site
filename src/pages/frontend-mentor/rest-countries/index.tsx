@@ -26,6 +26,15 @@ export default function RESTCountriesPage() {
               All Countries
             </LocalAnchour>
           </li>
+          <li>
+            <LocalAnchour
+              href={{
+                pathname: "/frontend-mentor/rest-countries/regions",
+              }}
+            >
+              Regions
+            </LocalAnchour>
+          </li>
         </ul>
       </nav>
     </Section>

@@ -12,6 +12,7 @@ export type {
   RootlessProps,
   DescriptionListProps,
   SpanProps,
-  ImgProps
+  ImgProps,
+  HeadingProps
 } from "./base-props";
 export type { Challenge } from "./frontend-mentor";

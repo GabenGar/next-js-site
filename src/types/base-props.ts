@@ -31,3 +31,5 @@ export interface DescriptionListProps extends ComponentPropsWithoutRef<"dl"> {}
 export interface SpanProps extends ComponentPropsWithoutRef<"span"> {}
 
 export interface ImgProps extends ComponentPropsWithoutRef<"img"> {}
+
+export interface HeadingProps extends ComponentPropsWithoutRef<"h1"> {}

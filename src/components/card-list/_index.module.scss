@@ -1,4 +1,4 @@
-@use "../styles/variables/sass" as *;
+@use "../../styles/variables/sass" as *;
 
 .block {
   position: relative;
@@ -12,6 +12,11 @@
   gap: $size-normal;
   padding: $size-normal 0;
 
+  &_gallery {
+    flex-flow: row nowrap;
+    overflow-x: auto;
+  }
+
   &_mobile {
     --local-card-width: #{$width-mobile};
   }
@@ -19,6 +24,4 @@
   & > * {
     flex: 0 1 var(--local-card-width);
   }
-
-
 }

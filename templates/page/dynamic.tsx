@@ -1,5 +1,6 @@
 import Head from "next/head";
 
+import { siteTitle } from "#lib/util";
 import { Section, BaseLayout as Layout } from "#components/page";
 
 import type {
@@ -19,7 +20,7 @@ function TemplatePage({}: InferGetServerSidePropsType<
   return (
     <Section heading="template heading">
       <Head>
-        <title>template title</title>
+        <title>{siteTitle("template title")}</title>
         <meta name="description" content="template description" />
         {/* <link rel="icon" href="/favicon.ico" /> */}
       </Head>
@@ -31,7 +32,7 @@ TemplatePage.getLayout = function getLayout(page: NextPage) {
   return <Layout>{page}</Layout>;
 };
 
-const getServerSideProps: GetServerSideProps<Props, Params> = async (
+export const getServerSideProps: GetServerSideProps<Props, Params> = async (
   context
 ) => {
   const data = undefined;

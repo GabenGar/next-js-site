@@ -1,20 +1,30 @@
 import { useState } from "react";
 import { useClassName } from "#lib/hooks";
-import styles from "./card-list.module.scss";
+import styles from "./_index.module.scss";
 
-import type { ElementProps } from "#types";
+import type { BaseProps } from "#types";
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface Props extends ElementProps<HTMLDivElement> {}
+interface Props extends BaseProps {
+  isGallery?: boolean;
+}
 
 const layouts = {
   mobile: styles.list_mobile,
 };
 
-export function CardList({ children, className, ...blockProps }: Props) {
+export function CardList({
+  isGallery = undefined,
+  children,
+  className,
+  ...blockProps
+}: Props) {
   const [layout, changeLayout] = useState(layouts.mobile);
   const blockClass = useClassName(styles.block, className);
-  const listClass = useClassName(styles.list, layout);
+  const listClass = useClassName(
+    styles.list,
+    layout,
+    isGallery ? styles.list_gallery : undefined
+  );
 
   return (
     <div className={blockClass} {...blockProps}>
