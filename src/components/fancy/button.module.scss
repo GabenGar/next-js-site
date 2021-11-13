@@ -14,8 +14,8 @@
   color: var(--local-colour1-primary);
   background-color: var(--local-colour2-secondary);
   border: $size-nano solid var(--local-colour1-secondary);
-  box-shadow: inset 2px 2px 3px var(--local-colour2-secondary),
-    inset -2px -2px 3px var(--local-colour1-tertiary);
+  box-shadow: inset 2px 2px 3px hsla(0, 0%, 90%, 40%),
+    inset -2px -2px 3px hsla(0, 0%, 0%, 50%);
 
   transition-duration: var(--duration-global);
   transition-property: box-shadow, background-color, border-color;
@@ -25,7 +25,7 @@
     background-color: var(--local-colour2-primary);
   }
   &:active {
-    box-shadow: inset 2px 2px 3px var(--local-colour1-tertiary),
-      inset -2px -2px 3px var(--local-colour2-secondary);
+    box-shadow: inset 2px 2px 3px hsla(0, 0%, 0%, 50%),
+      inset -2px -2px 3px hsla(0, 0%, 90%, 40%);
   }
 }

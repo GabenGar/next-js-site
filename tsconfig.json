@@ -2,29 +2,67 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "#configs*": ["configs/_index.ts"],
-      "#configs/public": ["configs/public/_index.ts"],
-      "#api/*": ["src/api/*"],
-      "#api/rest-countries": ["src/api/rest-countries/_index.ts"],
-      "#assets": ["src/assets/_index.ts"],
-      "#assets/*": ["src/assets/*"],
-      "#components": ["src/components/_index.ts"],
-      "#components/page": ["src/components/page/_index.ts"],
-      "#components/fancy": ["src/components/fancy/_index.ts"],
-      "#components/fancy/dl": ["src/components/fancy/dl/_index.ts"],
-      "#components/fancy/form": ["src/components/fancy/form/_index.ts"],
-      "#components/fancy/input": ["src/components/fancy/input/_index.ts"],
-      "#components/cards": ["src/components/cards/_index.ts"],
+      "#configs*": [
+        "configs/_index.ts"
+      ],
+      "#configs/public": [
+        "configs/public/_index.ts"
+      ],
+      "#api/*": [
+        "src/api/*"
+      ],
+      "#api/rest-countries": [
+        "src/api/rest-countries/_index.ts"
+      ],
+      "#assets": [
+        "src/assets/_index.ts"
+      ],
+      "#assets/*": [
+        "src/assets/*"
+      ],
+      "#components": [
+        "src/components/_index.ts"
+      ],
+      "#components/page": [
+        "src/components/page/_index.ts"
+      ],
+      "#components/fancy": [
+        "src/components/fancy/_index.ts"
+      ],
+      "#components/fancy/dl": [
+        "src/components/fancy/dl/_index.ts"
+      ],
+      "#components/fancy/form": [
+        "src/components/fancy/form/_index.ts"
+      ],
+      "#components/fancy/input": [
+        "src/components/fancy/input/_index.ts"
+      ],
+      "#components/cards": [
+        "src/components/cards/_index.ts"
+      ],
       "#components/frontend-mentor": [
         "src/components/frontend-mentor/_index.ts"
       ],
-      "#styles/*": ["src/styles/*"],
-      "#lib": ["src/lib/_index.ts"],
-      "#lib/*": ["src/lib/*/_index.ts"],
-      "#types": ["src/types/_index.ts"],
+      "#styles/*": [
+        "src/styles/*"
+      ],
+      "#lib": [
+        "src/lib/_index.ts"
+      ],
+      "#lib/*": [
+        "src/lib/*/_index.ts"
+      ],
+      "#types": [
+        "src/types/_index.ts"
+      ]
     },
     "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -36,7 +74,14 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
+    "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

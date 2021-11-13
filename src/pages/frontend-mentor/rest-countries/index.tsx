@@ -28,10 +28,6 @@ export default function RESTCountriesPage() {
           </li>
         </ul>
       </nav>
-      <p>TODO list:</p>
-      <ul>
-        <li>Toggle the color scheme between light and dark mode (optional)</li>
-      </ul>
     </Section>
   );
 }

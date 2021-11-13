@@ -7,8 +7,8 @@
   max-width: $width-mobile;
   background-color: var(--colour1-secondary);
   border-radius: 10px;
-  border: $size-thin solid var(--colour0-tertiary);
-  padding: $size-small;
+  border: $size-thin solid transparent;
+  padding: $size-normal;
   margin: 0 auto;
 }
 
