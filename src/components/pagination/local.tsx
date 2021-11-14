@@ -10,9 +10,9 @@ import type {
   Dispatch,
   SetStateAction,
 } from "react";
-import type { ElementProps } from "#types";
+import type { DivProps } from "#types";
 
-export interface Props extends ElementProps<HTMLDivElement> {
+interface Props extends DivProps {
   currentPage: number;
   totalCount: number;
   limit?: number;

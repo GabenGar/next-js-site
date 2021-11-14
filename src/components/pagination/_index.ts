@@ -1,1 +1,2 @@
-export { Pagination } from "./base";
+export { Pagination } from "./local";
+export type { PaginationInit } from "./types";

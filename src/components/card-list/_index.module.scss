@@ -12,13 +12,25 @@
   gap: $size-normal;
   padding: $size-normal 0;
 
-  &_gallery {
+  &_vertical {
+    flex-flow: row wrap;
+  }
+
+  &_horizontal {
     flex-flow: row nowrap;
     overflow-x: auto;
   }
 
+  &_feature {
+    --local-card-width: #{$width-feature};
+  }
+
   &_mobile {
     --local-card-width: #{$width-mobile};
+  }
+
+  &_phone {
+    --local-card-width: #{$width-phone};
   }
 
   & > * {

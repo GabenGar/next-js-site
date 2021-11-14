@@ -1,10 +1,16 @@
 import { useClassName } from "#lib/hooks";
 import styles from "./button.module.scss";
 
+import type { MouseEvent as ReactMouseEvent } from "react";
 import type { ButtonProps } from "#types";
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface Props extends ButtonProps {}
+
+/**
+ * Convenience interface for the `click` event.
+ */
+export interface ButtonClickEvent
+  extends ReactMouseEvent<HTMLButtonElement, MouseEvent> {}
 
 export function Button({
   children,
@@ -15,7 +21,11 @@ export function Button({
   const blockClass = useClassName(styles.block, className);
 
   return (
-    <button className={blockClass} type={type} {...blockProps}>
+    <button
+      className={blockClass}
+      type={type}
+      {...blockProps}
+    >
       {children}
     </button>
   );

@@ -1,1 +1,2 @@
-export { CardList } from "./base";
+export { CardList } from "./card-list";
+export { GalleryList } from "./gallery";
