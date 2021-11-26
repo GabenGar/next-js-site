@@ -3,7 +3,7 @@ import { Fragment } from "react";
 
 import { siteTitle } from "#lib/util";
 import { allCountries } from "#api/rest-countries";
-import { CardList } from "#components";
+import { CardList, GalleryList } from "#components";
 import { CountryCard } from "#components/frontend-mentor";
 import { Section, RESTCountries as Layout } from "#components/page";
 
@@ -38,11 +38,11 @@ function RegionCountries({
           <h2>
             {region} (<span>{countries.length}</span> countries)
           </h2>
-          <CardList>
+          <GalleryList>
             {countries.map((country) => (
-              <CountryCard country={country} />
+              <CountryCard key={country.cca2} country={country} />
             ))}
-          </CardList>
+          </GalleryList>
         </Fragment>
       ))}
     </Section>

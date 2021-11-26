@@ -31,6 +31,7 @@ export function GalleryList({ children, className, ...blockProps }: Props) {
       <div>
         {Object.entries(listLayouts).map(([name, layout]) => (
           <Button
+            key={name}
             onClick={switchLayout(layout)}
             disabled={layout === currentLayout}
           >

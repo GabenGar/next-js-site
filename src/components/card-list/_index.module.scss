@@ -12,6 +12,10 @@
   gap: $size-normal;
   padding: $size-normal 0;
 
+  & > * {
+    flex: 0 1 var(--local-card-width);
+  }
+
   &_vertical {
     flex-flow: row wrap;
   }
@@ -19,6 +23,10 @@
   &_horizontal {
     flex-flow: row nowrap;
     overflow-x: auto;
+
+    & > * {
+      flex-shrink: 0;
+    }
   }
 
   &_feature {
@@ -33,7 +41,5 @@
     --local-card-width: #{$width-phone};
   }
 
-  & > * {
-    flex: 0 1 var(--local-card-width);
-  }
+
 }
