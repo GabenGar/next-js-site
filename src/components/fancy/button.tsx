@@ -2,9 +2,9 @@ import { useClassName } from "#lib/hooks";
 import styles from "./button.module.scss";
 
 import type { MouseEvent as ReactMouseEvent } from "react";
-import type { ButtonProps } from "#types";
+import type { BlockProps } from "#types";
 
-interface Props extends ButtonProps {}
+interface Props extends BlockProps<"button"> {}
 
 /**
  * Convenience interface for the `click` event.

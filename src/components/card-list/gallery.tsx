@@ -4,10 +4,10 @@ import { Button } from "#components/fancy";
 import { ItemList, listTypes, listLayouts } from "./list";
 import styles from "./_index.module.scss";
 
-import type { BaseProps } from "#types";
+import type { BlockProps } from "#types";
 import type { ButtonClickEvent } from "#components/fancy";
 
-interface Props extends BaseProps {
+interface Props extends BlockProps<"div"> {
   type?: string;
 }
 

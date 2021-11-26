@@ -1,29 +1,19 @@
-import Link from "next/link";
-import { useClassName } from "#lib/hooks";
+import { blockComponent } from "#components";
 import styles from "./_index.module.scss";
 
-import type { LinkProps } from "next/link";
-import type { ReactNode } from "react";
+import type { BlockProps } from "#types";
 
-interface LocalProps extends LinkProps {
-  is_external?: boolean;
-  className?: string;
-  children?: ReactNode;
+interface Props extends BlockProps<"a"> {
+  targetID: string;
 }
 
-export function LocalAnchour({
-  children,
-  className,
-  is_external = false,
-  ...blockProps
-}: LocalProps) {
-  const blockClass = useClassName(styles.block, styles.block_local, className);
-
-  return (
-    <Link {...blockProps}>
-      <a className={blockClass} target={is_external ? "_blank" : "_self"}>
+export const LocalAnchour = blockComponent<Props>(
+  styles.block,
+  ({ targetID, children, ...blockProps }) => {
+    return (
+      <a {...blockProps} href={`#${targetID}`}>
         {children}
       </a>
-    </Link>
-  );
-}
+    );
+  }
+);

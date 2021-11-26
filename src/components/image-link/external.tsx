@@ -1,10 +1,10 @@
-import { useClassName } from "#lib/hooks";
+import { blockComponent } from "#components";
 import { Anchour } from "#components/fancy";
 import styles from "./_index.module.scss";
 
-import type { AnchourProps } from "#types";
+import type { BlockProps } from "#types";
 
-interface Props extends AnchourProps {
+interface Props extends BlockProps<"a"> {
   src: string;
   href?: string;
   alt?: string;
@@ -12,29 +12,31 @@ interface Props extends AnchourProps {
   isLazy?: boolean;
 }
 
-export function ImageLink({
-  src,
-  href = src,
-  alt = "",
-  srcSet = src,
-  isLazy = true,
-  className,
-  ...blockProps
-}: Props) {
-  const blockClass = useClassName(styles.block, className);
+blockComponent;
 
-  return (
-    <Anchour href={href} className={blockClass} {...blockProps}>
-      <picture>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          className={styles.image}
-          src={src}
-          alt={alt}
-          srcSet={srcSet}
-          loading={isLazy ? "lazy" : "eager"}
-        />
-      </picture>
-    </Anchour>
-  );
-}
+export const ImageLink = blockComponent(
+  styles.block,
+  ({
+    src,
+    href = src,
+    alt = "",
+    srcSet = src,
+    isLazy = true,
+    ...blockProps
+  }: Props) => {
+    return (
+      <Anchour href={href} {...blockProps}>
+        <picture>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            className={styles.image}
+            src={src}
+            alt={alt}
+            srcSet={srcSet}
+            loading={isLazy ? "lazy" : "eager"}
+          />
+        </picture>
+      </Anchour>
+    );
+  }
+);

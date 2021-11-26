@@ -3,9 +3,10 @@ import { Fragment } from "react";
 
 import { siteTitle } from "#lib/util";
 import { allCountries } from "#api/rest-countries";
-import { CardList, GalleryList } from "#components";
-import { CountryCard } from "#components/frontend-mentor";
+import { GalleryList } from "#components";
+import { LocalNav } from "#components/fancy";
 import { Section, RESTCountries as Layout } from "#components/page";
+import { CountryCard } from "#components/frontend-mentor";
 
 import type {
   GetServerSideProps,
@@ -26,6 +27,13 @@ interface Params extends ParsedUrlQuery {}
 function RegionCountries({
   regions,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const regionList = Object.keys(regions).map((region) => {
+    return {
+      title: region,
+      id: region.trim().toLowerCase(),
+    };
+  });
+
   return (
     <Section heading="Countries by Regions">
       <Head>
@@ -33,9 +41,10 @@ function RegionCountries({
         <meta name="description" content="Countries by Regions" />
         {/* <link rel="icon" href="/favicon.ico" /> */}
       </Head>
+      <LocalNav items={regionList} />
       {Object.entries(regions).map(([region, countries]) => (
         <Fragment key={region.trim().toLowerCase()}>
-          <h2>
+          <h2 id={region}>
             {region} (<span>{countries.length}</span> countries)
           </h2>
           <GalleryList>

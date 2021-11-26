@@ -1,9 +1,9 @@
 import { useClassName } from "#lib/hooks";
 import styles from "./_index.module.scss";
 
-import type { DivProps } from "#types";
+import type { BlockProps } from "#types";
 
-interface Props extends DivProps {
+interface Props extends BlockProps<"div"> {
   type?: string;
   layout?: string;
 }

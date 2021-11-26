@@ -3,9 +3,9 @@ import { Header } from "./header";
 import { Heading } from "./heading";
 import styles from "./_index.module.scss";
 
-import type { BaseProps } from "#types";
+import type { BlockProps } from "#types";
 
-interface Props extends BaseProps {
+interface Props extends BlockProps<"section"> {
   heading?: string;
 }
 

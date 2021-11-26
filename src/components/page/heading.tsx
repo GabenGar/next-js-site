@@ -1,9 +1,9 @@
 import { useClassName } from "#lib/hooks";
 import styles from "./_index.module.scss";
 
-import type { HeadingProps } from "#types";
+import type { BlockProps } from "#types";
 
-interface Props extends HeadingProps {}
+interface Props extends BlockProps<"h1"> {}
 
 export function Heading({ children, className, ...blockProps }: Props) {
   const blockClass = useClassName(styles.block, className);

@@ -1,39 +1,37 @@
-import { useClassName } from "#lib/hooks";
+import { blockComponent } from "#components";
 import styles from "./base.module.scss";
 
-import type { BaseProps } from "#types";
+import type { BlockProps } from "#types";
 
-interface Props extends BaseProps {
-}
+interface Props extends BlockProps<"article"> {}
+interface HeaderProps extends BlockProps<"header"> {}
+interface BodyProps extends BlockProps<"section"> {}
+interface FooterProps extends BlockProps<"footer"> {}
 
-export function CardBase({ children, className, ...blockProps }: Props) {
-  const blockClass = useClassName(styles.block, className);
+export const CardBase = blockComponent(
+  styles.block,
+  ({ children, ...blockProps }: Props) => {
+    return <article {...blockProps}>{children}</article>;
+  }
+);
 
-  return (<article className={blockClass} {...blockProps}>
-    {children}
-  </article>);
-}
+export const CardHeader = blockComponent(
+  styles.header,
+  ({ children, ...blockProps }: HeaderProps) => {
+    return <header {...blockProps}>{children}</header>;
+  }
+);
 
-export function CardHeader({ children, className, ...blockProps }: Props) {
-  const blockClass = useClassName(styles.header, className);
+export const CardBody = blockComponent(
+  styles.body,
+  ({ children, ...blockProps }: BodyProps) => {
+    return <section {...blockProps}>{children}</section>;
+  }
+);
 
-  return (<header className={blockClass} {...blockProps}>
-    {children}
-  </header>);
-}
-
-export function CardBody({ children, className, ...blockProps }: Props) {
-  const blockClass = useClassName(styles.body, className);
-
-  return (<section className={blockClass} {...blockProps}>
-    {children}
-  </section>);
-}
-
-export function CardFooter({ children, className, ...blockProps }: Props) {
-  const blockClass = useClassName(styles.footer, className);
-
-  return (<footer className={blockClass} {...blockProps}>
-    {children}
-  </footer>);
-}
+export const CardFooter = blockComponent(
+  styles.footer,
+  ({ children, ...blockProps }: FooterProps) => {
+    return <footer {...blockProps}>{children}</footer>;
+  }
+);

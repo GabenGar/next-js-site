@@ -1,13 +1,20 @@
-import type { ComponentPropsWithoutRef } from "react";
+import { BlockProps } from "#types";
 
-interface BlockProps extends ComponentPropsWithoutRef<"div"> {}
-
-interface ReactComponent {
-  ({}: BlockProps): JSX.Element
-}
-
-export function blockComponent(functionComponent: ReactComponent) {
-  return function () {
-    return functionComponent({});
+/**
+ * TODO: fix typing.
+ * @param blockClassName `className` of the root element
+ * @param functionComponent
+ * @returns Wrapped function.
+ */
+export function blockComponent<T = BlockProps<"div">>(
+  blockClassName: string,
+  functionComponent: (props: T) => JSX.Element
+) {
+  return ({ className, ...blockProps }: T) => {
+    const blockClass = [
+      blockClassName ? blockClassName : "",
+      className ? className : "",
+    ].join(" ");
+    return functionComponent({ className: blockClass, ...blockProps });
   };
 }

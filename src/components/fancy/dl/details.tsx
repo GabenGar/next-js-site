@@ -1,19 +1,13 @@
-import { useClassName } from "#lib/hooks";
+import { blockComponent } from "#components";
 import styles from "./_index.module.scss";
 
-import type { BaseProps } from "#types";
+import type { BlockProps } from "#types";
 
-interface Props extends BaseProps {}
+interface Props extends BlockProps<"dd"> {}
 
-export function DescriptionDetails({
-  children,
-  className,
-  ...blockProps
-}: Props) {
-  const blockClass = useClassName(styles.details, className);
-  return (
-    <dd className={blockClass} {...blockProps}>
-      {children}
-    </dd>
-  );
-}
+export const DescriptionDetails = blockComponent<Props>(
+  styles.details,
+  ({ children, ...blockProps }) => {
+    return <dd {...blockProps}>{children}</dd>;
+  }
+);

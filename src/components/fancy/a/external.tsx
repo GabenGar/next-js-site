@@ -1,9 +1,9 @@
 import { useClassName } from "#lib/hooks";
 import styles from "./_index.module.scss";
 
-import type { AnchourProps } from "#types";
+import type { BlockProps } from "#types";
 
-interface Props extends AnchourProps {
+interface Props extends BlockProps<"a"> {
   href: string;
 }
 

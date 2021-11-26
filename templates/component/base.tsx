@@ -1,16 +1,13 @@
-import { useClassName } from "#lib/hooks";
+import { blockComponent } from "#components";
 import styles from "./_index.module.scss";
 
-import type { BaseProps } from "#types";
+import type { BlockProps } from "#types";
 
-interface Props extends BaseProps {}
+interface Props extends BlockProps<"section"> {}
 
-function Template({ children, className, ...blockProps }: Props) {
-  const blockClass = useClassName(styles.block, className);
-
-  return (
-    <section className={blockClass} {...blockProps}>
-      {children}
-    </section>
-  );
-}
+const TemplateComponent = blockComponent<Props>(
+  styles.block,
+  ({ children, className, ...blockProps }) => {
+    return <section {...blockProps}>{children}</section>;
+  }
+);

@@ -1,3 +1,4 @@
+export { blockComponent } from "./block-component";
 export { CardList, GalleryList } from "./card-list/_index"
 export { ImageLink, LocalImageLink } from "./image-link/_index";
 export { Pagination } from "./pagination/_index";
