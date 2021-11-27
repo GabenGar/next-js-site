@@ -93,7 +93,17 @@ export default function RESTCountriesCountryDetail({
                 >
                   {country.region}
                 </InternalAnchour>{" "}
-                (<span>{country.subregion}</span>)
+                (
+                <InternalAnchour
+                  href={{
+                    pathname:
+                      "/frontend-mentor/rest-countries/subregions/[subregion]",
+                    query: { subregion: country.subregion },
+                  }}
+                >
+                  {country.subregion}
+                </InternalAnchour>
+                )
               </DD>
             </DLSection>
 

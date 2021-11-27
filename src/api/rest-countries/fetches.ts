@@ -50,3 +50,14 @@ export async function countriesByRegion(region: string) {
   const countries: Country[] = await response.json();
   return countries;
 }
+
+export async function countriesBySubRegion(subRegion: string) {
+  const response = await baseFetch(
+    `/v3.1/subregion/${subRegion}`,
+    {
+      method: "GET",
+    },
+  );
+  const countries: Country[] = await response.json();
+  return countries;
+}
