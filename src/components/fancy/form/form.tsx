@@ -1,16 +1,17 @@
-import { useClassName } from "#lib/hooks";
+import { blockComponent } from "#components";
 import styles from "./_index.module.scss";
 
-import type { FormProps } from "#types";
+import type { BlockProps } from "#types";
 
-interface Props extends FormProps {}
+interface Props extends BlockProps<"form"> {}
 
-export function Form({ children, className, ...blockProps }: Props) {
-  const blockClass = useClassName(styles.block, className);
-
-  return (
-    <form className={blockClass} {...blockProps}>
-      {children}
-    </form>
-  );
-}
+export const Form = blockComponent<Props>(
+  styles.block,
+  ({ id, method, children, ...blockProps }) => {
+    return (
+      <form id={id} method={method} {...blockProps}>
+        {children}
+      </form>
+    );
+  }
+);

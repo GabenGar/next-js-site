@@ -1,18 +1,17 @@
-import { useClassName } from "#lib/hooks";
+import { blockComponent } from "#components";
 import styles from "./_index.module.scss";
 
-import type { LabelProps } from "#types";
+import type { BlockProps } from "#types";
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface Props extends LabelProps {
-}
+interface Props extends BlockProps<"label"> {}
 
-export function Label({ children, className, ...blockProps }: Props) {
-  const blockClass = useClassName(styles.label, className);
-
-  return (<label
-    className={blockClass} {...blockProps}
-  >
-    {children}
-  </label>);
-}
+export const Label = blockComponent<Props>(
+  styles.label,
+  ({ htmlFor, children, ...blockProps }) => {
+    return (
+      <label htmlFor={htmlFor} {...blockProps}>
+        {children}
+      </label>
+    );
+  }
+);

@@ -1,5 +1,7 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
+import { allCountries } from "#api/rest-countries";
+import { siteTitle } from "#lib/util";
 import { CardList, Pagination } from "#components";
 import {
   Form,
@@ -18,10 +20,10 @@ import type {
   InferGetServerSidePropsType,
 } from "next";
 import type { FormEvent } from "react";
-import type { API } from "#types/frontend-mentor/rest-countries";
+import type { Country } from "#api/rest-countries";
 
 interface Props {
-  countries: API.Country[];
+  countries: Country[];
 }
 
 const limit = 25;
@@ -31,15 +33,14 @@ export default function RESTCountriesPage({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const [currentPage, changeCurrentPage] = useState(1);
   const [filteredCountries, filterCountries] = useState(countries);
-  const [currentCountries, changeCurrentCountries] = useState<API.Country[]>(
-    []
-  );
+  const [currentCountries, changeCurrentCountries] = useState<Country[]>([]);
   const regions = Array.from(
     countries.reduce(
       (prev, current) => prev.add(current.region),
       new Set<string>()
     )
   );
+  const pageTitle = "All Countries";
 
   useEffect(() => {
     const currentRange = [(currentPage - 1) * limit, currentPage * limit];
@@ -71,10 +72,10 @@ export default function RESTCountriesPage({
   }
 
   return (
-    <Section heading="All Countries">
+    <Section heading={pageTitle}>
       <Head>
-        <title>All Countries</title>
-        <meta name="description" content="All Countries" />
+        <title>{siteTitle(pageTitle)}</title>
+        <meta name="description" content={pageTitle} />
       </Head>
 
       <Form className={styles.search} onSubmit={handleSearch}>
@@ -86,7 +87,7 @@ export default function RESTCountriesPage({
           label={"Region:"}
           name="country-region"
         >
-          <Option key="" value="">
+          <Option key="base-key" value="">
             All
           </Option>
           {regions.map((region) => (
@@ -117,8 +118,7 @@ RESTCountriesPage.getLayout = function getLayout(page: NextPage) {
 };
 
 export const getServerSideProps: GetServerSideProps<Props> = async () => {
-  const response = await fetch("https://restcountries.com/v3.1/all");
-  const countries: API.Country[] = await response.json();
+  const countries = await allCountries();
 
   if (!countries) {
     return {

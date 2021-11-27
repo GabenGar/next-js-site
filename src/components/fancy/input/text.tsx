@@ -1,15 +1,14 @@
-import { useClassName } from "#lib/hooks";
+import { blockComponent } from "#components";
 import { Input } from "./base";
 import styles from "./_index.module.scss";
 
-import type { InputProps } from "#types";
+import type { BlockProps } from "#types";
 
-interface Props extends InputProps {}
+interface Props extends BlockProps<"input"> {}
 
-export function TextInput({ className, ...blockProps }: Props) {
-  const blockClass = useClassName(styles.text, className);
-
-  return (
-    <Input className={blockClass} {...blockProps} type="text"/>
-  );
-}
+export const TextInput = blockComponent<Props>(
+  styles.text,
+  ({ ...blockProps }) => {
+    return <Input {...blockProps} type="text" />;
+  }
+);

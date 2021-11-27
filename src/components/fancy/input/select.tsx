@@ -1,16 +1,17 @@
-import { useClassName } from "#lib/hooks";
+import { blockComponent } from "#components";
 import styles from "./_index.module.scss";
 
-import type { SelectProps } from "#types";
+import type { BlockProps } from "#types";
 
-interface Props extends SelectProps {}
+interface Props extends BlockProps<"select"> {}
 
-export function Select({ className, children, ...blockProps }: Props) {
-  const blockClass = useClassName(styles.select, className);
-
-  return (
-    <select className={blockClass} {...blockProps}>
-      {children}
-    </select>
-  );
-}
+export const Select = blockComponent<Props>(
+  styles.select,
+  ({ id, name, children, ...blockProps }) => {
+    return (
+      <select id={id} name={name} {...blockProps}>
+        {children}
+      </select>
+    );
+  }
+);

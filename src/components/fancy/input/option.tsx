@@ -1,16 +1,13 @@
-import { useClassName } from "#lib/hooks";
+import { blockComponent } from "#components";
 import styles from "./_index.module.scss";
 
-import type { OptionProps } from "#types";
+import type { BlockProps } from "#types";
 
-interface Props extends OptionProps {}
+interface Props extends BlockProps<"option"> {}
 
-export function Option({ className, children, ...blockProps }: Props) {
-  const blockClass = useClassName(styles.option, className);
-
-  return (
-    <option className={blockClass} {...blockProps}>
-      {children}
-    </option>
-  );
-}
+export const Option = blockComponent<Props>(
+  styles.option,
+  ({ children, ...blockProps }) => {
+    return <option {...blockProps}>{children}</option>;
+  }
+);

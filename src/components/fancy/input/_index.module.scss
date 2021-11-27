@@ -28,11 +28,13 @@
   // magical number to center the text in FF
   padding-top: 0.7em;
   transition-duration: var(--duration-global);
-  transition-property: background-color;
+  transition-property: background-color, border-color;
 
   &:hover {
   }
+
   &:focus {
+    border-color: var(--submit-colour2-secondary);
   }
 }
 

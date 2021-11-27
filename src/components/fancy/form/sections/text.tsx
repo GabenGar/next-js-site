@@ -1,25 +1,20 @@
+import { blockComponent } from "#components";
 import { FormSection, Label } from "#components/fancy/form";
 import { TextInput } from "#components/fancy/input";
-import { useClassName } from "#lib/hooks";
 import styles from "./_index.module.scss";
 
-import type { FieldSetProps } from "#types";
+import type { BlockProps } from "#types";
 
-interface Props extends FieldSetProps {}
+interface Props extends BlockProps<"fieldset"> {}
 
-export function TextSection({
-  id,
-  name,
-  children,
-  className,
-  ...blockProps
-}: Props) {
-  const blockClass = useClassName(styles.section, className);
-
-  return (
-    <FormSection className={blockClass} {...blockProps}>
-      <Label htmlFor={id}>{children}</Label>
-      <TextInput id={id} name={name} />
-    </FormSection>
-  );
-}
+export const TextSection = blockComponent<Props>(
+  styles.section,
+  ({ id, name, children, ...blockProps }) => {
+    return (
+      <FormSection {...blockProps}>
+        <Label htmlFor={id}>{children}</Label>
+        <TextInput id={id} name={name} />
+      </FormSection>
+    );
+  }
+);
