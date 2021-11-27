@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { Section, RESTCountries as Layout } from "#components/page";
-import { LocalAnchour } from "#components/fancy";
+import { InternalAnchour } from "#components/fancy";
 import styles from "./index.module.scss";
 
 import type { NextPage } from "next";
@@ -18,22 +18,22 @@ export default function RESTCountriesPage() {
       <nav>
         <ul>
           <li>
-            <LocalAnchour
+            <InternalAnchour
               href={{
                 pathname: "/frontend-mentor/rest-countries/all",
               }}
             >
               All Countries
-            </LocalAnchour>
+            </InternalAnchour>
           </li>
           <li>
-            <LocalAnchour
+            <InternalAnchour
               href={{
                 pathname: "/frontend-mentor/rest-countries/regions",
               }}
             >
               Regions
-            </LocalAnchour>
+            </InternalAnchour>
           </li>
         </ul>
       </nav>

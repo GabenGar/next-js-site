@@ -1,27 +1,24 @@
 import Image from "next/image";
-import { useClassName } from "#lib/hooks";
 import styles from "./_index.module.scss";
 
-import type { ElementProps } from "#types";
+import type { BlockProps } from "#types";
+import { blockComponent } from "#components";
 
-interface LocalProps extends ElementProps<HTMLSpanElement> {
+interface Props extends BlockProps<"span"> {
   src: string;
   srcset?: string;
   alt?: string;
 }
 
-export function LocalPicture({
-  src,
-  alt = "",
-  className,
-  ...blockProps
-}: LocalProps) {
-  const blockClass = useClassName(styles.block, className);
-  return (
-    <span className={blockClass} {...blockProps}>
-      <picture>
-        <Image src={src} alt={alt} />
-      </picture>
-    </span>
-  );
-}
+export const LocalPicture = blockComponent<Props>(
+  styles.block,
+  ({ src, alt = "", className, ...blockProps }) => {
+    return (
+      <span {...blockProps}>
+        <picture>
+          <Image src={src} alt={alt} />
+        </picture>
+      </span>
+    );
+  }
+);

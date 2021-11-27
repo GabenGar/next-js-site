@@ -42,5 +42,4 @@ export const CardList = blockComponent<Props>(
       </div>
     );
   }
-
-)
+);

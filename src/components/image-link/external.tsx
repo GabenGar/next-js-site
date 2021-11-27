@@ -14,7 +14,7 @@ interface Props extends BlockProps<"a"> {
 
 blockComponent;
 
-export const ImageLink = blockComponent(
+export const ImageLink = blockComponent<Props>(
   styles.block,
   ({
     src,
@@ -23,7 +23,7 @@ export const ImageLink = blockComponent(
     srcSet = src,
     isLazy = true,
     ...blockProps
-  }: Props) => {
+  }) => {
     return (
       <Anchour href={href} {...blockProps}>
         <picture>

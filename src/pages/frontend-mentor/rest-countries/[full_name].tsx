@@ -2,7 +2,7 @@ import Head from "next/head";
 import { countriesByCodes, countryByName } from "#api/rest-countries";
 import { CardList, ImageCarousel, FancyNumber, FancyArea } from "#components";
 import { Section, RESTCountries as Layout } from "#components/page";
-import { Anchour } from "#components/fancy";
+import { Anchour, InternalAnchour } from "#components/fancy";
 import { DL, DLSection, DD, DT } from "#components/fancy/dl";
 import { CountryCard } from "#components/frontend-mentor";
 import { isObjectEmpty } from "#lib/util";
@@ -18,7 +18,7 @@ import type { Country } from "#api/rest-countries";
 
 interface Props {
   country: Country;
-  borderCountries?: Country[];
+  borderCountries: Country[] | null;
 }
 
 interface Params extends ParsedUrlQuery {
@@ -84,7 +84,16 @@ export default function RESTCountriesCountryDetail({
             <DLSection>
               <DT>Region</DT>
               <DD className={styles.region}>
-                <span>{country.region}</span> (<span>{country.subregion}</span>)
+                <InternalAnchour
+                  href={{
+                    pathname:
+                      "/frontend-mentor/rest-countries/regions/[region]",
+                    query: { region: country.region },
+                  }}
+                >
+                  {country.region}
+                </InternalAnchour>{" "}
+                (<span>{country.subregion}</span>)
               </DD>
             </DLSection>
 
@@ -257,9 +266,9 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (
     };
   }
 
-  const borderCountries = country.borders.length
+  const borderCountries = country.borders?.length
     ? await countriesByCodes(country.borders)
-    : undefined;
+    : null;
 
   return {
     props: { country, borderCountries },
