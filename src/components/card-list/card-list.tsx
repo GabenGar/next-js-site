@@ -7,13 +7,11 @@ import styles from "./_index.module.scss";
 import type { BlockProps } from "#types";
 import type { ButtonClickEvent } from "#components/fancy";
 
-interface Props extends BlockProps<"div"> {
-  type?: string;
-}
+interface Props extends BlockProps<"div"> {}
 
 export const CardList = blockComponent<Props>(
   styles.block,
-  ({ children, className, ...blockProps }) => {
+  ({ children, ...blockProps }) => {
     const [currentLayout, changeCurrentLayout] = useState(listLayouts.mobile);
 
     function switchLayout(layout: string) {
@@ -32,6 +30,8 @@ export const CardList = blockComponent<Props>(
         <div>
           {Object.entries(listLayouts).map(([name, layout]) => (
             <Button
+              key={name}
+              className={styles.button}
               onClick={switchLayout(layout)}
               disabled={layout === currentLayout}
             >

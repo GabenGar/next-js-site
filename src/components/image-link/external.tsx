@@ -12,8 +12,6 @@ interface Props extends BlockProps<"a"> {
   isLazy?: boolean;
 }
 
-blockComponent;
-
 export const ImageLink = blockComponent<Props>(
   styles.block,
   ({

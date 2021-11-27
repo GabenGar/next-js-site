@@ -41,10 +41,12 @@ function RegionCountries({
         <meta name="description" content="Countries by Regions" />
         {/* <link rel="icon" href="/favicon.ico" /> */}
       </Head>
-      <LocalNav items={regionList} />
+      <LocalNav items={regionList}>
+        Regions
+      </LocalNav>
       {Object.entries(regions).map(([region, countries]) => (
         <Fragment key={region.trim().toLowerCase()}>
-          <h2 id={region}>
+          <h2 id={region.trim().toLowerCase()}>
             {region} (<span>{countries.length}</span> countries)
           </h2>
           <GalleryList>

@@ -17,6 +17,7 @@ export const listLayouts = {
   feature: styles.list_feature,
   mobile: styles.list_mobile,
   phone: styles.list_phone,
+  tablet: styles.list_tablet
 };
 
 export function ItemList({

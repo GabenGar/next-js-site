@@ -1,4 +1,4 @@
-import { useClassName } from "#lib/hooks";
+import { blockComponent } from "#components";
 import styles from "./button.module.scss";
 
 import type { MouseEvent as ReactMouseEvent } from "react";
@@ -12,21 +12,13 @@ interface Props extends BlockProps<"button"> {}
 export interface ButtonClickEvent
   extends ReactMouseEvent<HTMLButtonElement, MouseEvent> {}
 
-export function Button({
-  children,
-  className,
-  type = "button",
-  ...blockProps
-}: Props) {
-  const blockClass = useClassName(styles.block, className);
-
-  return (
-    <button
-      className={blockClass}
-      type={type}
-      {...blockProps}
-    >
-      {children}
-    </button>
-  );
-}
+export const Button = blockComponent<Props>(
+  styles.block,
+  ({ type = "button", children, ...blockProps }) => {
+    return (
+      <button type={type} {...blockProps}>
+        {children}
+      </button>
+    );
+  }
+);

@@ -18,7 +18,7 @@
     inset -2px -2px 3px hsla(0, 0%, 0%, 50%);
 
   transition-duration: var(--duration-global);
-  transition-property: box-shadow, background-color, border-color;
+  transition-property: opacity, box-shadow, background-color, border-color;
 
   &:focus,
   &:hover {
@@ -27,5 +27,9 @@
   &:active {
     box-shadow: inset 2px 2px 3px hsla(0, 0%, 0%, 50%),
       inset -2px -2px 3px hsla(0, 0%, 90%, 40%);
+  }
+
+  &:disabled {
+    opacity: 0.5;
   }
 }

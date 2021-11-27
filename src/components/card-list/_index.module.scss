@@ -41,9 +41,14 @@
     --local-card-width: #{$width-phone};
   }
 
-
+  &_tablet {
+    --local-card-width: #{$width-tablet};
+  }
 }
 
 .button {
-
+  &:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
 }

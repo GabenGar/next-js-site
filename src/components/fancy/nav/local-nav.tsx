@@ -14,10 +14,13 @@ interface Props extends BlockProps<"nav"> {
 
 export const LocalNav = blockComponent<Props>(
   styles.block,
-  ({ items, ...blockProps }) => {
+  ({ items, children, ...blockProps }) => {
     return (
       <FancyNav {...blockProps}>
         <NavList>
+          <p className={styles.title}>
+            {children ? children : "Table of Contents"}
+          </p>
           {items.map((item) => (
             <NavItem key={item.id}>
               <LocalAnchour targetID={item.id}>{item.title}</LocalAnchour>

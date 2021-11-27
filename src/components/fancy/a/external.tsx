@@ -9,9 +9,15 @@ interface Props extends BlockProps<"a"> {
 
 export const Anchour = blockComponent<Props>(
   styles.block,
-  ({ href, children, className, ...blockProps }) => {
+  ({
+    href,
+    target = "_blank",
+    rel = "noreferrer",
+    children,
+    ...blockProps
+  }) => {
     return (
-      <a href={href} {...blockProps} target="_blank" rel="noreferrer">
+      <a href={href} target={target} rel={rel} {...blockProps}>
         {children}
       </a>
     );
