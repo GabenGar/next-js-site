@@ -1,8 +1,8 @@
 import styles from "./base.module.scss";
 
-import type { BaseProps } from "#types";
+import type { RootlessProps } from "#types";
 
-interface Props extends BaseProps {
+interface Props extends RootlessProps {
 }
 
 export function BaseLayout({ children }: Props) {

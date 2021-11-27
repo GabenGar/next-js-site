@@ -6,7 +6,7 @@ import {
   setCurrentTheme,
   getCurrentTheme,
 } from "#lib/theme";
-import { LocalAnchour, Button, Anchour } from "#components/fancy";
+import { InternalAnchour, Button, Anchour } from "#components/fancy";
 import styles from "./rest-countries.module.scss";
 
 import { MouseEvent as RMouseEvent } from "react";
@@ -40,17 +40,17 @@ export function RESTCountries({ children }: Props) {
         <nav className={styles.navigation}>
           <ul className={styles.list}>
             <li className={styles.item}>
-              <LocalAnchour href="/">Home</LocalAnchour>
+              <InternalAnchour href="/">Home</InternalAnchour>
             </li>
             <li className={styles.item}>
-              <LocalAnchour href="/frontend-mentor/rest-countries">
+              <InternalAnchour href="/frontend-mentor/rest-countries">
                 REST Countries
-              </LocalAnchour>
+              </InternalAnchour>
             </li>
             <li className={styles.item}>
-              <LocalAnchour href="/frontend-mentor/rest-countries/all">
+              <InternalAnchour href="/frontend-mentor/rest-countries/all">
                 All
-              </LocalAnchour>
+              </InternalAnchour>
             </li>
           </ul>
         </nav>
