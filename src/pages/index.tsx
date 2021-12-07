@@ -1,6 +1,6 @@
 import Head from "next/head";
 
-import { LocalAnchour } from "#components/fancy";
+import { InternalAnchour } from "#components/fancy";
 import { Section } from "#components/page";
 
 import type { NextPage } from "next";
@@ -16,14 +16,14 @@ const Home: NextPage = () => {
     <nav>
       <ul>
         <li>
-          <LocalAnchour href="/">
+          <InternalAnchour href="/">
             Home
-          </LocalAnchour>
+          </InternalAnchour>
         </li>
         <li>
-          <LocalAnchour href="/frontend-mentor">
+          <InternalAnchour href="/frontend-mentor">
             Frontend Mentor Challenges
-          </LocalAnchour>
+          </InternalAnchour>
         </li>
       </ul>
     </nav>

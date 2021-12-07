@@ -7,14 +7,14 @@ import type { LinkProps } from "next/link";
 import type { ReactNode } from "react";
 
 interface LocalProps extends LinkProps {
-  is_external?: boolean;
+  isExternal?: boolean;
   className?: string;
   children?: ReactNode;
 }
 
-export const InternalAnchour = blockComponent(
+export const InternalAnchour = blockComponent<LocalProps>(
   styles.block,
-  ({ children, className, is_external = false, ...blockProps }: LocalProps) => {
+  ({ children, className, isExternal = false, ...blockProps }) => {
     const blockClass = useClassName(
       styles.block_local,
       className
@@ -22,7 +22,7 @@ export const InternalAnchour = blockComponent(
 
     return (
       <Link {...blockProps}>
-        <a className={blockClass} target={is_external ? "_blank" : "_self"}>
+        <a className={blockClass} target={isExternal ? "_blank" : "_self"}>
           {children}
         </a>
       </Link>
