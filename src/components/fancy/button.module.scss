@@ -31,5 +31,8 @@
 
   &:disabled {
     opacity: 0.5;
+    background-color: var(--local-colour2-secondary);
+    box-shadow: inset 2px 2px 3px hsla(0, 0%, 90%, 40%),
+    inset -2px -2px 3px hsla(0, 0%, 0%, 50%);
   }
 }
