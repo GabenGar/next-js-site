@@ -15,6 +15,7 @@ import type {
 } from "next";
 import type { ParsedUrlQuery } from "querystring";
 import type { Country } from "#api/rest-countries";
+import { Fragment } from "react";
 
 interface Props {
   country: Country;
@@ -171,9 +172,9 @@ export default function RESTCountriesCountryDetail({
             <DLSection>
               <DT>Languages</DT>
               {Object.entries(country.languages).map(([code, lang]) => (
-                <>
-                  <DD key={code + lang}>{lang}</DD>{" "}
-                </>
+                <Fragment key={code}>
+                  <DD >{lang}</DD>{" "}
+                </Fragment>
               ))}
             </DLSection>
 
@@ -266,7 +267,6 @@ RESTCountriesCountryDetail.getLayout = function getLayout(page: NextPage) {
 export const getServerSideProps: GetServerSideProps<Props, Params> = async (
   context
 ) => {
-  // https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-0.html#non-null-assertion-operator
   const { full_name } = context.params!;
   const country = await countryByName(full_name, true);
 

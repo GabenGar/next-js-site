@@ -1,18 +1,21 @@
 import { formatArea } from "#lib/number-formatter";
-import { useClassName } from "#lib/hooks";
+import { blockComponent } from "#components";
 import styles from "./_index.module.scss";
 
-import type { BaseProps } from "#types";
+import type { BlockProps } from "#types";
 
-interface Props extends BaseProps {
+interface Props extends BlockProps<"span"> {
   number: number;
 }
 
-export function FancyArea({ number, className, ...blockProps }: Props) {
-  const blockClass = useClassName(styles.block, className);
-  return (
-    <span data-value={number} className={blockClass} {...blockProps}>
-      {formatArea(number)}<sup>2</sup>
-    </span>
-  );
-}
+export const FancyArea = blockComponent<Props>(
+  styles.block,
+  ({ number, ...blockProps }) => {
+    return (
+      <span data-value={number} {...blockProps}>
+        {formatArea(number)}
+        <sup>2</sup>
+      </span>
+    );
+  }
+);
