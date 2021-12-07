@@ -1,1 +1,1 @@
-export {}
+export { initClient } from "./init-client";

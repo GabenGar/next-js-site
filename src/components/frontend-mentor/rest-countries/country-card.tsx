@@ -1,0 +1,69 @@
+import { Country } from "#api/rest-countries";
+import { ImageLink, FancyNumber, FancyArea, blockComponent } from "#components";
+import { CardBase, CardHeader, CardBody, CardFooter } from "#components/cards";
+import { InternalAnchour } from "#components/fancy";
+import { DL, DLSection, DT, DD } from "#components/fancy/dl";
+import styles from "./country-card.module.scss";
+
+import type { BlockProps } from "#types";
+
+interface Props extends BlockProps<"article"> {
+  country: Country;
+}
+
+export const CountryCard = blockComponent<Props>(
+  styles.block,
+  ({ country, ...blockProps }) => {
+    return (
+      <CardBase {...blockProps}>
+        <CardHeader>
+          <h2 className={styles.title}>{country.name.common}</h2>
+          <ImageLink
+            href={country.flags.svg}
+            src={country.flags.png}
+            className={styles.flag}
+          />
+        </CardHeader>
+        <CardBody>
+          <DL className={styles.details}>
+            <DLSection>
+              <DT>Capital</DT>
+              <DD>{country.capital}</DD>
+            </DLSection>
+            <DLSection>
+              <DT>Area</DT>
+              <DD>
+                <FancyArea number={country.area} />
+              </DD>
+            </DLSection>
+            <DLSection>
+              <DT>Population</DT>
+              <DD>
+                <FancyNumber number={country.population} />
+              </DD>
+            </DLSection>
+            <DLSection>
+              <DT>Currencies</DT>
+              {country.currencies &&
+                Object.entries(country.currencies).map(([name, currency]) => (
+                  <DD key={name}>
+                    {currency.name} ({currency.symbol})
+                  </DD>
+                ))}
+            </DLSection>
+          </DL>
+        </CardBody>
+        <CardFooter>
+          <InternalAnchour
+            href={{
+              pathname: "/frontend-mentor/rest-countries/[full_name]",
+              query: { full_name: country.name.official },
+            }}
+          >
+            Detailed Information
+          </InternalAnchour>
+        </CardFooter>
+      </CardBase>
+    );
+  }
+);

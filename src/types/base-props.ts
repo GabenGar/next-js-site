@@ -1,6 +1,9 @@
-import type { DetailedHTMLProps, HTMLAttributes } from "react";
+import type { PropsWithChildren, ComponentPropsWithoutRef } from "react";
 
 /**
- * Base `props` for all components.
+ * Generic props for rootless components.
  */
-export interface BaseProps<DOMInterface> extends DetailedHTMLProps<HTMLAttributes<DOMInterface>, DOMInterface> {}
+export interface RootlessProps
+  extends PropsWithChildren<Record<string, unknown>> {}
+
+export type BlockProps<T extends keyof JSX.IntrinsicElements> = ComponentPropsWithoutRef<T>

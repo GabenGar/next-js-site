@@ -1,0 +1,54 @@
+@use "../../styles/variables/sass" as *;
+
+.block {
+  position: relative;
+}
+
+.list {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: stretch;
+  gap: $size-normal;
+  padding: $size-normal 0;
+
+  & > * {
+    flex: 0 1 var(--local-card-width);
+  }
+
+  &_vertical {
+    flex-flow: row wrap;
+  }
+
+  &_horizontal {
+    flex-flow: row nowrap;
+    overflow-x: auto;
+
+    & > * {
+      flex-shrink: 0;
+    }
+  }
+
+  &_feature {
+    --local-card-width: #{$width-feature};
+  }
+
+  &_mobile {
+    --local-card-width: #{$width-mobile};
+  }
+
+  &_phone {
+    --local-card-width: #{$width-phone};
+  }
+
+  &_tablet {
+    --local-card-width: #{$width-tablet};
+  }
+}
+
+.button {
+  &:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+}

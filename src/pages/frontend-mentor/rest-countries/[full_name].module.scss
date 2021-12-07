@@ -1,0 +1,33 @@
+@use "../../../styles/variables/sass" as *;
+
+.info {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $size-normal;
+  padding: $size-normal 0;
+}
+
+.images {
+  max-width: 20em;
+  margin: 0 auto;
+  background-color: var(--colour1-secondary-transparent);
+  border-radius: 10px;
+  padding: $size-normal;
+}
+
+.capital {
+  &::after {
+    content: none;
+  }
+}
+
+.region {
+  margin-right: 0;
+}
+
+.codes {
+
+  &_term {
+    display: block;
+  }
+}

@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 
 /**
- * @param classNames A list of strings
- * @returns `className` string
+ * @param classNames String arguments
+ * @returns A `className` string
  */
 export function useClassName(...classNames: Array<string | undefined>): string {
   const [className, changeClassName] = useState("");
@@ -10,7 +10,7 @@ export function useClassName(...classNames: Array<string | undefined>): string {
   useEffect(() => {
     const newClassName = classNames.filter((str) => str && String(str)).join(" ");
     changeClassName(newClassName);
-  }, [className]);
+  }, [classNames]);
 
   return className;
 }

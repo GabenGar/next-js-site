@@ -1,0 +1,29 @@
+@use "../../../styles/variables/sass" as *;
+
+.block {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $size-normal;
+  max-width: $width-mobile;
+  background-color: var(--colour1-secondary);
+  border-radius: 10px;
+  border: $size-thin solid transparent;
+  padding: $size-normal;
+  margin: 0 auto;
+}
+
+.section {
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+
+.label {
+  display: inline-block;
+  font-weight: bold;
+  padding: $size-thin 0;
+}
+
+.submit {
+  width: 100%;
+}

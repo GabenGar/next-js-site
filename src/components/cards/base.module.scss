@@ -1,0 +1,45 @@
+@use "../../styles/variables/sass" as *;
+
+.block {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-auto-rows: auto 1fr auto;
+  grid-template-areas:
+  "header"
+  "body"
+  "footer"
+  ;
+  overflow: hidden;
+  background-color: var(--colour1-primary);
+  border-radius: 10px;
+  border: $size-thin solid transparent;
+  transition-property: border, box-shadow;
+  transition-duration: var(--duration-global);
+
+  & > * {
+    padding: $size-normal;
+  }
+
+  &:hover,
+  &:focus-within {
+    box-shadow: 0 0 5px var(--positive-colour1-primary);
+  }
+}
+
+.header {
+  grid-area: header;
+  align-self: flex-start;
+  padding-bottom: $size-small;
+}
+
+.body {
+  grid-area: body;
+  align-self: center;
+  padding: $size-small $size-normal;
+}
+
+.footer {
+  grid-area: footer;
+  align-self: flex-end;
+  padding-top: $size-small;
+}

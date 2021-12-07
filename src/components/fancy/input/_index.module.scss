@@ -1,0 +1,44 @@
+@use "../../../styles/variables/sass" as *;
+@use "../../../styles/mixins" as mixin;
+
+.block {
+  @include mixin.form-input();
+  background-color: var(--colour1-primary);
+
+  transition-duration: var(--duration-global);
+  transition-property: background-color;
+
+  &:hover {
+  }
+  &:focus {
+  }
+}
+
+.number {
+}
+
+.text {
+}
+
+.select {
+  @include mixin.form-input();
+  line-height: 100%;
+  color: var(--colour0-primary);
+  background-color: var(--colour1-primary);
+  // magical number to center the text in FF
+  padding-top: 0.7em;
+  transition-duration: var(--duration-global);
+  transition-property: background-color, border-color;
+
+  &:hover {
+  }
+
+  &:focus {
+    border-color: var(--submit-colour2-secondary);
+  }
+}
+
+.option {
+  @include mixin.form-input();
+  background-color: var(--colour1-primary);
+}

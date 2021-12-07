@@ -1,3 +1,23 @@
 {
-  "extends": "next/core-web-vitals"
+  "root": true,
+  "plugins": ["@typescript-eslint"],
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
+  "rules": {
+    // it's a-okay to create empty interfaces with a different name for alias purposes
+    "@typescript-eslint/no-empty-interface": "off",
+    "@typescript-eslint/member-delimiter-style": {
+      "multiline": {
+        "delimiter": "none",
+        "requireLast": false
+      },
+      "singleline": {
+        "delimiter": "semi",
+        "requireLast": true
+      }
+    }
+  }
 }
