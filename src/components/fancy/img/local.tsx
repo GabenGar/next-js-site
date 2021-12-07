@@ -1,8 +1,8 @@
 import Image from "next/image";
+import { blockComponent } from "#components";
 import styles from "./_index.module.scss";
 
 import type { BlockProps } from "#types";
-import { blockComponent } from "#components";
 
 interface Props extends BlockProps<"span"> {
   src: string;

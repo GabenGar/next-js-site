@@ -1,16 +1,14 @@
-import { useClassName } from "#lib/hooks";
+import { blockComponent } from "#components";
 import { Input } from "./base";
 import styles from "./_index.module.scss";
 
-import type { InputProps } from "#types";
+import type { BlockProps } from "#types";
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface Props extends InputProps {}
+interface Props extends BlockProps<"input"> {}
 
-export function NumberInput({ className, ...blockProps }: Props) {
-  const blockClass = useClassName(styles.number, className);
-
-  return (
-    <Input className={blockClass} {...blockProps} type="number"/>
-  );
-}
+export const NumberInput = blockComponent<Props>(
+  styles.number,
+  ({ ...blockProps }) => {
+    return <Input {...blockProps} type="number" />;
+  }
+);

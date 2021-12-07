@@ -2,9 +2,9 @@ import { FormSection, SubmitButton } from "#components/fancy/form";
 import { useClassName } from "#lib/hooks";
 import styles from "./_index.module.scss";
 
-import type { FieldSetProps } from "#types";
+import type { BlockProps } from "#types";
 
-interface Props extends FieldSetProps {
+interface Props extends BlockProps<"fieldset"> {
 }
 
 export function SubmitSection({ children, className, ...blockProps }: Props) {

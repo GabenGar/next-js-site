@@ -1,9 +1,9 @@
 import { useClassName } from "#lib/hooks";
 import styles from "./_index.module.scss";
 
-import type { ImgProps } from "#types";
+import type { BlockProps } from "#types";
 
-interface Props extends ImgProps {}
+interface Props extends BlockProps<"img"> {}
 
 export function IMG({ className, ...blockProps }: Props) {
   const blockClass = useClassName(styles.image, className);

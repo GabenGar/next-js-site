@@ -1,28 +1,24 @@
-import { useClassName } from "#lib/hooks";
+import { blockComponent } from "#components";
 import { Button } from "#components/fancy";
 import styles from "./_index.module.scss";
 
-import type { ElementProps } from "#types";
+import type { BlockProps } from "#types";
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface Props extends ElementProps<HTMLButtonElement> {
+interface Props extends BlockProps<"button"> {
   pageNumber?: number;
 }
 
-export function PageButton({
-  pageNumber = undefined,
-  className,
-  ...blockProps
-}: Props) {
-  const blockClass = useClassName(styles.page, className);
-  return (
-    <Button
-      className={blockClass}
-      {...blockProps}
-      value={pageNumber ? pageNumber : undefined}
-      disabled={!pageNumber}
-    >
-      {pageNumber ? pageNumber : "..."}
-    </Button>
-  );
-}
+export const PageButton = blockComponent<Props>(
+  styles.page,
+  ({ pageNumber = undefined, ...blockProps }) => {
+    return (
+      <Button
+        {...blockProps}
+        value={pageNumber ? pageNumber : undefined}
+        disabled={!pageNumber}
+      >
+        {pageNumber ? pageNumber : "..."}
+      </Button>
+    );
+  }
+);

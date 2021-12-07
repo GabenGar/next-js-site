@@ -2,10 +2,9 @@ import { useClassName } from "#lib/hooks";
 import { Button } from "#components/fancy";
 import styles from "./_index.module.scss";
 
-import type { ButtonProps } from "#types";
+import type { BlockProps } from "#types";
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface Props extends ButtonProps {}
+interface Props extends BlockProps<"button"> {}
 
 export function SubmitButton({ children, className, ...blockProps }: Props) {
   const blockClass = useClassName(styles.submit, className);

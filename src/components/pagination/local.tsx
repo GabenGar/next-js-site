@@ -1,5 +1,4 @@
 import { useReducer } from "react";
-import { useClassName } from "#lib/hooks";
 import { paginationReducer, initState, gotoPage } from "./reducer";
 import { CurrentPage } from "./current-page";
 import { PageButton } from "./page";
@@ -10,84 +9,86 @@ import type {
   Dispatch,
   SetStateAction,
 } from "react";
-import type { DivProps } from "#types";
+import type { BlockProps } from "#types";
+import { blockComponent } from "#components";
 
-interface Props extends DivProps {
+interface Props extends BlockProps<"div"> {
   currentPage: number;
   totalCount: number;
   limit?: number;
   changeCurrentPage: Dispatch<SetStateAction<number>>;
 }
 
-export function Pagination({
-  currentPage = 1,
-  totalCount,
-  limit = 25,
-  changeCurrentPage,
-  className,
-  ...blockProps
-}: Props) {
-  const [state, dispatch] = useReducer(
-    paginationReducer,
-    {
-      currentPage,
-      limit,
-      totalCount,
-    },
-    initState
-  );
-  const blockClass = useClassName(styles.block, className);
+export const Pagination = blockComponent<Props>(
+  styles.block,
+  ({
+    currentPage = 1,
+    totalCount,
+    limit = 25,
+    changeCurrentPage,
+    ...blockProps
+  }) => {
+    const [state, dispatch] = useReducer(
+      paginationReducer,
+      {
+        currentPage,
+        limit,
+        totalCount,
+      },
+      initState
+    );
 
-  function switchPage(event: ReactMouseEvent<HTMLDivElement, MouseEvent>) {
-    event.stopPropagation();
-    const button = event.target as HTMLButtonElement;
-    if (
-      button.classList.contains(styles.page) &&
-      !button.classList.contains(styles.currentPage) &&
-      !button.disabled
-    ) {
-      const pageNumber = Number(button.value);
-      dispatch(gotoPage(pageNumber));
-      changeCurrentPage(pageNumber);
+    function switchPage(event: ReactMouseEvent<HTMLDivElement, MouseEvent>) {
+      event.stopPropagation();
+      const button = event.target as HTMLButtonElement;
+      if (
+        button.classList.contains(styles.page) &&
+        !button.classList.contains(styles.currentPage) &&
+        !button.disabled
+      ) {
+        const pageNumber = Number(button.value);
+        dispatch(gotoPage(pageNumber));
+        changeCurrentPage(pageNumber);
+      }
     }
-  }
 
-  return (
-    <div className={blockClass} {...blockProps}>
-      <p className={styles.info}>
-        Showing{" "}
-        <span className={styles.currentMin}>{state.currentCountMin}</span> -{" "}
-        <span className={styles.currentMax}>{state.currentCountMax}</span> out
-        of <span className={styles.totalCount}>{state.totalCount}</span>
-      </p>
+    return (
+      <div {...blockProps}>
+        <p className={styles.info}>
+          Showing{" "}
+          <span className={styles.currentMin}>{state.currentCountMin}</span> -{" "}
+          <span className={styles.currentMax}>{state.currentCountMax}</span> out
+          of <span className={styles.totalCount}>{state.totalCount}</span>
+        </p>
 
-      <div className={styles.buttons} onClick={switchPage}>
-        <PageButton pageNumber={state.currentPage !== 1 ? 1 : undefined} />
-        <PageButton
-          pageNumber={
-            state.currentPage - 1 <= 1 ? undefined : state.currentPage - 1
-          }
-        />
-        <CurrentPage
-          changeCurrentPage={changeCurrentPage}
-          state={state}
-          dispatch={dispatch}
-        />
-        <PageButton
-          pageNumber={
-            state.currentPage + 1 >= state.totalPages
-              ? undefined
-              : state.currentPage + 1
-          }
-        ></PageButton>
-        <PageButton
-          pageNumber={
-            state.totalPages !== state.currentPage
-              ? state.totalPages
-              : undefined
-          }
-        />
+        <div className={styles.buttons} onClick={switchPage}>
+          <PageButton pageNumber={state.currentPage !== 1 ? 1 : undefined} />
+          <PageButton
+            pageNumber={
+              state.currentPage - 1 <= 1 ? undefined : state.currentPage - 1
+            }
+          />
+          <CurrentPage
+            changeCurrentPage={changeCurrentPage}
+            state={state}
+            dispatch={dispatch}
+          />
+          <PageButton
+            pageNumber={
+              state.currentPage + 1 >= state.totalPages
+                ? undefined
+                : state.currentPage + 1
+            }
+          ></PageButton>
+          <PageButton
+            pageNumber={
+              state.totalPages !== state.currentPage
+                ? state.totalPages
+                : undefined
+            }
+          />
+        </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
+)

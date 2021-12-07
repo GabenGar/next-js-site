@@ -1,9 +1,9 @@
 import { useClassName } from "#lib/hooks";
 import styles from "./_index.module.scss";
 
-import type { BaseProps } from "#types";
+import type { BlockProps } from "#types";
 
-interface Props extends BaseProps {}
+interface Props extends BlockProps<"figure"> {}
 
 export function Figure({ children, className, ...blockProps }: Props) {
   const blockClass = useClassName(styles.block, className);
