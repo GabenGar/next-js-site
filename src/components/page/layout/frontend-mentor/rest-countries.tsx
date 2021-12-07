@@ -14,7 +14,7 @@ import type { RootlessProps } from "#types";
 
 interface Props extends RootlessProps {}
 
-const repoURL = `${ENV_VARS.REPOSITORY}/tree/fm-rest/src/pages/frontend-mentor/rest-countries`;
+const repoURL = `${ENV_VARS.REPOSITORY}/tree/master/src/pages/frontend-mentor/rest-countries`;
 
 export function RESTCountries({ children }: Props) {
   const [currentTheme, switchCurrentTheme] = useState("");
