@@ -1,11 +1,43 @@
+@use "../../../styles/variables/sass" as *;
+
+.header,
+.main,
+.footer {
+
+}
+
 .header {
   grid-area: header;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: $size-normal;
+  background-color: var(--colour1-secondary-transparent);
+
+  transition-duration: var(--duration-global);
+  transition-property: color, background-color;
 }
 
 .main {
   grid-area: main;
+  transition-duration: var(--duration-global);
+  transition-property: color, background-color;
 }
 
 .footer {
   grid-area: footer;
+  background-color: var(--colour1-secondary-transparent);
+
+  transition-duration: var(--duration-global);
+  transition-property: color, background-color;
+}
+
+.nav {
+  background-color: transparent;
+  padding: 0;
+}
+
+.switch {
+  text-transform: capitalize;
 }

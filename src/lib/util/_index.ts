@@ -26,6 +26,30 @@ export function isObjectEmpty(obj: {} | undefined) {
   return true;
 }
 
+export function debounce<A extends any[], F extends (...args: A) => any>(
+  fnc: F,
+  cooldown: number = 250
+) {
+  let debounceStart = Date.now();
+  let isOnCooldown = false;
+
+  return (...args: A) => {
+    const timeDiff = Date.now() - debounceStart;
+
+    if (timeDiff > cooldown) {
+      isOnCooldown = false;
+    }
+
+    if (isOnCooldown) {
+      return;
+    }
+
+    debounceStart = Date.now();
+    isOnCooldown = true;
+    fnc(...args);
+  };
+}
+
 export function initEnvVars(obj: Record<string, string | undefined>) {
   const unset_values: string[] = [];
 
