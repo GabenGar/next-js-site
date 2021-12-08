@@ -1,3 +1,4 @@
+import { debounce } from "#lib/util";
 import { blockComponent } from "#components";
 import styles from "./button.module.scss";
 
@@ -14,9 +15,13 @@ export interface ButtonClickEvent
 
 export const Button = blockComponent<Props>(
   styles.block,
-  ({ type = "button", children, ...blockProps }) => {
+  ({ type = "button", onClick, children, ...blockProps }) => {
     return (
-      <button type={type} {...blockProps}>
+      <button
+        type={type}
+        onClick={onClick ? debounce(onClick, 250) : undefined}
+        {...blockProps}
+      >
         {children}
       </button>
     );
