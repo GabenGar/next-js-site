@@ -28,8 +28,12 @@ body {
 [id="__next"] {
   position: relative;
   display: grid;
-  grid-template-rows: auto 1fr auto;
-  grid-template-columns: 100%;
+  grid-template:
+  "header" auto
+  "main" 1fr
+  "footer" auto
+  / 100%
+  ;
   justify-items: stretch;
   min-height: 100%;
   width: 100%;
