@@ -12,6 +12,7 @@ import styles from "./base.module.scss";
 import type { RootlessProps } from "#types";
 import type { ButtonClickEvent } from "#components/fancy";
 import { ENV_VARS } from "#configs/public";
+import { SVGIcon } from "#components";
 
 interface Props extends RootlessProps {}
 
@@ -38,7 +39,10 @@ export function BaseLayout({ children }: Props) {
         <FancyNav className={styles.nav}>
           <NavList>
             <NavItem>
-              <InternalAnchour href="/">Home</InternalAnchour>
+              <InternalAnchour href="/">
+                <SVGIcon iconID="react" />
+                <span>Home</span>
+              </InternalAnchour>
             </NavItem>
           </NavList>
         </FancyNav>

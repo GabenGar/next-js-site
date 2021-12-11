@@ -6,6 +6,7 @@ module.exports = {
   eslint: {
     dirs: [
       'src',
+      'configs'
     ]
   },
   sassOptions: {
