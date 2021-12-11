@@ -7,7 +7,7 @@ interface Props extends BlockProps<"a"> {
   href: string;
 }
 
-export const Anchour = blockComponent<Props>(
+export const AnchourExternal = blockComponent<Props>(
   styles.block,
   ({
     href,

@@ -11,7 +11,7 @@ interface Props extends BlockProps<"span"> {
 export const SVGIcon = blockComponent<Props>(
   styles.block,
   ({ iconID, children, ...blockProps }) => {
-    const iconPath = `${SVGSprite}#${iconID}`;
+    const iconPath = `${SVGSprite.src}#${iconID}`;
 
     return (
       <span {...blockProps}>
