@@ -1,25 +1,37 @@
 import { blockComponent } from "#components";
+import { Anchour } from "#components/fancy/a";
+
 import styles from "./_index.module.scss";
 
-import type { BlockProps } from "#types";
+import type { AnchourProps } from "#components/fancy/a";
 
-interface Props extends BlockProps<"a"> {
+interface Props extends AnchourProps {
   href: string;
+  isAffiliated: boolean;
 }
 
-export const AnchourExternal = blockComponent<Props>(
+export const LinkExternal = blockComponent<Props>(
   styles.block,
   ({
     href,
+    isAffiliated = false,
     target = "_blank",
-    rel = "noreferrer",
+    rel = undefined,
     children,
     ...blockProps
   }) => {
+    const relEx = isAffiliated
+      ? "external noopener"
+      : "external nofollow noopener noreferrer";
     return (
-      <a href={href} target={target} rel={rel} {...blockProps}>
+      <Anchour
+        href={href}
+        target={target}
+        rel={`${rel} ${relEx}`}
+        {...blockProps}
+      >
         {children}
-      </a>
+      </Anchour>
     );
   }
 );

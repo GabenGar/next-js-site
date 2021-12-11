@@ -1,19 +1,19 @@
 import { blockComponent } from "#components";
+import { Anchour } from "#components/fancy/a";
 import styles from "./_index.module.scss";
 
-import type { BlockProps } from "#types";
-
-interface Props extends BlockProps<"a"> {
+import type { AnchourProps } from "#components/fancy/a";
+interface Props extends AnchourProps {
   targetID: string;
 }
 
-export const LocalAnchour = blockComponent<Props>(
+export const LinkLocal = blockComponent<Props>(
   styles.block,
   ({ targetID, children, ...blockProps }) => {
     return (
-      <a {...blockProps} href={`#${targetID}`}>
+      <Anchour {...blockProps} href={`#${targetID}`}>
         {children}
-      </a>
+      </Anchour>
     );
   }
 );
