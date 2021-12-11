@@ -1,20 +1,18 @@
 import { blockComponent } from "#components";
-import { InternalAnchour } from "#components/fancy/a";
+import { FancyLink } from "#components/links";
 import styles from "./_index.module.scss";
 
-import type { BlockProps } from "#types";
+import type { LinkProps } from "#components/links";
 
-interface Props extends BlockProps<"a"> {
-  type: "external" | "internal" | "local";
-}
+interface Props extends LinkProps {}
 
-export const FancyNav = blockComponent(
+export const FancyNav = blockComponent<Props>(
   styles.block,
-  ({ children, ...blockProps }: Props) => {
+  ({ type, children, ...blockProps }) => {
     return (
-      <InternalAnchour {...blockProps} href="/">
+      <FancyLink type={type} {...blockProps}>
         {children}
-      </InternalAnchour>
+      </FancyLink>
     );
   }
 );

@@ -5,12 +5,11 @@ import styles from "./_index.module.scss";
 
 import type { AnchourProps } from "#components/fancy/a";
 
-interface Props extends AnchourProps {
-  href: string;
-  isAffiliated: boolean;
+export interface ExternalProps extends AnchourProps {
+  isAffiliated?: boolean;
 }
 
-export const LinkExternal = blockComponent<Props>(
+export const LinkExternal = blockComponent<ExternalProps>(
   styles.block,
   ({
     href,

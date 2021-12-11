@@ -1,9 +1,9 @@
 import { blockComponent } from "#components";
 import { FancyNav, NavList, NavItem } from "./base";
+import { LinkLocal } from "#components/links";
 import styles from "./_index.module.scss";
 
 import type { BlockProps } from "#types";
-import { LocalAnchour } from "#components/fancy";
 
 interface Props extends BlockProps<"nav"> {
   items: {
@@ -23,7 +23,7 @@ export const LocalNav = blockComponent<Props>(
           </p>
           {items.map((item) => (
             <NavItem key={item.id}>
-              <LocalAnchour targetID={item.id}>{item.title}</LocalAnchour>
+              <LinkLocal targetID={item.id}>{item.title}</LinkLocal>
             </NavItem>
           ))}
         </NavList>

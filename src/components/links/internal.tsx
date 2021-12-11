@@ -7,7 +7,7 @@ import styles from "./_index.module.scss";
 import type { LinkProps } from "next/link";
 import type { ReactNode } from "react";
 
-interface LocalProps extends LinkProps {
+export interface InternalProps extends LinkProps {
   /**
    * Opens a new page/tab if `true`.
    */
@@ -16,7 +16,7 @@ interface LocalProps extends LinkProps {
   children?: ReactNode;
 }
 
-export const LinkInternal = blockComponent<LocalProps>(
+export const LinkInternal = blockComponent<InternalProps>(
   styles.block,
   ({ children, className, isNewPage: isExternal = false, ...blockProps }) => {
     const blockClass = useClassName(styles.block_local, className);

@@ -1,10 +1,10 @@
 import Head from "next/head";
 
-import { InternalAnchour } from "#components/fancy";
+import { siteTitle } from "#lib/util";
+import { LinkInternal } from "#components/links";
 import { Section } from "#components/page";
 
 import type { NextPage } from "next";
-import { siteTitle } from "#lib/util";
 
 const Home: NextPage = () => {
   const pageTitle = "Gabengar's site";
@@ -22,12 +22,12 @@ const Home: NextPage = () => {
       <nav>
         <ul>
           <li>
-            <InternalAnchour href="/">Home</InternalAnchour>
+            <LinkInternal href="/">Home</LinkInternal>
           </li>
           <li>
-            <InternalAnchour href="/frontend-mentor">
+            <LinkInternal href="/frontend-mentor">
               Frontend Mentor Challenges
-            </InternalAnchour>
+            </LinkInternal>
           </li>
         </ul>
       </nav>

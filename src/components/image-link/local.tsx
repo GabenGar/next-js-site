@@ -1,20 +1,21 @@
-import { useClassName } from "#lib/hooks";
-import { LocalPicture, InternalAnchour } from "#components/fancy";
+import { blockComponent } from "#components";
+import { LocalPicture } from "#components/fancy";
+import { LinkInternal } from "#components/links";
 import styles from "./_index.module.scss";
 
-import type { LinkProps } from "next/link";
+import type { InternalProps } from "#components/links";
 
-interface Props extends LinkProps {
-  className?: string;
+interface Props extends InternalProps {
   src: string;
 }
 
-export function LocalImageLink({ href, src, className, ...blockProps }: Props) {
-  const blockClass = useClassName(styles.block, className);
-
-  return (
-    <InternalAnchour href={href} className={blockClass} {...blockProps}>
-      <LocalPicture className={styles.picture} src={src} />
-    </InternalAnchour>
-  );
-}
+export const LocalImageLink = blockComponent<Props>(
+  styles.block,
+  ({ href, src, ...blockProps }) => {
+    return (
+      <LinkInternal href={href} {...blockProps}>
+        <LocalPicture className={styles.picture} src={src} />
+      </LinkInternal>
+    );
+  }
+);

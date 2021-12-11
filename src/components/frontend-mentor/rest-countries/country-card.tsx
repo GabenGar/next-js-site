@@ -1,13 +1,13 @@
 import { Country } from "#api/rest-countries";
 import { ImageLink, FancyNumber, FancyArea, blockComponent } from "#components";
 import { CardBase, CardHeader, CardBody, CardFooter } from "#components/cards";
-import { InternalAnchour } from "#components/fancy";
 import { DL, DLSection, DT, DD } from "#components/fancy/dl";
+import { LinkInternal } from "#components/links";
 import styles from "./country-card.module.scss";
 
-import type { BlockProps } from "#types";
+import type { CardProps } from "#components/cards";
 
-interface Props extends BlockProps<"article"> {
+interface Props extends CardProps {
   country: Country;
 }
 
@@ -54,14 +54,14 @@ export const CountryCard = blockComponent<Props>(
           </DL>
         </CardBody>
         <CardFooter>
-          <InternalAnchour
+          <LinkInternal
             href={{
               pathname: "/frontend-mentor/rest-countries/[full_name]",
               query: { full_name: country.name.official },
             }}
           >
             Detailed Information
-          </InternalAnchour>
+          </LinkInternal>
         </CardFooter>
       </CardBase>
     );

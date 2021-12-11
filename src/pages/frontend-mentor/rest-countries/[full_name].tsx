@@ -2,7 +2,7 @@ import Head from "next/head";
 import { countriesByCodes, countryByName } from "#api/rest-countries";
 import { CardList, ImageCarousel, FancyNumber, FancyArea } from "#components";
 import { Section, RESTCountries as Layout } from "#components/page";
-import { Anchour, InternalAnchour } from "#components/fancy";
+import { LinkExternal, LinkInternal } from "#components/links";
 import { DL, DLSection, DD, DT } from "#components/fancy/dl";
 import { CountryCard } from "#components/frontend-mentor";
 import { isObjectEmpty } from "#lib/util";
@@ -85,7 +85,7 @@ export default function RESTCountriesCountryDetail({
             <DLSection>
               <DT>Region</DT>
               <DD className={styles.region}>
-                <InternalAnchour
+                <LinkInternal
                   href={{
                     pathname:
                       "/frontend-mentor/rest-countries/regions/[region]",
@@ -93,9 +93,9 @@ export default function RESTCountriesCountryDetail({
                   }}
                 >
                   {country.region}
-                </InternalAnchour>{" "}
+                </LinkInternal>{" "}
                 (
-                <InternalAnchour
+                <LinkInternal
                   href={{
                     pathname:
                       "/frontend-mentor/rest-countries/subregions/[subregion]",
@@ -103,7 +103,7 @@ export default function RESTCountriesCountryDetail({
                   }}
                 >
                   {country.subregion}
-                </InternalAnchour>
+                </LinkInternal>
                 )
               </DD>
             </DLSection>
@@ -143,7 +143,7 @@ export default function RESTCountriesCountryDetail({
               <DT>Maps</DT>
               {Object.entries(country.maps).map(([service, link]) => (
                 <DD key={service.toLowerCase()}>
-                  <Anchour href={link}>{service}</Anchour>
+                  <LinkExternal href={link}>{service}</LinkExternal>
                 </DD>
               ))}
             </DLSection>

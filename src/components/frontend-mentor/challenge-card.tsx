@@ -1,11 +1,13 @@
 import { blockComponent } from "#components";
 import { CardBase, CardHeader, CardBody, CardFooter } from "#components/cards";
-import { Anchour, FancyImageExternal, InternalAnchour } from "#components/fancy";
+import { FancyImageExternal } from "#components/fancy";
+import { LinkExternal, LinkInternal } from "#components/links";
 import styles from "./challenge-card.module.scss";
 
-import type { Challenge, BlockProps } from "#types";
+import type { Challenge } from "#types";
+import type { CardProps } from "#components/cards";
 
-interface Props extends BlockProps<"article"> {
+interface Props extends CardProps {
   challenge: Challenge;
 }
 
@@ -22,12 +24,12 @@ export const ChallengeCard = blockComponent<Props>(
         </CardBody>
         <CardFooter>
           <p>
-            <InternalAnchour href={`/frontend-mentor/${challenge.localLink}`}>
+            <LinkInternal href={`/frontend-mentor/${challenge.localLink}`}>
               Go to the page
-            </InternalAnchour>
+            </LinkInternal>
           </p>
           <p>
-            <Anchour href={challenge.link}>Original page</Anchour>
+            <LinkExternal href={challenge.link}>Original page</LinkExternal>
           </p>
         </CardFooter>
       </CardBase>

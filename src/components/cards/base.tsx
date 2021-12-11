@@ -3,14 +3,14 @@ import styles from "./base.module.scss";
 
 import type { BlockProps } from "#types";
 
-interface Props extends BlockProps<"article"> {}
+export interface CardProps extends BlockProps<"article"> {}
 interface HeaderProps extends BlockProps<"header"> {}
 interface BodyProps extends BlockProps<"section"> {}
 interface FooterProps extends BlockProps<"footer"> {}
 
 export const CardBase = blockComponent(
   styles.block,
-  ({ children, ...blockProps }: Props) => {
+  ({ children, ...blockProps }: CardProps) => {
     return <article {...blockProps}>{children}</article>;
   }
 );

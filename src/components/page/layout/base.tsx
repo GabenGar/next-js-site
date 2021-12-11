@@ -5,7 +5,8 @@ import {
   setCurrentTheme,
   getCurrentTheme,
 } from "#lib/theme";
-import { Anchour, Button, InternalAnchour } from "#components/fancy";
+import { Button } from "#components/fancy";
+import { LinkExternal, LinkInternal } from "#components/links";
 import { FancyNav, NavList, NavItem } from "#components/fancy/nav";
 import styles from "./base.module.scss";
 
@@ -39,10 +40,10 @@ export function BaseLayout({ children }: Props) {
         <FancyNav className={styles.nav}>
           <NavList>
             <NavItem>
-              <InternalAnchour href="/">
+              <LinkInternal href="/">
                 <SVGIcon iconID="react" />
                 <span>Home</span>
-              </InternalAnchour>
+              </LinkInternal>
             </NavItem>
           </NavList>
         </FancyNav>
@@ -59,7 +60,9 @@ export function BaseLayout({ children }: Props) {
         <FancyNav className={styles.nav}>
           <NavList>
             <NavItem>
-              <Anchour href={ENV_VARS.REPOSITORY}>Source code</Anchour>
+              <LinkExternal href={ENV_VARS.REPOSITORY}>
+                Source code
+              </LinkExternal>
             </NavItem>
           </NavList>
         </FancyNav>
