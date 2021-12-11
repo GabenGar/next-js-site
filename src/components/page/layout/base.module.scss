@@ -38,8 +38,8 @@
 }
 
 .navLink {
-  --local-width: 2em;
-  --local-height: 2em;
+  --local-width: 1.75em;
+  --local-height: 1.75em;
 
   display: inline-flex;
   align-items: center;
@@ -48,5 +48,12 @@
 }
 
 .switch {
+  --local-width: 1.5em;
+  --local-height: 1.5em;
+
+  display: inline-flex;
+  align-items: center;
+  gap: $size-small;
+  align-items: center;
   text-transform: capitalize;
 }
