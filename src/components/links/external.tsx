@@ -26,7 +26,7 @@ export const LinkExternal = blockComponent<ExternalProps>(
       <Anchour
         href={href}
         target={target}
-        rel={`${rel} ${relEx}`}
+        rel={relEx}
         {...blockProps}
       >
         {children}

@@ -18,17 +18,17 @@ export interface InternalProps extends LinkProps {
 
 export const LinkInternal = blockComponent<InternalProps>(
   styles.block,
-  ({ children, className, isNewPage: isExternal = false, ...blockProps }) => {
-    const blockClass = useClassName(styles.block_local, className);
+  ({ children, className, isNewPage = false, ...blockProps }) => {
+    const blockClass = useClassName(styles.internal, className);
 
     return (
       <Link {...blockProps}>
-        <Anchour
+        <a
           className={blockClass}
-          target={isExternal ? "_blank" : "_self"}
+          target={isNewPage ? "_blank" : "_self"}
         >
           {children}
-        </Anchour>
+        </a>
       </Link>
     );
   }

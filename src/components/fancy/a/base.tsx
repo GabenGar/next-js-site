@@ -7,7 +7,7 @@ export interface AnchourProps extends BlockProps<"a"> {}
 
 export const Anchour = blockComponent<AnchourProps>(
   styles.block,
-  ({ href, children, ...blockProps }) => {
+  ({ children, ...blockProps }) => {
     return <a {...blockProps}>{children}</a>;
   }
 );
