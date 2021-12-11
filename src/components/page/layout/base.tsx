@@ -40,7 +40,7 @@ export function BaseLayout({ children }: Props) {
         <FancyNav className={styles.nav}>
           <NavList>
             <NavItem>
-              <LinkInternal href="/">
+              <LinkInternal href="/" className={styles.navLink}>
                 <SVGIcon iconID="react" />
                 <span>Home</span>
               </LinkInternal>

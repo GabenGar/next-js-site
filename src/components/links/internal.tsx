@@ -23,10 +23,8 @@ export const LinkInternal = blockComponent<InternalProps>(
 
     return (
       <Link {...blockProps}>
-        <a
-          className={blockClass}
-          target={isNewPage ? "_blank" : "_self"}
-        >
+        {/* Not using `Anchour` because `Link` doesn't like it as a child element. */}
+        <a className={blockClass} target={isNewPage ? "_blank" : "_self"}>
           {children}
         </a>
       </Link>

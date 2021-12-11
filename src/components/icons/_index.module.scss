@@ -1,10 +1,7 @@
 .block {
-  --local-width: 1em;
-  --local-height: 1em;
-
   display: grid;
-  width: var(--local-width);
-  height: var(--local-height);
+  width: var(--local-width, 1em);
+  height: var(--local-height, 1em);
 }
 
 .svg {

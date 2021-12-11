@@ -41,7 +41,7 @@
   justify-content: space-between;
   align-items: center;
   gap: $size-normal;
-  background-color: var(--colour1-secondary-transparent);
+  background-color: var(--colour1-secondary);
 
   transition-duration: var(--duration-global);
   transition-property: color, background-color;
@@ -63,12 +63,13 @@
 }
 
 .main {
+  background-color: var(--colour1-tertiary);
   transition-duration: var(--duration-global);
   transition-property: color, background-color;
 }
 
 .footer {
-  background-color: var(--colour1-secondary-transparent);
+  background-color: var(--colour1-secondary);
 
   transition-duration: var(--duration-global);
   transition-property: color, background-color;

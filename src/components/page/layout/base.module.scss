@@ -3,7 +3,6 @@
 .header,
 .main,
 .footer {
-
 }
 
 .header {
@@ -36,6 +35,16 @@
 .nav {
   background-color: transparent;
   padding: 0;
+}
+
+.navLink {
+  --local-width: 2em;
+  --local-height: 2em;
+
+  display: inline-flex;
+  align-items: center;
+  gap: $size-small;
+  align-items: center;
 }
 
 .switch {
