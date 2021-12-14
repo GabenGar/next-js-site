@@ -56,6 +56,8 @@ h1 {
   text-transform: capitalize;
   font-size: 1.7rem;
   font-weight: normal;
+  background-color: var(--colour1-primary);
+  padding: 0.5rem;
   margin: 0;
 }
 
@@ -140,8 +142,8 @@ a {
   }
 
   &:active {
-    background-color: var(--local-colour1-primary);
     color: var(--local-colour2-primary);
+    background-color: var(--local-colour1-primary);
     border-bottom-color: var(--local-colour2-primary);
   }
 }

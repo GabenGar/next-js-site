@@ -1,10 +1,10 @@
 import { blockComponent } from "#components";
-import { Anchour } from "#components/fancy";
+import { LinkExternal } from "#components/links";
 import styles from "./_index.module.scss";
 
-import type { BlockProps } from "#types";
+import type { ExternalProps } from "#components/links";
 
-interface Props extends BlockProps<"a"> {
+interface Props extends ExternalProps {
   src: string;
   href?: string;
   alt?: string;
@@ -23,9 +23,8 @@ export const ImageLink = blockComponent<Props>(
     ...blockProps
   }) => {
     return (
-      <Anchour href={href} {...blockProps}>
+      <LinkExternal href={href} {...blockProps}>
         <picture>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             className={styles.image}
             src={src}
@@ -34,7 +33,7 @@ export const ImageLink = blockComponent<Props>(
             loading={isLazy ? "lazy" : "eager"}
           />
         </picture>
-      </Anchour>
+      </LinkExternal>
     );
   }
 );

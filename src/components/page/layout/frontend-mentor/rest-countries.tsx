@@ -6,11 +6,12 @@ import {
   setCurrentTheme,
   getCurrentTheme,
 } from "#lib/theme";
-import { InternalAnchour, Button, Anchour } from "#components/fancy";
+import { Button } from "#components/fancy";
+import { LinkInternal, LinkExternal } from "#components/links";
 import styles from "./rest-countries.module.scss";
 
-import { MouseEvent as RMouseEvent } from "react";
 import type { RootlessProps } from "#types";
+import type { ButtonClickEvent } from "#components/fancy";
 
 interface Props extends RootlessProps {}
 
@@ -24,7 +25,7 @@ export function RESTCountries({ children }: Props) {
     switchCurrentTheme(() => getCurrentTheme());
   }, []);
 
-  function switchTheme(event: RMouseEvent<HTMLButtonElement, MouseEvent>) {
+  function switchTheme(event: ButtonClickEvent) {
     const nextTheme =
       currentTheme === AVAILABLE_THEMES.DARK
         ? AVAILABLE_THEMES.LIGHT
@@ -40,17 +41,17 @@ export function RESTCountries({ children }: Props) {
         <nav className={styles.navigation}>
           <ul className={styles.list}>
             <li className={styles.item}>
-              <InternalAnchour href="/">Home</InternalAnchour>
+              <LinkInternal href="/">Home</LinkInternal>
             </li>
             <li className={styles.item}>
-              <InternalAnchour href="/frontend-mentor/rest-countries">
+              <LinkInternal href="/frontend-mentor/rest-countries">
                 REST Countries
-              </InternalAnchour>
+              </LinkInternal>
             </li>
             <li className={styles.item}>
-              <InternalAnchour href="/frontend-mentor/rest-countries/all">
+              <LinkInternal href="/frontend-mentor/rest-countries/all">
                 All
-              </InternalAnchour>
+              </LinkInternal>
             </li>
           </ul>
         </nav>
@@ -64,7 +65,7 @@ export function RESTCountries({ children }: Props) {
       <main className={styles.main}>{children}</main>
 
       <footer className={styles.footer}>
-        <Anchour href={repoURL}>Source code</Anchour>
+        <LinkExternal href={repoURL}>Source code</LinkExternal>
       </footer>
     </>
   );

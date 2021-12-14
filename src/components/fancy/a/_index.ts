@@ -1,3 +1,2 @@
-export { Anchour } from "./external";
-export { InternalAnchour } from "./internal";
-export { LocalAnchour } from "./local";
+export { Anchour } from "./base";
+export type { AnchourProps } from "./base";

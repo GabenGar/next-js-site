@@ -1,17 +1,20 @@
 import { useEffect, useState } from "react";
+
+import { ENV_VARS } from "#configs/public";
 import {
   AVAILABLE_THEMES,
   defaultTheme,
   setCurrentTheme,
   getCurrentTheme,
 } from "#lib/theme";
-import { Anchour, Button, InternalAnchour } from "#components/fancy";
+import { SVGIcon } from "#components";
+import { Button } from "#components/fancy";
+import { LinkExternal, LinkInternal } from "#components/links";
 import { FancyNav, NavList, NavItem } from "#components/fancy/nav";
 import styles from "./base.module.scss";
 
 import type { RootlessProps } from "#types";
 import type { ButtonClickEvent } from "#components/fancy";
-import { ENV_VARS } from "#configs/public";
 
 interface Props extends RootlessProps {}
 
@@ -38,14 +41,20 @@ export function BaseLayout({ children }: Props) {
         <FancyNav className={styles.nav}>
           <NavList>
             <NavItem>
-              <InternalAnchour href="/">Home</InternalAnchour>
+              <LinkInternal href="/" className={styles.navLink}>
+                <SVGIcon iconID="react" />
+                <span>Home</span>
+              </LinkInternal>
             </NavItem>
           </NavList>
         </FancyNav>
         <Button className={styles.switch} onClick={switchTheme}>
-          {currentTheme === AVAILABLE_THEMES.LIGHT
-            ? AVAILABLE_THEMES.DARK
-            : AVAILABLE_THEMES.LIGHT}
+          <SVGIcon iconID="adjust" />
+          <span>
+            {currentTheme === AVAILABLE_THEMES.LIGHT
+              ? AVAILABLE_THEMES.DARK
+              : AVAILABLE_THEMES.LIGHT}
+          </span>
         </Button>
       </header>
 
@@ -55,7 +64,13 @@ export function BaseLayout({ children }: Props) {
         <FancyNav className={styles.nav}>
           <NavList>
             <NavItem>
-              <Anchour href={ENV_VARS.REPOSITORY}>Source code</Anchour>
+              <LinkExternal
+                href={ENV_VARS.REPOSITORY}
+                className={styles.navLink}
+              >
+                <SVGIcon iconID="github" />
+                <span>Source code</span>
+              </LinkExternal>
             </NavItem>
           </NavList>
         </FancyNav>

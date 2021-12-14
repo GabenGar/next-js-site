@@ -3,7 +3,6 @@
 .header,
 .main,
 .footer {
-
 }
 
 .header {
@@ -38,6 +37,23 @@
   padding: 0;
 }
 
+.navLink {
+  --local-width: 1.75em;
+  --local-height: 1.75em;
+
+  display: inline-flex;
+  align-items: center;
+  gap: $size-small;
+  align-items: center;
+}
+
 .switch {
+  --local-width: 1.5em;
+  --local-height: 1.5em;
+
+  display: inline-flex;
+  align-items: center;
+  gap: $size-small;
+  align-items: center;
   text-transform: capitalize;
 }
