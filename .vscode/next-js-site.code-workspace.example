@@ -1,0 +1,29 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"editor.tabSize": 2,
+		"editor.rulers": [
+			{
+				"color": "orange",
+				"column": 65
+			}
+		],
+		"editor.wordWrap": "wordWrapColumn",
+		"editor.wordWrapColumn": 65,
+		"[markdown]": {
+			"editor.wordWrap": "wordWrapColumn",
+			"editor.quickSuggestions": false
+		}
+	},
+	"extensions": {
+		"recommendations": [
+			"eamodio.gitlens",
+			"webben.browserslist",
+			"mikestead.dotenv"
+		]
+	},
+}
