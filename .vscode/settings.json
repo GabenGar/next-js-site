@@ -1,4 +1,18 @@
 {
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "typescript.preferences.quoteStyle": "double",
+  "typescript.preferences.useAliasesForRenames": false,
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "json.schemas": [
+    {
+      "fileMatch": ["schema/*schema.json"],
+      "url": "./schema/_meta.schema.json"
+    },
+    {
+      "fileMatch": ["config.json"],
+      "url": "./schema/config.schema.json"
+    }
+  ],
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   }

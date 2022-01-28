@@ -3,13 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "prepare": "husky install",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
-    "next": "^12.0.3",
+    "clsx": "^1.1.1",
+    "nanoid": "^3.1.32",
+    "next": "^12.0.9",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "swr": "^1.0.1"
@@ -23,6 +26,8 @@
     "eslint-config-prettier": "^8.3.0",
     "prettier": "2.4.1",
     "sass": "^1.42.1",
-    "typescript": "4.4.3"
+    "typescript": "4.4.3",
+    "webpack": "^5.65.0",
+    "webpack-cli": "^4.9.1"
   }
 }

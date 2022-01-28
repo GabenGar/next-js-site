@@ -1,0 +1,21 @@
+{
+  "title": "ProjectConfig",
+  "description": "Config for the project.",
+  "properties": {
+    "NEXT_PUBLIC_SITE_ORIGIN": {
+      "type": "string",
+      "format": "uri",
+      "default": "http://localhost:3000",
+      "description": "The origin of the site."
+    },
+    "NEXT_PUBLIC_SITE_NAME": {
+      "type": "string",
+      "default": "LOCALHOST"
+    },
+    "NEXT_PUBLIC_REPOSITORY": {
+      "type": "string",
+      "format": "uri",
+      "default": "https://github.com/GabenGar/next-js-site"
+    }
+  }
+}

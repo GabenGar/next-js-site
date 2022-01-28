@@ -1,7 +1,11 @@
+export const ERROR_MESSAGE = "FLYING POLAR BUFFALO ERROR";
+
+export const HTTP_NOT_AUTHORIZED = 402
+
 /**
  * @link https://tc39.es/proposal-unified-intl-numberformat/section6/locales-currencies-tz_proposed_out.html#sec-issanctionedsimpleunitidentifier
  */
-const ES_UNITS = {
+export const ES_UNITS = {
   ACRE: "acre",
   BIT: "bit",
   BYTE: "byte",
@@ -46,9 +50,3 @@ const ES_UNITS = {
   yard: "yard",
   year: "year",
 }
-
-export const CONSTANTS = {
-  ES_UNITS
-}
-
-Object.freeze(CONSTANTS)

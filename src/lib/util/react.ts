@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { Children, isValidElement, cloneElement } from "react";
 import type { ReactNode, ReactElement, PropsWithChildren } from "react";
 
@@ -31,7 +32,7 @@ export function transformChildrenProps<N>(
       if (isValidElement(current)) {
         const newElement = cloneElement(current, {
           ...current.props,
-          className: useClassList(current.props.className, className),
+          className: clsx(current.props.className, className),
           ...props,
         });
 
@@ -43,16 +44,4 @@ export function transformChildrenProps<N>(
   );
 
   return newChildren;
-}
-
-export function useClassList(...classNames: Array<string | undefined>): string {
-  if (!classNames.length) {
-    return "";
-  }
-
-  if (classNames.length === 1 && classNames[0]) {
-    return classNames[0];
-  }
-
-  return classNames.join(" ");
 }
