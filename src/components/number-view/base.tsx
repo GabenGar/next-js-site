@@ -1,5 +1,5 @@
 import { formatNumber } from "#lib/number-formatter";
-import { blockComponent } from "#components";
+import { blockComponent } from "#components/meta";
 import styles from "./_index.module.scss";
 
 import type { BlockProps } from "#types";

@@ -1,7 +1,7 @@
 import "#styles/globals.scss";
 import { useEffect, useState } from "react";
-import { initClient } from "#lib";
-import { BaseLayout } from "#components/page";
+import { initClient } from "#lib/browser";
+import { BaseLayout } from "#components/layout";
 
 import type { AppProps } from "next/app";
 import type { NextPage } from "next";

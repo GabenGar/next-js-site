@@ -1,4 +1,4 @@
-import { blockComponent } from "#components";
+import { blockComponent } from "#components/meta";
 import { Button } from "#components/fancy";
 import { Form, FormSection, SubmitButton } from "#components/fancy/form";
 import { NumberInput } from "#components/fancy/input";

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { blockComponent } from "#components";
+import { blockComponent } from "#components/meta";
 import { Picture } from "./picture";
 import { IMG } from "./base";
 import styles from "./_index.module.scss";

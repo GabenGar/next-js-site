@@ -10,7 +10,7 @@ import {
   SelectSection,
 } from "#components/fancy/form";
 import { Option } from "#components/fancy/input";
-import { Section, RESTCountries as Layout } from "#components/page";
+import { Section, RESTCountries as Layout } from "#components/pages";
 import { CountryCard } from "#components/frontend-mentor";
 import styles from "./all.module.scss";
 

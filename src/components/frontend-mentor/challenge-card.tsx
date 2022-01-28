@@ -1,4 +1,4 @@
-import { blockComponent } from "#components";
+import { blockComponent } from "#components/meta";
 import { CardBase, CardHeader, CardBody, CardFooter } from "#components/cards";
 import { FancyImageExternal } from "#components/fancy";
 import { LinkExternal, LinkInternal } from "#components/links";

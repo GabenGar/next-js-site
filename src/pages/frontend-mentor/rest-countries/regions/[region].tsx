@@ -3,7 +3,7 @@ import Head from "next/head";
 import { siteTitle } from "#lib/util";
 import { countriesByRegion } from "#api/rest-countries";
 import { CardList } from "#components";
-import { Section, RESTCountries as Layout } from "#components/page";
+import { Section, RESTCountries as Layout } from "#components/pages";
 import { CountryCard } from "#components/frontend-mentor";
 
 import type {

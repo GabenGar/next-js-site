@@ -1,4 +1,4 @@
-import { blockComponent } from "#components";
+import { blockComponent } from "#components/meta";
 import { Input } from "./base";
 import styles from "./_index.module.scss";
 

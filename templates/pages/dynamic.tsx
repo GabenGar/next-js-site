@@ -1,7 +1,8 @@
 import Head from "next/head";
-
+import { IS_DEVELOPMENT } from "#environment/derived";
 import { siteTitle } from "#lib/util";
-import { Section, BaseLayout as Layout } from "#components/page";
+import { Section } from "#components/pages";
+import { BaseLayout as Layout } from "#components/layout";
 
 import type {
   GetServerSideProps,
@@ -10,9 +11,9 @@ import type {
 } from "next";
 import type { ParsedUrlQuery } from "querystring";
 
-interface Props {}
+interface ITemplatePageProps {}
 
-interface Params extends ParsedUrlQuery {}
+interface ITemplatePageParams extends ParsedUrlQuery {}
 
 function TemplatePage({}: InferGetServerSidePropsType<
   typeof getServerSideProps
@@ -32,9 +33,15 @@ TemplatePage.getLayout = function getLayout(page: NextPage) {
   return <Layout>{page}</Layout>;
 };
 
-export const getServerSideProps: GetServerSideProps<Props, Params> = async (
+export const getServerSideProps: GetServerSideProps<ITemplatePageProps, ITemplatePageParams> = async (
   context
 ) => {
+  if (!IS_DEVELOPMENT) {
+    return {
+      notFound: true,
+    };
+  }
+
   const data = undefined;
 
   if (!data) {
@@ -48,4 +55,4 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (
   };
 };
 
-export default TemplatePage;
+// export default TemplatePage;

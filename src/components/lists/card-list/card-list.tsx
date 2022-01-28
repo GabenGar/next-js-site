@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { blockComponent } from "#components";
+import { blockComponent } from "#components/meta";
 import { Button } from "#components/fancy";
 import { ItemList, listTypes, listLayouts } from "./list";
 import styles from "./_index.module.scss";

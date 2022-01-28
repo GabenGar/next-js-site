@@ -1,7 +1,8 @@
 import Head from "next/head";
 import { countriesByCodes, countryByName } from "#api/rest-countries";
 import { CardList, ImageCarousel, FancyNumber, FancyArea } from "#components";
-import { Section, RESTCountries as Layout } from "#components/page";
+import { RESTCountries as Layout } from "#components/layout/frontend-mentor";
+import { Section } from "#components/pages";
 import { LinkExternal, LinkInternal } from "#components/links";
 import { DL, DLSection, DD, DT } from "#components/fancy/dl";
 import { CountryCard } from "#components/frontend-mentor";

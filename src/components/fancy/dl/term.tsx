@@ -1,7 +1,7 @@
 import styles from "./_index.module.scss";
 
 import type { BlockProps } from "#types";
-import { blockComponent } from "#components";
+import { blockComponent } from "#components/meta";
 
 interface Props extends BlockProps<"dt"> {}
 

@@ -2,7 +2,7 @@ import Head from "next/head";
 
 import { siteTitle } from "#lib/util";
 import { LinkInternal } from "#components/links";
-import { Section } from "#components/page";
+import { Section } from "#components/pages";
 
 import type { NextPage } from "next";
 

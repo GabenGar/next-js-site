@@ -1,4 +1,4 @@
-import { blockComponent } from "#components";
+import { blockComponent } from "#components/meta";
 import { FancyNav, NavList, NavItem } from "./base";
 import { LinkLocal } from "#components/links";
 import styles from "./_index.module.scss";

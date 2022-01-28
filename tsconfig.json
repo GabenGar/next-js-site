@@ -7,12 +7,11 @@
       "#api/rest-countries": ["src/api/rest-countries/_index.ts"],
       "#assets": ["src/assets/_index.ts"],
       "#assets/*": ["src/assets/*"],
-      "#components": ["src/components/_index.ts"],
       "#components/*": ["src/components/*/_index.ts"],
+      "#pages/*": ["src/pages/*"],
       "#styles/*": ["src/styles/*"],
-      "#lib": ["src/lib/_index.ts"],
       "#lib/*": ["src/lib/*/_index.ts"],
-      "#types": ["src/types/_index.ts"]
+      "#types/*": ["src/types/*"]
     },
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],

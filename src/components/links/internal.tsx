@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useClassName } from "#lib/hooks";
-import { blockComponent } from "#components";
+import { blockComponent } from "#components/meta";
 import { Anchour } from "#components/fancy/a";
 import styles from "./_index.module.scss";
 

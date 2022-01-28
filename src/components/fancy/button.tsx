@@ -1,5 +1,5 @@
 import { debounce } from "#lib/util";
-import { blockComponent } from "#components";
+import { blockComponent } from "#components/meta";
 import styles from "./button.module.scss";
 
 import type { MouseEvent as ReactMouseEvent } from "react";

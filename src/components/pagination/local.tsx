@@ -10,7 +10,7 @@ import type {
   SetStateAction,
 } from "react";
 import type { BlockProps } from "#types";
-import { blockComponent } from "#components";
+import { blockComponent } from "#components/meta";
 
 interface Props extends BlockProps<"div"> {
   currentPage: number;

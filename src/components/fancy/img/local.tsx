@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { blockComponent } from "#components";
+import { blockComponent } from "#components/meta";
 import styles from "./_index.module.scss";
 
 import type { BlockProps } from "#types";

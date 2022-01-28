@@ -5,7 +5,7 @@ import { siteTitle } from "#lib/util";
 import { allCountries } from "#api/rest-countries";
 import { GalleryList } from "#components";
 import { LocalNav } from "#components/fancy";
-import { Section, RESTCountries as Layout } from "#components/page";
+import { Section, RESTCountries as Layout } from "#components/pages";
 import { CountryCard } from "#components/frontend-mentor";
 
 import type {

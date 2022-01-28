@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { Section, RESTCountries as Layout } from "#components/page";
+import { Section, RESTCountries as Layout } from "#components/pages";
 import { LinkInternal } from "#components/links";
 import styles from "./index.module.scss";
 
