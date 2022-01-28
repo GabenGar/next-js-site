@@ -2,7 +2,7 @@ import { formatNumber } from "#lib/number-formatter";
 import { blockComponent } from "#components/meta";
 import styles from "./_index.module.scss";
 
-import type { BlockProps } from "#types";
+import type { BlockProps } from "#types/base-props";
 
 interface Props extends BlockProps<"span"> {
   number: number;

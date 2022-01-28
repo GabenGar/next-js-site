@@ -1,4 +1,4 @@
-import { initLocalStorage, initCookieStore } from "#lib/store";
+import { initLocalStorage, initCookieStore } from "#lib/browser/store";
 import { initTheme } from "#lib/theme";
 
 /**

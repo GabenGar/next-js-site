@@ -1,19 +1,18 @@
 import { useEffect, useState } from "react";
-
-import { ENV_VARS } from "#configs/public";
+import { REPOSITORY } from "#environment/vars";
 import {
   AVAILABLE_THEMES,
   defaultTheme,
   setCurrentTheme,
   getCurrentTheme,
 } from "#lib/theme";
-import { SVGIcon } from "#components";
+import { SVGIcon } from "#components/icons";
 import { Button } from "#components/fancy";
 import { LinkExternal, LinkInternal } from "#components/links";
 import { FancyNav, NavList, NavItem } from "#components/fancy/nav";
 import styles from "./base.module.scss";
 
-import type { RootlessProps } from "#types";
+import type { RootlessProps } from "#types/base-props";
 import type { ButtonClickEvent } from "#components/fancy";
 
 interface Props extends RootlessProps {}
@@ -23,7 +22,7 @@ export function BaseLayout({ children }: Props) {
 
   useEffect(() => {
     switchCurrentTheme(() => getCurrentTheme());
-  });
+  }, []);
 
   function switchTheme(event: ButtonClickEvent) {
     const nextTheme =
@@ -65,7 +64,7 @@ export function BaseLayout({ children }: Props) {
           <NavList>
             <NavItem>
               <LinkExternal
-                href={ENV_VARS.REPOSITORY}
+                href={REPOSITORY}
                 className={styles.navLink}
               >
                 <SVGIcon iconID="github" />

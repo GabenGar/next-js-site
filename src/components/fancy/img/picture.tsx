@@ -2,7 +2,7 @@ import { useClassName } from "#lib/hooks";
 import { IMG } from "./base";
 import styles from "./_index.module.scss";
 
-import type { BlockProps } from "#types";
+import type { BlockProps } from "#types/base-props";
 
 interface Props extends BlockProps<"picture"> {}
 

@@ -1,4 +1,4 @@
-import { DERIVED_VARS } from "#configs/public";
+import { IS_DEVELOPMENT } from "#environment/derived";
 import { cookieKeys } from "./base";
 import { parseCookie, saveCookie } from "./parse";
 import type { CookieStore, ParsedCookie } from "./types";
@@ -24,14 +24,10 @@ export function init() {
 export function createCookieStore(key: string): CookieStore {
   // @ts-ignore
   if (!cookieKeys[key]) {
-    if (DERIVED_VARS.IS_DEVELOPMENT) {
-      throw new Error(
-        `The cookie key "${key}" is not present in the list of allowed keys. Add the entry to the \`cookie-store\` module to make it work.`
-      );
+    if (IS_DEVELOPMENT) {
+      console.warn(`The cookie key "${key}" is not present in the list of allowed keys. Add the entry to the \`cookie-store\` module to make it work.`)
     } else {
-      throw new Error(
-        `The cookie key "${key}" is not present in the list of allowed keys.`
-      );
+      console.warn(`The cookie key "${key}" is not present in the list of allowed keys.`);
     }
   }
 

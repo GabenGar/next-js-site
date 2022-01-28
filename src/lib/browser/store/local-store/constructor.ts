@@ -1,4 +1,4 @@
-import { DERIVED_VARS } from "#configs/public";
+import { IS_DEVELOPMENT } from "#environment/derived";
 import { storeItems, legacyStoreItems, createdItems } from "./base";
 
 import type { LocalStore, OnChangeCallback } from "./types";
@@ -27,12 +27,12 @@ export function isAvailable() {
 
 export function createStore(name: string): LocalStore {
   if (createdItems.has(name)) {
-    if (DERIVED_VARS.IS_DEVELOPMENT) {
-      throw Error(
+    if (IS_DEVELOPMENT) {
+      console.error(
         `\`localStorage\` item "${name}" is already created, use the methods for manipualting its values provided by the module which created it instead.`
       );
     } else {
-      throw Error(`\`localStorage\` item "${name}" is already created.`);
+      console.warn(`\`localStorage\` item "${name}" is already created.`);
     }
   }
 

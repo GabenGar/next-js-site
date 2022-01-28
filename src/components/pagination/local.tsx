@@ -9,7 +9,7 @@ import type {
   Dispatch,
   SetStateAction,
 } from "react";
-import type { BlockProps } from "#types";
+import type { BlockProps } from "#types/base-props";
 import { blockComponent } from "#components/meta";
 
 interface Props extends BlockProps<"div"> {

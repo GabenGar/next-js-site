@@ -3,7 +3,7 @@ import { Header } from "./header";
 import { Heading } from "./heading";
 import styles from "./_index.module.scss";
 
-import type { BlockProps } from "#types";
+import type { BlockProps } from "#types/base-props";
 
 interface Props extends BlockProps<"section"> {
   heading?: string;

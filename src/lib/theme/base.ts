@@ -3,8 +3,8 @@ import {
   createLocalStore,
   localStoreItems,
   cookieKeys,
-} from "#lib/store";
-import type { LocalStore, CookieStore } from "#lib/store";
+} from "#lib/browser/store";
+import type { LocalStore, CookieStore } from "#lib/browser/store";
 
 export const AVAILABLE_THEMES = {
   DARK: "dark",
