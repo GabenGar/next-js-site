@@ -1,6 +1,8 @@
 import Head from "next/head";
 import { countriesByCodes, countryByName } from "#api/rest-countries";
-import { CardList, ImageCarousel, FancyNumber, FancyArea } from "#components";
+import { CardList } from "#components/lists";
+import { ImageCarousel } from "#components/image-carousel";
+import { FancyNumber, FancyArea } from "#components/number-view";
 import { RESTCountries as Layout } from "#components/layout/frontend-mentor";
 import { Section } from "#components/pages";
 import { LinkExternal, LinkInternal } from "#components/links";
@@ -174,7 +176,7 @@ export default function RESTCountriesCountryDetail({
               <DT>Languages</DT>
               {Object.entries(country.languages).map(([code, lang]) => (
                 <Fragment key={code}>
-                  <DD >{lang}</DD>{" "}
+                  <DD>{lang}</DD>{" "}
                 </Fragment>
               ))}
             </DLSection>

@@ -1,4 +1,4 @@
-@use "../../../../styles/variables/sass" as *;
+@use "../../../styles/variables/sass" as *;
 
 .header,
 .main,
@@ -73,4 +73,14 @@
 
   transition-duration: var(--duration-global);
   transition-property: color, background-color;
+}
+
+.navLink {
+  --local-width: 1.75em;
+  --local-height: 1.75em;
+
+  display: inline-flex;
+  align-items: center;
+  gap: $size-small;
+  align-items: center;
 }

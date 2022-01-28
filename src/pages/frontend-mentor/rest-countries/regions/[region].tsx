@@ -2,8 +2,9 @@ import Head from "next/head";
 
 import { siteTitle } from "#lib/util";
 import { countriesByRegion } from "#api/rest-countries";
-import { CardList } from "#components";
-import { Section, RESTCountries as Layout } from "#components/pages";
+import { CardList } from "#components/lists";
+import { RESTCountries as Layout } from "#components/layout/frontend-mentor";
+import { Section } from "#components/pages";
 import { CountryCard } from "#components/frontend-mentor";
 
 import type {

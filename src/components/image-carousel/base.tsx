@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { ImageLink } from "#components";
+import clsx from "clsx";
+import { ImageLink } from "#components/image-link";
 import { Button, Figure, FigCaption } from "#components/fancy";
 import { useClassName } from "#lib/hooks";
-import { useClassList } from "#lib/util";
 import styles from "./_index.module.scss";
 
 import type { ComponentPropsWithoutRef } from "react";
@@ -35,9 +35,9 @@ export function ImageCarousel({ images, className, ...blockProps }: Props) {
         {images.map((image, index) => (
           <Figure
             key={index}
-            className={useClassList(
+            className={clsx(
               styles.image,
-              index === currentImage ? styles.image_shown : undefined
+              index === currentImage && styles.image_shown
             )}
           >
             <FigCaption>{image.caption}</FigCaption>

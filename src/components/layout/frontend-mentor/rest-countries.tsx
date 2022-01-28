@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ENV_VARS } from "#configs/public";
+import { REPOSITORY } from "#environment/vars";
 import {
   AVAILABLE_THEMES,
   defaultTheme,
@@ -8,14 +8,15 @@ import {
 } from "#lib/theme";
 import { Button } from "#components/fancy";
 import { LinkInternal, LinkExternal } from "#components/links";
+import { SVGIcon } from "#components/icons";
 import styles from "./rest-countries.module.scss";
 
-import type { RootlessProps } from "#types";
+import type { RootlessProps } from "#types/base-props";
 import type { ButtonClickEvent } from "#components/fancy";
 
 interface Props extends RootlessProps {}
 
-const repoURL = `${ENV_VARS.REPOSITORY}/tree/master/src/pages/frontend-mentor/rest-countries`;
+const repoURL = `${REPOSITORY}/tree/master/src/pages/frontend-mentor/rest-countries`;
 
 export function RESTCountries({ children }: Props) {
   const [currentTheme, switchCurrentTheme] = useState("");
@@ -65,7 +66,10 @@ export function RESTCountries({ children }: Props) {
       <main className={styles.main}>{children}</main>
 
       <footer className={styles.footer}>
-        <LinkExternal href={repoURL}>Source code</LinkExternal>
+        <LinkExternal className={styles.navLink} href={repoURL}>
+          <SVGIcon iconID="github" />
+          <span>Source code</span>
+        </LinkExternal>
       </footer>
     </>
   );

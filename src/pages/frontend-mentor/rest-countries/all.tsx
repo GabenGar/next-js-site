@@ -2,7 +2,8 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 import { allCountries } from "#api/rest-countries";
 import { siteTitle } from "#lib/util";
-import { CardList, Pagination } from "#components";
+import { CardList } from "#components/lists/card-list";
+import { Pagination } from "#components/pagination";
 import {
   Form,
   SubmitSection,
@@ -10,7 +11,8 @@ import {
   SelectSection,
 } from "#components/fancy/form";
 import { Option } from "#components/fancy/input";
-import { Section, RESTCountries as Layout } from "#components/pages";
+import { RESTCountries as Layout } from "#components/layout/frontend-mentor";
+import { Section } from "#components/pages";
 import { CountryCard } from "#components/frontend-mentor";
 import styles from "./all.module.scss";
 
