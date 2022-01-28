@@ -1,11 +1,13 @@
-import { Country } from "#api/rest-countries";
-import { ImageLink, FancyNumber, FancyArea, blockComponent } from "#components";
+import { blockComponent } from "#components/meta";
+import { ImageLink } from "#components/image-link";
+import { FancyNumber, FancyArea } from "#components/number-view";
 import { CardBase, CardHeader, CardBody, CardFooter } from "#components/cards";
-import { DL, DLSection, DT, DD } from "#components/fancy/dl";
+import { DL, DLSection, DT, DD } from "#components/lists/d-list";
 import { LinkInternal } from "#components/links";
 import styles from "./country-card.module.scss";
 
 import type { CardProps } from "#components/cards";
+import type { Country } from "#api/rest-countries";
 
 interface Props extends CardProps {
   country: Country;

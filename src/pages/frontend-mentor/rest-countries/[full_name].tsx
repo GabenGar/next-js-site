@@ -4,7 +4,7 @@ import { CardList, ImageCarousel, FancyNumber, FancyArea } from "#components";
 import { RESTCountries as Layout } from "#components/layout/frontend-mentor";
 import { Section } from "#components/pages";
 import { LinkExternal, LinkInternal } from "#components/links";
-import { DL, DLSection, DD, DT } from "#components/fancy/dl";
+import { DL, DLSection, DD, DT } from "#components/lists/d-list";
 import { CountryCard } from "#components/frontend-mentor";
 import { isObjectEmpty } from "#lib/util";
 import styles from "./[full_name].module.scss";
