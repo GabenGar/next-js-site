@@ -6,10 +6,11 @@ import {
 } from "#lib/browser/store";
 import type { LocalStore, CookieStore } from "#lib/browser/store";
 
-export const AVAILABLE_THEMES = {
-  DARK: "dark",
-  LIGHT: "light",
+export enum AVAILABLE_THEMES {
+  DARK = "dark",
+  LIGHT = "light"
 };
+
 export const defaultTheme = AVAILABLE_THEMES.LIGHT;
 let store: { cookie: CookieStore; local: LocalStore };
 

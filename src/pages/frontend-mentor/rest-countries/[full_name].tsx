@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { countriesByCodes, countryByName } from "#api/rest-countries";
+import { countriesByCodes, countryByName } from "#lib/api/rest-countries";
 import { CardList } from "#components/lists";
 import { ImageCarousel } from "#components/image-carousel";
 import { FancyNumber, FancyArea } from "#components/number-view";
@@ -17,7 +17,7 @@ import type {
   NextPage,
 } from "next";
 import type { ParsedUrlQuery } from "querystring";
-import type { Country } from "#api/rest-countries";
+import type { Country } from "#lib/api/rest-countries";
 import { Fragment } from "react";
 
 interface Props {

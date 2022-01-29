@@ -18,21 +18,21 @@ import type { ButtonClickEvent } from "#components/fancy";
 interface Props extends RootlessProps {}
 
 export function BaseLayout({ children }: Props) {
-  const [currentTheme, switchCurrentTheme] = useState("");
+  // const [currentTheme, switchCurrentTheme] = useState("");
 
-  useEffect(() => {
-    switchCurrentTheme(() => getCurrentTheme());
-  }, []);
+  // useEffect(() => {
+  //   switchCurrentTheme(() => getCurrentTheme());
+  // }, []);
 
-  function switchTheme(event: ButtonClickEvent) {
-    const nextTheme =
-      currentTheme === AVAILABLE_THEMES.DARK
-        ? AVAILABLE_THEMES.LIGHT
-        : AVAILABLE_THEMES.DARK;
+  // function switchTheme(event: ButtonClickEvent) {
+  //   const nextTheme =
+  //     currentTheme === AVAILABLE_THEMES.DARK
+  //       ? AVAILABLE_THEMES.LIGHT
+  //       : AVAILABLE_THEMES.DARK;
 
-    switchCurrentTheme(() => nextTheme);
-    setCurrentTheme(nextTheme);
-  }
+  //   switchCurrentTheme(() => nextTheme);
+  //   setCurrentTheme(nextTheme);
+  // }
 
   return (
     <>
@@ -47,14 +47,14 @@ export function BaseLayout({ children }: Props) {
             </NavItem>
           </NavList>
         </FancyNav>
-        <Button className={styles.switch} onClick={switchTheme}>
+        {/* <Button className={styles.switch} onClick={switchTheme}>
           <SVGIcon iconID="adjust" />
           <span>
             {currentTheme === AVAILABLE_THEMES.LIGHT
               ? AVAILABLE_THEMES.DARK
               : AVAILABLE_THEMES.LIGHT}
           </span>
-        </Button>
+        </Button> */}
       </header>
 
       <main className={styles.main}>{children}</main>
@@ -63,10 +63,7 @@ export function BaseLayout({ children }: Props) {
         <FancyNav className={styles.nav}>
           <NavList>
             <NavItem>
-              <LinkExternal
-                href={REPOSITORY}
-                className={styles.navLink}
-              >
+              <LinkExternal href={REPOSITORY} className={styles.navLink}>
                 <SVGIcon iconID="github" />
                 <span>Source code</span>
               </LinkExternal>

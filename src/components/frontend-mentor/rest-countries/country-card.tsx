@@ -7,7 +7,7 @@ import { LinkInternal } from "#components/links";
 import styles from "./country-card.module.scss";
 
 import type { CardProps } from "#components/cards";
-import type { Country } from "#api/rest-countries";
+import type { Country } from "#lib/api/rest-countries";
 
 interface Props extends CardProps {
   country: Country;

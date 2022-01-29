@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
-import { allCountries } from "#api/rest-countries";
+import { allCountries } from "#lib/api/rest-countries";
 import { siteTitle } from "#lib/util";
 import { CardList } from "#components/lists/card-list";
 import { Pagination } from "#components/pagination";
@@ -22,7 +22,7 @@ import type {
   InferGetServerSidePropsType,
 } from "next";
 import type { FormEvent } from "react";
-import type { Country } from "#api/rest-countries";
+import type { Country } from "#lib/api/rest-countries";
 
 interface Props {
   countries: Country[];

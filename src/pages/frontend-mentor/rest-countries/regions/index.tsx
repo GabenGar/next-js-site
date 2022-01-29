@@ -2,7 +2,7 @@ import Head from "next/head";
 import { Fragment } from "react";
 
 import { siteTitle } from "#lib/util";
-import { allCountries } from "#api/rest-countries";
+import { allCountries } from "#lib/api/rest-countries";
 import { GalleryList } from "#components/lists";
 import { LocalNav } from "#components/fancy";
 import { RESTCountries as Layout } from "#components/layout/frontend-mentor";
@@ -15,7 +15,7 @@ import type {
   NextPage,
 } from "next";
 import type { ParsedUrlQuery } from "querystring";
-import type { Country } from "#api/rest-countries";
+import type { Country } from "#lib/api/rest-countries";
 
 interface Props {
   regions: {

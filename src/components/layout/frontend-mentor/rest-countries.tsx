@@ -19,22 +19,22 @@ interface Props extends RootlessProps {}
 const repoURL = `${REPOSITORY}/tree/master/src/pages/frontend-mentor/rest-countries`;
 
 export function RESTCountries({ children }: Props) {
-  const [currentTheme, switchCurrentTheme] = useState("");
+  // const [currentTheme, switchCurrentTheme] = useState("");
 
   // doing this because nextjs server is upset over `document`
-  useEffect(() => {
-    switchCurrentTheme(() => getCurrentTheme());
-  }, []);
+  // useEffect(() => {
+  //   switchCurrentTheme(() => getCurrentTheme());
+  // }, []);
 
-  function switchTheme(event: ButtonClickEvent) {
-    const nextTheme =
-      currentTheme === AVAILABLE_THEMES.DARK
-        ? AVAILABLE_THEMES.LIGHT
-        : AVAILABLE_THEMES.DARK;
+  // function switchTheme(event: ButtonClickEvent) {
+  //   const nextTheme =
+  //     currentTheme === AVAILABLE_THEMES.DARK
+  //       ? AVAILABLE_THEMES.LIGHT
+  //       : AVAILABLE_THEMES.DARK;
 
-    switchCurrentTheme(() => nextTheme);
-    setCurrentTheme(nextTheme);
-  }
+  //   switchCurrentTheme(() => nextTheme);
+  //   setCurrentTheme(nextTheme);
+  // }
 
   return (
     <>
@@ -56,11 +56,11 @@ export function RESTCountries({ children }: Props) {
             </li>
           </ul>
         </nav>
-        <Button onClick={switchTheme}>
+        {/* <Button onClick={switchTheme}>
           {currentTheme === AVAILABLE_THEMES.LIGHT
             ? AVAILABLE_THEMES.DARK
             : AVAILABLE_THEMES.LIGHT}
-        </Button>
+        </Button> */}
       </header>
 
       <main className={styles.main}>{children}</main>
