@@ -1,5 +1,5 @@
 import { SITE_NAME } from "#environment/vars"
-export { fancyFetch } from "./fancy-fetch";
+export { createFetch } from "./fancy-fetch";
 export { buttonClicked } from "./dom";
 export {
   transformChildrenProps,

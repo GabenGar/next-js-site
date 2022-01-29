@@ -11,9 +11,9 @@ import type { Router } from "next/router";
 //   };
 // }
 
-// This is where we specify the typings of req.session.*
-// declare module "iron-session" {
-//   interface IronSessionData {
-//     account_id?: number;
-//   }
-// }
+// This is where we specify the typings of req.session.
+declare module "iron-session" {
+  interface IronSessionData {
+    account_id?: number;
+  }
+}

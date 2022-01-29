@@ -1,5 +1,5 @@
-import { fancyFetch } from "#lib/util";
+import { createFetch } from "#lib/util";
 
 const origin = "https://restcountries.com";
 
-export const baseFetch = fancyFetch(origin);
+export const baseFetch = createFetch(origin);
