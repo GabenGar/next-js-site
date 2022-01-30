@@ -16,6 +16,52 @@
       "type": "string",
       "format": "uri",
       "default": "https://github.com/GabenGar/next-js-site"
+    },
+    "NEXT_PUBLIC_EMAIL_ADDRESS": {
+      "type": "string",
+      "format": "email",
+      "default": "FLYING POLAR BUFFALO ERROR"
+    },
+    "DATABASE_HOSTNAME": {
+      "type": "string",
+      "default": "localhost"
+    },
+    "DATABASE_PORT": {
+      "type": "integer",
+      "default": 5432
+    },
+    "DATABASE_NAME": {
+      "type": "string",
+      "default": "FLYING POLAR BUFFALLO ERROR"
+    },
+    "DATABASE_USER": {
+      "type": "string",
+      "default": "FLYING POLAR BUFFALLO ERROR"
+    },
+    "DATABASE_PASSWORD": {
+      "type": "string",
+      "default": "FLYING POLAR BUFFALLO ERROR"
+    },
+    "PGSSLMODE": {
+      "type": "string",
+      "default": "no-verify",
+      "description": "Required for migrations to work on heroku-deployed DB."
+    },
+    "EMAIL_SMTP_HOSTNAME": {
+      "type": "string",
+      "default": "FLYING POLAR BUFFALO ERROR"
+    },
+    "EMAIL_PORT": {
+      "type": "integer",
+      "default": 465
+    },
+    "EMAIL_USERNAME": {
+      "type": "string",
+      "default": "FLYING POLAR BUFFALO ERROR"
+    },
+    "EMAIL_PASSWORD": {
+      "type": "string",
+      "default": "FLYING POLAR BUFFALO ERROR"
     }
   }
 }
