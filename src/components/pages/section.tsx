@@ -1,9 +1,9 @@
-import { useClassName } from "#lib/hooks";
+import styles from "./_index.module.scss";
 import { Header } from "./header";
 import { Heading } from "./heading";
-import styles from "./_index.module.scss";
 
-import type { BlockProps } from "#types/base-props";
+import type { BlockProps } from "#types/props";
+import clsx from "clsx";
 
 interface Props extends BlockProps<"section"> {
   heading?: string;
@@ -15,7 +15,7 @@ export function Section({
   className,
   ...blockProps
 }: Props) {
-  const blockClass = useClassName(styles.block, className);
+  const blockClass = clsx(styles.block, className);
 
   return (
     <section className={blockClass} {...blockProps}>

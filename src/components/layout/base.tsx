@@ -12,7 +12,7 @@ import { LinkExternal, LinkInternal } from "#components/links";
 import { FancyNav, NavList, NavItem } from "#components/fancy/nav";
 import styles from "./base.module.scss";
 
-import type { RootlessProps } from "#types/base-props";
+import type { RootlessProps } from "#types/props";
 import type { ButtonClickEvent } from "#components/fancy";
 
 interface Props extends RootlessProps {}

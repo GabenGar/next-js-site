@@ -1,7 +1,7 @@
 import { blockComponent } from "#components/meta";
 import styles from "./base.module.scss";
 
-import type { BlockProps } from "#types/base-props";
+import type { BlockProps } from "#types/props";
 
 export interface CardProps extends BlockProps<"article"> {}
 interface HeaderProps extends BlockProps<"header"> {}

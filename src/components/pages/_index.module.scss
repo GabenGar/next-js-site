@@ -9,3 +9,9 @@
 }
 
 .heading {}
+
+.content {
+  & > * {
+    margin-bottom: $size-normal;
+  }
+}

@@ -1,4 +1,5 @@
 import { useReducer } from "react";
+import { blockComponent } from "#components/meta";
 import { paginationReducer, initState, gotoPage } from "./reducer";
 import { CurrentPage } from "./current-page";
 import { PageButton } from "./page";
@@ -9,8 +10,7 @@ import type {
   Dispatch,
   SetStateAction,
 } from "react";
-import type { BlockProps } from "#types/base-props";
-import { blockComponent } from "#components/meta";
+import type { BlockProps } from "#types/props";
 
 interface Props extends BlockProps<"div"> {
   currentPage: number;

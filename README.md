@@ -8,9 +8,9 @@ cd next-js-site
 npm install
 ```
 
-Copy .env file and set the values:
+Create .env file and set the values:
 ```
-cp .env.example .env.local
+npm run env
 ```
 
 ## Develop

@@ -11,7 +11,7 @@ import { LinkInternal, LinkExternal } from "#components/links";
 import { SVGIcon } from "#components/icons";
 import styles from "./rest-countries.module.scss";
 
-import type { RootlessProps } from "#types/base-props";
+import type { RootlessProps } from "#types/props";
 import type { ButtonClickEvent } from "#components/fancy";
 
 interface Props extends RootlessProps {}

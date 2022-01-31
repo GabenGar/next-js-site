@@ -22,6 +22,10 @@
       "format": "email",
       "default": "FLYING POLAR BUFFALO ERROR"
     },
+    "SECRET_KEY": {
+      "type": "string",
+      "default": "FLYING POLAR BUFFALO ERROR"
+    },
     "DATABASE_HOSTNAME": {
       "type": "string",
       "default": "localhost"
@@ -41,6 +45,11 @@
     "DATABASE_PASSWORD": {
       "type": "string",
       "default": "FLYING POLAR BUFFALLO ERROR"
+    },
+    "DATABASE_URL": {
+      "type": "string",
+      "default": "FLYING POLAR BUFFALLO ERROR",
+      "description": "Full url for migrations script."
     },
     "PGSSLMODE": {
       "type": "string",

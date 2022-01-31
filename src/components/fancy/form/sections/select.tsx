@@ -3,7 +3,7 @@ import { FormSection, Label } from "#components/fancy/form";
 import { Select } from "#components/fancy/input";
 import styles from "./_index.module.scss";
 
-import type { BlockProps } from "#types/base-props";
+import type { BlockProps } from "#types/props";
 
 interface Props extends BlockProps<"fieldset"> {
   label: string;

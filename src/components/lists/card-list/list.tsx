@@ -1,7 +1,7 @@
-import { useClassName } from "#lib/hooks";
+import clsx from "clsx";
 import styles from "./_index.module.scss";
 
-import type { BlockProps } from "#types/base-props";
+import type { BlockProps } from "#types/props";
 
 interface Props extends BlockProps<"div"> {
   type?: string;
@@ -27,7 +27,7 @@ export function ItemList({
   className,
   ...blockProps
 }: Props) {
-  const blockClass = useClassName(styles.list, type, layout);
+  const blockClass = clsx(styles.list, type, layout);
 
   return (
     <div className={blockClass} {...blockProps}>

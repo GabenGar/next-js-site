@@ -3,7 +3,7 @@ import { blockComponent } from "#components/meta";
 import styles from "./button.module.scss";
 
 import type { MouseEvent as ReactMouseEvent } from "react";
-import type { BlockProps } from "#types/base-props";
+import type { BlockProps } from "#types/props";
 
 interface Props extends BlockProps<"button"> {}
 
