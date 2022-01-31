@@ -23,7 +23,7 @@ interface RegisterPageProps extends BasePageProps {
   accCreds?: AccCreds;
 }
 
-export function RegisterPage({
+function RegisterPage({
   accCreds,
   errors,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {

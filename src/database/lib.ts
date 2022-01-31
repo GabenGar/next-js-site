@@ -2,7 +2,8 @@ import path from "path";
 import pgLib from "pg-promise";
 import { QueryFile } from "pg-promise";
 
-import { DATABASE_CLIENT_CONFIG } from "#environment/derived";
+// import { DATABASE_CLIENT_CONFIG } from "#environment/derived";
+import { DATABASE_URL } from "#environment/vars";
 import { createSingleton } from "#lib/util";
 
 import type { IInitOptions, IDatabase, IMain } from "pg-promise";
@@ -17,8 +18,7 @@ interface IDatabaseScope {
 }
 
 const initOptions: IInitOptions = {};
-// @ts-expect-error
-const connParams: IConnectionParameters<IClient> = DATABASE_CLIENT_CONFIG;
+// const connParams: IConnectionParameters<IClient> = DATABASE_CLIENT_CONFIG;
 const pgp = pgLib(initOptions);
 
 // Type id-s supported by PostgreSQL, copied from:
@@ -32,7 +32,7 @@ pgp.pg.types.setTypeParser(1184, (dateString) => dateString);
 export function getDB(): IDatabaseScope {
   return createSingleton<IDatabaseScope>("db-scope", () => {
     return {
-      db: pgp(connParams),
+      db: pgp(DATABASE_URL),
       pgp,
     };
   });
