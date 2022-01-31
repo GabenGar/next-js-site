@@ -6,9 +6,12 @@
     "prepare": "husky install",
     "env": "node install.js",
     "dev": "next dev",
+    "prebuild": "npm run migrate:up",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "migrate": "node-pg-migrate",
+    "migrate:up": "node-pg-migrate up --migrations-dir src/database/migrations --reject-unauthorized false"
   },
   "dependencies": {
     "clsx": "^1.1.1",

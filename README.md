@@ -30,3 +30,9 @@ npm run build
 ```
 
 The result will be inside `.next` folder.
+
+## Database
+Create migration:
+```
+npm run migrate create {migration_name} -- --migrations-dir src/database/migrations --migration-filename-format utc --migration-file-language sql
+```

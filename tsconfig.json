@@ -3,9 +3,12 @@
     "baseUrl": ".",
     "paths": {
       "#environment/*": ["environment/*"],
-      "#lib/*": ["src/lib/*/_index.ts"],
+      "#server/*": ["src/server/*/_index.ts"],
+      "#database": ["src/database/_index.ts"],
+      "#database/*": ["src/database/*/_index.ts"],
       "#assets": ["src/assets/_index.ts"],
       "#assets/*": ["src/assets/*"],
+      "#lib/*": ["src/lib/*/_index.ts"],
       "#components/*": ["src/components/*/_index.ts"],
       "#pages/*": ["src/pages/*"],
       "#styles/*": ["src/styles/*"],
