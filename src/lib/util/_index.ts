@@ -4,6 +4,7 @@ export { createFetch } from "./fancy-fetch";
 export { buttonClicked } from "./dom";
 export { transformChildrenProps, getValidChildren } from "./react";
 export { getReqBody } from "./get-req-body";
+export { createSingleton } from "./create-singleton";
 export function siteTitle(text: string) {
   return `${text} | ${SITE_NAME}`;
 }
