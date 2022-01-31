@@ -3,6 +3,10 @@
 .header,
 .main,
 .footer {
+  color: var(--colour0-primary);
+
+  transition-duration: var(--duration-global);
+  transition-property: color, background-color;
 }
 
 .header {
@@ -13,6 +17,11 @@
   align-items: center;
   gap: $size-normal;
   background-color: var(--colour1-secondary-transparent);
+  padding: $size-small $size-normal;
+
+  @media (min-width: $width-tablet) {
+    padding: $size-small $size-big;
+  }
 
   transition-duration: var(--duration-global);
   transition-property: color, background-color;
@@ -20,16 +29,29 @@
 
 .main {
   grid-area: main;
-  transition-duration: var(--duration-global);
-  transition-property: color, background-color;
+  display: grid;
+  grid-template-columns: 1fr;
+  align-content: baseline;
+  gap: $size-normal;
+  background-color: var(--colour1-tertiary);
+
+  & > * {
+    padding: 0 $size-normal;
+
+    @media (min-width: $width-tablet) {
+      padding: 0 $size-big;
+    }
+  }
 }
 
 .footer {
   grid-area: footer;
   background-color: var(--colour1-secondary-transparent);
+  padding: $size-small $size-normal;
 
-  transition-duration: var(--duration-global);
-  transition-property: color, background-color;
+  @media (min-width: $width-tablet) {
+    padding: $size-small $size-big;
+  }
 }
 
 .nav {
