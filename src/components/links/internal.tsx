@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useClassName } from "#lib/hooks";
+import clsx from "clsx";
 import { blockComponent } from "#components/meta";
 import { Anchour } from "#components/fancy/a";
 import styles from "./_index.module.scss";
@@ -19,7 +19,7 @@ export interface InternalProps extends LinkProps {
 export const LinkInternal = blockComponent<InternalProps>(
   styles.block,
   ({ children, className, isNewPage = false, ...blockProps }) => {
-    const blockClass = useClassName(styles.internal, className);
+    const blockClass = clsx(styles.internal, className);
 
     return (
       <Link {...blockProps}>

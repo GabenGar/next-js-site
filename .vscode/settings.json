@@ -3,6 +3,7 @@
   "typescript.preferences.quoteStyle": "double",
   "typescript.preferences.useAliasesForRenames": false,
   "typescript.preferences.importModuleSpecifier": "non-relative",
+  "typescript.preferences.jsxAttributeCompletionStyle": "braces",
   "json.schemas": [
     {
       "fileMatch": ["schema/*schema.json"],

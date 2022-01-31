@@ -33,8 +33,22 @@
 }
 
 .nav {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: $size-normal;
+  width: 100%;
   background-color: transparent;
   padding: 0;
+}
+
+.list {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: $size-normal;
 }
 
 .navLink {

@@ -7,23 +7,23 @@ interface Props extends BlockProps<"nav"> {}
 interface ListProps extends BlockProps<"ul"> {}
 interface ItemProps extends BlockProps<"li"> {}
 
-export const FancyNav = blockComponent(
+export const FancyNav = blockComponent<Props>(
   styles.block,
-  ({ children, ...blockProps }: Props) => {
+  ({ children, ...blockProps }) => {
     return <nav {...blockProps}>{children}</nav>;
   }
 );
 
-export const NavList = blockComponent(
+export const NavList = blockComponent<ListProps>(
   styles.list,
-  ({ children, ...blockProps }: ListProps) => {
+  ({ children, ...blockProps }) => {
     return <ul {...blockProps}>{children}</ul>;
   }
 );
 
-export const NavItem = blockComponent(
+export const NavItem = blockComponent<ItemProps>(
   styles.item,
-  ({ children, ...blockProps }: ItemProps) => {
+  ({ children, ...blockProps }) => {
     return <li {...blockProps}>{children}</li>;
   }
 );

@@ -38,11 +38,33 @@ export function BaseLayout({ children }: Props) {
     <>
       <header className={styles.header}>
         <FancyNav className={styles.nav}>
-          <NavList>
+          <NavList className={styles.list}>
             <NavItem>
               <LinkInternal href="/" className={styles.navLink}>
                 <SVGIcon iconID="react" />
                 <span>Home</span>
+              </LinkInternal>
+            </NavItem>
+          </NavList>
+          <NavList className={styles.list}>
+            <NavItem>
+              <LinkInternal href="/account" className={styles.navLink}>
+                <span>Account</span>
+              </LinkInternal>
+            </NavItem>
+            <NavItem>
+              <LinkInternal href="/auth/register" className={styles.navLink}>
+                <span>Register</span>
+              </LinkInternal>
+            </NavItem>
+            <NavItem>
+              <LinkInternal href="/auth/login" className={styles.navLink}>
+                <span>Login</span>
+              </LinkInternal>
+            </NavItem>
+            <NavItem>
+              <LinkInternal href="/auth/logout" className={styles.navLink}>
+                <span>Logout</span>
               </LinkInternal>
             </NavItem>
           </NavList>
