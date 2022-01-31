@@ -16,7 +16,7 @@ CREATE TABLE email_confirmations (
   created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
   account_id INT UNIQUE REFERENCES accounts,
   confirmation_key TEXT UNIQUE NOT NULL,
-  email TEXT UNIQUE NOT NULL
+  email TEXT UNIQUE NOT NULL,
   expires_at TIMESTAMPTZ NOT NULL
 )
 -- Down Migration

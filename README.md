@@ -33,6 +33,12 @@ The result will be inside `.next` folder.
 
 ## Database
 Create migration:
-```
+```sh
 npm run migrate create {migration_name} -- --migrations-dir src/database/migrations --migration-filename-format utc --migration-file-language sql
+```
+
+Run migrations:
+Add `?sslmode=disable` param to local connection string.
+```sh
+npm run migrate:up -- --envPath .env.local
 ```
