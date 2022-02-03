@@ -1,10 +1,10 @@
 import { blockComponent } from "#components/meta";
-import { CardBase, CardHeader, CardBody, CardFooter } from "#components/cards";
+import { Card, CardHeader, CardBody, CardFooter } from "#components/cards";
 import { FancyImageExternal } from "#components/fancy";
 import { LinkExternal, LinkInternal } from "#components/links";
 import styles from "./challenge-card.module.scss";
 
-import type { Challenge } from "#types";
+import type { Challenge } from "#types/frontend-mentor";
 import type { CardProps } from "#components/cards";
 
 interface Props extends CardProps {
@@ -15,7 +15,7 @@ export const ChallengeCard = blockComponent<Props>(
   styles.block,
   ({ challenge, ...blockProps }) => {
     return (
-      <CardBase {...blockProps}>
+      <Card {...blockProps}>
         <CardHeader>
           <h2 className={styles.title}>{challenge.title}</h2>
         </CardHeader>
@@ -32,7 +32,7 @@ export const ChallengeCard = blockComponent<Props>(
             <LinkExternal href={challenge.link}>Original page</LinkExternal>
           </p>
         </CardFooter>
-      </CardBase>
+      </Card>
     );
   }
 );

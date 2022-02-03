@@ -1,8 +1,8 @@
 import { blockComponent } from "#components/meta";
 import { ImageLink } from "#components/image-link";
 import { FancyNumber, FancyArea } from "#components/number-view";
-import { CardBase, CardHeader, CardBody, CardFooter } from "#components/cards";
-import { DL, DLSection, DT, DD } from "#components/lists/d-list";
+import { Card, CardHeader, CardBody, CardFooter } from "#components/cards";
+import { DL, DS, DT, DD } from "#components/lists/d-list";
 import { LinkInternal } from "#components/links";
 import styles from "./country-card.module.scss";
 
@@ -17,7 +17,7 @@ export const CountryCard = blockComponent<Props>(
   styles.block,
   ({ country, ...blockProps }) => {
     return (
-      <CardBase {...blockProps}>
+      <Card {...blockProps}>
         <CardHeader>
           <h2 className={styles.title}>{country.name.common}</h2>
           <ImageLink
@@ -28,23 +28,23 @@ export const CountryCard = blockComponent<Props>(
         </CardHeader>
         <CardBody>
           <DL className={styles.details}>
-            <DLSection>
+            <DS>
               <DT>Capital</DT>
               <DD>{country.capital}</DD>
-            </DLSection>
-            <DLSection>
+            </DS>
+            <DS>
               <DT>Area</DT>
               <DD>
                 <FancyArea number={country.area} />
               </DD>
-            </DLSection>
-            <DLSection>
+            </DS>
+            <DS>
               <DT>Population</DT>
               <DD>
                 <FancyNumber number={country.population} />
               </DD>
-            </DLSection>
-            <DLSection>
+            </DS>
+            <DS>
               <DT>Currencies</DT>
               {country.currencies &&
                 Object.entries(country.currencies).map(([name, currency]) => (
@@ -52,7 +52,7 @@ export const CountryCard = blockComponent<Props>(
                     {currency.name} ({currency.symbol})
                   </DD>
                 ))}
-            </DLSection>
+            </DS>
           </DL>
         </CardBody>
         <CardFooter>
@@ -65,7 +65,7 @@ export const CountryCard = blockComponent<Props>(
             Detailed Information
           </LinkInternal>
         </CardFooter>
-      </CardBase>
+      </Card>
     );
   }
 );

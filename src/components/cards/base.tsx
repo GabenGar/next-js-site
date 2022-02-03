@@ -8,7 +8,7 @@ interface HeaderProps extends BlockProps<"header"> {}
 interface BodyProps extends BlockProps<"section"> {}
 interface FooterProps extends BlockProps<"footer"> {}
 
-export const CardBase = blockComponent(
+export const Card = blockComponent(
   styles.block,
   ({ children, ...blockProps }: CardProps) => {
     return <article {...blockProps}>{children}</article>;
