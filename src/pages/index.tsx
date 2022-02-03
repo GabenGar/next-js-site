@@ -2,17 +2,17 @@ import Head from "next/head";
 
 import { siteTitle } from "#lib/util";
 import { LinkInternal } from "#components/links";
-import { Section } from "#components/page";
+import { Section } from "#components/pages";
 
 import type { NextPage } from "next";
 
 const Home: NextPage = () => {
-  const pageTitle = "Gabengar's site";
+  const pageTitle = "Welcome to my site!";
 
   return (
     <Section heading={pageTitle}>
       <Head>
-        <title>{siteTitle(pageTitle)}</title>
+        <title>{siteTitle("Welcome page")}</title>
         <meta
           name="description"
           content="This is the site of mine made with nextjs."
@@ -21,9 +21,6 @@ const Home: NextPage = () => {
       </Head>
       <nav>
         <ul>
-          <li>
-            <LinkInternal href="/">Home</LinkInternal>
-          </li>
           <li>
             <LinkInternal href="/frontend-mentor">
               Frontend Mentor Challenges

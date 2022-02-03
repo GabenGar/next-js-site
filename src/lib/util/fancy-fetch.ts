@@ -2,7 +2,7 @@
  * @param origin The `origin` of upcoming the fetches.
  * @returns Fetch function.
  */
-export function fancyFetch(origin: string) {
+export function createFetch(origin: string) {
   return async (
     path: string,
     init?: RequestInit,

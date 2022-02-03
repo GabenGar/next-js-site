@@ -1,16 +1,13 @@
-import { useClassName } from "#lib/hooks";
+import { blockComponent } from "#components/meta";
 import styles from "./_index.module.scss";
 
-import type { BlockProps } from "#types";
+import type { BlockProps } from "#types/props";
 
-interface Props extends BlockProps<"figcaption"> {}
+export interface IFigCaptionProps extends BlockProps<"figcaption"> {}
 
-export function FigCaption({ children, className, ...blockProps }: Props) {
-  const blockClass = useClassName(styles.caption, className);
-
-  return (
-    <figcaption className={blockClass} {...blockProps}>
-      {children}
-    </figcaption>
-  );
-}
+export const FigCaption = blockComponent<IFigCaptionProps>(
+  styles.caption,
+  ({ children, ...blockProps }) => {
+    return <figcaption {...blockProps}>{children}</figcaption>;
+  }
+);

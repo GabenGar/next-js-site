@@ -1,9 +1,9 @@
-import { blockComponent } from "#components";
+import { blockComponent } from "#components/meta";
 import { FormSection, Label } from "#components/fancy/form";
 import { TextInput } from "#components/fancy/input";
 import styles from "./_index.module.scss";
 
-import type { BlockProps } from "#types";
+import type { BlockProps } from "#types/props";
 
 interface Props extends BlockProps<"fieldset"> {}
 

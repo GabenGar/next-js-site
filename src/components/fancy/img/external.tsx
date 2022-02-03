@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { blockComponent } from "#components";
+import { blockComponent } from "#components/meta";
 import { Picture } from "./picture";
 import { IMG } from "./base";
 import styles from "./_index.module.scss";
 
 import type { SyntheticEvent } from "react";
-import type { BlockProps } from "#types";
+import type { BlockProps } from "#types/props";
 
 interface Props extends BlockProps<"span"> {
   src: string;
