@@ -2,15 +2,10 @@ import path from "path";
 import pgLib from "pg-promise";
 import { QueryFile } from "pg-promise";
 
-// import { DATABASE_CLIENT_CONFIG } from "#environment/derived";
 import { DATABASE_URL } from "#environment/vars";
 import { createSingleton } from "#lib/util";
 
 import type { IInitOptions, IDatabase, IMain } from "pg-promise";
-import type {
-  IClient,
-  IConnectionParameters,
-} from "pg-promise/typescript/pg-subset";
 
 interface IDatabaseScope {
   db: IDatabase<any>;
