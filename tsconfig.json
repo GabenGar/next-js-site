@@ -2,6 +2,9 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
+      "#scripts": [
+        "scripts/_index.js"
+      ],
       "#configs*": [
         "configs/_index.ts"
       ],
