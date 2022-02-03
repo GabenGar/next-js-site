@@ -1,11 +1,11 @@
 import Head from "next/head";
 import { Fragment } from "react";
-
 import { siteTitle } from "#lib/util";
-import { allCountries } from "#api/rest-countries";
-import { GalleryList } from "#components";
+import { allCountries } from "#lib/api/rest-countries";
+import { GalleryList } from "#components/lists";
 import { LocalNav } from "#components/fancy";
-import { Section, RESTCountries as Layout } from "#components/page";
+import { RESTCountries as Layout } from "#components/layout/frontend-mentor";
+import { Section } from "#components/pages";
 import { CountryCard } from "#components/frontend-mentor";
 
 import type {
@@ -14,7 +14,7 @@ import type {
   NextPage,
 } from "next";
 import type { ParsedUrlQuery } from "querystring";
-import type { Country } from "#api/rest-countries";
+import type { Country } from "#lib/api/rest-countries";
 
 interface Props {
   subregions: {

@@ -1,15 +1,14 @@
+// @ts-check
 const path = require("path");
 
 /** @type {import('next').NextConfig} */
 module.exports = {
   reactStrictMode: true,
+  swcMinify: true,
   eslint: {
-    dirs: [
-      'src',
-      'configs'
-    ]
+    dirs: ["src", "environment"],
   },
   sassOptions: {
-    includePaths: [path.join(__dirname, 'src', 'styles')],
+    includePaths: [path.join(__dirname, "src", "styles")],
   },
-}
+};

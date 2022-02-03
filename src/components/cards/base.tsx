@@ -1,14 +1,14 @@
-import { blockComponent } from "#components";
+import { blockComponent } from "#components/meta";
 import styles from "./base.module.scss";
 
-import type { BlockProps } from "#types";
+import type { BlockProps } from "#types/props";
 
 export interface CardProps extends BlockProps<"article"> {}
 interface HeaderProps extends BlockProps<"header"> {}
 interface BodyProps extends BlockProps<"section"> {}
 interface FooterProps extends BlockProps<"footer"> {}
 
-export const CardBase = blockComponent(
+export const Card = blockComponent(
   styles.block,
   ({ children, ...blockProps }: CardProps) => {
     return <article {...blockProps}>{children}</article>;

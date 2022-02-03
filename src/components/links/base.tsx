@@ -1,4 +1,4 @@
-import { blockComponent } from "#components";
+import { blockComponent } from "#components/meta";
 import { guessLinkType } from "./lib";
 import { linkTypes } from "./types";
 import styles from "./_index.module.scss";

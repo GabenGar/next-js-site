@@ -1,13 +1,13 @@
-import { useClassName } from "#lib/hooks";
+import clsx from "clsx";
 import styles from "./_index.module.scss";
 
-import type { BlockProps } from "#types";
+import type { BlockProps } from "#types/props";
 
 interface Props extends BlockProps<"fieldset"> {
 }
 
 export function FormSection({ children, className, ...blockProps }: Props) {
-  const blockClass = useClassName(styles.section, className);
+  const blockClass = clsx(styles.section, className);
 
   return (<fieldset
     className={blockClass} {...blockProps}

@@ -1,0 +1,17 @@
+@use "../../styles/variables/sass" as *;
+
+.block {
+}
+
+.header {
+  text-align: center;
+  margin-bottom: $size-small;
+}
+
+.heading {}
+
+.content {
+  & > * {
+    margin-bottom: $size-normal;
+  }
+}

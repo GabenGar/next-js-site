@@ -1,9 +1,12 @@
 import Head from "next/head";
-import { countriesByCodes, countryByName } from "#api/rest-countries";
-import { CardList, ImageCarousel, FancyNumber, FancyArea } from "#components";
-import { Section, RESTCountries as Layout } from "#components/page";
+import { countriesByCodes, countryByName } from "#lib/api/rest-countries";
+import { CardList } from "#components/lists";
+import { ImageCarousel } from "#components/image-carousel";
+import { FancyNumber, FancyArea } from "#components/number-view";
+import { RESTCountries as Layout } from "#components/layout/frontend-mentor";
+import { Section } from "#components/pages";
 import { LinkExternal, LinkInternal } from "#components/links";
-import { DL, DLSection, DD, DT } from "#components/fancy/dl";
+import { DL, DS, DD, DT } from "#components/lists/d-list";
 import { CountryCard } from "#components/frontend-mentor";
 import { isObjectEmpty } from "#lib/util";
 import styles from "./[full_name].module.scss";
@@ -14,7 +17,7 @@ import type {
   NextPage,
 } from "next";
 import type { ParsedUrlQuery } from "querystring";
-import type { Country } from "#api/rest-countries";
+import type { Country } from "#lib/api/rest-countries";
 import { Fragment } from "react";
 
 interface Props {
@@ -55,7 +58,7 @@ export default function RESTCountriesCountryDetail({
 
           <DL>
             {country?.capital && (
-              <DLSection>
+              <DS>
                 <DT>Capital</DT>
                 <DD className={styles.capital}>{country.capital}</DD> (
                 <DD className={styles.capital}>
@@ -65,10 +68,10 @@ export default function RESTCountriesCountryDetail({
                   {country.capitalInfo?.latlng[1]}
                 </DD>
                 )
-              </DLSection>
+              </DS>
             )}
 
-            <DLSection>
+            <DS>
               <DT>Other names</DT>
               {country.altSpellings ? (
                 country.altSpellings.map((spelling) => (
@@ -77,12 +80,12 @@ export default function RESTCountriesCountryDetail({
               ) : (
                 <DD>No other names</DD>
               )}
-            </DLSection>
+            </DS>
           </DL>
         </header>
         <section>
           <DL>
-            <DLSection>
+            <DS>
               <DT>Region</DT>
               <DD className={styles.region}>
                 <LinkInternal
@@ -106,140 +109,140 @@ export default function RESTCountriesCountryDetail({
                 </LinkInternal>
                 )
               </DD>
-            </DLSection>
+            </DS>
 
-            <DLSection>
+            <DS>
               <DT>Continents</DT>
               {country.continents.map((continent) => (
                 <DD key={continent}>{continent}</DD>
               ))}
-            </DLSection>
+            </DS>
 
-            <DLSection>
+            <DS>
               <DT>Area</DT>
               <DD>
                 <FancyArea number={country.area} />
               </DD>
-            </DLSection>
+            </DS>
 
-            <DLSection>
+            <DS>
               <DT>Timezones</DT>
               {country.timezones.map((tz) => (
                 <DD key={tz}>{tz}</DD>
               ))}
-            </DLSection>
+            </DS>
 
-            <DLSection>
+            <DS>
               <DT>Coordinates</DT>
               <DD>{country.latlng[0]}</DD> <DD>{country.latlng[1]}</DD>
-            </DLSection>
+            </DS>
 
-            <DLSection>
+            <DS>
               <DT>Landlocked</DT>
               <DD>{country.landlocked ? "yes" : "no"}</DD>
-            </DLSection>
+            </DS>
 
-            <DLSection>
+            <DS>
               <DT>Maps</DT>
               {Object.entries(country.maps).map(([service, link]) => (
                 <DD key={service.toLowerCase()}>
                   <LinkExternal href={link}>{service}</LinkExternal>
                 </DD>
               ))}
-            </DLSection>
+            </DS>
 
-            <DLSection>
+            <DS>
               <DT>Population</DT>
               <DD>
                 <FancyNumber number={country.population} />
               </DD>
-            </DLSection>
+            </DS>
 
-            <DLSection>
+            <DS>
               <DT>Week start</DT>
               <DD>
                 {country.startOfWeek !== "turday"
                   ? country.startOfWeek
                   : `Sa${country.startOfWeek}`}
               </DD>
-            </DLSection>
+            </DS>
 
-            <DLSection>
+            <DS>
               <DT>Status</DT>
               <DD>{country.status}</DD>
-            </DLSection>
+            </DS>
 
-            <DLSection>
+            <DS>
               <DT>Languages</DT>
               {Object.entries(country.languages).map(([code, lang]) => (
                 <Fragment key={code}>
-                  <DD >{lang}</DD>{" "}
+                  <DD>{lang}</DD>{" "}
                 </Fragment>
               ))}
-            </DLSection>
+            </DS>
 
-            <DLSection>
+            <DS>
               <DT>Independency Status</DT>
               {country.independent ? (
                 <DD>Independent</DD>
               ) : (
                 <DD>Not independent</DD>
               )}
-            </DLSection>
+            </DS>
 
-            <DLSection>
+            <DS>
               <DT>UN membership</DT>
               {country.unMember ? <DD>UN member</DD> : <DD>Not a UN member</DD>}
-            </DLSection>
+            </DS>
 
-            <DLSection>
+            <DS>
               <DT>Currencies</DT>
               {Object.entries(country.currencies).map(([id, currency]) => (
                 <DD key={id}>
                   {currency.name} ({currency.symbol})
                 </DD>
               ))}
-            </DLSection>
+            </DS>
           </DL>
         </section>
         <footer>
           <DL>
-            <DLSection>
+            <DS>
               <DT>Top Level Domain</DT>
               {country.tld.map((tld) => (
                 <DD key={tld}>
                   <code>{tld}</code>
                 </DD>
               ))}
-            </DLSection>
+            </DS>
 
-            <DLSection className={styles.codes}>
+            <DS className={styles.codes}>
               <DT className={styles.codes_term}>Codes</DT>
               <DD>
                 <DL>
-                  <DLSection>
+                  <DS>
                     <DT>cca2</DT>
                     <DD>{country.cca2}</DD>
-                  </DLSection>
-                  <DLSection>
+                  </DS>
+                  <DS>
                     <DT>cca3</DT>
                     <DD>{country.cca3}</DD>
-                  </DLSection>
-                  <DLSection>
+                  </DS>
+                  <DS>
                     <DT>ccn3</DT>
                     <DD>{country.ccn3}</DD>
-                  </DLSection>
-                  <DLSection>
+                  </DS>
+                  <DS>
                     <DT>cioc</DT>
                     <DD>{country.cioc}</DD>
-                  </DLSection>
-                  <DLSection>
+                  </DS>
+                  <DS>
                     <DT>fifa</DT>
                     <DD>{country.fifa}</DD>
-                  </DLSection>
+                  </DS>
                 </DL>
               </DD>
-            </DLSection>
+            </DS>
           </DL>
           <h2>Borders</h2>
           {borderCountries ? (

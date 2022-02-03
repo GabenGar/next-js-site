@@ -1,4 +1,4 @@
-import { blockComponent } from "#components";
+import { blockComponent } from "#components/meta";
 import { Button } from "#components/fancy";
 import { Form, FormSection, SubmitButton } from "#components/fancy/form";
 import { NumberInput } from "#components/fancy/input";
@@ -6,7 +6,7 @@ import { Action, State, gotoPage, selectPage } from "./reducer";
 import styles from "./_index.module.scss";
 
 import type { FormEvent, CSSProperties, Dispatch, SetStateAction } from "react";
-import type { BlockProps } from "#types";
+import type { BlockProps } from "#types/props";
 
 interface Props extends BlockProps<"form"> {
   state: State;
