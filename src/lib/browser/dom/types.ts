@@ -1,0 +1,16 @@
+export const allowedValuesA = new Set([
+  "alternate",
+  "author",
+  "bookmark",
+  "external",
+  "help",
+  "license",
+  "next",
+  "nofollow",
+  "noopener",
+  "noreferrer",
+  "opener",
+  "prev",
+  "search",
+  "tag",
+]);

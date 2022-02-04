@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { useEffect, useState } from "react";
-import { REPOSITORY } from "#environment/vars";
+import { REPOSITORY, EMAIL_ADDRESS } from "#environment/vars";
 import {
   AVAILABLE_THEMES,
   defaultTheme,
@@ -11,13 +11,8 @@ import { useAccount } from "#lib/hooks";
 import { blockComponent } from "#components/meta";
 import { SVGIcon } from "#components/icons";
 import { Button } from "#components/fancy";
-import { LinkExternal, LinkInternal } from "#components/links";
-import {
-  FancyNav,
-  NavList,
-  NavItem,
-  NavListProps,
-} from "#components/fancy/nav";
+import { LinkExternal, LinkInternal, LinkEmail } from "#components/links";
+import { FancyNav, NavList, NavItem } from "#components/fancy/nav";
 import styles from "./base.module.scss";
 
 import type { RootlessProps } from "#types/props";
@@ -79,6 +74,11 @@ export function BaseLayout({ children }: Props) {
             </NavItem>
           </NavList>
         </FancyNav>
+        <address className={styles.contacts}>
+          Contacts:
+          <br />
+          <LinkEmail email={EMAIL_ADDRESS}>Email</LinkEmail>
+        </address>
       </footer>
     </>
   );

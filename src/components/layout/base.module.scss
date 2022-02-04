@@ -46,6 +46,11 @@
 
 .footer {
   grid-area: footer;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: $size-normal;
   background-color: var(--colour1-secondary-transparent);
   padding: $size-small $size-normal;
 
@@ -148,4 +153,7 @@
   position: relative;
   z-index: 1;
   text-transform: capitalize;
+}
+
+.contacts {
 }

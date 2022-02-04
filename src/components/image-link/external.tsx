@@ -2,9 +2,9 @@ import { blockComponent } from "#components/meta";
 import { LinkExternal } from "#components/links";
 import styles from "./_index.module.scss";
 
-import type { ExternalProps } from "#components/links";
+import type { LinkExternalProps } from "#components/links";
 
-interface Props extends ExternalProps {
+interface Props extends LinkExternalProps {
   src: string;
   href?: string;
   alt?: string;

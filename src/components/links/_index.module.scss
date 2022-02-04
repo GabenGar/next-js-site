@@ -14,3 +14,14 @@
 
 .local {
 }
+
+.email {
+  display: flex;
+  align-items: center;
+  gap: $size-small;
+}
+
+.icon {
+  --local-width: 1.5em;
+  --local-height: 1.5em;
+}
