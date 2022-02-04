@@ -1,6 +1,16 @@
-.block {}
+@use "../../styles/variables/sass.scss" as *;
 
-.external {}
-.internal {
+.block {
 }
-.local {}
+
+.external {
+}
+
+.internal {
+  display: flex;
+  align-items: center;
+  gap: $size-small;
+}
+
+.local {
+}

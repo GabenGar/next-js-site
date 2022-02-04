@@ -1,9 +1,9 @@
 import Head from "next/head";
-
 import { siteTitle } from "#lib/util";
+import { Page } from "#components/pages";
+import { Nav, NavItem, NavList } from "#components/navigation";
 import { LinkInternal } from "#components/links";
 import { FELogo } from "#components/icons/logos";
-import { Page } from "#components/pages";
 
 import type { NextPage } from "next";
 
@@ -21,16 +21,16 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <nav>
-        <ul>
-          <li>
+      <Nav>
+        <NavList>
+          <NavItem>
             <LinkInternal href="/frontend-mentor">
               <FELogo />
               Frontend Mentor Challenges
             </LinkInternal>
-          </li>
-        </ul>
-      </nav>
+          </NavItem>
+        </NavList>
+      </Nav>
     </Page>
   );
 };
