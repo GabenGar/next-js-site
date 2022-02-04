@@ -4,7 +4,7 @@ import styles from "./_index.module.scss";
 import type { BlockProps } from "#types/props";
 
 interface Props extends BlockProps<"nav"> {}
-interface ListProps extends BlockProps<"ul"> {}
+export interface NavListProps extends BlockProps<"ul"> {}
 interface ItemProps extends BlockProps<"li"> {}
 
 export const FancyNav = blockComponent<Props>(
@@ -14,7 +14,7 @@ export const FancyNav = blockComponent<Props>(
   }
 );
 
-export const NavList = blockComponent<ListProps>(
+export const NavList = blockComponent<NavListProps>(
   styles.list,
   ({ children, ...blockProps }) => {
     return <ul {...blockProps}>{children}</ul>;

@@ -71,6 +71,7 @@
   align-items: center;
   justify-content: flex-start;
   gap: $size-normal;
+  width: 100%;
 }
 
 .navLink {
@@ -91,5 +92,60 @@
   align-items: center;
   gap: $size-small;
   align-items: center;
+  text-transform: capitalize;
+}
+
+.account {
+  position: relative;
+  margin-left: auto;
+
+  & .list {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    visibility: hidden;
+    opacity: 0;
+    flex-flow: column nowrap;
+    align-items: flex-end;
+    gap: $size-small;
+    width: 120%;
+    background-color: var(--colour1-primary);
+    padding: $size-small;
+    box-shadow: 0 0 3px 3px var(--colour0-tertiary-transparent);
+    transition-duration: var(--duration-global);
+    transition-property: visibility, opacity;
+  }
+
+  &_loading {
+    cursor: progress;
+
+    & * {
+      pointer-events: none;
+    }
+  }
+
+  &_open {
+    & .list {
+      visibility: visible;
+      opacity: 1;
+      border-radius: $radius-small 0 $radius-small $radius-small;
+    }
+
+    & .button {
+      border-radius: $radius-small $radius-small 0 0;
+    }
+  }
+}
+
+.button {
+  --local-width: 1.5em;
+  --local-height: 1.5em;
+
+  display: inline-flex;
+  align-items: center;
+  gap: $size-small;
+  align-items: center;
+  position: relative;
+  z-index: 1;
   text-transform: capitalize;
 }

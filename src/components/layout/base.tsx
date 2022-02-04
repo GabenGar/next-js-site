@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { useEffect, useState } from "react";
 import { REPOSITORY } from "#environment/vars";
 import {
@@ -6,10 +7,17 @@ import {
   setCurrentTheme,
   getCurrentTheme,
 } from "#lib/theme";
+import { useAccount } from "#lib/hooks";
+import { blockComponent } from "#components/meta";
 import { SVGIcon } from "#components/icons";
 import { Button } from "#components/fancy";
 import { LinkExternal, LinkInternal } from "#components/links";
-import { FancyNav, NavList, NavItem } from "#components/fancy/nav";
+import {
+  FancyNav,
+  NavList,
+  NavItem,
+  NavListProps,
+} from "#components/fancy/nav";
 import styles from "./base.module.scss";
 
 import type { RootlessProps } from "#types/props";
@@ -45,28 +53,7 @@ export function BaseLayout({ children }: Props) {
                 <span>Home</span>
               </LinkInternal>
             </NavItem>
-          </NavList>
-          <NavList className={styles.list}>
-            <NavItem>
-              <LinkInternal href="/account" className={styles.navLink}>
-                <span>Account</span>
-              </LinkInternal>
-            </NavItem>
-            <NavItem>
-              <LinkInternal href="/auth/register" className={styles.navLink}>
-                <span>Register</span>
-              </LinkInternal>
-            </NavItem>
-            <NavItem>
-              <LinkInternal href="/auth/login" className={styles.navLink}>
-                <span>Login</span>
-              </LinkInternal>
-            </NavItem>
-            <NavItem>
-              <LinkInternal href="/auth/logout" className={styles.navLink}>
-                <span>Logout</span>
-              </LinkInternal>
-            </NavItem>
+            <AccountNav />
           </NavList>
         </FancyNav>
         {/* <Button className={styles.switch} onClick={switchTheme}>
@@ -94,5 +81,63 @@ export function BaseLayout({ children }: Props) {
         </FancyNav>
       </footer>
     </>
+  );
+}
+
+function AccountNav() {
+  const { account, isLoading } = useAccount();
+  const [isOpen, changeOpen] = useState(false);
+  const isLoggedIn = Boolean(!isLoading && account);
+
+  return (
+    <NavItem
+      className={clsx(
+        styles.account,
+        isLoading && styles.account_loading,
+        isOpen && styles.account_open
+      )}
+      onBlur={() => {
+        changeOpen(false);
+      }}
+    >
+      <Button
+        className={styles.button}
+        onClick={() => {
+          changeOpen(!isOpen);
+        }}
+      >
+        <SVGIcon iconID="user-circle" />
+        <span>Account</span>
+      </Button>
+      <NavList className={clsx(styles.list)}>
+        {isLoggedIn ? (
+          <>
+            <NavItem>
+              <LinkInternal href="/account" className={styles.navLink}>
+                <span>Information</span>
+              </LinkInternal>
+            </NavItem>
+            <NavItem>
+              <LinkInternal href="/auth/logout" className={styles.navLink}>
+                <span>Logout</span>
+              </LinkInternal>
+            </NavItem>
+          </>
+        ) : (
+          <>
+            <NavItem>
+              <LinkInternal href="/auth/register" className={styles.navLink}>
+                <span>Register</span>
+              </LinkInternal>
+            </NavItem>
+            <NavItem>
+              <LinkInternal href="/auth/login" className={styles.navLink}>
+                <span>Login</span>
+              </LinkInternal>
+            </NavItem>
+          </>
+        )}
+      </NavList>
+    </NavItem>
   );
 }
