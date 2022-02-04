@@ -4,11 +4,11 @@ import styles from "./_index.module.scss";
 
 import type { BlockProps } from "#types/props";
 
-interface Props extends BlockProps<"span"> {
+export interface SVGIconProps extends BlockProps<"span"> {
   iconID: string;
 }
 
-export const SVGIcon = blockComponent<Props>(
+export const SVGIcon = blockComponent<SVGIconProps>(
   styles.block,
   ({ iconID, children, ...blockProps }) => {
     const iconPath = `${SVGSprite.src}#${iconID}`;

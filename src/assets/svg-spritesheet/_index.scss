@@ -11,4 +11,10 @@
       // transition-duration: var(--duration-global);
     }
   }
+
+  &--fe-logo {
+    & .path-1 {}
+    & .path-2 {}
+    & .path-3 {}
+  }
 }

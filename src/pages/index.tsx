@@ -2,7 +2,8 @@ import Head from "next/head";
 
 import { siteTitle } from "#lib/util";
 import { LinkInternal } from "#components/links";
-import { Section } from "#components/pages";
+import { FELogo } from "#components/icons/logos";
+import { Page } from "#components/pages";
 
 import type { NextPage } from "next";
 
@@ -10,7 +11,7 @@ const Home: NextPage = () => {
   const pageTitle = "Welcome to my site!";
 
   return (
-    <Section heading={pageTitle}>
+    <Page heading={pageTitle}>
       <Head>
         <title>{siteTitle("Welcome page")}</title>
         <meta
@@ -19,16 +20,18 @@ const Home: NextPage = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
       <nav>
         <ul>
           <li>
             <LinkInternal href="/frontend-mentor">
+              <FELogo />
               Frontend Mentor Challenges
             </LinkInternal>
           </li>
         </ul>
       </nav>
-    </Section>
+    </Page>
   );
 };
 

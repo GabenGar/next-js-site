@@ -108,7 +108,7 @@
     flex-flow: column nowrap;
     align-items: flex-end;
     gap: $size-small;
-    width: 120%;
+    min-width: 130%;
     background-color: var(--colour1-primary);
     padding: $size-small;
     box-shadow: 0 0 3px 3px var(--colour0-tertiary-transparent);

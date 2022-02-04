@@ -115,11 +115,13 @@ function AccountNav() {
             <NavItem>
               <LinkInternal href="/account" className={styles.navLink}>
                 <span>Information</span>
+                <SVGIcon iconID="address-card" />
               </LinkInternal>
             </NavItem>
             <NavItem>
               <LinkInternal href="/auth/logout" className={styles.navLink}>
                 <span>Logout</span>
+                <SVGIcon iconID="sign-out-alt" />
               </LinkInternal>
             </NavItem>
           </>
@@ -128,11 +130,13 @@ function AccountNav() {
             <NavItem>
               <LinkInternal href="/auth/register" className={styles.navLink}>
                 <span>Register</span>
+                <SVGIcon iconID="user-plus" />
               </LinkInternal>
             </NavItem>
             <NavItem>
               <LinkInternal href="/auth/login" className={styles.navLink}>
                 <span>Login</span>
+                <SVGIcon iconID="sign-in-alt" />
               </LinkInternal>
             </NavItem>
           </>
