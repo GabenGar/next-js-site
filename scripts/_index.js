@@ -1,3 +1,0 @@
-/*
-  Using CJS because ESM support for nextjs is experimental.
-*/

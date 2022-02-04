@@ -43,3 +43,6 @@ Add `?sslmode=disable` param to local connection string.
 ```sh
 npm run migrate:up -- --envPath .env.local
 ```
+
+## MISC
+`scripts` folder is using CJS because ESM support in NextJS is experimental.
