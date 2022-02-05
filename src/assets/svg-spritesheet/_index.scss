@@ -1,5 +1,6 @@
 .svg-icon {
-  fill: var(--local-colour1-primary);
+  fill: var(--local-icon-colour-primary, var(--local-colour1-primary));
+
   transition-property: fill;
   transition-duration: var(--duration-global);
 

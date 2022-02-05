@@ -97,7 +97,9 @@ function AccountNav() {
         isOpen && styles.account_open
       )}
       onBlur={() => {
-        changeOpen(false);
+        if (!document.activeElement?.closest(`.${styles.account}`)) {
+          changeOpen(false);
+        }
       }}
     >
       <Button

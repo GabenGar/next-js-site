@@ -7,7 +7,7 @@
 }
 
 .internal {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: $size-small;
 }
@@ -16,7 +16,7 @@
 }
 
 .email {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: $size-small;
 }
