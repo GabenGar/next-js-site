@@ -1,5 +1,5 @@
 .block {
-  display: grid;
+  display: inline-grid;
   width: var(--local-width, 1em);
   height: var(--local-height, 1em);
 }

@@ -1,0 +1,9 @@
+@use "../../../styles/variables/sass.scss" as *;
+
+.block {
+  --local-width: 2em;
+  --local-height: 2em;
+  background-color: var(--colour1-primary);
+  border-radius: $radius-round;
+  padding: $size-little;
+}

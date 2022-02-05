@@ -1,21 +1,20 @@
 import { blockComponent } from "#components/meta";
-import { Anchour } from "#components/fancy/a";
+import { HTMLA } from "#components/html/a";
 
 import styles from "./_index.module.scss";
 
-import type { AnchourProps } from "#components/fancy/a";
+import type { HTMLAProps } from "#components/html/a";
 
-export interface ExternalProps extends AnchourProps {
+export interface LinkExternalProps extends HTMLAProps {
   isAffiliated?: boolean;
 }
 
-export const LinkExternal = blockComponent<ExternalProps>(
+export const LinkExternal = blockComponent<LinkExternalProps>(
   styles.block,
   ({
     href,
     isAffiliated = false,
     target = "_blank",
-    rel = undefined,
     children,
     ...blockProps
   }) => {
@@ -23,14 +22,14 @@ export const LinkExternal = blockComponent<ExternalProps>(
       ? "external noopener"
       : "external nofollow noopener noreferrer";
     return (
-      <Anchour
+      <HTMLA
         href={href}
         target={target}
-        rel={relEx}
         {...blockProps}
+        rel={relEx}
       >
         {children}
-      </Anchour>
+      </HTMLA>
     );
   }
 );

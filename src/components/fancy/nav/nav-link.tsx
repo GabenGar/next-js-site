@@ -1,5 +1,5 @@
 import { blockComponent } from "#components/meta";
-import { FancyLink } from "#components/links";
+import { Link } from "#components/links";
 import styles from "./_index.module.scss";
 
 import type { LinkProps } from "#components/links";
@@ -10,9 +10,9 @@ export const FancyNav = blockComponent<Props>(
   styles.block,
   ({ type, children, ...blockProps }) => {
     return (
-      <FancyLink type={type} {...blockProps}>
+      <Link type={type} {...blockProps}>
         {children}
-      </FancyLink>
+      </Link>
     );
   }
 );

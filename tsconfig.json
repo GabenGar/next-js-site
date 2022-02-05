@@ -2,6 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
+      "#scripts": ["scripts/_index.js"],
       "#environment/*": ["environment/*"],
       "#server/*": ["src/server/*/_index.ts"],
       "#database": ["src/database/_index.ts"],

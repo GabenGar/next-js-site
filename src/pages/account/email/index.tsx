@@ -24,7 +24,7 @@ function AccountEmailPage({
   errors,
   account,
   newEmail,
-  isSent
+  isSent,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <Page heading="Account Email">
@@ -43,16 +43,20 @@ function AccountEmailPage({
             Current Email
           </FormSectionEmail>
         )}
-        <FormSectionEmail
-          id="email-new"
-          name="new_email"
-          required
-          defaultValue={newEmail}
-        >
-          New Email
-        </FormSectionEmail>
-        {errors && <ErrorsView errors={errors} /> }
-        {isSent && (<p>The confirmation link is sent to your email.</p>)}
+
+        {errors && <ErrorsView errors={errors} />}
+        {isSent ? (
+          <p>The confirmation link is sent to your email.</p>
+        ) : (
+          <FormSectionEmail
+            id="email-new"
+            name="new_email"
+            required
+            defaultValue={newEmail}
+          >
+            New Email
+          </FormSectionEmail>
+        )}
       </Form>
     </Page>
   );
@@ -60,7 +64,6 @@ function AccountEmailPage({
 
 export const getServerSideProps = withSessionSSR<AccountEmailProps>(
   async ({ req }) => {
-
     const { account_id } = req.session;
 
     if (!account_id) {
@@ -110,14 +113,17 @@ export const getServerSideProps = withSessionSSR<AccountEmailProps>(
         };
       }
 
-      const confirmation = await sendEmailConfirmation(formattedEmail!, account_id);
+      const confirmation = await sendEmailConfirmation(
+        formattedEmail!,
+        account_id
+      );
 
       return {
         props: {
           account: accountClient,
-          isSent: true
-        }
-      }
+          isSent: true,
+        },
+      };
     }
 
     return {

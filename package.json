@@ -1,17 +1,19 @@
 {
   "name": "next-js-site",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": true,
+  "imports": {
+    "#scripts": "./scripts/_index.js"
+  },
   "scripts": {
     "prepare": "husky install",
     "env": "node install.js",
     "dev": "next dev",
-    "prebuild": "npm run migrate:up",
+    "prebuild": "npm run migrate",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "migrate": "node-pg-migrate",
-    "migrate:up": "node-pg-migrate up --migrations-dir src/database/migrations --reject-unauthorized false"
+    "migrate": "node scripts/migrate-up.js"
   },
   "dependencies": {
     "clsx": "^1.1.1",

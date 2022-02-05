@@ -1,5 +1,27 @@
-.block {}
+@use "../../styles/variables/sass.scss" as *;
 
-.external {}
-.internal {}
-.local {}
+.block {
+}
+
+.external {
+}
+
+.internal {
+  display: inline-flex;
+  align-items: center;
+  gap: $size-small;
+}
+
+.local {
+}
+
+.email {
+  display: inline-flex;
+  align-items: center;
+  gap: $size-small;
+}
+
+.icon {
+  --local-width: 1.5em;
+  --local-height: 1.5em;
+}

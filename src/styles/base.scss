@@ -112,10 +112,12 @@ a {
   transition-duration: var(--duration-global);
 
   &:link {
+    --local-icon-colour-primary: var(--local-colour1-primary);
     color: var(--local-colour1-primary);
   }
 
   &:visited {
+    --local-icon-colour-primary: var(--local-colour1-secondary);
     color: var(--local-colour1-secondary);
   }
 
@@ -130,6 +132,8 @@ a {
   }
 
   &:active {
+    // a hack to make links to work with icons
+    --local-icon-colour-primary: var(--local-colour2-primary);
     color: var(--local-colour2-primary);
     background-color: var(--local-colour1-primary);
     border-bottom-color: var(--local-colour2-primary);

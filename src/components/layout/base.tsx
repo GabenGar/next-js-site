@@ -1,14 +1,17 @@
+import clsx from "clsx";
 import { useEffect, useState } from "react";
-import { REPOSITORY } from "#environment/vars";
+import { REPOSITORY, EMAIL_ADDRESS } from "#environment/vars";
 import {
   AVAILABLE_THEMES,
   defaultTheme,
   setCurrentTheme,
   getCurrentTheme,
 } from "#lib/theme";
+import { useAccount } from "#lib/hooks";
+import { blockComponent } from "#components/meta";
 import { SVGIcon } from "#components/icons";
 import { Button } from "#components/fancy";
-import { LinkExternal, LinkInternal } from "#components/links";
+import { LinkExternal, LinkInternal, LinkEmail } from "#components/links";
 import { FancyNav, NavList, NavItem } from "#components/fancy/nav";
 import styles from "./base.module.scss";
 
@@ -45,28 +48,7 @@ export function BaseLayout({ children }: Props) {
                 <span>Home</span>
               </LinkInternal>
             </NavItem>
-          </NavList>
-          <NavList className={styles.list}>
-            <NavItem>
-              <LinkInternal href="/account" className={styles.navLink}>
-                <span>Account</span>
-              </LinkInternal>
-            </NavItem>
-            <NavItem>
-              <LinkInternal href="/auth/register" className={styles.navLink}>
-                <span>Register</span>
-              </LinkInternal>
-            </NavItem>
-            <NavItem>
-              <LinkInternal href="/auth/login" className={styles.navLink}>
-                <span>Login</span>
-              </LinkInternal>
-            </NavItem>
-            <NavItem>
-              <LinkInternal href="/auth/logout" className={styles.navLink}>
-                <span>Logout</span>
-              </LinkInternal>
-            </NavItem>
+            <AccountNav />
           </NavList>
         </FancyNav>
         {/* <Button className={styles.switch} onClick={switchTheme}>
@@ -92,7 +74,71 @@ export function BaseLayout({ children }: Props) {
             </NavItem>
           </NavList>
         </FancyNav>
+        <address className={styles.contacts}>
+          Contacts:
+          <br />
+          <LinkEmail email={EMAIL_ADDRESS}>Email</LinkEmail>
+        </address>
       </footer>
     </>
+  );
+}
+
+function AccountNav() {
+  const { account, isLoading } = useAccount();
+  const [isOpen, changeOpen] = useState(false);
+  const isLoggedIn = Boolean(!isLoading && account);
+
+  return (
+    <NavItem
+      className={clsx(
+        styles.account,
+        isLoading && styles.account_loading,
+        isOpen && styles.account_open
+      )}
+    >
+      <Button
+        className={styles.button}
+        onClick={() => {
+          changeOpen(!isOpen);
+        }}
+      >
+        <SVGIcon iconID="user-circle" />
+        <span>Account</span>
+      </Button>
+      <NavList className={clsx(styles.list)}>
+        {isLoggedIn ? (
+          <>
+            <NavItem>
+              <LinkInternal href="/account" className={styles.navLink}>
+                <span>Information</span>
+                <SVGIcon iconID="address-card" />
+              </LinkInternal>
+            </NavItem>
+            <NavItem>
+              <LinkInternal href="/auth/logout" className={styles.navLink}>
+                <span>Logout</span>
+                <SVGIcon iconID="sign-out-alt" />
+              </LinkInternal>
+            </NavItem>
+          </>
+        ) : (
+          <>
+            <NavItem>
+              <LinkInternal href="/auth/register" className={styles.navLink}>
+                <span>Register</span>
+                <SVGIcon iconID="user-plus" />
+              </LinkInternal>
+            </NavItem>
+            <NavItem>
+              <LinkInternal href="/auth/login" className={styles.navLink}>
+                <span>Login</span>
+                <SVGIcon iconID="sign-in-alt" />
+              </LinkInternal>
+            </NavItem>
+          </>
+        )}
+      </NavList>
+    </NavItem>
   );
 }

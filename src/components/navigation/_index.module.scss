@@ -1,6 +1,7 @@
 @use "../../styles/variables/sass" as *;
 
 .block {
+  display: inline-block;
   background-color: var(--colour1-secondary);
   border-radius: $radius-normal;
   padding: $size-small $size-normal;

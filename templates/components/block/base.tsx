@@ -7,7 +7,7 @@ interface Props extends BlockProps<"section"> {}
 
 const TemplateComponent = blockComponent<Props>(
   styles.block,
-  ({ children, className, ...blockProps }) => {
+  ({ children, ...blockProps }) => {
     return <section {...blockProps}>{children}</section>;
   }
 );
