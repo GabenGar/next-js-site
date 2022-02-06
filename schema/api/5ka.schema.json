@@ -35,23 +35,16 @@
         "200": {
           "type": "array",
           "items": {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "integer"
-              },
-              "name": {
-                "type": "string"
-              },
-              "sap_code": {
-                "type": "string",
-                "description": "Stringified number"
-              },
-              "main_store": {
-                "type": "null"
-              }
-            }
+            "$ref": "#/definitions/region"
           }
+        }
+      }
+    },
+    "/v1/delivery_store/regions/{region_id}": {
+      "method": "GET",
+      "response": {
+        "200": {
+          "$ref": "#/definitions/region"
         }
       }
     },
@@ -216,24 +209,174 @@
           }
         }
       }
-    }
-  },
-  "/v5/categories": {
-    "method": "GET",
-    "params": [
-      "include_type",
-      "type"
-    ],
-    "response": {
-      "200": {
-        "type": "array",
-        "items": {
-          "$ref": "#/definitions/category"
+    },
+    "/v2/stores": {
+      "method": "GET",
+      "params": [
+        {
+          "key": "bbox",
+          "value": {
+            "type": "string",
+            "description": "Array string of numbers. Separator: \",\"."
+          }
+        }
+      ],
+      "response": {
+        "200": {
+          "properties": {
+            "data": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "enum": [
+                    "FeatureCollection"
+                  ]
+                },
+                "features": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/feature"
+                  }
+                }
+              }
+            },
+            "error": {
+              "type": "object",
+              "default": null
+            }
+          }
+        }
+      }
+    },
+    "/v5/categories": {
+      "method": "GET",
+      "params": [
+        "include_type",
+        "type"
+      ],
+      "response": {
+        "200": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/category"
+          }
         }
       }
     }
   },
   "definitions": {
+    "region": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "sap_code": {
+          "type": "string",
+          "description": "Stringified number"
+        },
+        "main_store": {
+          "type": "null"
+        }
+      }
+    },
+    "feature":  {
+      "type": "object",
+      "properties": {
+        "properties": {
+          "type": "object",
+          "properties": {
+            "city_id": {
+              "type": "integer"
+            },
+            "photo": {
+              "type": "null"
+            },
+            "opening_date": {
+              "type": "null"
+            },
+            "phone": {
+              "type": "string",
+              "examples": [
+                "8 800 555 55 05"
+              ]
+            },
+            "address": {
+              "type": "string"
+            },
+            "city_name": {
+              "type": "string"
+            },
+            "work_start_time": {
+              "type": "string",
+              "format": "date"
+            },
+            "work_end_time": {
+              "type": "string",
+              "format": "date"
+            },
+            "is_24h": {
+              "type": "boolean"
+            },
+            "state": {
+              "enum": [
+                "active"
+              ]
+            },
+            "type": {
+              "enum": [
+                "store"
+              ]
+            }
+          }
+        },
+        "geometry": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "enum": [
+                "Point"
+              ]
+            },
+            "coordinates": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 2,
+              "maxItems": 2
+            }
+          }
+        },
+        "store_sublease": {
+          "type": "array"
+        },
+        "id": {
+          "type": "integer"
+        },
+        "sap_code": {
+          "type": "string"
+        },
+        "type": {
+          "enum": [
+            "Feature"
+          ]
+        },
+        "options": {
+          "type": "object",
+          "properties": {
+            "preset": {
+              "enum": [
+                "store.active"
+              ]
+            }
+          }
+        }
+      }
+    },
     "category": {
       "required": [
         "id",
