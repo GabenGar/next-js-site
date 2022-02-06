@@ -1,0 +1,90 @@
+{
+  "title": "API",
+  "description": "API schema",
+  "required": [
+    "origin",
+    "title"
+  ],
+  "properties": {
+    "origin": {
+      "type": "string",
+      "format": "uri",
+      "description": "The origin of the API."
+    },
+    "title": {
+      "type": "string",
+      "description": "The name of the API."
+    },
+    "pathname_prefix": {
+      "type": "string",
+      "format": "uri-reference",
+      "description": "A pathname prepended to all endpoints."
+    },
+    "endpoints": {
+      "additionalProperties": {
+        "$ref": "#/definitions/endpoint"
+      },
+      "description": "Endpoints of the API. The keys are either relative URLs or URL templates."
+    }
+  },
+  "definitions": {
+    "endpoint": {
+      "type": "object",
+      "title": "APIEndpoint",
+      "description": "Endpoint of the API.",
+      "required": [
+        "method",
+        "response"
+      ],
+      "properties": {
+        "method": {
+          "type": "string",
+          "enum": [
+            "GET",
+            "POST",
+            "PUT",
+            "PATCH",
+            "DELETE"
+          ],
+          "default": "GET"
+        },
+        "params": {
+          "description": "A list of param keys used by the endpoint.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/search_param"
+          }
+        },
+        "request": {
+          "type": "object",
+          "description": "The body of request for API endpont, if any."
+        },
+        "response": {
+          "type": "object",
+          "description": "The body of response for API endpont. Key is the response status.",
+          "additionalProperties": {
+            "$ref": "./_meta.schema.json"
+          }
+        }
+      }
+    },
+    "search_param": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "key": {
+              "type": "string"
+            },
+            "value": {
+              "$ref": "./_meta.schema.json"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

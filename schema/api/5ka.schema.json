@@ -1,0 +1,456 @@
+{
+  "title": "X5API",
+  "origin": "https://5ka.ru",
+  "pathname_prefix": "/api",
+  "endpoints": {
+    "/v1/compilation_data/": {
+      "method": "GET",
+      "response": {
+        "200": {
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "default_store_id": {
+              "type": "string"
+            },
+            "default_compilation": {
+              "type": "object",
+              "properties": {
+                "leaders_id": {
+                  "type": "integer"
+                },
+                "discounts_id": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/delivery_store/regions": {
+      "method": "GET",
+      "response": {
+        "200": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "name": {
+                "type": "string"
+              },
+              "sap_code": {
+                "type": "string",
+                "description": "Stringified number"
+              },
+              "main_store": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      }
+    },
+    "v1/products": {
+      "method": "GET",
+      "params": [
+        "limit",
+        "offset",
+        "rates_count_from",
+        "is_promo",
+        {
+          "key": "category",
+          "value": {
+            "type": "integer"
+          }
+        },
+        {
+          "key": "rating_order",
+          "value": {
+            "enum": [
+              "average_rating_desc"
+            ]
+          }
+        },
+        {
+          "key": "average_rating_from",
+          "value": {
+            "type": "number"
+          }
+        }
+      ],
+      "response": {
+        "200": {
+          "properties": {
+            "filters": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/filter"
+              }
+            },
+            "products": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/product"
+              }
+            }
+          }
+        }
+      }
+    },
+    "v1/products/{product_id}": {
+      "method": "GET",
+      "response": {
+        "200": {
+          "type": "object",
+          "properties": {
+            "plu": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "string"
+            },
+            "image": {
+              "type": "string",
+              "format": "uri"
+            },
+            "brand": {
+              "type": "string"
+            },
+            "country": {
+              "type": "string"
+            },
+            "prices": {
+              "type": "object",
+              "properties": {
+                "price_regular": {
+                  "type": "string",
+                  "description": "Number string"
+                },
+                "price_discount": {
+                  "type": "string",
+                  "description": "Number string",
+                  "default": null
+                },
+                "discount": {
+                  "type": "string",
+                  "description": "Number string",
+                  "default": null
+                }
+              }
+            },
+            "promo": {
+              "default": null
+            },
+            "description": {
+              "type": "string",
+              "default": null
+            },
+            "weight": {
+              "type": "string",
+              "description": "Number string."
+            },
+            "ingredients": {
+              "type": "string",
+              "description": "Delimiter: \", \""
+            },
+            "protein": {
+              "default": null
+            },
+            "fat": {
+              "default": null
+            },
+            "carbohydrate": {
+              "default": null
+            },
+            "calories": {
+              "type": "integer"
+            },
+            "shelf_life": {
+              "default": null
+            },
+            "remaining_shelf_life": {
+              "default": null
+            },
+            "package_type": {
+              "default": null
+            },
+            "is_new": {
+              "type": "boolean"
+            },
+            "ean": {
+              "default": null
+            },
+            "tax_group": {
+              "default": null
+            },
+            "group_code": {
+              "default": null
+            },
+            "uom": {
+              "type": "string"
+            },
+            "step": {
+              "type": "string",
+              "description": "Number string"
+            },
+            "average_rating": {
+              "type": "number"
+            },
+            "rates_count_in_period": {
+              "type": "integer"
+            },
+            "availability_status": {
+              "type": "string",
+              "enum": [
+                "sufficient"
+              ]
+            },
+            "is_available": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    }
+  },
+  "/v5/categories": {
+    "method": "GET",
+    "params": [
+      "include_type",
+      "type"
+    ],
+    "response": {
+      "200": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/category"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "category": {
+      "required": [
+        "id",
+        "name"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "category",
+            "compilation"
+          ]
+        },
+        "description": {
+          "type": "string",
+          "default": ""
+        },
+        "subtitle": {
+          "type": "string",
+          "default": ""
+        },
+        "image": {
+          "type": "string",
+          "format": "uri"
+        },
+        "big_image_320": {
+          "type": "string",
+          "default": ""
+        },
+        "big_image_768": {
+          "type": "string",
+          "default": ""
+        },
+        "big_image_1280": {
+          "type": "string",
+          "default": ""
+        },
+        "web_image": {
+          "type": "string",
+          "format": "uri"
+        },
+        "web_image_back": {
+          "type": "string",
+          "format": "uri"
+        },
+        "minimum_rates_count_web": {
+          "type": "integer",
+          "default": null
+        },
+        "minimum_rates_count_mobile": {
+          "type": "integer",
+          "default": null
+        },
+        "top_products_number_web": {
+          "type": "integer",
+          "default": null
+        },
+        "top_products_number_mobile": {
+          "type": "integer",
+          "default": null
+        },
+        "gradient_start": {
+          "type": "string"
+        },
+        "gradient_end": {
+          "type": "string"
+        },
+        "code": {
+          "type": "string",
+          "default": ""
+        },
+        "title_color": {
+          "type": "string"
+        },
+        "start_at": {
+          "type": "string",
+          "format": "date-time",
+          "default": null
+        },
+        "end_at": {
+          "type": "string",
+          "format": "date-time",
+          "default": null
+        },
+        "products_count": {
+          "type": "integer"
+        },
+        "subcategories": {
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "$ref": "#/definitions/category"
+          }
+        }
+      }
+    },
+    "filter": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "field_name": {
+          "type": "string",
+          "enum": [
+            "brand",
+            "price"
+          ]
+        },
+        "filter_type": {
+          "type": "string",
+          "enum": [
+            "list",
+            "range"
+          ]
+        },
+        "list_values": {
+          "type": "object",
+          "properties": {
+            "all": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "actual": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "default": null
+        },
+        "range_min_val": {
+          "type": "integer",
+          "default": null
+        },
+        "range_max_val": {
+          "type": "integer",
+          "default": null
+        }
+      }
+    },
+    "product": {
+      "type": "object",
+      "properties": {
+        "plu": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "image_small": {
+          "type": "string",
+          "format": "uri"
+        },
+        "prices": {
+          "type": "object",
+          "properties": {
+            "price_regular": {
+              "type": "string",
+              "description": "Number string"
+            },
+            "price_discount": {
+              "type": "string",
+              "description": "Number string",
+              "default": null
+            },
+            "discount": {
+              "type": "string",
+              "description": "Number string",
+              "default": null
+            }
+          }
+        },
+        "promo": {
+          "type": "object",
+          "properties": {
+            "date_begin": {
+              "type": "string",
+              "format": "date",
+              "default": null
+            },
+            "date_end": {
+              "type": "string",
+              "format": "date",
+              "default": null
+            },
+            "mech": {
+              "default": null
+            }
+          }
+        },
+        "is_new": {
+          "type": "boolean"
+        },
+        "uom": {
+          "type": "string"
+        },
+        "step": {
+          "type": "string",
+          "description": "Number string"
+        },
+        "average_rating": {
+          "type": "number"
+        },
+        "rates_count_in_period": {
+          "type": "integer"
+        }
+      }
+    }
+  }
+}
