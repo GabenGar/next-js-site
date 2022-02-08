@@ -7,7 +7,7 @@ import type { CardProps } from "#components/cards";
 interface TemplateCardProps extends CardProps {
 }
 
-const AccountCard = blockComponent<TemplateCardProps>(
+const TemplateCard = blockComponent<TemplateCardProps>(
   styles.block,
   ({ ...blockProps }) => {
     return (
