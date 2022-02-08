@@ -4,11 +4,20 @@ import styles from "./base.module.scss";
 
 import type { BlockProps } from "#types/props";
 
-export interface HTMLAProps extends BlockProps<"a"> { }
+export interface HTMLAProps extends BlockProps<"a"> {
+  href: string;
+}
 
+/**
+ * TODO: forward ref
+ */
 export const HTMLA = blockComponent<HTMLAProps>(
   styles.block,
-  ({ children, ...htmlaProps }) => {
-    return (<a {...htmlaProps}>{children}</a>);
+  ({ href, children, ...htmlaProps }) => {
+    return (
+      <a href={href} {...htmlaProps}>
+        {children}
+      </a>
+    );
   }
-)
+);

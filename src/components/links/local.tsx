@@ -4,7 +4,7 @@ import styles from "./_index.module.scss";
 
 import type { HTMLAProps } from "#components/html/a";
 
-export interface LinkLocalProps extends HTMLAProps {
+export interface LinkLocalProps extends Omit<HTMLAProps, "href"> {
   targetID: string;
 }
 

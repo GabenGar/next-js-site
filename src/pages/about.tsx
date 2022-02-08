@@ -14,12 +14,10 @@ import { DL, DS } from "#components/lists/d-list";
 import styles from "./about.module.scss"
 
 function AboutPage() {
-  const pageTitle = "About me";
-
   return (
     <Page heading={pageTitle}>
       <Head>
-        <title>{siteTitle("About me")}</title>
+        <title>{siteTitle(pageTitle)}</title>
         <meta name="description" content="The profile of mine." />
         <link rel="icon" href="/favicon.ico" />
       </Head>
