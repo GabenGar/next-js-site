@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
+import { AdminPhoto } from "#assets";
 import { siteTitle } from "#lib/util";
 import { Page } from "#components/pages";
 import {
@@ -10,6 +11,7 @@ import {
 } from "#components/articles";
 import { Heading } from "#components/headings";
 import { DL, DS } from "#components/lists/d-list";
+import styles from "./about.module.scss"
 
 function AboutPage() {
   const pageTitle = "About me";
@@ -23,10 +25,14 @@ function AboutPage() {
       </Head>
       <Article>
         <ArticleHeader>
-          <Heading level={2}>Gaben Bengar</Heading>
+          <Heading level={2} className={styles.heading}>Gaben Bengar</Heading>
         </ArticleHeader>
         <ArticleBody>
-          <Image src={"/public/photo.png"} alt=""></Image>
+          <Image
+            src={AdminPhoto}
+            alt="Totally the photo of mine"
+            className={styles.photo}
+          />
           <p>
             I am an aspiring <del>rapper</del>
             <ins>frontend developer</ins> from Musohranovo, Russia.

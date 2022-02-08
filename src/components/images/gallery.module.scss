@@ -1,0 +1,39 @@
+@use "../../styles/variables/sass" as *;
+
+.block {
+}
+
+.title {
+}
+
+.items {
+  display: grid;
+  grid-template: "item";
+}
+
+.item {
+  grid-area: item;
+  display: grid;
+  visibility: hidden;
+  opacity: 0;
+
+  transition-duration: var(--duration-global);
+  transition-property: visibility, opacity;
+
+  &_selected {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+.buttons {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: $size-normal;
+}
+
+.button {
+
+}

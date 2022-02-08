@@ -1,7 +1,16 @@
-.block {}
+@use "../../styles/variables/sass.scss" as *;
 
-.header {}
+.block {
+  background-color: var(--colour1-primary);
+  border-radius: $radius-normal;
+  padding: $size-normal;
+}
 
-.body {}
+.header {
+}
 
-.footer {}
+.body {
+}
+
+.footer {
+}

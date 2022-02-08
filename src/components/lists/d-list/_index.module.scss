@@ -10,11 +10,15 @@
 // }
 
 .term {
-  display: inline;
+  display: inline-block;
   font-weight: bold;
 
   &::after {
-    content: ": ";
+    content: ":";
+  }
+
+  &:last-of-type {
+    margin-right: $size-small;
   }
 }
 
@@ -34,4 +38,8 @@
   & .block {
     padding: 0 0 0 calc(#{$size-normal} * 2)
   }
+}
+
+.details {
+  display: inline-block;
 }

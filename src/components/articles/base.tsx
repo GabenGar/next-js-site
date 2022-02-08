@@ -1,5 +1,5 @@
 import { blockComponent } from "#components/meta";
-import styles from "./_index.module.scss";
+import styles from "./base.module.scss";
 
 import type { BlockProps } from "#types/props";
 
