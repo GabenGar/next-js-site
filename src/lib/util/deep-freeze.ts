@@ -1,8 +1,21 @@
 /**
  * Freezes an object recusively.
- * @param obj
+ * @param item
  */
-export function deepFreeze(obj: Record<string, unknown>) {
+export function deepFreeze(item: Record<string, unknown> | Array<unknown>) {
+
+  if (item instanceof Array) {
+    freezeArray(item)
+  }
+
+  if (typeof item === "object") {
+    freezeObject(item as Record<string, unknown>)
+  }
+
+  return Object.freeze(item)
+}
+
+function freezeObject(obj: Record<string, unknown>) {
   // Retrieve the property names defined on object
   const propNames = Object.getOwnPropertyNames(obj);
 
@@ -14,8 +27,12 @@ export function deepFreeze(obj: Record<string, unknown>) {
       continue;
     }
 
+    if (value instanceof Array) {
+      freezeArray(value);
+    }
+
     if (typeof value === "object") {
-      deepFreeze(value as Record<string, unknown>);
+      freezeObject(value as Record<string, unknown>);
     }
   }
 
