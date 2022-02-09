@@ -14,13 +14,22 @@ export function guessLinkType(url: string | URL): {
 
   if (url instanceof URL) {
     type = guessURLType(url);
+    url.searchParams.sort();
     parsedUrl = url.toString();
   } else {
-    type = "external";
+    type = guessURLStringType(url);
     parsedUrl = url;
   }
 
   return { parsedUrl, type };
+}
+
+function guessURLStringType(url: string): ILinkTypes {
+  if (url.startsWith("#")) {
+    return "local";
+  }
+
+  return guessURLType(new URL(url));
 }
 
 /**
@@ -30,8 +39,9 @@ export function guessLinkType(url: string | URL): {
  */
 function guessURLType(url: URL): ILinkTypes {
   if (url.protocol === "mailto:") {
-    return "email"
+    return "email";
   }
+
   if (url.origin === SITE_ORIGIN) {
     return "internal";
   }

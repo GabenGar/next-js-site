@@ -12,7 +12,7 @@ export interface IEmailFields {
   body?: string;
 }
 
-export interface ILinkEmailProps extends HTMLAProps {
+export interface ILinkEmailProps extends Omit<HTMLAProps, "href"> {
   email: string;
   emailFields?: IEmailFields;
 }
@@ -20,7 +20,7 @@ export interface ILinkEmailProps extends HTMLAProps {
 export const LinkEmail = blockComponent<ILinkEmailProps>(
   styles.email,
   ({ email, emailFields, children, ...blockProps }) => {
-    const emailURL = `mailto:${email}`;
+    const emailURL = email.startsWith("mailto:") ? email : `mailto:${email}`;
 
     return (
       <HTMLA {...blockProps} href={emailURL}>

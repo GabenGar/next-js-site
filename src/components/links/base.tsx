@@ -3,6 +3,7 @@ import { guessLinkType } from "./lib";
 import { LinkExternal } from "./external";
 import { LinkInternal } from "./internal";
 import { LinkLocal } from "./local";
+import { LinkEmail } from "./email";
 import styles from "./_index.module.scss";
 
 import type { BlockProps } from "#types/props";
@@ -23,6 +24,13 @@ export const Link = blockComponent<ILinkProps>(
           </LinkLocal>
         );
       }
+      case "email": {
+        return (
+          <LinkEmail email={parsedUrl} {...blockProps}>
+            {children}
+          </LinkEmail>
+        );
+      }
       case "internal": {
         return (
           <LinkInternal href={parsedUrl} {...blockProps}>
@@ -30,7 +38,6 @@ export const Link = blockComponent<ILinkProps>(
           </LinkInternal>
         );
       }
-
       case "external":
       default: {
         return (
