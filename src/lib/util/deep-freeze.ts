@@ -21,3 +21,7 @@ export function deepFreeze(obj: Record<string, unknown>) {
 
   return Object.freeze(obj);
 }
+
+function freezeArray(array: Array<unknown>) {
+  return Object.freeze(array);
+}
