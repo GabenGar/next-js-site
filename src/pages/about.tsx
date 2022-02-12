@@ -1,5 +1,4 @@
 import Head from "next/head";
-import Image from "next/image";
 import { AdminPhoto } from "#assets";
 import { siteTitle } from "#lib/util";
 import { Page } from "#components/pages";
@@ -10,6 +9,7 @@ import {
   ArticleFooter,
 } from "#components/articles";
 import { Heading } from "#components/headings";
+import { ImageFigure } from "#components/images";
 import { DL, DS } from "#components/lists/d-list";
 import styles from "./about.module.scss";
 
@@ -30,7 +30,7 @@ function AboutPage() {
           </Heading>
         </ArticleHeader>
         <ArticleBody>
-          <Image
+          <ImageFigure
             src={AdminPhoto}
             alt="Totally the photo of mine"
             className={styles.photo}

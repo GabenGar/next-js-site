@@ -16,7 +16,7 @@ export type IImageLinkTypes = typeof imageLinkTypes[number];
 export interface IImageProps extends ISpanProps {
   src: string | StaticImageData;
   alt?: string;
-  height?: string;
+  imageHeight?: string;
   type?: IImageLinkTypes;
 }
 interface IInnerImageProps {
@@ -27,8 +27,10 @@ interface IInnerImageProps {
 
 export const Image = blockComponent<IImageProps>(
   styles.block,
-  ({ src, alt = "", height = "30em", type, className, ...blockProps }) => {
-    const isNoImage = !Boolean(typeof src === "string" && src.trim());
+  ({ src, alt = "", imageHeight = "30em", type, className, ...blockProps }) => {
+    const isNoImage = !Boolean(
+      typeof src === "object" || (typeof src === "string" && src.trim())
+    );
     const imgType = type || guessImageLinkType(src);
 
     return (
@@ -36,7 +38,7 @@ export const Image = blockComponent<IImageProps>(
         className={clsx(className, isNoImage && styles.block_noImage)}
         {...blockProps}
         // react-typescript-friendly way of passing css variables
-        style={{ "--local-height": height } as CSSProperties}
+        style={{ "--local-height": imageHeight } as CSSProperties}
       >
         {isNoImage ? (
           <p>No Image Available</p>
@@ -50,9 +52,8 @@ export const Image = blockComponent<IImageProps>(
 
 function InnerImage({ type, src, alt }: IInnerImageProps) {
   switch (type) {
-
     case "internal": {
-      return <ImageLocal src={src} />;
+      return <ImageLocal className={styles.image} src={src} alt={alt} />;
     }
 
     case "external":

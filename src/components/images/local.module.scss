@@ -1,1 +1,3 @@
-.block {}
+.block {
+  height: var(--local-height, 30em);
+}

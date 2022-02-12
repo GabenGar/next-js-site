@@ -1,23 +1,20 @@
 import { useState } from "react";
 import clsx from "clsx";
 import { blockComponent } from "#components/meta";
-import { HTMLDiv } from "#components/html/div";
-import { HTMLFigure } from "#components/html/figure";
-import { HTMLFigCaption } from "#components/html/figcaption";
-import { HTMLSpan } from "#components/html/span";
+import { Figure, FigCaption } from "#components/fancy/figure";
 import { Button } from "#components/buttons";
 import { Image } from "./base";
 import styles from "./gallery.module.scss";
 
 import type { ReactNode } from "react";
-import type { HTMLDivProps } from "#components/html/div";
+import type { IDivProps } from "#types/props";
 
 export interface IGalleryItem {
   src: string;
   caption?: string;
 }
 
-export interface IGalleryProps extends HTMLDivProps {
+export interface IGalleryProps extends IDivProps {
   galleryTitle?: ReactNode;
   galleryItems: IGalleryItem[];
 }
@@ -47,16 +44,16 @@ export const Gallery = blockComponent<IGalleryProps>(
     }
 
     return (
-      <HTMLDiv {...blockProps}>
-        <HTMLDiv className={styles.title}>{galleryTitle}</HTMLDiv>
-        <HTMLDiv className={styles.items}>
+      <div {...blockProps}>
+        <div className={styles.title}>{galleryTitle}</div>
+        <div className={styles.items}>
           {isNoImages ? (
-            <HTMLFigure className={clsx(styles.item, styles.item_selected)}>
-              <Image alt="" />
-            </HTMLFigure>
+            <Figure className={clsx(styles.item, styles.item_selected)}>
+              <Image src="" alt="No images present." />
+            </Figure>
           ) : (
             galleryItems.map((galleryItem, index) => (
-              <HTMLFigure
+              <Figure
                 key={galleryItem.src + index}
                 className={clsx(
                   styles.item,
@@ -65,26 +62,26 @@ export const Gallery = blockComponent<IGalleryProps>(
               >
                 <Image src={galleryItem.src} alt="" />
                 {galleryItem.caption && (
-                  <HTMLFigCaption>{galleryItem.caption}</HTMLFigCaption>
+                  <FigCaption>{galleryItem.caption}</FigCaption>
                 )}
-              </HTMLFigure>
+              </Figure>
             ))
           )}
-        </HTMLDiv>
+        </div>
         {!isOneOrNoImage && (
-          <HTMLDiv className={styles.buttons}>
+          <div className={styles.buttons}>
             <Button className={styles.button} onClick={prevItem}>
               Prev
             </Button>
-            <HTMLSpan>
+            <span>
               {selectedItem + 1}/{galleryItems.length}
-            </HTMLSpan>
+            </span>
             <Button className={styles.button} onClick={nextItem}>
               Next
             </Button>
-          </HTMLDiv>
+          </div>
         )}
-      </HTMLDiv>
+      </div>
     );
   }
 );
