@@ -1,5 +1,8 @@
 import { SITE_ORIGIN } from "#environment/vars";
-import type { ILinkTypes } from "./types";
+
+const linkTypes = ["external", "internal", "local", "email"] as const;
+
+export type ILinkTypes = typeof linkTypes[number];
 
 /**
  * Guess the link type from provided url.

@@ -1,5 +1,5 @@
 import { blockComponent } from "#components/meta";
-import { guessLinkType } from "./lib";
+import { guessLinkType } from "#lib/util";
 import { LinkExternal } from "./external";
 import { LinkInternal } from "./internal";
 import { LinkLocal } from "./local";

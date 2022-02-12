@@ -11,9 +11,11 @@ import {
 } from "#components/articles";
 import { Heading } from "#components/headings";
 import { DL, DS } from "#components/lists/d-list";
-import styles from "./about.module.scss"
+import styles from "./about.module.scss";
 
 function AboutPage() {
+  const pageTitle = "About me";
+
   return (
     <Page heading={pageTitle}>
       <Head>
@@ -23,7 +25,9 @@ function AboutPage() {
       </Head>
       <Article>
         <ArticleHeader>
-          <Heading level={2} className={styles.heading}>Gaben Bengar</Heading>
+          <Heading level={2} className={styles.heading}>
+            Gaben Bengar
+          </Heading>
         </ArticleHeader>
         <ArticleBody>
           <Image
