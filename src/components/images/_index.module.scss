@@ -1,4 +1,5 @@
 .block {
+  position: relative;
   display: inline-block;
   height: var(--local-height, 30em);
 

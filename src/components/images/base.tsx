@@ -23,37 +23,48 @@ interface IInnerImageProps {
   type: IImageLinkTypes;
   src: string | StaticImageData;
   alt?: string;
+  /**
+   * Used to limit the size of local image due its API.
+   */
+  imageHeight?: string;
 }
 
 export const Image = blockComponent<IImageProps>(
   styles.block,
   ({ src, alt = "", imageHeight = "30em", type, className, ...blockProps }) => {
-    const isNoImage = !Boolean(
+    const isImage = Boolean(
       typeof src === "object" || (typeof src === "string" && src.trim())
     );
     const imgType = type || guessImageLinkType(src);
 
     return (
       <span
-        className={clsx(className, isNoImage && styles.block_noImage)}
+        className={clsx(className, !isImage && styles.block_noImage)}
         {...blockProps}
         // react-typescript-friendly way of passing css variables
         style={{ "--local-height": imageHeight } as CSSProperties}
       >
-        {isNoImage ? (
+        {!isImage ? (
           <p>No Image Available</p>
         ) : (
-          <InnerImage src={src} alt={alt} type={imgType} />
+          <InnerImage src={src} alt={alt} type={imgType} imageHeight={imageHeight} />
         )}
       </span>
     );
   }
 );
 
-function InnerImage({ type, src, alt }: IInnerImageProps) {
+function InnerImage({ type, src, alt, imageHeight }: IInnerImageProps) {
   switch (type) {
     case "internal": {
-      return <ImageLocal className={styles.image} src={src} alt={alt} />;
+      return (
+        <ImageLocal
+          className={styles.image}
+          src={src}
+          alt={alt}
+          layout="fill"
+        />
+      );
     }
 
     case "external":

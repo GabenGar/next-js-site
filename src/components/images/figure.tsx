@@ -1,7 +1,7 @@
 import { blockComponent } from "#components/meta";
-import { Figure } from "#components/fancy/figure";
+import { Figure, FigCaption } from "#components/fancy/figure";
 import { Image } from "#components/images";
-import styles from "./_index.module.scss";
+import styles from "./figure.module.scss";
 
 import type { ReactNode } from "react";
 import type { IFigureProps } from "#components/fancy/figure";
@@ -24,6 +24,7 @@ export const ImageFigure = blockComponent<IImageFigureProps>(
           alt={alt}
           imageHeight={imageHeight}
         />
+        {figCaption && <FigCaption>{figCaption}</FigCaption>}
       </Figure>
     );
   }

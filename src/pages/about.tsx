@@ -29,14 +29,15 @@ function AboutPage() {
             Gaben Bengar
           </Heading>
         </ArticleHeader>
-        <ArticleBody>
+        <ArticleBody className={styles.body}>
           <ImageFigure
             src={AdminPhoto}
             alt="Totally the photo of mine"
-            className={styles.photo}
+            figCaption="Totally me"
+            imageHeight="20em"
           />
           <p>
-            I am an aspiring <del>rapper</del>
+            I am an aspiring <del>rapper</del>{" "}
             <ins>frontend developer</ins> from Musohranovo, Russia.
           </p>
           <DL></DL>

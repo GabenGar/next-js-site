@@ -1,6 +1,11 @@
-.block {}
+@use "../../styles/variables/sass.scss" as *;
+
+.block {
+  background-color: var(--colour1-secondary);
+  padding: $size-small;
+}
 
 .image {
   width: 100%;
-  height: 100%;
+  height: var(--local-height, 100%);
 }

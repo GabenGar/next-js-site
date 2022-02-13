@@ -1,8 +1,8 @@
-import Image from "next/image";
+import NextImage from "next/image";
 import { blockComponent } from "#components/meta";
 import styles from "./local.module.scss";
 
-import type { ImageProps,  ImageLoader } from "next/image";
+import type { ImageProps } from "next/image";
 
 export interface IImageLocalProps extends ImageProps {}
 
@@ -12,6 +12,6 @@ export interface IImageLocalProps extends ImageProps {}
 export const ImageLocal = blockComponent<IImageLocalProps>(
   styles.block,
   ({ src, alt = "", ...blockProps }) => {
-    return <Image src={src} alt={alt} {...blockProps} />;
+    return <NextImage src={src} alt={alt} {...blockProps} />;
   }
 );
