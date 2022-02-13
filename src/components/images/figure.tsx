@@ -3,7 +3,7 @@ import { Figure, FigCaption } from "#components/fancy/figure";
 import { Image } from "#components/images";
 import styles from "./figure.module.scss";
 
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import type { IFigureProps } from "#components/fancy/figure";
 
 export interface IImageFigureProps extends IFigureProps {
@@ -11,13 +11,24 @@ export interface IImageFigureProps extends IFigureProps {
   alt?: string;
   figCaption?: ReactNode;
   imageHeight?: string;
+  maxWidth?: string;
 }
 
 export const ImageFigure = blockComponent<IImageFigureProps>(
   styles.block,
-  ({ src, alt, figCaption, imageHeight, ...blockProps }) => {
+  ({
+    src,
+    alt,
+    figCaption,
+    imageHeight,
+    maxWidth = "360px",
+    ...blockProps
+  }) => {
     return (
-      <Figure {...blockProps}>
+      <Figure
+        {...blockProps}
+        style={{ "--local-max-width": maxWidth } as CSSProperties}
+      >
         <Image
           className={styles.image}
           src={src}

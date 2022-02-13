@@ -1,8 +1,10 @@
 @use "../../styles/variables/sass.scss" as *;
 
 .block {
+  max-width: var(--local-max-width, #{$width-mobile});
   background-color: var(--colour1-secondary);
   padding: $size-small;
+  margin: 0 auto;
 }
 
 .image {
