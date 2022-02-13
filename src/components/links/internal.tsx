@@ -1,7 +1,7 @@
 import Link from "next/link";
 import clsx from "clsx";
 import { blockComponent } from "#components/meta";
-import { Anchour } from "#components/fancy/a";
+// import { Anchour } from "#components/fancy/a";
 import styles from "./_index.module.scss";
 
 import type { LinkProps } from "next/link";
@@ -16,6 +16,9 @@ export interface InternalProps extends LinkProps {
   children?: ReactNode;
 }
 
+/**
+ * TODO: ref component
+ */
 export const LinkInternal = blockComponent<InternalProps>(
   styles.block,
   ({ children, className, isNewPage = false, ...blockProps }) => {

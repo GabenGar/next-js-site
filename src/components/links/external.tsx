@@ -22,12 +22,7 @@ export const LinkExternal = blockComponent<LinkExternalProps>(
       ? "external noopener"
       : "external nofollow noopener noreferrer";
     return (
-      <HTMLA
-        href={href}
-        target={target}
-        {...blockProps}
-        rel={relEx}
-      >
+      <HTMLA href={href} target={target} {...blockProps} rel={relEx}>
         {children}
       </HTMLA>
     );

@@ -2,7 +2,8 @@ import { useState } from "react";
 import clsx from "clsx";
 import { blockComponent } from "#components/meta";
 import { ImageLink } from "#components/image-link";
-import { Button, Figure, FigCaption } from "#components/fancy";
+import { Button } from "#components/fancy";
+import { Figure, FigCaption } from "#components/fancy/figure";
 import styles from "./_index.module.scss";
 
 import type { ComponentPropsWithoutRef } from "react";

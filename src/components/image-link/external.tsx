@@ -4,7 +4,7 @@ import styles from "./_index.module.scss";
 
 import type { LinkExternalProps } from "#components/links";
 
-interface Props extends LinkExternalProps {
+interface IImageLinkProps extends LinkExternalProps {
   src: string;
   href?: string;
   alt?: string;
@@ -12,7 +12,7 @@ interface Props extends LinkExternalProps {
   isLazy?: boolean;
 }
 
-export const ImageLink = blockComponent<Props>(
+export const ImageLink = blockComponent<IImageLinkProps>(
   styles.block,
   ({
     src,

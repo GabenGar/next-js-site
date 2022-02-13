@@ -4,9 +4,7 @@ import styles from "./base.module.scss";
 
 import type { BlockProps } from "#types/props";
 
-export interface HTMLAProps extends BlockProps<"a"> {
-  href: string;
-}
+export interface HTMLAProps extends BlockProps<"a"> {}
 
 /**
  * TODO: forward ref

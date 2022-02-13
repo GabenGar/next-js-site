@@ -1,10 +1,10 @@
 import { blockComponent } from "#components/meta";
-import { HTMLDl } from "#components/html/dl";
+import { DL, DS, DT, DD } from "#components/lists/d-list";
 import styles from "./_index.module.scss";
 
-import type { HTMLDlProps } from "#components/html/dl";
+import type { IDLProps } from "#components/lists/d-list";
 
-export interface ErrorDictProps extends HTMLDlProps {
+export interface ErrorDictProps extends IDLProps {
   errors: Record<string, string[]>;
 }
 
@@ -12,16 +12,16 @@ export const ErrorDict = blockComponent<ErrorDictProps>(
   styles.dict,
   ({ errors, ...blockProps }) => {
     return (
-      <HTMLDl {...blockProps}>
+      <DL {...blockProps}>
         {Object.entries(errors).map(([key, errors]) => (
-          <div key={key}>
-            <dt>{key}</dt>
+          <DS key={key}>
+            <DT>{key}</DT>
             {errors.map((error, index) => (
-              <dd key={index + error}>{error}</dd>
+              <DD key={index + error}>{error}</DD>
             ))}
-          </div>
+          </DS>
         ))}
-      </HTMLDl>
+      </DL>
     );
   }
 );
