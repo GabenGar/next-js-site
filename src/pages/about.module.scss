@@ -2,7 +2,7 @@
 
 .block {
   & > * {
-    max-width: $width-mobile;
+    max-width: $width-phone;
     margin: 0 auto;
   }
 }
@@ -11,8 +11,13 @@
   text-align: center;
 }
 
+.bio {
+  margin-top: $size-small;
+}
+
 .skills {
-  text-align: start;
+  --local-height: 1.5em;
+  --local-width: 1.5em;
 }
 
 .annotation {

@@ -11,6 +11,7 @@ import {
 import { Heading } from "#components/headings";
 import { ImageFigure } from "#components/images";
 import { DL, DS, DT, DD } from "#components/lists/d-list";
+import { SVGIcon } from "#components/icons";
 import styles from "./about.module.scss";
 
 function AboutPage() {
@@ -36,6 +37,7 @@ function AboutPage() {
             figCaption="Totally me"
             imageHeight="20em"
           />
+          <Heading level={3}>Bio</Heading>
           <p>
             I am an aspiring <del>rapper</del> <ins>frontend developer</ins>{" "}
             from Musohranovo, Russia.
@@ -47,29 +49,65 @@ function AboutPage() {
               <DD>...subtechs</DD>
             </DS>
             <DS>
-              <DT>HTML</DT>
-              <DD>JSX</DD>{" "}
-              <DD>PUG (formerly Jade)</DD>{" "}
-              <DD>Jinja</DD>
-            </DS>
-            <DS>
-              <DT>CSS</DT>
-              <DD>SASS</DD>{" "}
-              <DD>CCS modules</DD>
-            </DS>
-            <DS>
-              <DT>Javascript</DT>
-              <DD>React</DD>{" "}
-              <DD>NextJS</DD>{" "}
-              <DD>Webpack</DD>{" "}
-              <DD>NodeJS</DD>{" "}
-              <DD>Express</DD>
+              <DT>
+                <SVGIcon iconID="html5" />
+                <span>HTML</span>
+              </DT>
+              <DD>JSX</DD>
+              <DD>
+                <SVGIcon iconID="pugjs" />
+                <span>PUG (formerly Jade)</span>
+              </DD>
+              <DD>
+                {/* TODO: fix markup and styles */}
+                {/* <SVGIcon iconID="jinja" /> */}
+                <span>Jinja</span>
+              </DD>
             </DS>
             <DS>
               <DT>
-                Database
+                <SVGIcon iconID="css3-alt" />
+                <span>CSS</span>
               </DT>
-              <DD>PostgreSQL</DD>
+              <DD>
+                <SVGIcon iconID="sass" />
+                <span>SASS</span>
+              </DD>
+              <DD>CSS modules</DD>
+            </DS>
+            <DS>
+              <DT>
+                <SVGIcon iconID="js" />
+                <span>Javascript</span>
+              </DT>
+              <DD>
+                <SVGIcon iconID="react" />
+                <span>React</span>
+              </DD>
+              <DD>
+              <SVGIcon iconID="nextjs" />
+                <span>NextJS</span>
+              </DD>
+              <DD>
+                <span>Webpack</span>
+              </DD>
+              <DD>
+                <SVGIcon iconID="node-js" />
+                <span>NodeJS</span>
+              </DD>
+              <DD>
+                <span>Express</span>
+              </DD>
+            </DS>
+            <DS>
+              <DT>
+                <SVGIcon iconID="database" />
+                <span>Database</span>
+              </DT>
+              <DD>
+                <SVGIcon iconID="postgresql-logo" />
+                <span>PostgreSQL</span>
+              </DD>
             </DS>
           </DL>
         </ArticleBody>
