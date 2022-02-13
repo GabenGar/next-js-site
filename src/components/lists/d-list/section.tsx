@@ -1,19 +1,19 @@
 import { blockComponent } from "#components/meta";
 import { DescriptionTerm } from "./term";
-import { DescriptionDetails } from "./details";
+import { DDetails } from "./details";
 import styles from "./_index.module.scss";
 
 import type { ReactNode } from "react";
 import type { BlockProps } from "#types/props";
 
-interface Props extends BlockProps<"div"> {
+export interface DSectionProps extends BlockProps<"div"> {
   dKey?: ReactNode;
   dValue?: ReactNode;
 }
 
-export const DescriptionSection = blockComponent<Props>(
+export const DSection = blockComponent<DSectionProps>(
   styles.section,
-  ({ dKey, dValue, children, className, ...blockProps }) => {
+  ({ dKey, dValue, children, ...blockProps }) => {
     return (
       <div {...blockProps}>
         {children ? (
@@ -21,7 +21,7 @@ export const DescriptionSection = blockComponent<Props>(
         ) : (
           <>
             <DescriptionTerm>{dKey}</DescriptionTerm>
-            <DescriptionDetails>{dValue}</DescriptionDetails>
+            <DDetails>{dValue}</DDetails>
           </>
         )}
       </div>

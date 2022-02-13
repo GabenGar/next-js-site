@@ -12,6 +12,9 @@ export interface RootlessProps
 export type BlockProps<T extends keyof JSX.IntrinsicElements> =
   ComponentPropsWithoutRef<T>;
 
+export interface ISpanProps extends BlockProps<"span"> {}
+export interface IDivProps extends BlockProps<"div"> {}
+
 /**
  * Props shared across all pages.
  */

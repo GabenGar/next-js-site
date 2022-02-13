@@ -1,5 +1,5 @@
 export { Link } from "./base";
-export type { LinkProps } from "./base";
+export type { ILinkProps } from "./base";
 export { LinkExternal } from "./external";
 export type { LinkExternalProps } from "./external";
 export { LinkInternal } from "./internal";

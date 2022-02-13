@@ -48,6 +48,12 @@ export function BaseLayout({ children }: Props) {
                 <span>Home</span>
               </LinkInternal>
             </NavItem>
+            <NavItem>
+              <LinkInternal href="/about" className={styles.navLink}>
+                <SVGIcon iconID="biohazard" />
+                <span>About</span>
+              </LinkInternal>
+            </NavItem>
             <AccountNav />
           </NavList>
         </FancyNav>

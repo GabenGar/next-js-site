@@ -1,0 +1,16 @@
+@use "../../styles/variables/sass.scss" as *;
+
+.block {
+  background-color: var(--colour1-primary);
+  border-radius: $radius-normal;
+  padding: $size-normal;
+}
+
+.header {
+}
+
+.body {
+}
+
+.footer {
+}

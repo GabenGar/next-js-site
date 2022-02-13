@@ -3,9 +3,9 @@ import styles from "./_index.module.scss";
 
 import type { BlockProps } from "#types/props";
 
-interface Props extends BlockProps<"figure"> {}
+export interface IFigureProps extends BlockProps<"figure"> {}
 
-export function Figure({ children, className, ...blockProps }: Props) {
+export function Figure({ children, className, ...blockProps }: IFigureProps) {
   const blockClass = clsx(styles.block, className);
 
   return (

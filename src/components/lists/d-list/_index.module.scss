@@ -1,4 +1,4 @@
-@use "../../../styles/variables/sass" as *;
+@use "../../../styles/variables/sass.scss" as *;
 
 .block {
   // background-color: var(--colour1-primary);
@@ -6,23 +6,33 @@
   // padding: $size-normal;
 }
 
-// .section {
-// }
+.section {
+  display: flex;
+  align-items: center;
+  flex-flow: row wrap;
+}
 
 .term {
-  display: inline;
+  display: inline-flex;
+  align-items: center;
   font-weight: bold;
 
   &::after {
-    content: ": ";
+    content: ":";
+  }
+
+  &:last-of-type {
+    margin-right: $size-small;
   }
 }
 
 .details {
-  display: inline;
+  display: inline-flex;
+  align-items: center;
 
   &::after {
-    content: ", ";
+    content: ",";
+    margin-right: $size-little;
   }
 
   &:last-child {
@@ -32,6 +42,6 @@
   }
 
   & .block {
-    padding: 0 0 0 calc(#{$size-normal} * 2)
+    padding: 0 0 0 calc(#{$size-normal} * 2);
   }
 }

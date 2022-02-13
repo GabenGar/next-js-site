@@ -1,0 +1,25 @@
+@use "../styles/variables/sass.scss" as *;
+
+.block {
+  & > * {
+    max-width: $width-phone;
+    margin: 0 auto;
+  }
+}
+
+.heading {
+  text-align: center;
+}
+
+.bio {
+  margin-top: $size-small;
+}
+
+.skills {
+  --local-height: 1.5em;
+  --local-width: 1.5em;
+}
+
+.annotation {
+  color: var(--colour0-secondary);
+}
