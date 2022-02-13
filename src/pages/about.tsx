@@ -10,14 +10,14 @@ import {
 } from "#components/articles";
 import { Heading } from "#components/headings";
 import { ImageFigure } from "#components/images";
-import { DL, DS } from "#components/lists/d-list";
+import { DL, DS, DT, DD } from "#components/lists/d-list";
 import styles from "./about.module.scss";
 
 function AboutPage() {
   const pageTitle = "About me";
 
   return (
-    <Page heading={pageTitle}>
+    <Page heading={pageTitle} pageClassName={styles.block}>
       <Head>
         <title>{siteTitle(pageTitle)}</title>
         <meta name="description" content="The profile of mine." />
@@ -29,7 +29,7 @@ function AboutPage() {
             Gaben Bengar
           </Heading>
         </ArticleHeader>
-        <ArticleBody className={styles.body}>
+        <ArticleBody>
           <ImageFigure
             src={AdminPhoto}
             alt="Totally the photo of mine"
@@ -37,10 +37,41 @@ function AboutPage() {
             imageHeight="20em"
           />
           <p>
-            I am an aspiring <del>rapper</del>{" "}
-            <ins>frontend developer</ins> from Musohranovo, Russia.
+            I am an aspiring <del>rapper</del> <ins>frontend developer</ins>{" "}
+            from Musohranovo, Russia.
           </p>
-          <DL></DL>
+          <Heading level={3}>Skills</Heading>
+          <DL className={styles.skills}>
+            <DS className={styles.annotation}>
+              <DT>Tech</DT>
+              <DD>...subtechs</DD>
+            </DS>
+            <DS>
+              <DT>HTML</DT>
+              <DD>JSX</DD>{" "}
+              <DD>PUG (formerly Jade)</DD>{" "}
+              <DD>Jinja</DD>
+            </DS>
+            <DS>
+              <DT>CSS</DT>
+              <DD>SASS</DD>{" "}
+              <DD>CCS modules</DD>
+            </DS>
+            <DS>
+              <DT>Javascript</DT>
+              <DD>React</DD>{" "}
+              <DD>NextJS</DD>{" "}
+              <DD>Webpack</DD>{" "}
+              <DD>NodeJS</DD>{" "}
+              <DD>Express</DD>
+            </DS>
+            <DS>
+              <DT>
+                Database
+              </DT>
+              <DD>PostgreSQL</DD>
+            </DS>
+          </DL>
         </ArticleBody>
         {/* <ArticleFooter></ArticleFooter> */}
       </Article>

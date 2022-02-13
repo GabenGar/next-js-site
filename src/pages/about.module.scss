@@ -1,7 +1,20 @@
+@use "../styles/variables/sass.scss" as *;
+
+.block {
+  & > * {
+    max-width: $width-mobile;
+    margin: 0 auto;
+  }
+}
+
 .heading {
   text-align: center;
 }
 
-.body {
-  text-align: center;
+.skills {
+  text-align: start;
+}
+
+.annotation {
+  color: var(--colour0-secondary);
 }
