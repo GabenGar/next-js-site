@@ -1,4 +1,7 @@
+import { BlockProps } from "#types/props";
 import clsx from "clsx";
+
+type FuncComponent<T> = (props: T, ref?: any) => JSX.Element;
 
 /**
  * TODO: fix typing.
@@ -6,15 +9,15 @@ import clsx from "clsx";
  * @param functionComponent
  * @returns Wrapped function.
  */
-export function blockComponent<T>(
+export function blockComponent<Props>(
   blockClassName: string | string[],
-  functionComponent: (props: T) => JSX.Element
-): (props: T) => JSX.Element {
-  // @ts-expect-error fix later
-  return ({ className, ...blockProps }: T) => {
+  functionComponent: FuncComponent<Props>
+): FuncComponent<Props> {
+  // @ts-expect-error
+  return ({ className, ...blockProps }: Props, ref) => {
     const baseClass = clsx(blockClassName, className);
 
-    // @ts-expect-error fix later
-    return functionComponent({ className: baseClass, ...blockProps });
+    // @ts-expect-error
+    return functionComponent({ className: baseClass, ...blockProps }, ref);
   };
 }
