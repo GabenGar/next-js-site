@@ -1,4 +1,8 @@
+import path from "path";
+
 export const ERROR_MESSAGE = "FLYING POLAR BUFFALO ERROR";
+
+export const BLOGS_FOLDER = path.join(process.cwd(), "src", "assets", "blog");
 
 export const HTTP_NOT_AUTHORIZED = 402;
 
