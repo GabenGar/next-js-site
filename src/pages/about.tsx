@@ -34,6 +34,7 @@ function AboutPage() {
           <ImageFigure
             src={AdminPhoto}
             alt="Totally the photo of mine"
+            href={AdminPhoto.src}
             figCaption="Totally me"
             imageHeight="20em"
           />

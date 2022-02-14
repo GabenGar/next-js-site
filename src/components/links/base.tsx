@@ -16,6 +16,7 @@ export const Link = blockComponent<ILinkProps>(
   styles.block,
   ({ url, children, ...blockProps }) => {
     const { type, parsedUrl } = guessLinkType(url);
+
     switch (type) {
       case "local": {
         return (
@@ -32,8 +33,9 @@ export const Link = blockComponent<ILinkProps>(
         );
       }
       case "internal": {
+        const { target, ...finalProps } = blockProps;
         return (
-          <LinkInternal href={parsedUrl} {...blockProps}>
+          <LinkInternal {...finalProps} href={parsedUrl} target={target}>
             {children}
           </LinkInternal>
         );
@@ -41,7 +43,7 @@ export const Link = blockComponent<ILinkProps>(
       case "external":
       default: {
         return (
-          <LinkExternal href={parsedUrl} {...blockProps}>
+          <LinkExternal {...blockProps} href={parsedUrl}>
             {children}
           </LinkExternal>
         );

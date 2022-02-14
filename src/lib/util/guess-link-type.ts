@@ -32,6 +32,10 @@ function guessURLStringType(url: string): ILinkTypes {
     return "local";
   }
 
+  if (url.startsWith("/")) {
+    return "internal";
+  }
+
   return guessURLType(new URL(url));
 }
 
