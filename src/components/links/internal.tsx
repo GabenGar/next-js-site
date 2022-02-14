@@ -5,13 +5,10 @@ import { blockComponent } from "#components/meta";
 import styles from "./_index.module.scss";
 
 import type { LinkProps } from "next/link";
-import type { ReactNode } from "react";
+import type { HTMLAttributeAnchorTarget, ReactNode } from "react";
 
 export interface InternalProps extends LinkProps {
-  /**
-   * Opens a new page/tab if `true`.
-   */
-  isNewPage?: boolean;
+  target?: HTMLAttributeAnchorTarget;
   className?: string;
   children?: ReactNode;
 }
@@ -21,13 +18,13 @@ export interface InternalProps extends LinkProps {
  */
 export const LinkInternal = blockComponent<InternalProps>(
   styles.block,
-  ({ children, className, isNewPage = false, ...blockProps }) => {
+  ({ children, target = "_self", className, ...blockProps }) => {
     const linkClass = clsx(styles.internal, className);
 
     return (
       <Link {...blockProps}>
         {/* Not using `Anchour` because `Link` doesn't like it as a child element. */}
-        <a className={linkClass} target={isNewPage ? "_blank" : "_self"}>
+        <a className={linkClass} target={target}>
           {children}
         </a>
       </Link>
