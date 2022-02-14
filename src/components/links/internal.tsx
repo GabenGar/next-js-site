@@ -1,13 +1,13 @@
 import Link from "next/link";
 import clsx from "clsx";
 import { blockComponent } from "#components/meta";
-// import { Anchour } from "#components/fancy/a";
+import { HTMLA } from "#components/html/a";
 import styles from "./_index.module.scss";
 
 import type { LinkProps } from "next/link";
 import type { HTMLAttributeAnchorTarget, ReactNode } from "react";
 
-export interface InternalProps extends LinkProps {
+export interface InternalProps extends Omit<LinkProps, "passHref"> {
   target?: HTMLAttributeAnchorTarget;
   className?: string;
   children?: ReactNode;
@@ -22,11 +22,10 @@ export const LinkInternal = blockComponent<InternalProps>(
     const linkClass = clsx(styles.internal, className);
 
     return (
-      <Link {...blockProps}>
-        {/* Not using `Anchour` because `Link` doesn't like it as a child element. */}
-        <a className={linkClass} target={target}>
+      <Link {...blockProps} passHref>
+        <HTMLA className={linkClass} target={target}>
           {children}
-        </a>
+        </HTMLA>
       </Link>
     );
   }

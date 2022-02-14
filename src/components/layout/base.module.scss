@@ -34,6 +34,7 @@
   align-content: baseline;
   gap: $size-normal;
   background-color: var(--colour1-tertiary);
+  padding-bottom: $size-normal;
 
   & > * {
     padding: 0 $size-normal;
