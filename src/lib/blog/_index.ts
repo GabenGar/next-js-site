@@ -58,10 +58,11 @@ export async function readBlogFolder() {
 export async function getBlogPost(slug: string): Promise<BlogPost> {
   const filePath = path.join(BLOGS_FOLDER, `${slug}.md`);
   const blogFileContent = await fse.readFile(filePath, { encoding: "utf-8" });
-  const { content, data } = matter(blogFileContent);
+  const { content, data, excerpt } = matter(blogFileContent, { excerpt: true });
   const parsedContent = await remark().use(html).process(content);
   const blogPost = {
     slug,
+    excerpt,
     content: parsedContent.toString(),
     ...(data as MDMatter),
   };

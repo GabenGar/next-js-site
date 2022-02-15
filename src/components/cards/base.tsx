@@ -3,14 +3,19 @@ import styles from "./base.module.scss";
 
 import type { BlockProps } from "#types/props";
 
-export interface CardProps extends BlockProps<"article"> {}
+const headingLevels = [1, 2, 3, 4, 5, 6] as const;
+export type HeadingLevel = typeof headingLevels[number]
+
+export interface ICardProps extends BlockProps<"article"> {
+  headingLevel?: HeadingLevel;
+}
 interface HeaderProps extends BlockProps<"header"> {}
 interface BodyProps extends BlockProps<"section"> {}
 interface FooterProps extends BlockProps<"footer"> {}
 
 export const Card = blockComponent(
   styles.block,
-  ({ children, ...blockProps }: CardProps) => {
+  ({ children, ...blockProps }: ICardProps) => {
     return <article {...blockProps}>{children}</article>;
   }
 );

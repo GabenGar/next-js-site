@@ -13,3 +13,4 @@ Install PostgreSQL for NextJS project.
 
 
 ## Abstract 
+Install PSQL.

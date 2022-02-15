@@ -1,14 +1,15 @@
 import Head from "next/head";
 import { IS_DEVELOPMENT } from "#environment/derived";
 import { siteTitle } from "#lib/util";
-import { Page } from "#components/pages";
 import { getBlogPosts } from "#lib/blog";
+import { Page } from "#components/pages";
+import { CardList } from "#components/lists";
+import { BlogPostCard } from "#components/entities/blog";
 
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import type { ParsedUrlQuery } from "querystring";
 import type { BasePageProps } from "#types/pages";
 import type { BlogPost } from "#lib/blog";
-import { JSONView } from "#components/json";
 
 interface IBlogPageProps extends BasePageProps {
   posts: BlogPost[];
@@ -23,8 +24,11 @@ function BlogPage({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
         <title>{siteTitle("Blog")}</title>
         <meta name="description" content="My blog" />
       </Head>
-      {/* @ts-expect-error */}
-      <JSONView json={posts} />
+      <CardList>
+        {posts.map((post) => (
+          <BlogPostCard key={post.slug} post={post} />
+        ))}
+      </CardList>
     </Page>
   );
 }
