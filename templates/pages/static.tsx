@@ -5,8 +5,9 @@ import { Page } from "#components/pages";
 import { BaseLayout as Layout } from "#components/layout";
 
 import type {
-  GetServerSideProps,
-  InferGetServerSidePropsType,
+  GetStaticPaths,
+  GetStaticProps,
+  InferGetStaticPropsType,
   NextPage,
 } from "next";
 import type { ParsedUrlQuery } from "querystring";
@@ -16,9 +17,7 @@ interface ITemplatePageProps extends BasePageProps {}
 
 interface ITemplatePageParams extends ParsedUrlQuery {}
 
-function TemplatePage({}: InferGetServerSidePropsType<
-  typeof getServerSideProps
->) {
+function TemplatePage({}: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <Page heading="template heading">
       <Head>
@@ -34,9 +33,19 @@ TemplatePage.getLayout = function getLayout(page: NextPage) {
   return <Layout>{page}</Layout>;
 };
 
-export const getServerSideProps: GetServerSideProps<ITemplatePageProps, ITemplatePageParams> = async (
+export const getStaticPaths: GetStaticPaths<ITemplatePageParams> = async (
   context
 ) => {
+  return {
+    paths: [{ params: {} }],
+    fallback: false,
+  };
+};
+
+export const getStaticProps: GetStaticProps<
+  ITemplatePageProps,
+  ITemplatePageParams
+> = async (context) => {
   if (!IS_DEVELOPMENT) {
     return {
       notFound: true,
@@ -47,8 +56,8 @@ export const getServerSideProps: GetServerSideProps<ITemplatePageProps, ITemplat
 
   if (!data) {
     return {
-      notFound: true
-    }
+      notFound: true,
+    };
   }
 
   return {

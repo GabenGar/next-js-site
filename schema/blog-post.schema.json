@@ -1,0 +1,30 @@
+{
+  "title": "BlogPost",
+  "description": "The post of the blog.",
+  "required": ["slug", "title", "created_at", "content"],
+  "properties": {
+    "slug": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "excerpt": {
+      "type": "string"
+    },
+    "content": {
+      "type": "string"
+    },
+    "author": {
+      "type": "string"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "edited_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

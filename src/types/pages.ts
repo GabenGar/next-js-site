@@ -1,3 +1,7 @@
+/**
+ * Props shared across all pages.
+ */
 export interface BasePageProps extends Record<string, unknown> {
-  errors?: Record<string, string[]> | string[]
+  theme?: string;
+  errors?: Record<string, string[]> | Array<string>
 }
