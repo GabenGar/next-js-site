@@ -1,10 +1,10 @@
 ---
-title: "How to run PostgreSQL on NextJS (almost) painlessly."
+title: "PostgreSQL and NextJS"
 created_at: "2022-02-14T18:28:57.395Z"
 edited_at: null
 author: "Gabengar"
 ---
-Install PostgreSQL for NextJS project.
+How to run PostgreSQL on NextJS (almost) painlessly.
 ---
 # PostgreSQL and NextJS
 
@@ -13,4 +13,4 @@ Install PostgreSQL for NextJS project.
 
 
 ## Abstract 
-Install PSQL.
+Apparently there is no plug-n-play package for installing PostgeSQL (without ORM at least).

@@ -2,6 +2,7 @@ import { blockComponent } from "#components/meta";
 import { Card, CardBody, CardHeader, CardFooter } from "#components/cards";
 import { Heading } from "#components/headings";
 import { LinkInternal } from "#components/links";
+import { DL, DS } from "#components/lists/d-list";
 import styles from "./card.module.scss";
 
 import type { BlogPost } from "#lib/blog";
@@ -18,7 +19,10 @@ export const BlogPostCard = blockComponent<IBlogPostProps>(
       <Card {...blockProps}>
         <CardHeader>
           <Heading level={headingLevel}>{post.title}</Heading>
-          <p>By {post.author}</p>
+          <DL className={styles.meta}>
+            <DS dKey={"By"} dValue={post.author} />
+            <DS dKey={"Published"} dValue={post.created_at} />
+          </DL>
         </CardHeader>
         <CardBody>{post.excerpt}</CardBody>
         <CardFooter>

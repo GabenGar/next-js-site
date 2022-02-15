@@ -3,6 +3,7 @@ import { IS_DEVELOPMENT } from "#environment/derived";
 import { siteTitle } from "#lib/util";
 import { Page } from "#components/pages";
 import { BaseLayout as Layout } from "#components/layout";
+import { JSONView } from "#components/json";
 
 import type {
   GetStaticPaths,
@@ -25,6 +26,7 @@ function TemplatePage({}: InferGetStaticPropsType<typeof getStaticProps>) {
         <meta name="description" content="template description" />
         {/* <link rel="icon" href="/favicon.ico" /> */}
       </Head>
+      {IS_DEVELOPMENT && <JSONView json={"props preview"} />}
     </Page>
   );
 }
