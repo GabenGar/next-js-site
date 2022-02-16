@@ -6,6 +6,10 @@
   border-radius: $radius-normal;
   padding: $size-normal;
   margin: 0 auto;
+
+  @media (min-width: $width-tablet) {
+    padding: $size-big;
+  }
 }
 
 .header {

@@ -31,9 +31,10 @@ export const BlogPostArticle = blockComponent<IBlogPostArticleProps>(
           </DL>
         </ArticleHeader>
         <ArticleBody
+          className={styles.body}
           dangerouslySetInnerHTML={{ __html: post.content }}
         ></ArticleBody>
-        <ArticleFooter></ArticleFooter>
+        {/* <ArticleFooter></ArticleFooter> */}
       </Article>
     );
   }

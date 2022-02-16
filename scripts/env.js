@@ -1,7 +1,8 @@
 // @ts-check
-const fse = require("fs-extra");
-const path = require("path");
-const dotenv = require("dotenv");
+import fse from "fs-extra";
+import path from "path";
+import dotenv from "dotenv";
+import { fileURLToPath } from "url";
 
 /**
  * @typedef EnvSchema
@@ -13,6 +14,10 @@ const dotenv = require("dotenv");
  * @typedef ConfigSchema
  * @property {Record<string, EnvSchema>} properties
  */
+
+// @ts-expect-error ts config
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const rootPath = path.resolve(__dirname, "..");
 
 const envTypes = {
   string(value) {
@@ -28,8 +33,8 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 function setupEnvFile() {
-  const envSchemaPath = path.resolve(__dirname, "schema", "config.schema.json");
-  const envFilePath = path.resolve(__dirname, ".env.local");
+  const envSchemaPath = path.join(rootPath, "schema", "config.schema.json");
+  const envFilePath = path.join(rootPath, ".env.local");
 
   /**
    * @type {ConfigSchema}
