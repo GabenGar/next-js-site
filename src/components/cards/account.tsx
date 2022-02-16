@@ -10,9 +10,9 @@ import {
 import styles from "./account.module.scss";
 
 import type { Account } from "#types/entities";
-import type { CardProps } from "./base";
+import type { ICardProps } from "./base";
 
-export interface AccountCardCardProps extends CardProps {
+export interface AccountCardCardProps extends ICardProps {
   account: Account;
 }
 

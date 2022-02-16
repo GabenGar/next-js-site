@@ -40,3 +40,6 @@ npx node-pg-migrate create {migration_name} --migrations-dir src/database/migrat
 
 ## MISC
 `scripts` folder is using CJS because ESM support in NextJS is experimental.
+
+## TODO
+- refactor `Image` components in `fancy` and `html` folders.

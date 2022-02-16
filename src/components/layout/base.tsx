@@ -8,7 +8,6 @@ import {
   getCurrentTheme,
 } from "#lib/theme";
 import { useAccount } from "#lib/hooks";
-import { blockComponent } from "#components/meta";
 import { SVGIcon } from "#components/icons";
 import { Button } from "#components/fancy";
 import { LinkExternal, LinkInternal, LinkEmail } from "#components/links";
@@ -46,6 +45,12 @@ export function BaseLayout({ children }: Props) {
               <LinkInternal href="/" className={styles.navLink}>
                 <SVGIcon iconID="react" />
                 <span>Home</span>
+              </LinkInternal>
+            </NavItem>
+            <NavItem>
+              <LinkInternal href="/blog" className={styles.navLink}>
+                <SVGIcon iconID="blog" />
+                <span>Blog</span>
               </LinkInternal>
             </NavItem>
             <NavItem>

@@ -1,6 +1,9 @@
 // @ts-check
-const path = require("path");
-const dotenv = require("dotenv");
+import { createRequire } from "module";
+import path from "path";
+import dotenv from "dotenv";
+// @ts-expect-error ts cannot into node ESM
+const require = createRequire(import.meta.url);
 const { default: pgMigrate } = require("node-pg-migrate");
 
 const envPath = path.join(process.cwd(), ".env.local");
@@ -22,7 +25,6 @@ const migrationsPath = path.join(
     dir: migrationsPath,
     direction: "up",
     migrationsTable: "pgmigrations",
-    verbose: IS_DEVELOPMENT
+    verbose: IS_DEVELOPMENT,
   });
-  
 })();

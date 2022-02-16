@@ -3,10 +3,12 @@ import { IS_DEVELOPMENT } from "#environment/derived";
 import { siteTitle } from "#lib/util";
 import { Page } from "#components/pages";
 import { BaseLayout as Layout } from "#components/layout";
+import { JSONView } from "#components/json";
 
 import type {
-  GetServerSideProps,
-  InferGetServerSidePropsType,
+  GetStaticPaths,
+  GetStaticProps,
+  InferGetStaticPropsType,
   NextPage,
 } from "next";
 import type { ParsedUrlQuery } from "querystring";
@@ -16,9 +18,7 @@ interface ITemplatePageProps extends BasePageProps {}
 
 interface ITemplatePageParams extends ParsedUrlQuery {}
 
-function TemplatePage({}: InferGetServerSidePropsType<
-  typeof getServerSideProps
->) {
+function TemplatePage({}: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <Page heading="template heading">
       <Head>
@@ -26,6 +26,7 @@ function TemplatePage({}: InferGetServerSidePropsType<
         <meta name="description" content="template description" />
         {/* <link rel="icon" href="/favicon.ico" /> */}
       </Head>
+      {IS_DEVELOPMENT && <JSONView json={"props preview"} />}
     </Page>
   );
 }
@@ -34,9 +35,19 @@ TemplatePage.getLayout = function getLayout(page: NextPage) {
   return <Layout>{page}</Layout>;
 };
 
-export const getServerSideProps: GetServerSideProps<ITemplatePageProps, ITemplatePageParams> = async (
+export const getStaticPaths: GetStaticPaths<ITemplatePageParams> = async (
   context
 ) => {
+  return {
+    paths: [{ params: {} }],
+    fallback: false,
+  };
+};
+
+export const getStaticProps: GetStaticProps<
+  ITemplatePageProps,
+  ITemplatePageParams
+> = async (context) => {
   if (!IS_DEVELOPMENT) {
     return {
       notFound: true,
@@ -47,8 +58,8 @@ export const getServerSideProps: GetServerSideProps<ITemplatePageProps, ITemplat
 
   if (!data) {
     return {
-      notFound: true
-    }
+      notFound: true,
+    };
   }
 
   return {

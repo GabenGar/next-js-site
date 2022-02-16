@@ -2,9 +2,10 @@ import { blockComponent } from "#components/meta";
 import styles from "./base.module.scss";
 
 import type { BlockProps } from "#types/props";
+import type { HeadingLevel } from "#components/headings";
 
 export interface IArticleProps extends BlockProps<"article"> {
-  level?: number;
+  headingLevel?: HeadingLevel;
 }
 export interface IArticleHeaderProps extends BlockProps<"header"> {}
 export interface IArticleBodyProps extends BlockProps<"section"> {}

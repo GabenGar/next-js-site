@@ -5,9 +5,9 @@ import { LinkExternal, LinkInternal } from "#components/links";
 import styles from "./challenge-card.module.scss";
 
 import type { Challenge } from "#types/frontend-mentor";
-import type { CardProps } from "#components/cards";
+import type { ICardProps } from "#components/cards";
 
-interface Props extends CardProps {
+interface Props extends ICardProps {
   challenge: Challenge;
 }
 
