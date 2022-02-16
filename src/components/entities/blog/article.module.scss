@@ -4,4 +4,8 @@
   & h2:first-child {
     display: none;
   }
+
+  & pre {
+    white-space: pre-wrap;
+  }
 }
