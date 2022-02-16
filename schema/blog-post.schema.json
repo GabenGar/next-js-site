@@ -25,6 +25,10 @@
     "edited_at": {
       "type": "string",
       "format": "date-time"
+    },
+    "next_slug": {
+      "type": "string",
+      "description": "The slug of the next article of the series."
     }
   }
 }
