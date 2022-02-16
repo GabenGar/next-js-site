@@ -1,5 +1,4 @@
 import Head from "next/head";
-import { IS_DEVELOPMENT } from "#environment/derived";
 import { siteTitle } from "#lib/util";
 import { getAllSlugs, getBlogPost } from "#lib/blog";
 import { Page } from "#components/pages";
@@ -55,12 +54,6 @@ export const getStaticProps: GetStaticProps<
   BlogPostPageProps,
   BlogPostPageParams
 > = async (context) => {
-  if (!IS_DEVELOPMENT) {
-    return {
-      notFound: true,
-    };
-  }
-
   const { slug } = context.params!;
 
   const post = await getBlogPost(slug);

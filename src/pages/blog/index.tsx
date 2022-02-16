@@ -1,5 +1,4 @@
 import Head from "next/head";
-import { IS_DEVELOPMENT } from "#environment/derived";
 import { siteTitle } from "#lib/util";
 import { getBlogPosts } from "#lib/blog";
 import { Page } from "#components/pages";
@@ -35,12 +34,6 @@ function BlogPage({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
 
 export const getStaticProps: GetStaticProps<IBlogPageProps, IBlogPageParams> =
   async (context) => {
-    if (!IS_DEVELOPMENT) {
-      return {
-        notFound: true,
-      };
-    }
-
     const posts = await getBlogPosts();
 
     return {
