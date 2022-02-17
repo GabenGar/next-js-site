@@ -26,7 +26,7 @@
       "type": "string",
       "format": "date-time"
     },
-    "next_slug": {
+    "next": {
       "type": "string",
       "description": "The slug of the next article of the series."
     }

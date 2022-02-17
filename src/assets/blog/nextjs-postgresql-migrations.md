@@ -1,18 +1,20 @@
 ---
 title: "PostgreSQL and NextJS (Part 1)"
 created_at: "2022-02-14T18:28:57.395Z"
-edited_at: null
+edited_at: "2022-02-17T14:06:03.295Z"
 author: "Gabengar"
+next: "nextjs-postgresql-database"
 ---
-How to run PostgreSQL on NextJS (almost) painlessly.
+Set up PosgreSQL migrations for the NextJS project.
 ---
+
 # PostgreSQL and NextJS (Part 1)
 
-## Table of contents
+<!-- ## Table of contents
 
 1. [Abstract](#abstract)
 2. [Installation](#installation)
-3. [Migrations](#migrations)
+3. [Migrations](#migrations) -->
 
 ## Abstract
 
@@ -107,7 +109,7 @@ Node 14+ versions can `await` at the module level without wrapping in an async I
       --migration-file-language sql
    ```
 
-`npx` is like npm but it runs the package from the closest `node_modules` folder. Using `.sql` files juыt so we wouldn't need to learn the transformation syntax of `node-pg-migrate`.
+`npx` is like npm but it runs the package from the closest `node_modules` folder. Using `.sql` files just so we wouldn't need to learn the transformation syntax of `node-pg-migrate`.
 
 7. Populate yor first migration file:
 
@@ -125,8 +127,12 @@ Node 14+ versions can `await` at the module level without wrapping in an async I
    ```
 
 8. Run the migration:
+
    ```sh
    npm run migrate
    ```
 
 9. Now we have fist table set up and some basic migration workflow in place.
+
+## Edits
+- Corrected typos

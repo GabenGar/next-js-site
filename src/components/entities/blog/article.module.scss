@@ -1,5 +1,8 @@
-.block {}
- 
+@use "../../../styles/variables/sass.scss" as *;
+
+.block {
+}
+
 .body {
   & h2:first-child {
     display: none;
@@ -7,5 +10,8 @@
 
   & pre {
     white-space: pre-wrap;
+    background-color: var(--colour1-secondary);
+    border-radius: $radius-small;
+    padding: $size-small;
   }
 }
