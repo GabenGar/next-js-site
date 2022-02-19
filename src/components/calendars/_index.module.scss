@@ -25,7 +25,7 @@
 .days {
   display: flex;
   flex-flow: row wrap;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
 }
 
@@ -37,11 +37,15 @@
   align-items: center;
   justify-items: center;
 
-  &_weekend {
+  &_other {
+    color: var(--colour0-secondary);
+  }
 
+  &_weekend {
+    background-color: hsl(0, 100%, 70%);
   }
 
   &_current {
-
+    background-color: hsl(240, 100%, 70%);
   }
 }

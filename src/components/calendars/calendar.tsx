@@ -6,12 +6,19 @@ import {
   addYears,
   getDaysInMonth,
   startOfMonth,
+  addDays,
+  getDate,
+  isWeekend,
+  isMonday,
+  isSaturday,
+  isSameDay,
+  isSameMonth,
 } from "date-fns";
+import clsx from "clsx";
 import { formatMonth, formatYear } from "#lib/dates";
 import { blockComponent } from "#components/meta";
 import { Button } from "#components/buttons";
 import { SVGIcon } from "#components/icons";
-import { JSONView } from "#components/json";
 import styles from "./_index.module.scss";
 
 import type { IDivProps } from "#types/props";
@@ -21,6 +28,7 @@ export interface ICalendarProps extends IDivProps {
 }
 interface IMonthOverviewProps {
   selectedDate: Date;
+  currentDate: Date;
 }
 
 export const Calendar = blockComponent<ICalendarProps>(
@@ -71,28 +79,52 @@ export const Calendar = blockComponent<ICalendarProps>(
             <span>Next</span>
           </Button>
         </div>
-        <MonthOverview selectedDate={selectedDate} />
+        <MonthOverview selectedDate={selectedDate} currentDate={currentDate} />
       </div>
     );
   }
 );
 
-function MonthOverview({ selectedDate }: IMonthOverviewProps) {
-  const monthStart = startOfMonth(selectedDate);
-  const daysInMonth = getDaysInMonth(monthStart);
-  const days = new Array<number>(daysInMonth).fill(1);
-
-  days.forEach((value, index) => {
-    days[index] = index + 1;
-  });
+function MonthOverview({ selectedDate, currentDate }: IMonthOverviewProps) {
+  const days = populateDays(selectedDate);
 
   return (
     <div className={styles.days}>
-      {days.map((day, index) => (
-        <span key={index} className={styles.day}>
-          {day}
-        </span>
-      ))}
+      {days.map((dayDate, index) => {
+        const className = clsx(
+          styles.day,
+          !isSameMonth(dayDate, currentDate) && styles.day_other,
+          isWeekend(dayDate) && styles.day_weekend,
+          isSameDay(dayDate, currentDate) && styles.day_current
+        );
+
+        return (
+          <span key={index} className={className}>
+            {getDate(dayDate)}
+          </span>
+        );
+      })}
     </div>
   );
+}
+
+function populateDays(selectedDate: Date) {
+  const monthStart = startOfMonth(selectedDate);
+  const daysInMonth = getDaysInMonth(monthStart);
+
+  const days = new Array(daysInMonth).fill(null).map((value, index) => {
+    return addDays(monthStart, index);
+  });
+
+  const firstDay = days[0];
+  const lastDay = days[days.length - 1];
+  let pastMonth;
+  let nextMoth;
+
+  if (!isMonday(firstDay)) {
+  }
+  if (!isSaturday(lastDay)) {
+  }
+
+  return days;
 }
