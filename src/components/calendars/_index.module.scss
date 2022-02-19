@@ -1,0 +1,27 @@
+@use "../../styles/variables/sass.scss" as *;
+
+.block {
+  border-radius: $radius-normal;
+  border: $size-thin solid var(--colour0-tertiary);
+  overflow: hidden;
+}
+
+.year,
+.month {
+  font-weight: bold;
+  text-align: center;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: $size-thin solid var(--colour0-tertiary);
+  padding: $size-small;
+}
+
+.button {
+  flex-basis: 5em;
+}
+
+.days {
+
+}

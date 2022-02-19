@@ -1,7 +1,7 @@
 import { ValidationErrors } from "#lib/json-schema/types";
 import type {
   JSONTypes,
-  JSONKeyTypes,
+  JSONKey,
   SchemaValidationFunction,
   JSONSchema,
   ValidationResult,

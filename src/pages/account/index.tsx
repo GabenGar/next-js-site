@@ -29,7 +29,12 @@ function AccountPage({
         <NavList>
           <NavItem>
             <LinkInternal href="/account/email">
-              {account.email ? "Email" : "Add email"}
+              {account.email ? "Change Email" : "Add email"}
+            </LinkInternal>
+          </NavItem>
+          <NavItem>
+            <LinkInternal href="/account/calendar">
+              Calendar
             </LinkInternal>
           </NavItem>
 

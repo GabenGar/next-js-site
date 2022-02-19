@@ -1,5 +1,5 @@
 import { DAY } from "#environment/constants/durations";
-import { toISOString } from "#lib/util/dates";
+import { toISOString } from "#lib/dates";
 import { getDB } from "#database";
 
 import type { Account, AccCreds, EmailConfirmation } from "#types/entities";
