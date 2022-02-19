@@ -1,9 +1,17 @@
 import { useState } from "react";
-import { addMonths, subMonths, subYears, addYears } from "date-fns";
+import {
+  addMonths,
+  subMonths,
+  subYears,
+  addYears,
+  getDaysInMonth,
+  startOfMonth,
+} from "date-fns";
 import { formatMonth, formatYear } from "#lib/dates";
 import { blockComponent } from "#components/meta";
 import { Button } from "#components/buttons";
 import { SVGIcon } from "#components/icons";
+import { JSONView } from "#components/json";
 import styles from "./_index.module.scss";
 
 import type { IDivProps } from "#types/props";
@@ -46,7 +54,7 @@ export const Calendar = blockComponent<ICalendarProps>(
             <SVGIcon iconID="chevron-left" />
             <span>Previous</span>
           </Button>
-          <span className={styles.info}>{formatYear(selectedDate)}</span>
+          <span>{formatYear(selectedDate)}</span>
           <Button className={styles.button} onClick={nextYear}>
             <SVGIcon iconID="chevron-right" />
             <span>Next</span>
@@ -57,7 +65,7 @@ export const Calendar = blockComponent<ICalendarProps>(
             <SVGIcon iconID="chevron-left" />
             <span>Previous</span>
           </Button>
-          <span className={styles.info}>{formatMonth(selectedDate)}</span>
+          <span>{formatMonth(selectedDate)}</span>
           <Button className={styles.button} onClick={nextMonth}>
             <SVGIcon iconID="chevron-right" />
             <span>Next</span>
@@ -70,9 +78,21 @@ export const Calendar = blockComponent<ICalendarProps>(
 );
 
 function MonthOverview({ selectedDate }: IMonthOverviewProps) {
+  const monthStart = startOfMonth(selectedDate);
+  const daysInMonth = getDaysInMonth(monthStart);
+  const days = new Array<number>(daysInMonth).fill(1);
+
+  days.forEach((value, index) => {
+    days[index] = index + 1;
+  });
+
   return (
-    <div>
-      <div className={styles.days}>...days</div>
+    <div className={styles.days}>
+      {days.map((day, index) => (
+        <span key={index} className={styles.day}>
+          {day}
+        </span>
+      ))}
     </div>
   );
 }
