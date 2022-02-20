@@ -55,7 +55,7 @@
   }
 
   &_weekend {
-    background-color: hsl(0, 100%, 70%);
+    background-color: var(--positive-colour2-secondary);
   }
 
   &_current {

@@ -11,11 +11,9 @@ import {
   getDate,
   getDay,
   isWeekend,
-  isMonday,
-  isSaturday,
   isSameDay,
   isSameMonth,
-  daysInWeek
+  daysInWeek,
 } from "date-fns";
 import clsx from "clsx";
 import { formatMonth, formatYear } from "#lib/dates";
@@ -111,37 +109,36 @@ function MonthOverview({ selectedDate, currentDate }: IMonthOverviewProps) {
   );
 }
 
+/**
+ * TODO: fixed length array
+ */
 function populateDays(selectedDate: Date) {
+  /**
+   * The amount of day to have consistent amount of rows between months.
+   */
+  const totalDays = daysInWeek * 6;
   const monthStart = startOfMonth(selectedDate);
   const daysInMonth = getDaysInMonth(monthStart);
+  const monthEnd = addDays(monthStart, daysInMonth);
 
-  const monthDays = new Array(daysInMonth).fill(null).map((value, index) => {
-    return addDays(monthStart, index - 1);
-  });
+  // if the first day of month not monday
+  // prepend needed amount of days to have full week
+  const prevDays = getDay(monthStart);
+  const previousMonth = new Array(prevDays)
+    .fill(null)
+    .map((_, index) => subDays(monthStart, index + 1))
+    .reverse();
 
-  const firstDay = monthDays[0];
-  const lastDay = monthDays[monthDays.length - 1];
+  const currentMonth = new Array(daysInMonth)
+    .fill(null)
+    .map((_, index) => addDays(monthStart, index));
 
-  if (!isMonday(firstDay)) {
-    const day = getDay(firstDay);
-    const pastMonth = new Array(day)
-      .fill(null)
-      .map((value, index) => {
-        return subDays(firstDay, index + 1);
-      })
-      .reverse();
+  // fill the rest of the calendar with next month
+  const nextDays = totalDays - daysInMonth - previousMonth.length;
+  const nextMonth = new Array(nextDays)
+    .fill(null)
+    .map((_, index) => addDays(monthEnd, index));
 
-    monthDays.unshift(...pastMonth);
-  }
-
-  if (!isSaturday(lastDay)) {
-    const day = getDay(lastDay);
-    const nextMonth = new Array(7 - day).fill(null).map((value, index) => {
-      return addDays(lastDay, index + 1);
-    });
-
-    monthDays.push(...nextMonth);
-  }
-
-  return monthDays;
+  const days = [...previousMonth, ...currentMonth, ...nextMonth];
+  return days;
 }
