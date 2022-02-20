@@ -31,6 +31,7 @@
   flex-flow: row wrap;
   justify-content: flex-start;
   align-items: center;
+  border-bottom: $size-thin solid var(--colour0-tertiary);
 }
 
 .day {
@@ -42,9 +43,18 @@
   justify-items: center;
   border-top: $size-thin solid var(--colour0-tertiary);
   border-right: $size-thin solid var(--colour0-tertiary);
+  cursor: pointer;
 
   transition-duration: var(--duration-global);
   transition-property: color, background-color;
+
+  &:focus {
+    color: var(--colour0-primary);
+  }
+
+  &:hover {
+    color: var(--colour0-primary);
+  }
 
   &:nth-child(7n) {
     border-right: none;
@@ -59,6 +69,24 @@
   }
 
   &_current {
+    background-color: var(--submit-colour2-secondary);
+  }
+
+  &_selected {
+    color: var(--colour0-primary);
     background-color: var(--submit-colour2-primary);
   }
+}
+
+.notes {
+  background-color: var(--colour1-secondary);
+  padding: $size-small;
+}
+
+.list {
+
+}
+
+.note {
+  background-color: var(--colour1-primary);
 }

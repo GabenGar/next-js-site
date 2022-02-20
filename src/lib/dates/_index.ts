@@ -1,6 +1,6 @@
 import { parseISO, formatISO, minTime, maxTime } from "date-fns";
 
-export { formatDate, formatMonth, formatYear } from "./format";
+export { formatDate, formatMonth, formatYear, formatTime } from "./format";
 
 export type IISODateString = string;
 export type DateLike = IISODateString | Date;

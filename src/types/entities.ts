@@ -24,3 +24,11 @@ export interface EmailConfirmation {
   created_at: string;
   expires_at: string;
 }
+
+export interface ICalendarNote {
+  id: number;
+  created_at: Date;
+  date: Date;
+  note: string;
+  account_id?: number;
+}

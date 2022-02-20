@@ -8,27 +8,21 @@ import {
   getDaysInMonth,
   startOfMonth,
   addDays,
-  getDate,
   getDay,
-  isWeekend,
-  isSameDay,
-  isSameMonth,
   daysInWeek,
 } from "date-fns";
-import clsx from "clsx";
 import { formatMonth, formatYear } from "#lib/dates";
 import { blockComponent } from "#components/meta";
 import { Button } from "#components/buttons";
 import { SVGIcon } from "#components/icons";
+import { MonthOverview } from "./month-overview";
+import { Notes } from "./notes";
 import styles from "./_index.module.scss";
 
 import type { IDivProps } from "#types/props";
+import type { ICalendarNote } from "#types/entities";
 
 export interface ICalendarProps extends IDivProps {
-  currentDate: Date;
-}
-interface IMonthOverviewProps {
-  selectedDate: Date;
   currentDate: Date;
 }
 
@@ -36,6 +30,12 @@ export const Calendar = blockComponent<ICalendarProps>(
   styles.block,
   ({ currentDate, ...blockProps }) => {
     const [selectedDate, changeSelectedDate] = useState(currentDate);
+    const [notes, changeNotes] = useState<ICalendarNote[]>([])
+    const days = populateDays(selectedDate);
+
+    async function addNote() {}
+
+    async function removeNote(noteID: number) {}
 
     function previousYear() {
       const newDate = subYears(selectedDate, 1);
@@ -80,34 +80,16 @@ export const Calendar = blockComponent<ICalendarProps>(
             <span>Next</span>
           </Button>
         </div>
-        <MonthOverview selectedDate={selectedDate} currentDate={currentDate} />
+        <MonthOverview
+          days={days}
+          selectedDate={selectedDate}
+          currentDate={currentDate}
+        />
+        <Notes notes={notes} />
       </div>
     );
   }
 );
-
-function MonthOverview({ selectedDate, currentDate }: IMonthOverviewProps) {
-  const days = populateDays(selectedDate);
-
-  return (
-    <div className={styles.days}>
-      {days.map((dayDate, index) => {
-        const className = clsx(
-          styles.day,
-          !isSameMonth(dayDate, selectedDate) && styles.day_other,
-          isWeekend(dayDate) && styles.day_weekend,
-          isSameDay(dayDate, currentDate) && styles.day_current
-        );
-
-        return (
-          <span key={index} className={className}>
-            {getDate(dayDate)}
-          </span>
-        );
-      })}
-    </div>
-  );
-}
 
 /**
  * TODO: fixed length array
