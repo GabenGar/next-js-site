@@ -1,6 +1,7 @@
 import { useState } from "react";
 import {
   addMonths,
+  subDays,
   subMonths,
   subYears,
   addYears,
@@ -8,11 +9,13 @@ import {
   startOfMonth,
   addDays,
   getDate,
+  getDay,
   isWeekend,
   isMonday,
   isSaturday,
   isSameDay,
   isSameMonth,
+  daysInWeek
 } from "date-fns";
 import clsx from "clsx";
 import { formatMonth, formatYear } from "#lib/dates";
@@ -93,7 +96,7 @@ function MonthOverview({ selectedDate, currentDate }: IMonthOverviewProps) {
       {days.map((dayDate, index) => {
         const className = clsx(
           styles.day,
-          !isSameMonth(dayDate, currentDate) && styles.day_other,
+          !isSameMonth(dayDate, selectedDate) && styles.day_other,
           isWeekend(dayDate) && styles.day_weekend,
           isSameDay(dayDate, currentDate) && styles.day_current
         );
@@ -112,19 +115,33 @@ function populateDays(selectedDate: Date) {
   const monthStart = startOfMonth(selectedDate);
   const daysInMonth = getDaysInMonth(monthStart);
 
-  const days = new Array(daysInMonth).fill(null).map((value, index) => {
-    return addDays(monthStart, index);
+  const monthDays = new Array(daysInMonth).fill(null).map((value, index) => {
+    return addDays(monthStart, index - 1);
   });
 
-  const firstDay = days[0];
-  const lastDay = days[days.length - 1];
-  let pastMonth;
-  let nextMoth;
+  const firstDay = monthDays[0];
+  const lastDay = monthDays[monthDays.length - 1];
 
   if (!isMonday(firstDay)) {
-  }
-  if (!isSaturday(lastDay)) {
+    const day = getDay(firstDay);
+    const pastMonth = new Array(day)
+      .fill(null)
+      .map((value, index) => {
+        return subDays(firstDay, index + 1);
+      })
+      .reverse();
+
+    monthDays.unshift(...pastMonth);
   }
 
-  return days;
+  if (!isSaturday(lastDay)) {
+    const day = getDay(lastDay);
+    const nextMonth = new Array(7 - day).fill(null).map((value, index) => {
+      return addDays(lastDay, index + 1);
+    });
+
+    monthDays.push(...nextMonth);
+  }
+
+  return monthDays;
 }

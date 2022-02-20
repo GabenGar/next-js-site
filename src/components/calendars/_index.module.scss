@@ -18,6 +18,10 @@
   padding: $size-small;
 }
 
+.month {
+  border-bottom: none;
+}
+
 .button {
   flex-basis: 5em;
 }
@@ -36,9 +40,18 @@
   grid-template-rows: 40px;
   align-items: center;
   justify-items: center;
+  border-top: $size-thin solid var(--colour0-tertiary);
+  border-right: $size-thin solid var(--colour0-tertiary);
+
+  transition-duration: var(--duration-global);
+  transition-property: color, background-color;
+
+  &:nth-child(7n) {
+    border-right: none;
+  }
 
   &_other {
-    color: var(--colour0-secondary);
+    color: var(--colour1-tertiary);
   }
 
   &_weekend {
@@ -46,6 +59,6 @@
   }
 
   &_current {
-    background-color: hsl(240, 100%, 70%);
+    background-color: var(--submit-colour2-primary);
   }
 }
