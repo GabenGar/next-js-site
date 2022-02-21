@@ -21,6 +21,7 @@ export const FormSectionTime = blockComponent<IFormSectionTimeProps>(
         <HTMLInput
           id={id}
           name={name}
+          type="time"
           required={required}
           defaultValue={defaultValue}
         />

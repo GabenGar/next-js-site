@@ -9,6 +9,7 @@ import styles from "./notes.module.scss";
 import type { ICalendarNote } from "#types/entities";
 import type { ISubmitEvent, IFormElements } from "#components/forms";
 import { SVGIcon } from "#components/icons";
+import { FormSectionTime } from "#components/forms/sections";
 
 interface INotesProps {
   dayDate: Date;
@@ -42,6 +43,7 @@ export function Notes({ dayDate, notes, onNoteAddition, onNoteRemoval }: INotesP
       <Heading level={2}>Notes</Heading>
 
       <Form
+        className={styles.new}
         onSubmit={addNote}
         submitButton={
           <ButtonSubmit className={styles.add}>
@@ -49,7 +51,9 @@ export function Notes({ dayDate, notes, onNoteAddition, onNoteRemoval }: INotesP
             <span>Add</span>
           </ButtonSubmit>
         }
-      ></Form>
+      >
+        <FormSectionTime id="new-time" name="time" required />
+      </Form>
 
       <HTMLUl className={styles.list}>
         {!notes.length ? (

@@ -5,6 +5,7 @@ import { LinkInternal } from "#components/links";
 import { Page } from "#components/pages";
 import { AccountCard } from "#components/cards";
 import { Nav, NavItem, NavList } from "#components/navigation";
+import { SVGIcon } from "#components/icons";
 import styles from "./index.module.scss";
 
 import type { InferGetServerSidePropsType } from "next";
@@ -34,13 +35,17 @@ function AccountPage({
           </NavItem>
           <NavItem>
             <LinkInternal href="/account/calendar">
-              Calendar
+              <SVGIcon iconID="calendar" />
+              <span>Calendar</span>
             </LinkInternal>
           </NavItem>
 
           {IS_DEVELOPMENT && (
             <NavItem>
-              <LinkInternal href="/account/admin">Admin</LinkInternal>
+              <LinkInternal href="/account/admin">
+                <SVGIcon iconID="screwdriver-wrench" />
+                <span>Admin</span>
+              </LinkInternal>
             </NavItem>
           )}
         </NavList>
