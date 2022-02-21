@@ -4,21 +4,20 @@ import styles from "./date-time.module.scss";
 
 import type { BlockProps } from "#types/props";
 
-export interface IDateViewProps extends Omit<BlockProps<"time">, "dateTime"> {
+export interface IDateTimeViewProps
+  extends Omit<BlockProps<"time">, "dateTime"> {
   /**
    * The string is assumed to be an ISO string.
    */
-  dateTime: string | Date;
+  dateTime: Date;
 }
 
-export const DateView = blockComponent<IDateViewProps>(
+export const DateTimeView = blockComponent<IDateTimeViewProps>(
   styles.block,
   ({ dateTime, children, ...blockProps }) => {
-    const date = dateTime instanceof Date ? dateTime : fromISOString(dateTime);
-
     return (
-      <time {...blockProps} dateTime={toISOString(date)}>
-        {children ? children : formatDate(date)}
+      <time {...blockProps} dateTime={toISOString(dateTime)}>
+        {children ? children : formatDate(dateTime)}
       </time>
     );
   }

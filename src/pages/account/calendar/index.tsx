@@ -7,7 +7,7 @@ import { Page } from "#components/pages";
 import { JSONView } from "#components/json";
 import { Article, ArticleBody, ArticleHeader } from "#components/articles";
 import { DL, DS } from "#components/lists/d-list";
-import { DateView } from "#components/dates";
+import { DateTimeView } from "#components/dates";
 import { Calendar } from "#components/calendars";
 
 import type { InferGetServerSidePropsType } from "next";
@@ -34,7 +34,7 @@ function CalendarPage({
           <DL>
             <DS
               dKey="Current Date"
-              dValue={<DateView dateTime={currentDate} />}
+              dValue={<DateTimeView dateTime={currentDate} />}
             />
           </DL>
         </ArticleHeader>

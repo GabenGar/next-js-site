@@ -11,7 +11,7 @@ import {
   getDay,
   daysInWeek,
 } from "date-fns";
-import { formatMonth, formatYear } from "#lib/dates";
+import { formatMonth, formatYear, toISOString } from "#lib/dates";
 import { blockComponent } from "#components/meta";
 import { Button } from "#components/buttons";
 import { SVGIcon } from "#components/icons";
@@ -30,12 +30,8 @@ export const Calendar = blockComponent<ICalendarProps>(
   styles.block,
   ({ currentDate, ...blockProps }) => {
     const [selectedDate, changeSelectedDate] = useState(currentDate);
-    const [notes, changeNotes] = useState<ICalendarNote[]>([])
+    const [notes, changeNotes] = useState<ICalendarNote[]>([]);
     const days = populateDays(selectedDate);
-
-    async function addNote() {}
-
-    async function removeNote(noteID: number) {}
 
     function previousYear() {
       const newDate = subYears(selectedDate, 1);
@@ -85,7 +81,17 @@ export const Calendar = blockComponent<ICalendarProps>(
           selectedDate={selectedDate}
           currentDate={currentDate}
         />
-        <Notes notes={notes} />
+        <Notes
+          dayDate={selectedDate}
+          notes={notes}
+          onNoteAddition={(note) => {
+            changeNotes(notes.concat(note));
+          }}
+          onNoteRemoval={(noteID) => {
+            const newNotes = notes.filter(({ id }) => id !== noteID);
+            changeNotes(newNotes);
+          }}
+        />
       </div>
     );
   }

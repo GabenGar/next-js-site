@@ -1,0 +1,26 @@
+@use "../../styles/variables/sass.scss" as *;
+
+.notes {
+  background-color: var(--colour1-secondary);
+  padding: $size-small;
+}
+
+.list {
+
+}
+
+.new {
+
+}
+
+.add {
+
+}
+
+.remove {
+  
+}
+
+.note {
+  background-color: var(--colour1-primary);
+}

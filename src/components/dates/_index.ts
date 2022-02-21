@@ -1,2 +1,2 @@
-export { DateView } from "./date-time";
-export type { IDateViewProps } from "./date-time";
+export { DateTimeView } from "./date-time";
+export type { IDateTimeViewProps } from "./date-time";
