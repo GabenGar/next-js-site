@@ -86,7 +86,7 @@ export const Calendar = blockComponent<ICalendarProps>(
           selectedDate={selectedDate}
           currentDate={currentDate}
         />
-        <Notes
+        {/* <Notes
           notes={notes}
           onNoteAddition={async (date, note) => {
             date.setFullYear(
@@ -113,7 +113,7 @@ export const Calendar = blockComponent<ICalendarProps>(
             const newNotes = notes.filter(({ id }) => id !== noteID);
             changeNotes(newNotes);
           }}
-        />
+        /> */}
       </div>
     );
   }

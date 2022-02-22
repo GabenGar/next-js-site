@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { getDate, isWeekend, isSameDay, isSameMonth } from "date-fns";
 import clsx from "clsx";
+import { DayOverview } from "./day-overview";
 import styles from "./_index.module.scss";
 
 interface IMonthOverviewProps {
@@ -23,28 +24,33 @@ export function MonthOverview({
   }
 
   return (
-    <div className={styles.days}>
-      {days.map((dayDate, index) => {
-        const className = clsx(
-          styles.day,
-          !isSameMonth(dayDate, selectedDate) && styles.day_other,
-          isWeekend(dayDate) && styles.day_weekend,
-          isSameDay(dayDate, currentDate) && styles.day_current,
-          selectedDay && isSameDay(selectedDay, dayDate) && styles.day_selected
-        );
+    <>
+      <div className={styles.days}>
+        {days.map((dayDate, index) => {
+          const className = clsx(
+            styles.day,
+            !isSameMonth(dayDate, selectedDate) && styles.day_other,
+            isWeekend(dayDate) && styles.day_weekend,
+            isSameDay(dayDate, currentDate) && styles.day_current,
+            selectedDay &&
+              isSameDay(selectedDay, dayDate) &&
+              styles.day_selected
+          );
 
-        return (
-          <span
-            key={index}
-            className={className}
-            onClick={() => {
-              handleSelection(dayDate);
-            }}
-          >
-            {getDate(dayDate)}
-          </span>
-        );
-      })}
-    </div>
+          return (
+            <span
+              key={index}
+              className={className}
+              onClick={() => {
+                handleSelection(dayDate);
+              }}
+            >
+              {getDate(dayDate)}
+            </span>
+          );
+        })}
+      </div>
+      <DayOverview selectedDay={selectedDay}></DayOverview>
+    </>
   );
 }

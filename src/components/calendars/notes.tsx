@@ -28,8 +28,6 @@ export function Notes({ notes, onNoteAddition, onNoteRemoval }: INotesProps) {
     const date = elements["time"].valueAsDate;
     const note = elements["note"].value;
 
-    console.log(date, elements["time"].value);
-
     if (!date || !note.trim()) {
       return;
     }
