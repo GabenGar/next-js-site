@@ -5,9 +5,12 @@ import {
   NOT_AUTHORIZED,
 } from "#environment/constants/http";
 import { getAccountDetails, withSessionRoute } from "#lib/account";
+import { getReqBody } from "#lib/util";
 import { addCalendarNote } from "#database/queries/account/calendar";
-import type { APIResponse } from "#types/api";
-import type { ICalendarNote } from "#types/entities";
+import type { APIRequest, APIResponse } from "#types/api";
+import type { ICalendarNote, ICalendarNoteInit } from "#types/entities";
+
+interface RequestBody extends APIRequest<ICalendarNoteInit> {}
 
 export default withSessionRoute<APIResponse<ICalendarNote>>(
   async (req, res) => {
@@ -35,8 +38,9 @@ export default withSessionRoute<APIResponse<ICalendarNote>>(
           errors: ["Unknown Error."],
         });
       }
-      const { data } = req.body;
+      const { data } = await getReqBody<RequestBody>(req);
       const isValidBody = [
+        data,
         "date" in data,
         typeof data.date === "string",
         "note" in data,
@@ -50,10 +54,11 @@ export default withSessionRoute<APIResponse<ICalendarNote>>(
         });
       }
 
-      const { date, note }: { date: string; note: string } = data;
+      const { date, note } = data;
 
       const { account_id: accID, ...newNote } = await addCalendarNote(
         account_id,
+        // @ts-expect-error TODO: fix Date conversions
         date,
         note
       );
