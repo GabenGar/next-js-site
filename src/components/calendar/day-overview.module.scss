@@ -4,3 +4,22 @@
   background-color: var(--colour1-secondary);
   padding: $size-small;
 }
+
+.new {
+  display: flex;
+  flex-flow: row nowrap;
+  max-width: 100%;
+  padding: 0;
+}
+
+.inputs {
+  flex: 1 1 auto;
+}
+
+.add {
+  flex: 0 0 5em;
+  align-self: flex-end;
+  display: flex;
+  justify-content: center;
+  gap: 1em;
+}

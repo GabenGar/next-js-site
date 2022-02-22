@@ -1,4 +1,4 @@
-import { formatDate, fromISOString, toISOString } from "#lib/dates";
+import { formatDate, fromISOString, toISODateTime } from "#lib/dates";
 import { blockComponent } from "#components/meta";
 import styles from "./date-time.module.scss";
 
@@ -16,7 +16,7 @@ export const DateTimeView = blockComponent<IDateTimeViewProps>(
   styles.block,
   ({ dateTime, children, ...blockProps }) => {
     return (
-      <time {...blockProps} dateTime={toISOString(dateTime)}>
+      <time {...blockProps} dateTime={toISODateTime(dateTime)}>
         {children ? children : formatDate(dateTime)}
       </time>
     );

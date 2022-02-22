@@ -21,8 +21,16 @@ export function fromISOString(dateString: IISODateString): Date {
   return parseISO(dateString);
 }
 
-export function toISOString(date: Date): string {
-  return formatISO(date);
+export function toISODateTime(date: Date): string {
+  return formatISO(date, { representation: "complete" });
+}
+
+export function toISOTime(date: Date): string {
+  return formatISO(date, { representation: "time" });
+}
+
+export function toISODate(date: Date): string {
+  return formatISO(date, { representation: "date" });
 }
 
 export function isISOString(dateString: IISODateString) {
