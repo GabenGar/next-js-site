@@ -1,5 +1,6 @@
 @use "../../styles/variables/sass.scss" as *;
 
 .block {
+  background-color: var(--colour1-secondary);
   padding: $size-small;
 }

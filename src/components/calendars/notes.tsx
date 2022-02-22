@@ -37,8 +37,6 @@ export function Notes({ notes, onNoteAddition, onNoteRemoval }: INotesProps) {
 
   return (
     <div className={styles.notes}>
-      <Heading level={2}>Notes</Heading>
-
       <Form
         className={styles.new}
         onSubmit={addNote}
@@ -49,7 +47,7 @@ export function Notes({ notes, onNoteAddition, onNoteRemoval }: INotesProps) {
           </ButtonSubmit>
         }
       >
-        <div className={styles.inputs} >
+        <div className={styles.inputs}>
           <FormSectionTime id="new-time" name="time" required />
           <TextArea id="new-note" name="note" required />
         </div>

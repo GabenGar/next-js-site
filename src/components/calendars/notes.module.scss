@@ -1,8 +1,6 @@
 @use "../../styles/variables/sass.scss" as *;
 
 .notes {
-  background-color: var(--colour1-secondary);
-  padding: $size-small;
 }
 
 .list {
@@ -23,6 +21,7 @@
   flex: 0 0 5em;
   align-self: flex-end;
   display: flex;
+  justify-content: center;
   gap: 1em;
 }
 
