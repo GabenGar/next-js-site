@@ -11,6 +11,7 @@ export interface FormProps extends HTMLFormProps {
 }
 
 /**
+ * Convenience type for `HTMLFormElement.elements`
  * @link https://stackoverflow.com/questions/29907163/how-to-work-with-form-elements-in-typescript/70995964#70995964
  */
 export type IFormElements<U extends string> = HTMLFormControlsCollection &

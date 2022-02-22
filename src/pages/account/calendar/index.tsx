@@ -8,7 +8,7 @@ import { JSONView } from "#components/json";
 import { Article, ArticleBody, ArticleHeader } from "#components/articles";
 import { DL, DS } from "#components/lists/d-list";
 import { DateTimeView } from "#components/dates";
-import { Calendar } from "#components/calendars";
+import { Calendar } from "#components/calendar";
 
 import type { InferGetServerSidePropsType } from "next";
 import type { AccountClient } from "#types/entities";
