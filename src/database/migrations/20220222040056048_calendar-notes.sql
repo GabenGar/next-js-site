@@ -1,0 +1,9 @@
+-- Up Migration
+CREATE TABLE calendar_notes (
+  id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  account_id INT REFERENCES accounts,
+  date TIMESTAMPTZ NOT NULL,
+  note TEXT NOT NULL
+)
+-- Down Migration
