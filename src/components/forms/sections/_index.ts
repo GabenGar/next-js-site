@@ -8,3 +8,5 @@ export { FormSectionEmail } from "./email";
 export type { FormSectionEmailProps } from "./email";
 export { FormSectionTime } from "./time";
 export type { IFormSectionTimeProps } from "./time";
+export { TextArea } from "./text-area";
+export type { ITextAreaProps } from "./text-area";

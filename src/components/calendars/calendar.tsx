@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   addMonths,
   subDays,
@@ -10,11 +10,16 @@ import {
   addDays,
   getDay,
   daysInWeek,
+  isSameYear,
+  getYear,
+  getMonth,
+  getDate,
 } from "date-fns";
 import { formatMonth, formatYear, toISOString } from "#lib/dates";
 import { blockComponent } from "#components/meta";
 import { Button } from "#components/buttons";
 import { SVGIcon } from "#components/icons";
+import { createNewNote } from "#lib/api/public";
 import { MonthOverview } from "./month-overview";
 import { Notes } from "./notes";
 import styles from "./_index.module.scss";
@@ -82,10 +87,27 @@ export const Calendar = blockComponent<ICalendarProps>(
           currentDate={currentDate}
         />
         <Notes
-          dayDate={selectedDate}
           notes={notes}
-          onNoteAddition={(note) => {
-            changeNotes(notes.concat(note));
+          onNoteAddition={async (date, note) => {
+            date.setFullYear(
+              getYear(selectedDate),
+              getMonth(selectedDate),
+              getDate(selectedDate)
+            );
+            const isoDate = toISOString(date);
+            console.log("ISOString: ", isoDate);
+
+            // // const { success, data, errors } = await createNewNote({
+            // //   date: isoDate,
+            // //   note: note,
+            // // });
+
+            // if (!success || !data) {
+            //   console.log(errors);
+            //   return;
+            // }
+
+            // changeNotes(notes.concat(data));
           }}
           onNoteRemoval={(noteID) => {
             const newNotes = notes.filter(({ id }) => id !== noteID);

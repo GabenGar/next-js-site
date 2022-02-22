@@ -1,3 +1,9 @@
+import {
+  UNPROCESSABLE_ENTITY,
+  OK,
+  INTERNAL_SERVER_ERROR,
+  NOT_AUTHORIZED,
+} from "#environment/constants/http";
 import { getAccountDetails, withSessionRoute } from "#lib/account";
 import { addCalendarNote } from "#database/queries/account/calendar";
 import type { APIResponse } from "#types/api";
@@ -10,7 +16,7 @@ export default withSessionRoute<APIResponse<ICalendarNote>>(
 
       if (!account_id) {
         return res
-          .status(401)
+          .status(NOT_AUTHORIZED)
           .json({ success: false, errors: ["Not Authorized."] });
       }
 
@@ -24,27 +30,27 @@ export default withSessionRoute<APIResponse<ICalendarNote>>(
         );
         req.session.destroy();
 
-        return res.status(500).json({
+        return res.status(INTERNAL_SERVER_ERROR).json({
           success: false,
           errors: ["Unknown Error."],
         });
       }
-      const { body } = req;
+      const { data } = req.body;
       const isValidBody = [
-        "date" in body,
-        typeof body.date === "string",
-        "note" in body,
-        typeof body.note === "string",
+        "date" in data,
+        typeof data.date === "string",
+        "note" in data,
+        typeof data.note === "string",
       ].every((value) => value);
 
       if (!isValidBody) {
-        return res.status(422).json({
+        return res.status(UNPROCESSABLE_ENTITY).json({
           success: false,
           errors: ["Invalid body."],
         });
       }
 
-      const { date, note }: { date: string; note: string } = body;
+      const { date, note }: { date: string; note: string } = data;
 
       const { account_id: accID, ...newNote } = await addCalendarNote(
         account_id,
@@ -52,7 +58,7 @@ export default withSessionRoute<APIResponse<ICalendarNote>>(
         note
       );
 
-      return res.status(200).json({ success: true, data: newNote });
+      return res.status(OK).json({ success: true, data: newNote });
     }
   }
 );

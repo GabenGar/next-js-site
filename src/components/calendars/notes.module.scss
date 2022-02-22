@@ -6,21 +6,27 @@
 }
 
 .list {
-
 }
 
 .new {
   display: flex;
   flex-flow: row nowrap;
-  width: 100%; 
+  max-width: 100%;
+  padding: 0;
+}
+
+.inputs {
+  flex: 1 1 auto;
 }
 
 .add {
-
+  flex: 0 0 5em;
+  align-self: flex-end;
+  display: flex;
+  gap: 1em;
 }
 
 .remove {
-
 }
 
 .note {

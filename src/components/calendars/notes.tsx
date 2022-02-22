@@ -1,24 +1,23 @@
-import { formatTime, fromISOString } from "#lib/dates";
+import { formatTime, fromISOString, toISOString } from "#lib/dates";
 import { HTMLUl } from "#components/html/ul";
 import { HTMLLi } from "#components/html/li";
 import { Heading } from "#components/headings";
 import { Form } from "#components/forms";
 import { Button, ButtonSubmit } from "#components/buttons";
+import { SVGIcon } from "#components/icons";
+import { FormSectionTime, TextArea } from "#components/forms/sections";
 import styles from "./notes.module.scss";
 
 import type { ICalendarNote } from "#types/entities";
 import type { ISubmitEvent, IFormElements } from "#components/forms";
-import { SVGIcon } from "#components/icons";
-import { FormSectionTime } from "#components/forms/sections";
 
 interface INotesProps {
-  dayDate: Date;
   notes: ICalendarNote[];
-  onNoteAddition: (note: ICalendarNote) => void;
+  onNoteAddition: (date: Date, note: string) => void;
   onNoteRemoval: (noteID: ICalendarNote["id"]) => void;
 }
 
-export function Notes({ dayDate, notes, onNoteAddition, onNoteRemoval }: INotesProps) {
+export function Notes({ notes, onNoteAddition, onNoteRemoval }: INotesProps) {
   function addNote(event: ISubmitEvent) {
     event.preventDefault();
     const formFields = ["time", "note"] as const;
@@ -26,16 +25,16 @@ export function Notes({ dayDate, notes, onNoteAddition, onNoteRemoval }: INotesP
       typeof formFields[number]
     >;
 
-    const id = Math.max(...notes.map(({ id }) => id)) + 1;
-    const time = elements["time"].value;
-    const newNote: ICalendarNote = {
-      id,
-      created_at: new Date(),
-      date: fromISOString(time),
-      note: elements["note"].value,
-    };
+    const date = elements["time"].valueAsDate;
+    const note = elements["note"].value;
 
-    onNoteAddition(newNote);
+    console.log(date, elements["time"].value);
+
+    if (!date || !note.trim()) {
+      return;
+    }
+
+    onNoteAddition(date, note);
   }
 
   return (
@@ -52,7 +51,10 @@ export function Notes({ dayDate, notes, onNoteAddition, onNoteRemoval }: INotesP
           </ButtonSubmit>
         }
       >
-        <FormSectionTime id="new-time" name="time" required />
+        <div className={styles.inputs} >
+          <FormSectionTime id="new-time" name="time" required />
+          <TextArea id="new-note" name="note" required />
+        </div>
       </Form>
 
       <HTMLUl className={styles.list}>

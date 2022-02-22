@@ -1,3 +1,5 @@
+import type { DateLike } from "#lib/dates";
+
 export interface Account {
   id?: number;
   created_at?: string;
@@ -27,8 +29,11 @@ export interface EmailConfirmation {
 
 export interface ICalendarNote {
   id: number;
-  created_at: Date;
-  date: Date;
+  created_at: DateLike;
+  date: DateLike;
   note: string;
   account_id?: number;
 }
+
+export interface ICalendarNoteInit
+  extends Omit<ICalendarNote, "id" | "created_at" | "account_id"> {}

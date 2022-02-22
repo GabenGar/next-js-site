@@ -1,21 +1,28 @@
-import { format } from "date-fns"
+import { format } from "date-fns";
+import { validateDateLike } from "./lib";
 
-export function formatDate(date: Date) {
-  const formatedDate = format(date, "do MMMM yyyy GG");
+import type { DateLike } from "./types";
+
+export function formatDate(date: DateLike) {
+  const finalDate = validateDateLike(date);
+  const formatedDate = format(finalDate, "do MMMM yyyy GG");
   return formatedDate;
 }
 
-export function formatYear(date: Date) {
-  const formatedYear = format(date, "yyyy");
+export function formatYear(date: DateLike) {
+  const finalDate = validateDateLike(date);
+  const formatedYear = format(finalDate, "yyyy");
   return formatedYear;
 }
 
-export function formatMonth(date: Date) {
-  const formatedMonth = format(date, "MMMM");
+export function formatMonth(date: DateLike) {
+  const finalDate = validateDateLike(date);
+  const formatedMonth = format(finalDate, "MMMM");
   return formatedMonth;
 }
 
-export function formatTime(date: Date) {
-  const formatedTime = format(date, "HH':'mm");
+export function formatTime(date: DateLike) {
+  const finalDate = validateDateLike(date);
+  const formatedTime = format(finalDate, "HH':'mm");
   return formatedTime;
 }
