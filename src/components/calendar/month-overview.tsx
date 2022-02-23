@@ -22,6 +22,10 @@ interface IMonthOverviewProps {
   currentDate: Date;
 }
 
+/**
+ * @todo Fix notes not syncing with state.
+ * @todo Fix notes sorting after state change.
+ */
 export function MonthOverview({
   selectedDate,
   currentDate,

@@ -1,5 +1,6 @@
 import { apiV1Fetch } from "./fetch";
 import { toISODateTime } from "#lib/dates";
+import { createRequestBody } from "./fetch";
 
 import type { APIResponse } from "#types/api";
 import type { ICalendarNotePublic, ICalendarNoteInit } from "#types/entities";
@@ -27,7 +28,7 @@ export async function createNewNote(noteInit: ICalendarNoteInit) {
 export async function removeNote(noteID: number) {
   const response = await apiV1Fetch("/account/calendar/remove-note", {
     method: "POST",
-    body: JSON.stringify({ data: { note_id: noteID } }),
+    body: createRequestBody<{ note_id: number }>({ note_id: noteID }),
   });
   const result: APIResponse<ICalendarNotePublic> = await response.json();
 

@@ -5,12 +5,12 @@ import { Button } from "#components/buttons";
 import { SVGIcon } from "#components/icons";
 import { TimeView } from "#components/dates";
 import styles from "./notes.module.scss";
+import { ICalendarNotePublic } from "#types/entities";
 
-import type { IClientNote } from "./types";
 
 interface INotesProps {
-  notes: IClientNote[];
-  onNoteRemoval: (noteID: IClientNote["id"]) => void;
+  notes: ICalendarNotePublic[];
+  onNoteRemoval: (noteID: ICalendarNotePublic["id"]) => void;
 }
 
 export function Notes({ notes, onNoteRemoval }: INotesProps) {
@@ -30,7 +30,7 @@ export function Notes({ notes, onNoteRemoval }: INotesProps) {
               <Button
                 className={styles.remove}
                 onClick={() => {
-                  // onNoteRemoval(note.id);
+                  onNoteRemoval(note.id);
                 }}
               >
                 <SVGIcon iconID="calendar-minus" />

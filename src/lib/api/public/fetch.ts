@@ -17,3 +17,7 @@ export async function apiV1Fetch(path: string, reqInit?: RequestInit) {
     throw error;
   }
 }
+
+export function createRequestBody<Type>(body: Type) {
+  return JSON.stringify({ data: body });
+}

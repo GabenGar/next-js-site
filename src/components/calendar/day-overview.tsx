@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getDate, getMonth, getYear, isSameDay, startOfDay } from "date-fns";
 import { fromISOString, toISODateTime } from "#lib/dates";
-import { createNewNote } from "#lib/api/public";
+import { createNewNote, removeNote } from "#lib/api/public";
 import { Heading } from "#components/headings";
 import { DateTimeView } from "#components/dates";
 import { Form } from "#components/forms";
@@ -36,12 +36,12 @@ export function DayOverview({ selectedDay, monthNotes }: IDayoveriewProps) {
 
   useEffect(() => {
     if (!selectedDay) {
-      return
+      return;
     }
 
-    const newNotes = getDayNotes(monthNotes, selectedDay)
-    changeNotes(newNotes)
-  }, [selectedDay, monthNotes])
+    const newNotes = getDayNotes(monthNotes, selectedDay);
+    changeNotes(newNotes);
+  }, [selectedDay, monthNotes]);
 
   async function addNote(event: ISubmitEvent) {
     event.preventDefault();
@@ -77,7 +77,7 @@ export function DayOverview({ selectedDay, monthNotes }: IDayoveriewProps) {
     }
 
     changeNotes(notes.concat(newNote));
-    elements["note"].value = ""
+    elements["note"].value = "";
   }
 
   return (
@@ -118,8 +118,19 @@ export function DayOverview({ selectedDay, monthNotes }: IDayoveriewProps) {
           </Form>
           <Notes
             notes={notes}
-            onNoteRemoval={(noteID) => {
-              const newNotes = notes.filter(({ id }) => id !== noteID);
+            onNoteRemoval={async (noteID) => {
+              const {
+                success,
+                data: deletedNote,
+                errors,
+              } = await removeNote(noteID);
+
+              if (!success || !deletedNote) {
+                console.error(errors);
+                return;
+              }
+
+              const newNotes = notes.filter(({ id }) => id !== deletedNote.id);
               changeNotes(newNotes);
             }}
           />
