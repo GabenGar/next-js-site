@@ -23,7 +23,19 @@
 }
 
 .button {
-  flex-basis: 6em;
+  flex-basis: 3em;
+
+  & span:nth-child(2) {
+    display: none;
+  }
+
+  @media (min-width: $width-tablet) {
+    flex-basis: 7em;
+
+    & span:nth-child(2) {
+      display: initial;
+    }
+  }
 }
 
 .days {
