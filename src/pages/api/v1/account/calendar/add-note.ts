@@ -4,8 +4,8 @@ import {
   INTERNAL_SERVER_ERROR,
   NOT_AUTHORIZED,
 } from "#environment/constants/http";
+import { IS_DEVELOPMENT } from "#environment/derived";
 import { getAccountDetails, withSessionRoute } from "#lib/account";
-import { getReqBody } from "#lib/util";
 import { addCalendarNote } from "#database/queries/account/calendar";
 import type { APIRequest, APIResponse } from "#types/api";
 import type { ICalendarNote, ICalendarNoteInit } from "#types/entities";
@@ -14,6 +14,7 @@ interface RequestBody extends APIRequest<ICalendarNoteInit> {}
 
 export default withSessionRoute<APIResponse<ICalendarNote>>(
   async (req, res) => {
+    IS_DEVELOPMENT && console.log("REQ_BODY:\n", JSON.stringify(req.body, null, 2));
     if (req.method === "POST") {
       const { account_id } = req.session;
 
@@ -38,7 +39,7 @@ export default withSessionRoute<APIResponse<ICalendarNote>>(
           errors: ["Unknown Error."],
         });
       }
-      const { data } = await getReqBody<RequestBody>(req);
+      const { data }:RequestBody = req.body;
       const isValidBody = [
         data,
         "date" in data,

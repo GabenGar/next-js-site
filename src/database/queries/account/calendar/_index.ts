@@ -11,19 +11,20 @@ export async function addCalendarNote(
   note: string
 ) {
   const query = `
-    INSERT INTO calendar_notes (date, note)
-    VALUES ($(date), $(note))
-    WHERE id = $(account_id)
+    INSERT INTO calendar_notes (account_id, date, note)
+    VALUES ($(account_id), $(date), $(note))
     RETURNING *
   `;
 
-  const newNote = await db.one<ICalendarNote>(query, { date, note, account_id: accountID });
-  
+  const newNote = await db.one<ICalendarNote>(query, {
+    date,
+    note,
+    account_id: accountID,
+  });
+
   return newNote;
 }
 
-export async function removeCalendarNote(accountID: number, noteID: number) {
-
-}
+export async function removeCalendarNote(accountID: number, noteID: number) {}
 
 export async function updateCalendarNote() {}

@@ -1,13 +1,11 @@
 import { useState } from "react";
 import {
   getDate,
-  getHours,
-  getMinutes,
   getMonth,
   getYear,
   startOfDay,
 } from "date-fns";
-import { toISODateTime, toISOTime } from "#lib/dates";
+import { toISODateTime } from "#lib/dates";
 import { createNewNote } from "#lib/api/public";
 import { Heading } from "#components/headings";
 import { DateTimeView } from "#components/dates";
@@ -43,6 +41,7 @@ export function DayOverview({ selectedDay }: IDayoveriewProps) {
     const note = elements["note"].value;
 
     if (!date || !note.trim() || !selectedDay) {
+      console.log("Something is wrong!");
       return;
     }
 
@@ -59,6 +58,8 @@ export function DayOverview({ selectedDay }: IDayoveriewProps) {
     };
 
     const { success, data: newNote, errors } = await createNewNote(noteInit);
+    console.log(newNote);
+    
 
     if (!success || !newNote) {
       console.log(errors);

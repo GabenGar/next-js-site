@@ -1,5 +1,16 @@
-import { useState } from "react";
-import { getDate, isWeekend, isSameDay, isSameMonth } from "date-fns";
+import { useEffect, useState } from "react";
+import {
+  getDate,
+  isWeekend,
+  isSameDay,
+  isSameMonth,
+  subDays,
+  getDaysInMonth,
+  startOfMonth,
+  addDays,
+  getDay,
+  daysInWeek,
+} from "date-fns";
 import clsx from "clsx";
 import { DayOverview } from "./day-overview";
 import styles from "./_index.module.scss";
@@ -7,20 +18,17 @@ import styles from "./_index.module.scss";
 interface IMonthOverviewProps {
   selectedDate: Date;
   currentDate: Date;
-  days: Date[];
 }
 
 export function MonthOverview({
-  days,
   selectedDate,
   currentDate,
 }: IMonthOverviewProps) {
-  const [selectedDay, selectDay] = useState<Date>();
+  const [selectedDay, selectDay] = useState<Date>(currentDate);
+  const days = populateDays(selectedDate);
 
   function handleSelection(dayDate: Date) {
-    const nextSelection =
-      selectedDay && isSameDay(selectedDay, dayDate) ? undefined : dayDate;
-    selectDay(nextSelection);
+    selectDay(dayDate);
   }
 
   return (
@@ -53,4 +61,38 @@ export function MonthOverview({
       <DayOverview selectedDay={selectedDay}></DayOverview>
     </>
   );
+}
+
+/**
+ * TODO: fixed length array
+ */
+function populateDays(selectedDate: Date) {
+  /**
+   * The amount of day to have consistent amount of rows between months.
+   */
+  const totalDays = daysInWeek * 6;
+  const monthStart = startOfMonth(selectedDate);
+  const daysInMonth = getDaysInMonth(monthStart);
+  const monthEnd = addDays(monthStart, daysInMonth);
+
+  // if the first day of month not monday
+  // prepend needed amount of days to have full week
+  const prevDays = getDay(monthStart);
+  const previousMonth = new Array(prevDays)
+    .fill(null)
+    .map((_, index) => subDays(monthStart, index + 1))
+    .reverse();
+
+  const currentMonth = new Array(daysInMonth)
+    .fill(null)
+    .map((_, index) => addDays(monthStart, index));
+
+  // fill the rest of the calendar with next month
+  const nextDays = totalDays - daysInMonth - previousMonth.length;
+  const nextMonth = new Array(nextDays)
+    .fill(null)
+    .map((_, index) => addDays(monthEnd, index));
+
+  const days = [...previousMonth, ...currentMonth, ...nextMonth];
+  return days;
 }
