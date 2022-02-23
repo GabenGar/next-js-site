@@ -49,6 +49,20 @@ export async function addCalendarNote(
   return newNote;
 }
 
-export async function removeCalendarNote(accountID: number, noteID: number) {}
+export async function removeCalendarNote(accountID: number, noteID: number) {
+  const query = `
+    DELETE FROM calendar_notes
+    WHERE 
+      id = $(note_id)
+      AND account_id = $(account_id)
+    RETURNING *
+  `;
+  const removedNote = await db.one<ICalendarNote>(query, {
+    account_id: accountID,
+    note_id: noteID,
+  });
+
+  return removedNote;
+}
 
 export async function updateCalendarNote() {}

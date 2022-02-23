@@ -49,7 +49,6 @@ export function DayOverview({ selectedDay, monthNotes }: IDayoveriewProps) {
     const elements = event.currentTarget.elements as IFormElements<
       typeof formFields[number]
     >;
-
     const date = elements["time"].valueAsDate;
     const note = elements["note"].value;
 
@@ -78,6 +77,7 @@ export function DayOverview({ selectedDay, monthNotes }: IDayoveriewProps) {
     }
 
     changeNotes(notes.concat(newNote));
+    elements["note"].value = ""
   }
 
   return (
