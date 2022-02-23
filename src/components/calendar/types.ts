@@ -1,6 +1,6 @@
-import type { ICalendarNoteClient } from "#types/entities";
+import type { ICalendarNotePublic } from "#types/entities";
 
 export interface ICalendarDay {
   dayDate: Date;
-  notes: ICalendarNoteClient[];
+  notes: ICalendarNotePublic[];
 }

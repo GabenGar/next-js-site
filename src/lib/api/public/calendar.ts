@@ -2,14 +2,14 @@ import { apiV1Fetch } from "./fetch";
 import { toISODateTime } from "#lib/dates";
 
 import type { APIResponse } from "#types/api";
-import type { ICalendarNote, ICalendarNoteClient, ICalendarNoteInit } from "#types/entities";
+import type { ICalendarNotePublic, ICalendarNoteInit } from "#types/entities";
 
 export async function getMonthNotes(monthDate: Date) {
   const response = await apiV1Fetch("/account/calendar/get-month-notes", {
     method: "POST",
     body: JSON.stringify({ data: { date: toISODateTime(monthDate) } }),
   });
-  const result: APIResponse<ICalendarNoteClient[]> = await response.json();
+  const result: APIResponse<ICalendarNotePublic[]> = await response.json();
 
   return result;
 }
@@ -19,8 +19,17 @@ export async function createNewNote(noteInit: ICalendarNoteInit) {
     method: "POST",
     body: JSON.stringify({ data: noteInit }),
   });
-  const result: APIResponse<Omit<ICalendarNote, "account_id">> =
-    await response.json();
+  const result: APIResponse<ICalendarNotePublic> = await response.json();
+
+  return result;
+}
+
+export async function removeNote(noteID: number) {
+  const response = await apiV1Fetch("/account/calendar/remove-note", {
+    method: "POST",
+    body: JSON.stringify({ data: { note_id: noteID } }),
+  });
+  const result: APIResponse<ICalendarNotePublic> = await response.json();
 
   return result;
 }

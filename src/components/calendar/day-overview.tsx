@@ -11,23 +11,23 @@ import { SVGIcon } from "#components/icons";
 import { Notes } from "./notes";
 import styles from "./day-overview.module.scss";
 
-import type { ICalendarNoteClient, ICalendarNoteInit } from "#types/entities";
+import type { ICalendarNotePublic, ICalendarNoteInit } from "#types/entities";
 import type { ISubmitEvent, IFormElements } from "#components/forms";
 
 interface IDayoveriewProps {
   selectedDay?: Date;
-  monthNotes: ICalendarNoteClient[];
+  monthNotes: ICalendarNotePublic[];
 }
 
 export function DayOverview({ selectedDay, monthNotes }: IDayoveriewProps) {
   const dayStart = selectedDay
     ? startOfDay(selectedDay)
     : startOfDay(new Date());
-  const [notes, changeNotes] = useState<ICalendarNoteClient[]>(
+  const [notes, changeNotes] = useState<ICalendarNotePublic[]>(
     (selectedDay && getDayNotes(monthNotes, selectedDay)) || []
   );
 
-  function getDayNotes(monthNotes: ICalendarNoteClient[], selectedDay: Date) {
+  function getDayNotes(monthNotes: ICalendarNotePublic[], selectedDay: Date) {
     const dayNotes = monthNotes.filter((note) =>
       isSameDay(fromISOString(note.date as string), selectedDay)
     );
