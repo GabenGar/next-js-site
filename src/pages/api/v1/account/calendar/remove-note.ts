@@ -5,15 +5,13 @@ import {
   NOT_AUTHORIZED,
 } from "#environment/constants/http";
 import { getAccountDetails, withSessionRoute } from "#lib/account";
-import { getCalendarNotesForMonth } from "#database/queries/account/calendar";
-import { fromISOString, IISODateString } from "#lib/dates";
-
+import { removeCalendarNote } from "#database/queries/account/calendar";
 import type { APIRequest, APIResponse } from "#types/api";
-import type { ICalendarNote, ICalendarNoteClient } from "#types/entities";
+import type { ICalendarNoteClient } from "#types/entities";
 
-interface RequestBody extends APIRequest<{ date: IISODateString }> {}
+interface RequestBody extends APIRequest<{ note_id: number }> {}
 
-export default withSessionRoute<APIResponse<ICalendarNote[]>>(
+export default withSessionRoute<APIResponse<ICalendarNoteClient>>(
   async (req, res) => {
     if (req.method === "POST") {
       const { account_id } = req.session;
@@ -42,8 +40,8 @@ export default withSessionRoute<APIResponse<ICalendarNote[]>>(
       const { data }: RequestBody = req.body;
       const isValidBody = [
         data,
-        "date" in data,
-        typeof data.date === "string",
+        "note_id" in data,
+        typeof data.note_id === "number",
       ].every((value) => value);
 
       if (!isValidBody) {
@@ -53,25 +51,14 @@ export default withSessionRoute<APIResponse<ICalendarNote[]>>(
         });
       }
 
-      const { date } = data;
+      const { note_id } = data;
 
-      const notes = await getCalendarNotesForMonth(
+      const { account_id: accID, ...removedNote } = await removeCalendarNote(
         account_id,
-        fromISOString(date)
+        note_id
       );
 
-      const clientNotes = notes.map<ICalendarNoteClient>(
-        ({ created_at, date, id, note }) => {
-          return {
-            created_at,
-            date,
-            id,
-            note,
-          };
-        }
-      );
-
-      return res.status(OK).json({ success: true, data: clientNotes });
+      return res.status(OK).json({ success: true, data: removedNote });
     }
   }
 );
