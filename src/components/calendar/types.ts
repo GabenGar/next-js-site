@@ -1,3 +1,6 @@
-import type { ICalendarNote } from "#types/entities";
+import type { ICalendarNoteClient } from "#types/entities";
 
-export interface IClientNote extends Omit<ICalendarNote, "account_id"> {}
+export interface ICalendarDay {
+  dayDate: Date;
+  notes: ICalendarNoteClient[];
+}

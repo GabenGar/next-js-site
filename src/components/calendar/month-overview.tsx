@@ -14,6 +14,8 @@ import {
 import clsx from "clsx";
 import { DayOverview } from "./day-overview";
 import styles from "./_index.module.scss";
+import { ICalendarNoteClient } from "#types/entities";
+import { getMonthNotes } from "#lib/api/public";
 
 interface IMonthOverviewProps {
   selectedDate: Date;
@@ -25,11 +27,29 @@ export function MonthOverview({
   currentDate,
 }: IMonthOverviewProps) {
   const [selectedDay, selectDay] = useState<Date>(currentDate);
+  const [monthNotes, changeMonthNotes] = useState<ICalendarNoteClient[]>([]);
   const days = populateDays(selectedDate);
 
   function handleSelection(dayDate: Date) {
     selectDay(dayDate);
   }
+
+  useEffect(() => {
+    (async () => {
+      const {
+        success,
+        data: newNotes,
+        errors,
+      } = await getMonthNotes(selectedDate);
+
+      if (!success || !newNotes) {
+        console.error(errors);
+        return;
+      }
+
+      changeMonthNotes(newNotes);
+    })();
+  }, [selectedDate]);
 
   return (
     <>
@@ -58,7 +78,7 @@ export function MonthOverview({
           );
         })}
       </div>
-      <DayOverview selectedDay={selectedDay} />
+      <DayOverview selectedDay={selectedDay} monthNotes={monthNotes} />
     </>
   );
 }

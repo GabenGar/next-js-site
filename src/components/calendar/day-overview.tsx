@@ -1,11 +1,6 @@
-import { useState } from "react";
-import {
-  getDate,
-  getMonth,
-  getYear,
-  startOfDay,
-} from "date-fns";
-import { toISODateTime } from "#lib/dates";
+import { useEffect, useState } from "react";
+import { getDate, getMonth, getYear, isSameDay, startOfDay } from "date-fns";
+import { fromISOString, toISODateTime } from "#lib/dates";
 import { createNewNote } from "#lib/api/public";
 import { Heading } from "#components/headings";
 import { DateTimeView } from "#components/dates";
@@ -16,19 +11,37 @@ import { SVGIcon } from "#components/icons";
 import { Notes } from "./notes";
 import styles from "./day-overview.module.scss";
 
-import type { ICalendarNoteInit } from "#types/entities";
+import type { ICalendarNoteClient, ICalendarNoteInit } from "#types/entities";
 import type { ISubmitEvent, IFormElements } from "#components/forms";
-import type { IClientNote } from "./types";
 
 interface IDayoveriewProps {
   selectedDay?: Date;
+  monthNotes: ICalendarNoteClient[];
 }
 
-export function DayOverview({ selectedDay }: IDayoveriewProps) {
+export function DayOverview({ selectedDay, monthNotes }: IDayoveriewProps) {
   const dayStart = selectedDay
     ? startOfDay(selectedDay)
     : startOfDay(new Date());
-  const [notes, changeNotes] = useState<IClientNote[]>([]);
+  const [notes, changeNotes] = useState<ICalendarNoteClient[]>(
+    (selectedDay && getDayNotes(monthNotes, selectedDay)) || []
+  );
+
+  function getDayNotes(monthNotes: ICalendarNoteClient[], selectedDay: Date) {
+    const dayNotes = monthNotes.filter((note) =>
+      isSameDay(fromISOString(note.date as string), selectedDay)
+    );
+    return dayNotes;
+  }
+
+  useEffect(() => {
+    if (!selectedDay) {
+      return
+    }
+
+    const newNotes = getDayNotes(monthNotes, selectedDay)
+    changeNotes(newNotes)
+  }, [selectedDay, monthNotes])
 
   async function addNote(event: ISubmitEvent) {
     event.preventDefault();
@@ -58,8 +71,6 @@ export function DayOverview({ selectedDay }: IDayoveriewProps) {
     };
 
     const { success, data: newNote, errors } = await createNewNote(noteInit);
-    console.log(newNote);
-    
 
     if (!success || !newNote) {
       console.log(errors);

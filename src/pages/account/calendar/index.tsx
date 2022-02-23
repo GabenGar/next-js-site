@@ -42,7 +42,6 @@ function CalendarPage({
           <Calendar currentDate={currentDate} />
         </ArticleBody>
       </Article>
-      {IS_DEVELOPMENT && <JSONView json={account} />}
     </Page>
   );
 }
