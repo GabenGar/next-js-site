@@ -58,7 +58,7 @@ export function MonthOverview({
           );
         })}
       </div>
-      <DayOverview selectedDay={selectedDay}></DayOverview>
+      <DayOverview selectedDay={selectedDay} />
     </>
   );
 }
