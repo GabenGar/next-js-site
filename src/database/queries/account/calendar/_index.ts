@@ -1,9 +1,32 @@
 import { getDB } from "#database";
+import { toISODateTime } from "#lib/dates";
 import { ICalendarNote } from "#types/entities";
+import { endOfMonth, startOfMonth } from "date-fns";
 
 const { db } = getDB();
 
-export async function getCalendarNotesForYear() {}
+export async function getCalendarNotesForMonth(
+  accountID: number,
+  monthDate: Date
+) {
+  const monthStart = toISODateTime(startOfMonth(monthDate));
+  const monthEnd = toISODateTime(endOfMonth(monthDate));
+  const query = `
+    SELECT *
+    FROM calendar_notes
+    WHERE
+      account_id = $(account_id)
+      AND date >= $(month_start)
+      AND date <= $(month_end)
+  `;
+  const notes = await db.manyOrNone<ICalendarNote>(query, {
+    account_id: accountID,
+    month_start: monthStart,
+    month_end: monthEnd,
+  });
+
+  return notes;
+}
 
 export async function addCalendarNote(
   accountID: number,
