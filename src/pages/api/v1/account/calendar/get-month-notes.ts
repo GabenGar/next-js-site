@@ -7,7 +7,7 @@ import {
 import { getAccountDetails, withSessionRoute } from "#lib/account";
 import { getCalendarNotesForMonth } from "#database/queries/account/calendar";
 import type { APIRequest, APIResponse } from "#types/api";
-import type { ICalendarNote } from "#types/entities";
+import type { ICalendarNote, ICalendarNoteClient } from "#types/entities";
 import { fromISOString, IISODateString } from "#lib/dates";
 
 interface RequestBody extends APIRequest<{ date: IISODateString }> {}
@@ -59,7 +59,18 @@ export default withSessionRoute<APIResponse<ICalendarNote[]>>(
         fromISOString(date)
       );
 
-      return res.status(OK).json({ success: true, data: notes });
+      const clientNotes = notes.map<ICalendarNoteClient>(
+        ({ created_at, date, id, note }) => {
+          return {
+            created_at,
+            date,
+            id,
+            note,
+          };
+        }
+      );
+
+      return res.status(OK).json({ success: true, data: clientNotes });
     }
   }
 );
