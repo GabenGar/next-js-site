@@ -1,9 +1,9 @@
-import { formatTime } from "#lib/dates";
+import { validateDateLike } from "#lib/dates";
 import { HTMLUl } from "#components/html/ul";
 import { HTMLLi } from "#components/html/li";
 import { Button } from "#components/buttons";
 import { SVGIcon } from "#components/icons";
-
+import { TimeView } from "#components/dates";
 import styles from "./notes.module.scss";
 
 import type { IClientNote } from "./types";
@@ -21,16 +21,20 @@ export function Notes({ notes, onNoteRemoval }: INotesProps) {
           <HTMLLi>No notes exist for this day.</HTMLLi>
         ) : (
           notes.map((note) => (
-            <HTMLLi key={note.id} id={String(note.id)} className={styles.note}>
-              <span>{formatTime(note.date)}</span>
-              <p>{note.note}</p>
+            <HTMLLi key={note.id} className={styles.note}>
+              <div className={styles.info}>
+                <TimeView dateTime={validateDateLike(note.date)} />
+                <p>{note.note}</p>
+              </div>
+
               <Button
+                className={styles.remove}
                 onClick={() => {
-                  onNoteRemoval(note.id);
+                  // onNoteRemoval(note.id);
                 }}
               >
-                <SVGIcon iconID="calendar-minus"></SVGIcon>
-                Remove
+                <SVGIcon iconID="calendar-minus" />
+                <span>Remove</span>
               </Button>
             </HTMLLi>
           ))

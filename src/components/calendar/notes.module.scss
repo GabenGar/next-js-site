@@ -1,14 +1,34 @@
 @use "../../styles/variables/sass.scss" as *;
 
 .notes {
+  padding: $size-normal 0;
 }
 
 .list {
-}
-
-.remove {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: stretch;
+  gap: $size-normal;
 }
 
 .note {
-  background-color: var(--colour1-primary);
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  gap: $size-normal;
+  
 }
+
+.info {
+  flex: 1 1 auto;
+  background-color: var(--colour1-primary);
+  border-radius: $radius-normal;
+  padding: $size-small;
+}
+
+.remove {
+  flex: 0 0 7em;
+  align-self: flex-end;
+}
+
+
