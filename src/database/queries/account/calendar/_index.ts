@@ -18,6 +18,7 @@ export async function getCalendarNotesForMonth(
       account_id = $(account_id)
       AND date >= $(month_start)
       AND date <= $(month_end)
+    ORDER BY date ASC
   `;
   const notes = await db.manyOrNone<ICalendarNote>(query, {
     account_id: accountID,
