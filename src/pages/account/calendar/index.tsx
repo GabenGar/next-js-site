@@ -48,11 +48,6 @@ function CalendarPage({
 
 export const getServerSideProps = withSessionSSR<ICalendarPageProps>(
   async ({ req }) => {
-    if (!IS_DEVELOPMENT) {
-      return {
-        notFound: true,
-      };
-    }
 
     const { account_id } = req.session;
 
