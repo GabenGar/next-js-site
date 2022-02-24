@@ -18,7 +18,7 @@ export type IJSONable =
   | boolean;
 
 export interface IJSONViewProps extends BlockProps<"pre"> {
-  json: IJSONable;
+  json: any;
 }
 
 export const JSONView = blockComponent<IJSONViewProps>(

@@ -1,10 +1,7 @@
 {
   "name": "next-js-site",
-  "version": "0.3.1",
+  "version": "0.4.1",
   "private": true,
-  "imports": {
-    "#scripts": "./scripts/_index.js"
-  },
   "scripts": {
     "prepare": "husky install",
     "env": "node scripts/env.js",
@@ -13,7 +10,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "migrate": "node scripts/migrate-up.js"
+    "migrate": "node scripts/migrate-up.js",
+    "clean": "node scripts/clean-db.js",
+    "reset": "node scripts/reset-db.js"
   },
   "dependencies": {
     "@js-temporal/polyfill": "^0.3.0",

@@ -4,11 +4,11 @@ import styles from "./_index.module.scss";
 
 import type { HTMLInputProps } from "#components/html/input";
 
-export interface InputTextProps extends HTMLInputProps { }
+export interface InputTextProps extends Omit<HTMLInputProps, "type"> {}
 
 export const InputText = blockComponent<InputTextProps>(
   styles.text,
-  ({ type, ...blockProps }) => {
-    return (<HTMLInput type="text" {...blockProps} />);
+  ({ ...blockProps }) => {
+    return <HTMLInput {...blockProps} type="text" />;
   }
-)
+);

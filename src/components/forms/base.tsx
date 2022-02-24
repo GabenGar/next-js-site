@@ -3,11 +3,24 @@ import { HTMLForm } from "#components/html/form";
 import { ButtonSubmit } from "#components/buttons";
 import styles from "./_index.module.scss";
 
+import type { FormEvent, ReactNode } from "react";
 import type { HTMLFormProps } from "#components/html/form";
 
 export interface FormProps extends HTMLFormProps {
-  submitButton?: string | JSX.Element;
+  submitButton?: ReactNode;
 }
+
+/**
+ * Convenience type for `HTMLFormElement.elements`
+ * @link https://stackoverflow.com/questions/29907163/how-to-work-with-form-elements-in-typescript/70995964#70995964
+ */
+export type IFormElements<U extends string> = HTMLFormControlsCollection &
+  Record<U, HTMLInputElement>;
+
+/**
+ * Convenience interface for submit event.
+ */
+export interface ISubmitEvent extends FormEvent<HTMLFormElement> {}
 
 export const Form = blockComponent<FormProps>(
   styles.block,
@@ -18,7 +31,7 @@ export const Form = blockComponent<FormProps>(
         {typeof submitButton === "string" ? (
           <ButtonSubmit>{submitButton}</ButtonSubmit>
         ) : (
-          { submitButton }
+          submitButton
         )}
       </HTMLForm>
     );

@@ -1,1 +1,6 @@
-.block {}
+@use "../../styles/variables/sass.scss" as *;
+
+.block {
+  padding: $size-normal 0;
+  white-space: pre-wrap;
+}

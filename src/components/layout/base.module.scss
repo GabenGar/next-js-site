@@ -30,7 +30,7 @@
 .main {
   grid-area: main;
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 100%;
   align-content: baseline;
   gap: $size-normal;
   background-color: var(--colour1-tertiary);

@@ -10,9 +10,11 @@
   --local-colour2-tertiary: var(--colour1-tertiary);
 
   @include mixins.form-input();
-  display: grid;
-  justify-items: center;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
   align-items: center;
+  gap: $size-small;
   width: auto;
   color: var(--local-colour1-primary);
   background-color: var(--local-colour2-secondary);

@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { getAccount } from "#lib/api/site";
+import { getAccount } from "#lib/api/public";
 
 export function useAccount() {
   const { data: account, error } = useSWR("/account", getAccount, {

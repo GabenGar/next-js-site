@@ -1,5 +1,5 @@
 import { DAY } from "#environment/constants/durations";
-import { toISOString } from "#lib/util/dates";
+import { toISODateTime } from "#lib/dates";
 import { getDB } from "#database";
 
 import type { Account, AccCreds, EmailConfirmation } from "#types/entities";
@@ -81,7 +81,7 @@ export async function createEmailConfirmation(
   confirmation_key: string
 ) {
   const expirationDate = new Date(Date.now() + DAY);
-  const expires_at = toISOString(expirationDate);
+  const expires_at = toISODateTime(expirationDate);
   const query = `
     INSERT INTO email_confirmations 
       (account_id, confirmation_key, email, expires_at)

@@ -4,7 +4,6 @@ export const ERROR_MESSAGE = "FLYING POLAR BUFFALO ERROR";
 
 export const BLOGS_FOLDER = path.join(process.cwd(), "src", "assets", "blog");
 
-export const HTTP_NOT_AUTHORIZED = 402;
 
 /**
  * @link https://tc39.es/proposal-unified-intl-numberformat/section6/locales-currencies-tz_proposed_out.html#sec-issanctionedsimpleunitidentifier

@@ -1,0 +1,91 @@
+@use "../../styles/variables/sass.scss" as *;
+
+.block {
+  border-radius: $radius-normal;
+  border: $size-thin solid var(--colour0-tertiary);
+  overflow: hidden;
+}
+
+.year,
+.month {
+  font-weight: bold;
+  text-align: center;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: $size-thin solid var(--colour0-tertiary);
+  padding: $size-small;
+}
+
+.month {
+  border-bottom: none;
+}
+
+.button {
+  flex-basis: 3em;
+
+  & span:nth-child(2) {
+    display: none;
+  }
+
+  @media (min-width: $width-tablet) {
+    flex-basis: 7em;
+
+    & span:nth-child(2) {
+      display: initial;
+    }
+  }
+}
+
+.days {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: center;
+  border-bottom: $size-thin solid var(--colour0-tertiary);
+}
+
+.day {
+  flex: 0 0 calc(100% / 7);
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: 40px;
+  align-items: center;
+  justify-items: center;
+  border-top: $size-thin solid var(--colour0-tertiary);
+  border-right: $size-thin solid var(--colour0-tertiary);
+  cursor: pointer;
+
+  transition-duration: var(--duration-global);
+  transition-property: color, background-color;
+
+  &:focus {
+    color: var(--colour0-primary);
+  }
+
+  &:hover {
+    color: var(--colour0-primary);
+  }
+
+  &:nth-child(7n) {
+    border-right: none;
+  }
+
+  &_other {
+    color: var(--colour1-tertiary);
+  }
+
+  &_weekend {
+    background-color: var(--positive-colour2-secondary);
+  }
+
+  &_current {
+    background-color: var(--submit-colour2-secondary);
+  }
+
+  &_selected {
+    color: var(--colour0-primary);
+    background-color: var(--submit-colour2-primary);
+  }
+}

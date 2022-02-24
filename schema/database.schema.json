@@ -1,0 +1,18 @@
+{
+  "title": "ProjectDatabase",
+  "description": "Various database details.",
+  "properties": {
+    "pgmigrations": {
+      "description": "Migrations."
+    },
+    "accounts": {
+      "description": "Accounts."
+    },
+    "email_confirmations": {
+      "description": "Pending email confirmations for accounts."
+    },
+    "calendar_notes": {
+      "description": "Account notes for calendar."
+    }
+  }
+}

@@ -1,0 +1,34 @@
+@use "../../styles/variables/sass.scss" as *;
+
+.block {
+  background-color: var(--colour1-secondary);
+  padding: $size-small;
+}
+
+.new {
+  display: flex;
+  flex-flow: row nowrap;
+  max-width: 100%;
+  padding: 0;
+}
+
+.inputs {
+  flex: 1 1 auto;
+}
+
+.add {
+  flex: 0 0 3em;
+  align-self: flex-end;
+
+  & span:nth-child(2) {
+    display: none;
+  }
+
+  @media (min-width: $width-tablet) {
+    flex-basis: 7em;
+
+    & span:nth-child(2) {
+      display: initial;
+    }
+  }
+}

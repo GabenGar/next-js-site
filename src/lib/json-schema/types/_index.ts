@@ -1,6 +1,6 @@
 import validator from "validator";
+import { isISOString } from "#lib/dates";
 import { ValidationErrors } from "./validation-errors";
-import { isISOString } from "#lib/util/dates";
 
 export type JSONTypes =
   | "array"
@@ -11,7 +11,7 @@ export type JSONTypes =
   | "object"
   | "string";
 
-export type JSONKeyTypes = "string" | "number";
+export type JSONKey = "string";
 
 export interface ValidationResult<T = undefined> {
   isValid: boolean;
