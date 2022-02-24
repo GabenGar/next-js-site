@@ -29,6 +29,9 @@ interface IInnerImageProps {
   imageHeight?: string;
 }
 
+/**
+ * @todo: Refactor `Image` components in `fancy` and `html` folders.
+ */
 export const Image = blockComponent<IImageProps>(
   styles.block,
   ({ src, alt = "", imageHeight = "30em", type, className, ...blockProps }) => {
