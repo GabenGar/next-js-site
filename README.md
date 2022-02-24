@@ -52,16 +52,23 @@ The result will be inside `.next` folder.
 
 ## Database
 
-Create migration file:
+### Create migration file:
 
 ```sh
 npx node-pg-migrate create {migration_name} --migrations-dir src/database/migrations --migration-filename-format utc --migration-file-language sql
 ```
 
-Clean database:
+### Clean database:
 ```sh
 npm run clean
 ```
+This drops all project tables, including migrations ones.
+
+### Reset database:
+```sh
+npm run reset
+```
+This truncates all non-migration project tables.
 
 ## MISC
 
