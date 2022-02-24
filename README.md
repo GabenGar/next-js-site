@@ -3,11 +3,10 @@
 ## Table of Contents
 
 1. [Requirements](#requirements)
-1. [Installation](#installation)
-1. [Develop](#develop)
-1. [Build](#build)
-1. [Database](#database)
-1. [MISC](#misc)
+2. [Installation](#installation)
+3. [Develop](#develop)
+4. [Build](#build)
+5. [Database](#database)
 
 ## Requirements
 
@@ -37,7 +36,9 @@ openssl rand -base64 32
 ```
 
 ## Develop
+
 Run the dev setup:
+
 ```sh
 npm run dev
 ```
@@ -59,17 +60,17 @@ npx node-pg-migrate create {migration_name} --migrations-dir src/database/migrat
 ```
 
 ### Clean database:
+
 ```sh
 npm run clean
 ```
+
 This drops all project tables, including migrations ones.
 
 ### Reset database:
+
 ```sh
 npm run reset
 ```
+
 This truncates all non-migration project tables.
-
-## MISC
-
-`scripts` folder is using CJS because ESM support in NextJS is experimental.
