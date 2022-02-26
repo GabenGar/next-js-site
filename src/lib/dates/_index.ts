@@ -1,4 +1,10 @@
-export { formatDate, formatMonth, formatYear, formatTime } from "./format";
+export {
+  formatDate,
+  formatMonth,
+  formatYear,
+  formatTime,
+  formatDatestamp,
+} from "./format";
 export {
   isAllowedTime,
   fromISOString,
@@ -6,7 +12,7 @@ export {
   toISODateTime,
   toISOTime,
   toISODate,
-  validateDateLike
+  validateDateLike,
 } from "./lib";
 
 export type { IISODateString, DateLike } from "./types";

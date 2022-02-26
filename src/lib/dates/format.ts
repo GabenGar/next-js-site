@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+import { format, formatISO9075 } from "date-fns";
 import { validateDateLike } from "./lib";
 
 import type { DateLike } from "./types";
@@ -24,5 +24,15 @@ export function formatMonth(date: DateLike) {
 export function formatTime(date: DateLike) {
   const finalDate = validateDateLike(date);
   const formatedTime = format(finalDate, "HH':'mm");
+  return formatedTime;
+}
+
+/**
+ * @returns A string in format `yyyy-mm-dd`.
+ * Values are numbers.
+ */
+export function formatDatestamp(date: DateLike) {
+  const finalDate = validateDateLike(date);
+  const formatedTime = formatISO9075(finalDate, { representation: "date" });
   return formatedTime;
 }

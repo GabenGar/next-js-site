@@ -5,12 +5,12 @@ import { Button } from "#components/buttons";
 import { SVGIcon } from "#components/icons";
 import { TimeView } from "#components/dates";
 import styles from "./notes.module.scss";
-import { ICalendarNotePublic } from "#types/entities";
+import { ICalendarNoteClient } from "#types/entities";
 
 
 interface INotesProps {
-  notes: ICalendarNotePublic[];
-  onNoteRemoval: (noteID: ICalendarNotePublic["id"]) => void;
+  notes: ICalendarNoteClient[];
+  onNoteRemoval: (noteID: ICalendarNoteClient["id"]) => void;
 }
 
 export function Notes({ notes, onNoteRemoval }: INotesProps) {

@@ -38,5 +38,5 @@ export interface ICalendarNote {
 export interface ICalendarNoteInit
   extends Omit<ICalendarNote, "id" | "created_at" | "account_id"> {}
 
-export interface ICalendarNotePublic
+export interface ICalendarNoteClient
   extends Omit<ICalendarNote, "account_id"> {}

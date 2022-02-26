@@ -7,11 +7,11 @@ import {
 import { getAccountDetails, withSessionRoute } from "#lib/account";
 import { removeCalendarNote } from "#database/queries/account/calendar";
 import type { APIRequest, APIResponse } from "#types/api";
-import type { ICalendarNotePublic } from "#types/entities";
+import type { ICalendarNoteClient } from "#types/entities";
 
 interface RequestBody extends APIRequest<{ note_id: number }> {}
 
-export default withSessionRoute<APIResponse<ICalendarNotePublic>>(
+export default withSessionRoute<APIResponse<ICalendarNoteClient>>(
   async (req, res) => {
     if (req.method === "POST") {
       const { account_id } = req.session;

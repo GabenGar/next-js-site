@@ -14,7 +14,7 @@ import {
 import clsx from "clsx";
 import { DayOverview } from "./day-overview";
 import styles from "./_index.module.scss";
-import { ICalendarNotePublic } from "#types/entities";
+import { ICalendarNoteClient } from "#types/entities";
 import { getMonthNotes } from "#lib/api/public";
 
 interface IMonthOverviewProps {
@@ -31,7 +31,7 @@ export function MonthOverview({
   currentDate,
 }: IMonthOverviewProps) {
   const [selectedDay, selectDay] = useState<Date>(currentDate);
-  const [monthNotes, changeMonthNotes] = useState<ICalendarNotePublic[]>([]);
+  const [monthNotes, changeMonthNotes] = useState<ICalendarNoteClient[]>([]);
   const days = populateDays(selectedDate);
 
   function handleSelection(dayDate: Date) {
