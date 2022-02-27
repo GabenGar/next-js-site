@@ -1,6 +1,8 @@
 import { SITE_ORIGIN } from "#environment/vars";
 import { createFetch } from "#lib/util";
 
+import type { APIRequest } from "#types/api";
+
 const baseFetch = createFetch(SITE_ORIGIN);
 
 export async function apiV1Fetch(path: string, reqInit?: RequestInit) {
@@ -18,6 +20,6 @@ export async function apiV1Fetch(path: string, reqInit?: RequestInit) {
   }
 }
 
-export function createRequestBody<Type>(body: Type) {
-  return JSON.stringify({ data: body });
+export function createRequestBody<Type>(reqBody: Type) {
+  return JSON.stringify({ data: reqBody } as APIRequest<Type>);
 }

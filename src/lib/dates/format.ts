@@ -31,7 +31,7 @@ export function formatTime(date: DateLike) {
  * @returns A string in format `yyyy-mm-dd`.
  * Values are numbers.
  */
-export function formatDatestamp(date: DateLike) {
+export function formatDateStamp(date: DateLike) {
   const finalDate = validateDateLike(date);
   const formatedTime = formatISO9075(finalDate, { representation: "date" });
   return formatedTime;

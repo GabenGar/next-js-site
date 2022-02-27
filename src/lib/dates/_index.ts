@@ -3,7 +3,7 @@ export {
   formatMonth,
   formatYear,
   formatTime,
-  formatDatestamp,
+  formatDateStamp,
 } from "./format";
 export {
   isAllowedTime,
