@@ -29,8 +29,14 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   Action<string>
 >;
 
+/**
+ * Typed dispatch.
+ */
 export function useAppDispatch() {
   return useDispatch<AppDispatch>();
 }
 
+/**
+ * Typed selector.
+ */
 export const useAppSelector: TypedUseSelectorHook<AppState> = useSelector;

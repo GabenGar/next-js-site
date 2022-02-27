@@ -11,12 +11,13 @@ import type { ICalendarNoteClient, ICalendarNoteInit } from "#types/entities";
 import type { AppState, AppThunk, Status } from "#store/redux";
 
 export interface CalendarState {
-  selectedDate?: Date;
+  selectedDate: Date;
   status: Status;
   notes: ICalendarNoteClient[];
 }
 
 const initialState: CalendarState = {
+  selectedDate: new Date(),
   status: "idle",
   notes: [],
 };
@@ -49,7 +50,7 @@ export const calendarSlice = createSlice({
   name: "calendar",
   initialState,
   reducers: {
-    selectDate: (state, action: PayloadAction<Date>) => {
+    changeSelectedDay: (state, action: PayloadAction<Date>) => {
       state.selectedDate = action.payload;
     },
   },
@@ -79,18 +80,21 @@ export const calendarSlice = createSlice({
 
         state.status = "idle";
       })
-      .addCase(removeNoteAsync.rejected, (state) => {})
       .addCase(removeNoteAsync.fulfilled, (state, action) => {
         const { id: noteID } = action.payload.data!;
         const newNotes = state.notes.filter(({ id }) => id !== noteID);
 
-        state.notes = newNotes
+        state.notes = newNotes;
       });
   },
 });
 
-export const { selectDate } = calendarSlice.actions;
+export const { changeSelectedDay } = calendarSlice.actions;
 export const calendarReducer = calendarSlice.reducer;
+
+export function selectCalendar(state: AppState) {
+  return state.calendar;
+}
 
 export function selectNotesForDay(day: Date) {
   return (state: AppState) => {
@@ -99,14 +103,3 @@ export function selectNotesForDay(day: Date) {
     );
   };
 }
-
-// We can also write thunks by hand, which may contain both sync and async logic.
-// Here's an example of conditionally dispatching actions based on current state.
-// export const incrementIfOdd =
-//   (amount: number): AppThunk =>
-//   (dispatch, getState) => {
-//     const currentValue = selectNotes(getState());
-//     if (currentValue % 2 === 1) {
-//       dispatch(incrementByAmount(amount));
-//     }
-//   };
