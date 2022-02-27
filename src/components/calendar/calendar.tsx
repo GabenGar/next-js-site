@@ -43,28 +43,40 @@ export const Calendar = blockComponent<ICalendarProps>(
     return (
       <div {...blockProps}>
         <div className={styles.year}>
-          <Button className={styles.button} onClick={previousYear}>
-            <SVGIcon iconID="chevron-left" />
-            <span>Previous</span>
+          <Button
+            className={styles.button}
+            iconID="chevron-left"
+            onClick={previousYear}
+          >
+            Previous
           </Button>
           <span>{formatYear(selectedDate)}</span>
-          <Button className={styles.button} onClick={nextYear}>
-            <SVGIcon iconID="chevron-right" />
-            <span>Next</span>
+          <Button
+            className={styles.button}
+            iconID="chevron-right"
+            onClick={nextYear}
+          >
+            Next
           </Button>
         </div>
         <div className={styles.month}>
-          <Button className={styles.button} onClick={previousMonth}>
-            <SVGIcon iconID="chevron-left" />
-            <span>Previous</span>
+          <Button
+            className={styles.button}
+            iconID="chevron-left"
+            onClick={previousMonth}
+          >
+            Previous
           </Button>
           <span>{formatMonth(selectedDate)}</span>
-          <Button className={styles.button} onClick={nextMonth}>
-            <SVGIcon iconID="chevron-right" />
-            <span>Next</span>
+          <Button
+            className={styles.button}
+            iconID="chevron-right"
+            onClick={nextMonth}
+          >
+            Next
           </Button>
         </div>
-        <MonthOverview selectedDate={selectedDate} currentDate={currentDate} />
+        <MonthOverview currentDate={currentDate} />
       </div>
     );
   }

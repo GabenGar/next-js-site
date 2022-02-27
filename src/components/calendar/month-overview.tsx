@@ -12,13 +12,15 @@ import {
   daysInWeek,
 } from "date-fns";
 import clsx from "clsx";
+import { getMonthNotes } from "#lib/api/public";
+import { useAppDispatch, useAppSelector } from "#store/redux";
+import { selectCalendar, changeSelectedDay } from "#store/redux/reducers";
 import { DayOverview } from "./day-overview";
 import styles from "./_index.module.scss";
-import { ICalendarNoteClient } from "#types/entities";
-import { getMonthNotes } from "#lib/api/public";
+
+import type { ICalendarNoteClient } from "#types/entities";
 
 interface IMonthOverviewProps {
-  selectedDate: Date;
   currentDate: Date;
 }
 
@@ -27,9 +29,10 @@ interface IMonthOverviewProps {
  * @todo Fix notes sorting after state change.
  */
 export function MonthOverview({
-  selectedDate,
   currentDate,
 }: IMonthOverviewProps) {
+  const dispatch = useAppDispatch();
+  const { selectedDate } = useAppSelector(selectCalendar);
   const [selectedDay, selectDay] = useState<Date>(currentDate);
   const [monthNotes, changeMonthNotes] = useState<ICalendarNoteClient[]>([]);
   const days = populateDays(selectedDate);
