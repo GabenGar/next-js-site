@@ -8,7 +8,7 @@ import type { TypedUseSelectorHook } from "react-redux";
 const statuses = ["idle", "loading", "failed"] as const;
 export type Status = typeof statuses[number];
 
-export const store = makeStore();
+export const reduxStore = makeStore();
 
 export function makeStore() {
   return configureStore({
@@ -18,9 +18,9 @@ export function makeStore() {
   });
 }
 
-export type AppState = ReturnType<typeof store.getState>;
+export type AppState = ReturnType<typeof reduxStore.getState>;
 
-export type AppDispatch = typeof store.dispatch;
+export type AppDispatch = typeof reduxStore.dispatch;
 
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
