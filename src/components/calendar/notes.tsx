@@ -1,19 +1,20 @@
 import { validateDateLike } from "#lib/dates";
+import { useAppDispatch } from "#store/redux";
+import { removeNoteAsync } from "#store/redux/reducers";
 import { HTMLUl } from "#components/html/ul";
 import { HTMLLi } from "#components/html/li";
 import { Button } from "#components/buttons";
-import { SVGIcon } from "#components/icons";
 import { TimeView } from "#components/dates";
 import styles from "./notes.module.scss";
-import { ICalendarNoteClient } from "#types/entities";
 
+import type { ICalendarNoteClient } from "#types/entities";
 
 interface INotesProps {
   notes: ICalendarNoteClient[];
-  onNoteRemoval: (noteID: ICalendarNoteClient["id"]) => void;
 }
 
-export function Notes({ notes, onNoteRemoval }: INotesProps) {
+export function Notes({ notes }: INotesProps) {
+  const dispatch = useAppDispatch();
   return (
     <div className={styles.notes}>
       <HTMLUl className={styles.list}>
@@ -29,12 +30,12 @@ export function Notes({ notes, onNoteRemoval }: INotesProps) {
 
               <Button
                 className={styles.remove}
+                iconID="calendar-minus"
                 onClick={() => {
-                  onNoteRemoval(note.id);
+                  dispatch(removeNoteAsync(note.id));
                 }}
               >
-                <SVGIcon iconID="calendar-minus" />
-                <span>Remove</span>
+                Remove
               </Button>
             </HTMLLi>
           ))

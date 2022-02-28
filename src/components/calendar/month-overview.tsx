@@ -12,29 +12,23 @@ import {
   daysInWeek,
 } from "date-fns";
 import clsx from "clsx";
-import { getMonthNotes } from "#lib/api/public";
 import { useAppDispatch, useAppSelector } from "#store/redux";
-import { selectCalendar, changeSelectedDay } from "#store/redux/reducers";
+import { selectCalendar, getMonthNotes } from "#store/redux/reducers";
 import { DayOverview } from "./day-overview";
 import styles from "./_index.module.scss";
 
 import type { ICalendarNoteClient } from "#types/entities";
 
-interface IMonthOverviewProps {
-  currentDate: Date;
-}
+interface IMonthOverviewProps {}
 
 /**
  * @todo Fix notes not syncing with state.
  * @todo Fix notes sorting after state change.
  */
-export function MonthOverview({
-  currentDate,
-}: IMonthOverviewProps) {
+export function MonthOverview({}: IMonthOverviewProps) {
   const dispatch = useAppDispatch();
-  const { selectedDate } = useAppSelector(selectCalendar);
+  const { selectedDate, currentDate } = useAppSelector(selectCalendar);
   const [selectedDay, selectDay] = useState<Date>(currentDate);
-  const [monthNotes, changeMonthNotes] = useState<ICalendarNoteClient[]>([]);
   const days = populateDays(selectedDate);
 
   function handleSelection(dayDate: Date) {
@@ -42,21 +36,8 @@ export function MonthOverview({
   }
 
   useEffect(() => {
-    (async () => {
-      const {
-        success,
-        data: newNotes,
-        errors,
-      } = await getMonthNotes(selectedDate);
-
-      if (!success || !newNotes) {
-        console.error(errors);
-        return;
-      }
-
-      changeMonthNotes(newNotes);
-    })();
-  }, [selectedDate]);
+    dispatch(getMonthNotes(selectedDate));
+  }, [dispatch, selectedDate]);
 
   return (
     <>
@@ -85,7 +66,7 @@ export function MonthOverview({
           );
         })}
       </div>
-      <DayOverview selectedDay={selectedDay} monthNotes={monthNotes} />
+      <DayOverview selectedDay={selectedDay} />
     </>
   );
 }
@@ -95,7 +76,7 @@ export function MonthOverview({
  */
 function populateDays(selectedDate: Date) {
   /**
-   * The amount of day to have consistent amount of rows between months.
+   * The amount of days to have consistent amount of rows between months.
    */
   const totalDays = daysInWeek * 6;
   const monthStart = startOfMonth(selectedDate);

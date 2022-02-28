@@ -1,7 +1,12 @@
-import { useEffect, useState } from "react";
-import { getDate, getMonth, getYear, isSameDay, startOfDay } from "date-fns";
-import { fromISOString, toISODateTime } from "#lib/dates";
-import { createNewNote, removeNote } from "#lib/api/public";
+import { useEffect } from "react";
+import { getDate, getMonth, getYear, startOfDay } from "date-fns";
+import { toISODateTime } from "#lib/dates";
+import { useAppDispatch, useAppSelector } from "#store/redux";
+import {
+  addNoteAsync,
+  getMonthNotes,
+  selectNotesForDay,
+} from "#store/redux/reducers";
 import { Heading } from "#components/headings";
 import { DateTimeView } from "#components/dates";
 import { Form } from "#components/forms";
@@ -11,44 +16,31 @@ import { SVGIcon } from "#components/icons";
 import { Notes } from "./notes";
 import styles from "./day-overview.module.scss";
 
-import type { ICalendarNoteClient, ICalendarNoteInit } from "#types/entities";
+import type { ICalendarNoteInit } from "#types/entities";
 import type { ISubmitEvent, IFormElements } from "#components/forms";
 
 interface IDayoveriewProps {
-  selectedDay?: Date;
-  monthNotes: ICalendarNoteClient[];
+  selectedDay: Date;
 }
 
-export function DayOverview({ selectedDay, monthNotes }: IDayoveriewProps) {
+export function DayOverview({ selectedDay }: IDayoveriewProps) {
+  const dispatch = useAppDispatch();
+  const dayNotes = useAppSelector(selectNotesForDay(selectedDay));
   const dayStart = selectedDay
     ? startOfDay(selectedDay)
     : startOfDay(new Date());
-  const [notes, changeNotes] = useState<ICalendarNoteClient[]>(
-    (selectedDay && getDayNotes(monthNotes, selectedDay)) || []
-  );
-
-  function getDayNotes(monthNotes: ICalendarNoteClient[], selectedDay: Date) {
-    const dayNotes = monthNotes.filter((note) =>
-      isSameDay(fromISOString(note.date as string), selectedDay)
-    );
-    return dayNotes;
-  }
 
   useEffect(() => {
-    if (!selectedDay) {
-      return;
+    if (!dayNotes.length) {
+      dispatch(getMonthNotes(selectedDay));
     }
-
-    const newNotes = getDayNotes(monthNotes, selectedDay);
-    changeNotes(newNotes);
-  }, [selectedDay, monthNotes]);
+  });
 
   async function addNote(event: ISubmitEvent) {
     event.preventDefault();
     const formFields = ["time", "note"] as const;
-    const elements = event.currentTarget.elements as IFormElements<
-      typeof formFields[number]
-    >;
+    const form = event.currentTarget;
+    const elements = form.elements as IFormElements<typeof formFields[number]>;
     const date = elements["time"].valueAsDate;
     const note = elements["note"].value;
 
@@ -69,15 +61,8 @@ export function DayOverview({ selectedDay, monthNotes }: IDayoveriewProps) {
       note,
     };
 
-    const { success, data: newNote, errors } = await createNewNote(noteInit);
-
-    if (!success || !newNote) {
-      console.log(errors);
-      return;
-    }
-
-    changeNotes(notes.concat(newNote));
-    elements["note"].value = "";
+    dispatch(addNoteAsync(noteInit));
+    form.reset();
   }
 
   return (
@@ -116,24 +101,7 @@ export function DayOverview({ selectedDay, monthNotes }: IDayoveriewProps) {
               </TextArea>
             </div>
           </Form>
-          <Notes
-            notes={notes}
-            onNoteRemoval={async (noteID) => {
-              const {
-                success,
-                data: deletedNote,
-                errors,
-              } = await removeNote(noteID);
-
-              if (!success || !deletedNote) {
-                console.error(errors);
-                return;
-              }
-
-              const newNotes = notes.filter(({ id }) => id !== deletedNote.id);
-              changeNotes(newNotes);
-            }}
-          />
+          <Notes notes={dayNotes} />
         </>
       )}
     </div>

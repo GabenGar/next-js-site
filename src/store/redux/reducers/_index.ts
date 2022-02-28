@@ -3,7 +3,7 @@ export {
   addNoteAsync,
   getMonthNotes,
   removeNoteAsync,
-  changeSelectedDay,
+  changeSelectedDate,
   selectNotesForDay,
   selectCalendar
 } from "./calendar";

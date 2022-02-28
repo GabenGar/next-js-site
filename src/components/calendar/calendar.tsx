@@ -1,8 +1,7 @@
-import { useState } from "react";
 import { addMonths, subMonths, subYears, addYears } from "date-fns";
 import { formatMonth, formatYear } from "#lib/dates";
 import { useAppDispatch, useAppSelector } from "#store/redux";
-import { changeSelectedDay, selectCalendar } from "#store/redux/reducers";
+import { changeSelectedDate, selectCalendar } from "#store/redux/reducers";
 import { blockComponent } from "#components/meta";
 import { Button } from "#components/buttons";
 import { SVGIcon } from "#components/icons";
@@ -23,21 +22,21 @@ export const Calendar = blockComponent<ICalendarProps>(
 
     function previousYear() {
       const newDate = subYears(selectedDate, 1);
-      dispatch(changeSelectedDay(newDate));
+      dispatch(changeSelectedDate(newDate));
     }
 
     function nextYear() {
       const newDate = addYears(selectedDate, 1);
-      dispatch(changeSelectedDay(newDate));
+      dispatch(changeSelectedDate(newDate));
     }
 
     function previousMonth() {
       const newDate = subMonths(selectedDate, 1);
-      dispatch(changeSelectedDay(newDate));
+      dispatch(changeSelectedDate(newDate));
     }
     function nextMonth() {
       const newDate = addMonths(selectedDate, 1);
-      dispatch(changeSelectedDay(newDate));
+      dispatch(changeSelectedDate(newDate));
     }
 
     return (

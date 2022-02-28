@@ -11,19 +11,25 @@ import type { ICalendarNoteClient, ICalendarNoteInit } from "#types/entities";
 import type { AppState, AppThunk, Status } from "#store/redux";
 
 export interface CalendarState {
+  currentDate: Date;
   selectedDate: Date;
+  selectedDay: Date;
   status: Status;
   notes: ICalendarNoteClient[];
 }
 
+const reducerName = "calendar";
+
 const initialState: CalendarState = {
+  currentDate: new Date(),
   selectedDate: new Date(),
+  selectedDay: new Date(),
   status: "idle",
   notes: [],
 };
 
 export const getMonthNotes = createAsyncThunk(
-  "calendar/getMonthNotes",
+  `${reducerName}/getMonthNotes`,
   async (monthDate: Date) => {
     const response = await fetchMonthNotes(monthDate);
     return response;
@@ -31,7 +37,7 @@ export const getMonthNotes = createAsyncThunk(
 );
 
 export const addNoteAsync = createAsyncThunk(
-  "calendar/addNote",
+  `${reducerName}/addNote`,
   async (noteInit: ICalendarNoteInit) => {
     const response = await createNewNote(noteInit);
     return response;
@@ -39,7 +45,7 @@ export const addNoteAsync = createAsyncThunk(
 );
 
 export const removeNoteAsync = createAsyncThunk(
-  "calendar/removeNote",
+  `${reducerName}/removeNote`,
   async (noteID: number) => {
     const response = await removeNote(noteID);
     return response;
@@ -47,11 +53,19 @@ export const removeNoteAsync = createAsyncThunk(
 );
 
 export const calendarSlice = createSlice({
-  name: "calendar",
+  name: reducerName,
   initialState,
   reducers: {
-    changeSelectedDay: (state, action: PayloadAction<Date>) => {
+    changeSelectedDate: (state, action: PayloadAction<Date>) => {
       state.selectedDate = action.payload;
+    },
+    /**
+     * Used for selecting a day in a month.
+     * A separate value to preserve the day selection
+     * regardless of curetly viewed date.
+     */
+    changeSelectedDay: (state, action: PayloadAction<Date>) => {
+      state.selectedDay = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -89,7 +103,7 @@ export const calendarSlice = createSlice({
   },
 });
 
-export const { changeSelectedDay } = calendarSlice.actions;
+export const { changeSelectedDate, changeSelectedDay } = calendarSlice.actions;
 export const calendarReducer = calendarSlice.reducer;
 
 export function selectCalendar(state: AppState) {
