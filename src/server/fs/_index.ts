@@ -4,7 +4,7 @@ import fse from "fs-extra";
 import type { ParsedPath } from "path";
 import type { Dirent } from "fs-extra";
 
-export interface FolderItem {
+export interface IFolderItem {
   entity: ParsedPath;
   entry: Dirent;
 }
@@ -12,7 +12,7 @@ export interface FolderItem {
 /**
  * @param folderPath Absolute path.
  */
-export async function readFolder(folderPath: string): Promise<FolderItem[]> {
+export async function readFolder(folderPath: string): Promise<IFolderItem[]> {
   if (!path.isAbsolute(folderPath)) {
     throw Error(`Path "${folderPath}" is not absolute.`);
   }
@@ -33,4 +33,8 @@ export async function readFolder(folderPath: string): Promise<FolderItem[]> {
   });
 
   return folderItems;
+}
+
+export async function saveToFile(filePath: string, content: string) {
+  await fse.writeFile(filePath, content);
 }

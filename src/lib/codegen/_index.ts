@@ -1,7 +1,7 @@
 import path from "path";
 // doing relative imports to please `ts-node`
 import { CODEGEN_FOLDER } from "../../../environment/constants";
-import { readFolder } from "../../server/fs/_index";
+import { readFolder, saveToFile } from "../../server/fs/_index";
 
 interface Module {
   default: () => Promise<string> | string;
@@ -42,7 +42,7 @@ async function runCodegen(codegenFolder: string) {
   for await (const { entity } of workableFolders) {
     const folderPath = path.format(entity);
     const generatedCode = await generateCode(folderPath);
-    console.info(generatedCode)
+    console.info(generatedCode);
     await saveGeneratedCode(folderPath, generatedCode);
     await createIndex(folderPath);
   }
@@ -65,6 +65,9 @@ async function generateCode(folder: string): Promise<string> {
   return code;
 }
 
-async function saveGeneratedCode(folder: string, code: string) {}
+async function saveGeneratedCode(folder: string, code: string) {
+  const filePath = path.join(folder, resultFilename);
+  await saveToFile(filePath, code);
+}
 
 async function createIndex(folder: string) {}
