@@ -4,7 +4,6 @@ import { toISODateTime } from "#lib/dates";
 import { useAppDispatch, useAppSelector } from "#store/redux";
 import {
   addNoteAsync,
-  getMonthNotes,
   selectNotesForDay,
 } from "#store/redux/reducers";
 import { Heading } from "#components/headings";
@@ -12,7 +11,6 @@ import { DateTimeView } from "#components/dates";
 import { Form } from "#components/forms";
 import { ButtonSubmit } from "#components/buttons";
 import { FormSectionTime, TextArea } from "#components/forms/sections";
-import { SVGIcon } from "#components/icons";
 import { Notes } from "./notes";
 import styles from "./day-overview.module.scss";
 
@@ -30,12 +28,8 @@ export function DayOverview({ selectedDay }: IDayoveriewProps) {
     ? startOfDay(selectedDay)
     : startOfDay(new Date());
 
-  useEffect(() => {
-    if (!dayNotes.length) {
-      dispatch(getMonthNotes(selectedDay));
-    }
-  });
 
+  
   async function addNote(event: ISubmitEvent) {
     event.preventDefault();
     const formFields = ["time", "note"] as const;
@@ -81,9 +75,8 @@ export function DayOverview({ selectedDay }: IDayoveriewProps) {
             className={styles.new}
             onSubmit={addNote}
             submitButton={
-              <ButtonSubmit className={styles.add}>
-                <SVGIcon iconID="calendar-plus" />
-                <span>Add</span>
+              <ButtonSubmit className={styles.add} iconID="calendar-plus">
+                Add
               </ButtonSubmit>
             }
           >

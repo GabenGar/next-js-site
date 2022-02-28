@@ -5,6 +5,9 @@
       "#scripts": [
         "scripts/_index.js"
       ],
+      "#schema/*": [
+        "schema/*"
+      ],
       "#environment/*": [
         "environment/*"
       ],
