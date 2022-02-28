@@ -1,16 +1,13 @@
 import path from "path";
 // doing relative imports to please `ts-node`
 import { CODEGEN_FOLDER } from "../../../environment/constants";
-import { readFolder, saveToFile } from "../../server/fs/_index";
-
-interface Module {
-  default: () => Promise<string> | string;
-}
-
-const excludedFolders = ["one-off"];
-const generatorFilename = "generator.ts";
-const indexFilename = "_index.ts";
-const resultFilename = "result.ts";
+import { readFolder } from "../../server/fs/_index";
+import {
+  generateTypescriptCode,
+  saveTypescriptCode,
+  createTypescriptIndex,
+} from "./ts";
+import { excludedFolders } from "./types";
 
 (async () => {
   try {
@@ -22,6 +19,10 @@ const resultFilename = "result.ts";
   }
 })();
 
+/**
+ * Analyzes the codegen folder.
+ * @param codegenFolder
+ */
 async function analyzeCodegen(codegenFolder: string) {}
 
 /**
@@ -41,33 +42,11 @@ async function runCodegen(codegenFolder: string) {
 
   for await (const { entity } of workableFolders) {
     const folderPath = path.format(entity);
-    const generatedCode = await generateCode(folderPath);
-    console.info(generatedCode);
-    await saveGeneratedCode(folderPath, generatedCode);
-    await createIndex(folderPath);
+    if (entity.ext === "ts") {
+      const generatedCode = await generateTypescriptCode(folderPath);
+      console.info(generatedCode);
+      const esModule = await saveTypescriptCode(folderPath, generatedCode);
+      await createTypescriptIndex(folderPath, esModule);
+    }
   }
 }
-
-async function generateCode(folder: string): Promise<string> {
-  const folderItems = await readFolder(folder);
-  const generatorFile = folderItems.find(
-    ({ entry }) => entry.name === generatorFilename
-  );
-
-  if (!generatorFile) {
-    throw Error(`No "${generatorFilename}" found in "${folder}"`);
-  }
-
-  const generatorFilePath = path.format(generatorFile.entity);
-  const module: Module = await import(generatorFilePath);
-  const code = await Promise.resolve(module.default());
-
-  return code;
-}
-
-async function saveGeneratedCode(folder: string, code: string) {
-  const filePath = path.join(folder, resultFilename);
-  await saveToFile(filePath, code);
-}
-
-async function createIndex(folder: string) {}
