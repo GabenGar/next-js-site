@@ -44,7 +44,6 @@ async function runCodegen(codegenFolder: string) {
     const folderPath = path.format(entity);
     if (entity.ext === "ts") {
       const generatedCode = await generateTypescriptCode(folderPath);
-      console.info(generatedCode);
       const esModule = await saveTypescriptCode(folderPath, generatedCode);
       await createTypescriptIndex(folderPath, esModule);
     }
