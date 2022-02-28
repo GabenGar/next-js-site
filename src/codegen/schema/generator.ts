@@ -1,5 +1,5 @@
 function generateSchemas() {
-  return ""
+  return "export interface FuckYou {};"
 }
 
 export default generateSchemas;
