@@ -1,0 +1,6 @@
+{
+  "title": "ISODateTime",
+  "description": "ISO string representing datetime.",
+  "type": "string",
+  "format": "date-time"
+}

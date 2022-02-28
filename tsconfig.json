@@ -4,6 +4,7 @@
     "paths": {
       "#scripts": ["scripts/_index.js"],
       "#environment/*": ["environment/*"],
+      "#codegen/*": ["src/codegen/*/_index.ts"],
       "#server/*": ["src/server/*/_index.ts"],
       "#database": ["src/database/_index.ts"],
       "#database/*": ["src/database/*/_index.ts"],

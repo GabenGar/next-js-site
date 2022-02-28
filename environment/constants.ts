@@ -2,8 +2,11 @@ import path from "path";
 
 export const ERROR_MESSAGE = "FLYING POLAR BUFFALO ERROR";
 
-export const BLOGS_FOLDER = path.join(process.cwd(), "src", "assets", "blog");
-
+export const PROJECT_ROOT = process.cwd();
+export const SCHEMA_FOLDER = path.join(PROJECT_ROOT, "schema");
+export const SOURCE_FOLDER = path.join(PROJECT_ROOT, "src");
+export const CODEGEN_FOLDER = path.join(SOURCE_FOLDER, "codegen");
+export const BLOGS_FOLDER = path.join(SOURCE_FOLDER, "assets", "blog");
 
 /**
  * @link https://tc39.es/proposal-unified-intl-numberformat/section6/locales-currencies-tz_proposed_out.html#sec-issanctionedsimpleunitidentifier
