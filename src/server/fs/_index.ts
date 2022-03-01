@@ -35,6 +35,11 @@ export async function readFolder(folderPath: string): Promise<IFolderItem[]> {
   return folderItems;
 }
 
+export async function readFile(filePath: string) {
+  const content = await fse.readFile(filePath, { encoding: "utf-8" });
+  return content;
+}
+
 export async function saveToFile(filePath: string, content: string) {
-  await fse.writeFile(filePath, content);
+  await fse.writeFile(filePath, content, { encoding: "utf-8" });
 }

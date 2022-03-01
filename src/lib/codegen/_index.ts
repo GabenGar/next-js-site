@@ -5,7 +5,7 @@ import { readFolder } from "../../server/fs/_index";
 import {
   generateTypescriptCode
 } from "./typescript/_index";
-import { excludedFolders } from "./types";
+import { excludedFolders, generatorFilename } from "./types";
 
 (async () => {
   try {
@@ -40,9 +40,15 @@ async function runCodegen(codegenFolder: string) {
 
   for await (const { entity } of workableFolders) {
     const folderPath = path.format(entity);
-    if (entity.ext === "ts") {
-      await generateTypescriptCode(folderPath);
+    const folderItems = await readFolder(folderPath);
+    const generator = folderItems.find(({ entity }) => entity.name === generatorFilename)
 
+    if (!generator) {
+      throw Error(`No generators found at "${folderPath}".`)
+    }
+
+    if (generator.entity.ext === ".ts") {
+      await generateTypescriptCode(folderPath);
     }
   }
 }

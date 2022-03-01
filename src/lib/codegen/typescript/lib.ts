@@ -1,17 +1,20 @@
 import path from "path";
 import { saveToFile } from "../../../server/fs/_index";
 import { generatorFilename, resultFilename, indexFilename } from "../types";
+import { analyzeGeneratedCode } from "./analyze-code";
 
 import type { ESModule } from "../types";
+import type { IExports } from "./types";
 
 export async function generateTypescriptCode(folderPath: string) {
   const generatedCode = await runGenerator(folderPath);
-  const esModule = await saveTypescriptCode(folderPath, generatedCode);
-  await createTypescriptIndex(folderPath, esModule);
+  const esModule = await saveGeneratedCode(folderPath, generatedCode);
+  const exports = await analyzeGeneratedCode(folderPath);
+  await createIndex(folderPath, exports);
 }
 
-export async function runGenerator(folder: string): Promise<string> {
-  const generatorFilePath = path.join(folder, generatorFilename);
+async function runGenerator(folder: string): Promise<string> {
+  const generatorFilePath = path.join(folder, `${generatorFilename}.ts`);
   const module: ESModule = await import(generatorFilePath);
 
   if (typeof module?.default !== "function") {
@@ -25,18 +28,16 @@ export async function runGenerator(folder: string): Promise<string> {
   return code;
 }
 
-export async function saveTypescriptCode(folder: string, code: string) {
-  const resultFilePath = path.join(folder, resultFilename);
+async function saveGeneratedCode(folder: string, code: string) {
+  const resultFilePath = path.join(folder, `${resultFilename}.ts`);
   await saveToFile(resultFilePath, code);
   const esModule: ESModule = await import(resultFilePath);
+
   return esModule;
 }
 
-export async function createTypescriptIndex(
-  folder: string,
-  esModule: ESModule
-) {
+async function createIndex(folder: string, exports: IExports) {
   const indexFilePath = path.join(folder, indexFilename);
   console.log("FOLDER: ", folder);
-  console.log("MODULE: ", esModule);
+  console.log("EXPORTS: ", exports);
 }
