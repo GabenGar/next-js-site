@@ -5,5 +5,5 @@ export interface ESModule {
 
 export const excludedFolders = ["one-off"];
 export const generatorFilename = "generator";
-export const indexFilename = "_index.ts";
+export const indexFilename = "_index";
 export const resultFilename = "result";

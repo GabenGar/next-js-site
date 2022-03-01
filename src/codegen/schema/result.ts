@@ -1,1 +1,1 @@
-export interface FuckYou {};
+export interface IFuckYou {};

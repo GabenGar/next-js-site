@@ -37,7 +37,16 @@ async function saveGeneratedCode(folder: string, code: string) {
 }
 
 async function createIndex(folder: string, exports: IExports) {
-  const indexFilePath = path.join(folder, indexFilename);
-  console.log("FOLDER: ", folder);
-  console.log("EXPORTS: ", exports);
+  const indexFilePath = path.join(folder, `${indexFilename}.ts`);
+  const { members, types } = exports;
+  const content = [
+    Boolean(members.length) &&
+      `export { ${members.join(", ")} } from "./result";`,
+    Boolean(types.length) &&
+      `export type { ${types.join(", ")} } from "./result";`,
+  ]
+    .filter((statement) => statement !== false)
+    .join("\n");
+
+  await saveToFile(indexFilePath, content);
 }
