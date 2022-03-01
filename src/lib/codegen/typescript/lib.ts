@@ -1,5 +1,5 @@
 import path from "path";
-import { saveToFile } from "../../../server/fs/_index";
+import { saveToFile } from "#server/fs";
 import { generatorFilename, resultFilename, indexFilename } from "../types";
 import { analyzeGeneratedCode } from "./analyze-code";
 

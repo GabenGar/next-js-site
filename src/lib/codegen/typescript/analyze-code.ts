@@ -4,12 +4,11 @@ import {
   ScriptTarget,
   SyntaxKind,
   isInterfaceDeclaration,
-  isExportAssignment,
 } from "typescript";
-import { readFile } from "../../../server/fs/_index";
+import { readFile } from "#server/fs";
 import { resultFilename } from "../types";
 
-import type { Node, SourceFile, InterfaceDeclaration } from "typescript";
+import type { SourceFile } from "typescript";
 import type { IExports } from "./types";
 
 export async function analyzeGeneratedCode(folder: string): Promise<IExports> {

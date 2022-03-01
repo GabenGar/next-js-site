@@ -1,7 +1,7 @@
 import path from "path";
 // doing relative imports to please `ts-node`
-import { CODEGEN_FOLDER } from "../../../environment/constants";
-import { readFolder } from "../../server/fs/_index";
+import { CODEGEN_FOLDER } from "#environment/constants";
+import { readFolder } from "#server/fs";
 import {
   generateTypescriptCode
 } from "./typescript/_index";
