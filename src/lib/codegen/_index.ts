@@ -2,9 +2,7 @@ import path from "path";
 // doing relative imports to please `ts-node`
 import { CODEGEN_FOLDER } from "#environment/constants";
 import { readFolder } from "#server/fs";
-import {
-  generateTypescriptCode
-} from "./typescript/_index";
+import { generateTypescriptCode } from "./typescript/_index";
 import { excludedFolders, generatorFilename } from "./types";
 
 (async () => {
@@ -41,10 +39,15 @@ async function runCodegen(codegenFolder: string) {
   for await (const { entity } of workableFolders) {
     const folderPath = path.format(entity);
     const folderItems = await readFolder(folderPath);
-    const generator = folderItems.find(({ entity }) => entity.name === generatorFilename)
+    const generator = folderItems.find(
+      ({ entity }) => entity.name === generatorFilename
+    );
 
     if (!generator) {
-      throw Error(`No generators found at "${folderPath}".`)
+      console.warn(
+        `No generators found at "${folderPath}". Skipping the folder.`
+      );
+      continue;
     }
 
     if (generator.entity.ext === ".ts") {

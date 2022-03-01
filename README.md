@@ -7,6 +7,7 @@
 3. [Develop](#develop)
 4. [Build](#build)
 5. [Database](#database)
+6. [TODOs](#todos)
 
 ## Requirements
 
@@ -74,3 +75,6 @@ npm run reset
 ```
 
 This truncates all non-migration project tables.
+
+## TODOs
+- figure out the problem between typescript, `ts-node` and  `stringify-object` being a pure ESM package.

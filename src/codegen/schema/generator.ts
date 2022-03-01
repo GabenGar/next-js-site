@@ -1,10 +1,11 @@
+import stringifyObject from "stringify-object";
 import { SCHEMA_FOLDER } from "#environment/constants";
-import { reduceFolder } from "#server/fs";
-
+import { readJSON, reduceFolder } from "#server/fs";
 
 async function generateSchemas() {
   const schemas = await getSchemas();
-  return "export interface IFuckYou {};";
+  const content = schemas.join("\n");
+  return content;
 }
 
 async function getSchemas() {
@@ -13,6 +14,17 @@ async function getSchemas() {
     [],
     { isShallow: false },
     async (schemas, folderItem) => {
+      const { entry, entity } = folderItem
+      if (!entry.isFile()) {
+        return schemas;
+      }
+
+      const schemaObj: { title: string } = await readJSON(folderItem.toString());
+      const exportLine = `export const ${schemaObj.title} = `;
+      const objString = stringifyObject(schemaObj, {});
+      const finalObj = `${exportLine} ${objString}\n`;
+
+      schemas.push(finalObj);
       return schemas;
     }
   );
