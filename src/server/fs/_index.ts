@@ -1,2 +1,3 @@
 export { readFile, readFolder, saveToFile } from "./lib";
-export { startFolderReduce as reduceFolder } from "./reduce-folder";
+export { startPathReduce as reduceFolder } from "./reduce-folder";
+export type { ReduceOptions, ReducerCallback } from "./reduce-folder";

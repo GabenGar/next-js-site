@@ -1,12 +1,11 @@
 import path from "path";
 import fse from "fs-extra";
-
-import type { IFolderItem } from "./types"
+import { FolderItem } from "./types";
 
 /**
  * @param folderPath Absolute path.
  */
- export async function readFolder(folderPath: string): Promise<IFolderItem[]> {
+export async function readFolder(folderPath: string): Promise<FolderItem[]> {
   if (!path.isAbsolute(folderPath)) {
     throw Error(`Path "${folderPath}" is not absolute.`);
   }
@@ -17,11 +16,7 @@ import type { IFolderItem } from "./types"
   });
   const folderItems = folderEntries.map((entry) => {
     const entryPath = path.join(folderPath, entry.name);
-    const entity = path.parse(entryPath);
-    const folderItem = {
-      entry,
-      entity,
-    };
+    const folderItem = new FolderItem(entryPath, entry);
 
     return folderItem;
   });
