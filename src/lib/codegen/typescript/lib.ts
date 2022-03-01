@@ -1,20 +1,17 @@
 import path from "path";
-import { readFolder, saveToFile } from "../../server/fs/_index";
-import { generatorFilename, resultFilename, indexFilename } from "./types";
+import { saveToFile } from "../../../server/fs/_index";
+import { generatorFilename, resultFilename, indexFilename } from "../types";
 
-import type { ESModule } from "./types";
+import type { ESModule } from "../types";
 
-export async function generateTypescriptCode(folder: string): Promise<string> {
-  const folderItems = await readFolder(folder);
-  const generatorFile = folderItems.find(
-    ({ entry }) => entry.name === generatorFilename
-  );
+export async function generateTypescriptCode(folderPath: string) {
+  const generatedCode = await runGenerator(folderPath);
+  const esModule = await saveTypescriptCode(folderPath, generatedCode);
+  await createTypescriptIndex(folderPath, esModule);
+}
 
-  if (!generatorFile) {
-    throw Error(`No "${generatorFilename}" found in "${folder}"`);
-  }
-
-  const generatorFilePath = path.format(generatorFile.entity);
+export async function runGenerator(folder: string): Promise<string> {
+  const generatorFilePath = path.join(folder, generatorFilename);
   const module: ESModule = await import(generatorFilePath);
 
   if (typeof module?.default !== "function") {

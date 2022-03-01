@@ -3,10 +3,8 @@ import path from "path";
 import { CODEGEN_FOLDER } from "../../../environment/constants";
 import { readFolder } from "../../server/fs/_index";
 import {
-  generateTypescriptCode,
-  saveTypescriptCode,
-  createTypescriptIndex,
-} from "./ts";
+  generateTypescriptCode
+} from "./typescript/_index";
 import { excludedFolders } from "./types";
 
 (async () => {
@@ -43,9 +41,8 @@ async function runCodegen(codegenFolder: string) {
   for await (const { entity } of workableFolders) {
     const folderPath = path.format(entity);
     if (entity.ext === "ts") {
-      const generatedCode = await generateTypescriptCode(folderPath);
-      const esModule = await saveTypescriptCode(folderPath, generatedCode);
-      await createTypescriptIndex(folderPath, esModule);
+      await generateTypescriptCode(folderPath);
+
     }
   }
 }
