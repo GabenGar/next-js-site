@@ -8,7 +8,7 @@ import {
 import { readFile } from "#server/fs";
 import { resultFilename } from "../types";
 
-import type { SourceFile } from "typescript";
+import type { SourceFile, Node } from "typescript";
 import type { IExports } from "./types";
 
 export async function analyzeGeneratedCode(folder: string): Promise<IExports> {
@@ -34,22 +34,8 @@ async function getExports(sourceFile: SourceFile): Promise<IExports> {
   };
 
   sourceFile.forEachChild((node) => {
-    // if (!isExportAssignment(node)) {
-    //   return;
-    // }
-
-    // node.name
-
-    // const parentKind = node.parent?.kind || 0;
-    // const kindInfo = {
-    //   parentKind: `${parentKind} (${SyntaxKind[parentKind]})`,
-    //   nodeKind: `${node.kind} (${SyntaxKind[node.kind]})`,
-    // };
-    // console.log(kindInfo);
-
     if (isInterfaceDeclaration(node)) {
       const { parent, modifiers, ...nodeInfo } = node;
-
       if (!modifiers?.length) {
         return;
       }
@@ -64,7 +50,41 @@ async function getExports(sourceFile: SourceFile): Promise<IExports> {
 
       exports.types.push(String(nodeInfo.name.escapedText));
     }
+
+    if (isExport(node)) {
+      const { parent, modifiers, kind, ...nodeInfo } = node;
+      console.log(`Node Kind: ${kind} (${SyntaxKind[kind]})\n`, nodeInfo);
+      node.forEachChild((node) => {
+        console.log(`Node Kind: ${node.kind} (${SyntaxKind[node.kind]})\n`, nodeInfo);
+      })
+    }
   });
 
   return exports;
+}
+
+function getKindInfo(node: Node) {
+  const { parent, modifiers, kind, ...nodeInfo } = node;
+  const parentKind = parent?.kind
+    ? `${parent.kind} (${SyntaxKind[parent.kind]})`
+    : 0;
+  const kinds = {
+    parentKind: `Parent kind: ${parentKind}`,
+    kind: `Kind: ${kind} (${SyntaxKind[kind]})`,
+  };
+  console.log(kinds);
+  // modifiers && console.log(modifiers)
+  // console.log(nodeInfo)
+}
+
+function isExport(node: Node) {
+  if (!node.modifiers) {
+    return false;
+  }
+
+  const result = node.modifiers.map(
+    (modifer) => modifer.kind === SyntaxKind.ExportKeyword
+  );
+
+  return result;
 }

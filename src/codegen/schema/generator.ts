@@ -1,3 +1,4 @@
+import path from "path";
 import stringifyObject from "stringify-object";
 import { SCHEMA_FOLDER } from "#environment/constants";
 import { readJSON, reduceFolder } from "#server/fs";
@@ -9,17 +10,20 @@ async function generateSchemas() {
 }
 
 async function getSchemas() {
+  const testPath = path.join(SCHEMA_FOLDER, "test")
   const schemas = await reduceFolder<string[]>(
-    SCHEMA_FOLDER,
+    testPath,
     [],
     { isShallow: false },
     async (schemas, folderItem) => {
-      const { entry, entity } = folderItem
+      const { entry } = folderItem;
       if (!entry.isFile()) {
         return schemas;
       }
 
-      const schemaObj: { title: string } = await readJSON(folderItem.toString());
+      const schemaObj: { title: string } = await readJSON(
+        folderItem.toString()
+      );
       const exportLine = `export const ${schemaObj.title} = `;
       const objString = stringifyObject(schemaObj, {});
       const finalObj = `${exportLine} ${objString}\n`;
