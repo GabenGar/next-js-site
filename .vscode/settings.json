@@ -19,6 +19,10 @@
       "url": "./schema/_meta.schema.json"
     },
     {
+      "fileMatch": ["schema/types/dates/*.schema.json"],
+      "url": "./schema/_meta.schema.json"
+    },
+    {
       "fileMatch": ["config.json"],
       "url": "./schema/config.schema.json"
     }

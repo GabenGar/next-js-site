@@ -2,21 +2,52 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "#scripts": ["scripts/_index.js"],
-      "#environment/*": ["environment/*"],
-      "#server/*": ["src/server/*/_index.ts"],
-      "#database": ["src/database/_index.ts"],
-      "#database/*": ["src/database/*/_index.ts"],
-      "#assets": ["src/assets/_index.ts"],
-      "#assets/*": ["src/assets/*"],
-      "#lib/*": ["src/lib/*/_index.ts"],
-      "#components/*": ["src/components/*/_index.ts"],
-      "#pages/*": ["src/pages/*"],
-      "#styles/*": ["src/styles/*"],
-      "#types/*": ["src/types/*"]
+      "#scripts": [
+        "scripts/_index.js"
+      ],
+      "#environment/*": [
+        "environment/*"
+      ],
+      "#codegen/*": [
+        "src/codegen/*/_index.ts"
+      ],
+      "#server/*": [
+        "src/server/*/_index.ts"
+      ],
+      "#database": [
+        "src/database/_index.ts"
+      ],
+      "#database/*": [
+        "src/database/*/_index.ts"
+      ],
+      "#assets": [
+        "src/assets/_index.ts"
+      ],
+      "#assets/*": [
+        "src/assets/*"
+      ],
+      "#lib/*": [
+        "src/lib/*/_index.ts"
+      ],
+      "#components/*": [
+        "src/components/*/_index.ts"
+      ],
+      "#pages/*": [
+        "src/pages/*"
+      ],
+      "#styles/*": [
+        "src/styles/*"
+      ],
+      "#types/*": [
+        "src/types/*"
+      ]
     },
     "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -30,6 +61,18 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["next-env.d.ts", "additional.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS"
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "additional.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
