@@ -1,3 +1,5 @@
+export type CodeGenerator = () => Promise<string> | string;
+
 export interface ESModule {
   default?: () => Promise<string> | string;
   [k: string]: unknown;
