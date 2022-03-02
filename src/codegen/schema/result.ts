@@ -1,4 +1,4 @@
-export const Account =  {
+export const AccountSchema =  {
 	title: 'Account',
 	description: 'Account on the resource.',
 	type: 'object',
@@ -45,8 +45,8 @@ export const Account =  {
 	}
 } as const;
 
-export type IAccount = typeof Account;
-export const BlogPost =  {
+export type IAccountSchema = typeof AccountSchema;
+export const BlogPostSchema =  {
 	title: 'BlogPost',
 	description: 'The post of the blog.',
 	required: [
@@ -86,8 +86,8 @@ export const BlogPost =  {
 	}
 } as const;
 
-export type IBlogPost = typeof BlogPost;
-export const CalendarNote =  {
+export type IBlogPostSchema = typeof BlogPostSchema;
+export const CalendarNoteSchema =  {
 	title: 'CalendarNote',
 	description: 'A note in the calendar.',
 	properties: {
@@ -114,8 +114,8 @@ export const CalendarNote =  {
 	}
 } as const;
 
-export type ICalendarNote = typeof CalendarNote;
-export const ProjectConfig =  {
+export type ICalendarNoteSchema = typeof CalendarNoteSchema;
+export const ProjectConfigSchema =  {
 	title: 'ProjectConfig',
 	description: 'Config for the project.',
 	properties: {
@@ -192,8 +192,8 @@ export const ProjectConfig =  {
 	}
 } as const;
 
-export type IProjectConfig = typeof ProjectConfig;
-export const ProjectDatabase =  {
+export type IProjectConfigSchema = typeof ProjectConfigSchema;
+export const ProjectDatabaseSchema =  {
 	title: 'ProjectDatabase',
 	description: 'Various database details.',
 	properties: {
@@ -212,8 +212,8 @@ export const ProjectDatabase =  {
 	}
 } as const;
 
-export type IProjectDatabase = typeof ProjectDatabase;
-export const EmailConfimation =  {
+export type IProjectDatabaseSchema = typeof ProjectDatabaseSchema;
+export const EmailConfimationSchema =  {
 	title: 'EmailConfimation',
 	description: 'Confirmation data for email.',
 	properties: {
@@ -241,28 +241,28 @@ export const EmailConfimation =  {
 	}
 } as const;
 
-export type IEmailConfimation = typeof EmailConfimation;
-export const ISODate =  {
+export type IEmailConfimationSchema = typeof EmailConfimationSchema;
+export const ISODateSchema =  {
 	title: 'ISODate',
 	description: 'ISO string representing date.',
 	type: 'string',
 	format: 'date'
 } as const;
 
-export type IISODate = typeof ISODate;
-export const ISODateTime =  {
+export type IISODateSchema = typeof ISODateSchema;
+export const ISODateTimeSchema =  {
 	title: 'ISODateTime',
 	description: 'ISO string representing datetime.',
 	type: 'string',
 	format: 'date-time'
 } as const;
 
-export type IISODateTime = typeof ISODateTime;
-export const ISOTime =  {
+export type IISODateTimeSchema = typeof ISODateTimeSchema;
+export const ISOTimeSchema =  {
 	title: 'ISOTime',
 	description: 'ISO string representing time.',
 	type: 'string',
 	format: 'time'
 } as const;
 
-export type IISOTime = typeof ISOTime;
+export type IISOTimeSchema = typeof ISOTimeSchema;

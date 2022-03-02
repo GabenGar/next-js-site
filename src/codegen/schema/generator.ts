@@ -5,7 +5,7 @@ import { readJSON, reduceFolder } from "#server/fs";
 /**
  * Generated separately.
  */
-const excludedSchema = "_meta.schema.json"
+const excludedSchema = "_meta.schema.json";
 
 async function generateSchemas() {
   const schemas = await getSchemas();
@@ -28,10 +28,11 @@ async function getSchemas() {
       const schemaObj: { title: string } = await readJSON(
         folderItem.toString()
       );
-      const exportLine = `export const ${schemaObj.title} = `;
+      const schemaName = `${schemaObj.title}Schema`;
+      const exportLine = `export const ${schemaName} = `;
       const objString = stringifyObject(schemaObj, {});
       const constDeclaration = `as const;`;
-      const derivativeType = `export type I${schemaObj.title} = typeof ${schemaObj.title};`;
+      const derivativeType = `export type I${schemaName} = typeof ${schemaName};`;
       const finalObj = `${exportLine} ${objString} ${constDeclaration}\n\n${derivativeType}`;
 
       schemas.push(finalObj);
