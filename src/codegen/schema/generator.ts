@@ -24,7 +24,9 @@ async function getSchemas() {
       );
       const exportLine = `export const ${schemaObj.title} = `;
       const objString = stringifyObject(schemaObj, {});
-      const finalObj = `${exportLine} ${objString}\n`;
+      const constDeclaration = `as const;`;
+      const derivativeType = `export type I${schemaObj.title} = typeof ${schemaObj.title};`;
+      const finalObj = `${exportLine} ${objString} ${constDeclaration}\n\n${derivativeType}`;
 
       schemas.push(finalObj);
       return schemas;
