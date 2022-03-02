@@ -1,4 +1,4 @@
-export const AccountSchema =  {
+export const accountSchema =  {
 	title: 'Account',
 	description: 'Account on the resource.',
 	type: 'object',
@@ -45,10 +45,10 @@ export const AccountSchema =  {
 	}
 } as const;
 
-export type IAccountSchema = typeof AccountSchema;
+export type AccountSchema = typeof accountSchema;
 
 
-export const BlogPostSchema =  {
+export const blogPostSchema =  {
 	title: 'BlogPost',
 	description: 'The post of the blog.',
 	required: [
@@ -88,10 +88,10 @@ export const BlogPostSchema =  {
 	}
 } as const;
 
-export type IBlogPostSchema = typeof BlogPostSchema;
+export type BlogPostSchema = typeof blogPostSchema;
 
 
-export const CalendarNoteSchema =  {
+export const calendarNoteSchema =  {
 	title: 'CalendarNote',
 	description: 'A note in the calendar.',
 	properties: {
@@ -118,10 +118,10 @@ export const CalendarNoteSchema =  {
 	}
 } as const;
 
-export type ICalendarNoteSchema = typeof CalendarNoteSchema;
+export type CalendarNoteSchema = typeof calendarNoteSchema;
 
 
-export const ProjectConfigSchema =  {
+export const projectConfigSchema =  {
 	title: 'ProjectConfig',
 	description: 'Config for the project.',
 	properties: {
@@ -198,10 +198,10 @@ export const ProjectConfigSchema =  {
 	}
 } as const;
 
-export type IProjectConfigSchema = typeof ProjectConfigSchema;
+export type ProjectConfigSchema = typeof projectConfigSchema;
 
 
-export const ProjectDatabaseSchema =  {
+export const projectDatabaseSchema =  {
 	title: 'ProjectDatabase',
 	description: 'Various database details.',
 	properties: {
@@ -220,10 +220,10 @@ export const ProjectDatabaseSchema =  {
 	}
 } as const;
 
-export type IProjectDatabaseSchema = typeof ProjectDatabaseSchema;
+export type ProjectDatabaseSchema = typeof projectDatabaseSchema;
 
 
-export const EmailConfimationSchema =  {
+export const emailConfimationSchema =  {
 	title: 'EmailConfimation',
 	description: 'Confirmation data for email.',
 	properties: {
@@ -251,35 +251,35 @@ export const EmailConfimationSchema =  {
 	}
 } as const;
 
-export type IEmailConfimationSchema = typeof EmailConfimationSchema;
+export type EmailConfimationSchema = typeof emailConfimationSchema;
 
 
-export const ISODateSchema =  {
+export const iSODateSchema =  {
 	title: 'ISODate',
 	description: 'ISO string representing date.',
 	type: 'string',
 	format: 'date'
 } as const;
 
-export type IISODateSchema = typeof ISODateSchema;
+export type ISODateSchema = typeof iSODateSchema;
 
 
-export const ISODateTimeSchema =  {
+export const iSODateTimeSchema =  {
 	title: 'ISODateTime',
 	description: 'ISO string representing datetime.',
 	type: 'string',
 	format: 'date-time'
 } as const;
 
-export type IISODateTimeSchema = typeof ISODateTimeSchema;
+export type ISODateTimeSchema = typeof iSODateTimeSchema;
 
 
-export const ISOTimeSchema =  {
+export const iSOTimeSchema =  {
 	title: 'ISOTime',
 	description: 'ISO string representing time.',
 	type: 'string',
 	format: 'time'
 } as const;
 
-export type IISOTimeSchema = typeof ISOTimeSchema;
+export type ISOTimeSchema = typeof iSOTimeSchema;
 

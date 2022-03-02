@@ -1,1 +1,11 @@
-export type { Account, BlogPost, CalendarNote, ProjectConfig, ProjectDatabase, EmailConfimation, ISODate, ISODateTime, ISOTime } from "./result";
+export type {
+  Account as IAccount,
+  BlogPost as IBlogPost,
+  CalendarNote as ICalendarNote,
+  ProjectConfig as IProjectConfig,
+  ProjectDatabase as IProjectDatabase,
+  EmailConfimation as IEmailConfimation,
+  ISODate as IISODate,
+  ISODateTime as IISODateTime,
+  ISOTime as IISOTime,
+} from "./result";

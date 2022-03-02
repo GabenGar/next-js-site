@@ -169,7 +169,7 @@ export interface MetaSchema1 {
 }
 
 
-export const MetaSchema =  {
+export const metaSchema =  {
 	$schema: 'http://json-schema.org/draft-07/schema#',
 	$id: 'http://json-schema.org/draft-07/schema#',
 	title: 'MetaSchema',

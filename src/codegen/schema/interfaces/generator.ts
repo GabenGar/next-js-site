@@ -1,6 +1,6 @@
-import { compile } from "json-schema-to-typescript";
 import { SCHEMA_FOLDER } from "#environment/constants";
 import { reduceFolder, readJSON } from "#server/fs";
+import { fromSchemaToInterface } from "#lib/json";
 
 import type { JSONSchema } from "json-schema-to-typescript";
 
@@ -31,9 +31,13 @@ async function generateInterfacesFromSchemas() {
         );
       }
 
-      const interfaceString = await compile(jsonObj, `I${jsonObj.title}`, {
-        bannerComment: "",
-      });
+      const interfaceString = await fromSchemaToInterface(
+        jsonObj,
+        jsonObj.title,
+        {
+          bannerComment: "",
+        }
+      );
 
       interfaces.push(interfaceString);
       return interfaces;
