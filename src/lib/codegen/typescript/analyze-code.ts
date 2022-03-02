@@ -4,6 +4,9 @@ import {
   ScriptTarget,
   SyntaxKind,
   isInterfaceDeclaration,
+  forEachChild,
+  isVariableDeclarationList,
+  isIdentifier,
 } from "typescript";
 import { readFile } from "#server/fs";
 import { resultFilename } from "../types";
@@ -51,12 +54,27 @@ async function getExports(sourceFile: SourceFile): Promise<IExports> {
       exports.types.push(String(nodeInfo.name.escapedText));
     }
 
+    // detect exports 
     if (isExport(node)) {
-      const { parent, modifiers, kind, ...nodeInfo } = node;
-      console.log(`Node Kind: ${kind} (${SyntaxKind[kind]})\n`, nodeInfo);
-      node.forEachChild((node) => {
-        console.log(`Node Kind: ${node.kind} (${SyntaxKind[node.kind]})\n`, nodeInfo);
-      })
+
+      // iterate over children and find `VariableDeclarationList`
+      node.forEachChild((node: Node) => {
+        if (isVariableDeclarationList(node)) {
+          const { declarations } = node;
+
+          // iterate over declarations and find the `name` attribute
+          declarations.forEach((declaration) => {
+            const { name } = declaration;
+
+            // if it's an identifier, extract it to exports
+            if (isIdentifier(name)) {
+              const exportedName = String(name.escapedText);
+
+              exports.members.push(exportedName);
+            }
+          });
+        }
+      });
     }
   });
 
@@ -82,9 +100,9 @@ function isExport(node: Node) {
     return false;
   }
 
-  const result = node.modifiers.map(
+  const result = node.modifiers.find(
     (modifer) => modifer.kind === SyntaxKind.ExportKeyword
   );
 
-  return result;
+  return Boolean(result);
 }
