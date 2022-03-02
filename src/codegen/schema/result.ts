@@ -46,6 +46,8 @@ export const AccountSchema =  {
 } as const;
 
 export type IAccountSchema = typeof AccountSchema;
+
+
 export const BlogPostSchema =  {
 	title: 'BlogPost',
 	description: 'The post of the blog.',
@@ -87,6 +89,8 @@ export const BlogPostSchema =  {
 } as const;
 
 export type IBlogPostSchema = typeof BlogPostSchema;
+
+
 export const CalendarNoteSchema =  {
 	title: 'CalendarNote',
 	description: 'A note in the calendar.',
@@ -115,6 +119,8 @@ export const CalendarNoteSchema =  {
 } as const;
 
 export type ICalendarNoteSchema = typeof CalendarNoteSchema;
+
+
 export const ProjectConfigSchema =  {
 	title: 'ProjectConfig',
 	description: 'Config for the project.',
@@ -193,6 +199,8 @@ export const ProjectConfigSchema =  {
 } as const;
 
 export type IProjectConfigSchema = typeof ProjectConfigSchema;
+
+
 export const ProjectDatabaseSchema =  {
 	title: 'ProjectDatabase',
 	description: 'Various database details.',
@@ -213,6 +221,8 @@ export const ProjectDatabaseSchema =  {
 } as const;
 
 export type IProjectDatabaseSchema = typeof ProjectDatabaseSchema;
+
+
 export const EmailConfimationSchema =  {
 	title: 'EmailConfimation',
 	description: 'Confirmation data for email.',
@@ -242,6 +252,8 @@ export const EmailConfimationSchema =  {
 } as const;
 
 export type IEmailConfimationSchema = typeof EmailConfimationSchema;
+
+
 export const ISODateSchema =  {
 	title: 'ISODate',
 	description: 'ISO string representing date.',
@@ -250,6 +262,8 @@ export const ISODateSchema =  {
 } as const;
 
 export type IISODateSchema = typeof ISODateSchema;
+
+
 export const ISODateTimeSchema =  {
 	title: 'ISODateTime',
 	description: 'ISO string representing datetime.',
@@ -258,6 +272,8 @@ export const ISODateTimeSchema =  {
 } as const;
 
 export type IISODateTimeSchema = typeof ISODateTimeSchema;
+
+
 export const ISOTimeSchema =  {
 	title: 'ISOTime',
 	description: 'ISO string representing time.',
@@ -266,3 +282,4 @@ export const ISOTimeSchema =  {
 } as const;
 
 export type IISOTimeSchema = typeof ISOTimeSchema;
+
