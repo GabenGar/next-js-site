@@ -1,3 +1,5 @@
+import { compile } from "json-schema-to-typescript";
+
 export interface IJSONOptions {
   /**
    * @default true
@@ -28,3 +30,5 @@ export function fromJSON<Type extends unknown>(
     : defaultJSONOptions;
   return JSON.parse(json);
 }
+
+export async function fromSchemaToInterface() {}
