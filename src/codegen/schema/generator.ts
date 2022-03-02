@@ -2,6 +2,11 @@ import stringifyObject from "stringify-object";
 import { SCHEMA_FOLDER } from "#environment/constants";
 import { readJSON, reduceFolder } from "#server/fs";
 
+/**
+ * Generated separately.
+ */
+const excludedSchema = "_meta.schema.json"
+
 async function generateSchemas() {
   const schemas = await getSchemas();
   const content = schemas.join("\n");
@@ -15,7 +20,8 @@ async function getSchemas() {
     { isShallow: false },
     async (schemas, folderItem) => {
       const { entry } = folderItem;
-      if (!entry.isFile()) {
+
+      if (!entry.isFile() || entry.name === excludedSchema) {
         return schemas;
       }
 
