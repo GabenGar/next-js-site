@@ -78,3 +78,4 @@ This truncates all non-migration project tables.
 
 ## TODOs
 - figure out the problem between typescript, `ts-node` and  `stringify-object` being a pure ESM package.
+- replace `$ref`s in generated schemas with references to the object/interface 
