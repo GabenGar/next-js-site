@@ -4,12 +4,15 @@ import {
   ScriptTarget,
   SyntaxKind,
   isInterfaceDeclaration,
-  isExportAssignment,
+  forEachChild,
+  isVariableDeclarationList,
+  isIdentifier,
+  isTypeAliasDeclaration,
 } from "typescript";
-import { readFile } from "../../../server/fs/_index";
+import { readFile } from "#server/fs";
 import { resultFilename } from "../types";
 
-import type { Node, SourceFile, InterfaceDeclaration } from "typescript";
+import type { SourceFile, Node } from "typescript";
 import type { IExports } from "./types";
 
 export async function analyzeGeneratedCode(folder: string): Promise<IExports> {
@@ -35,37 +38,68 @@ async function getExports(sourceFile: SourceFile): Promise<IExports> {
   };
 
   sourceFile.forEachChild((node) => {
-    // if (!isExportAssignment(node)) {
-    //   return;
-    // }
+    if (!isExport(node)) {
+      return;
+    }
 
-    // node.name
-
-    // const parentKind = node.parent?.kind || 0;
-    // const kindInfo = {
-    //   parentKind: `${parentKind} (${SyntaxKind[parentKind]})`,
-    //   nodeKind: `${node.kind} (${SyntaxKind[node.kind]})`,
-    // };
-    // console.log(kindInfo);
+    if (isTypeAliasDeclaration(node)) {
+      const { name } = node;
+      exports.types.push(String(name.escapedText));
+      return;
+    }
 
     if (isInterfaceDeclaration(node)) {
-      const { parent, modifiers, ...nodeInfo } = node;
+      const { name } = node;
 
-      if (!modifiers?.length) {
-        return;
-      }
-
-      const exportModifier = modifiers.find(
-        (modifier) => modifier.kind === SyntaxKind.ExportKeyword
-      );
-
-      if (!exportModifier) {
-        return;
-      }
-
-      exports.types.push(String(nodeInfo.name.escapedText));
+      exports.types.push(String(name.escapedText));
+      return;
     }
+
+    // iterate over children and find `VariableDeclarationList`
+    node.forEachChild((node: Node) => {
+      if (isVariableDeclarationList(node)) {
+        const { declarations } = node;
+
+        // iterate over declarations and find the `name` attribute
+        declarations.forEach((declaration) => {
+          const { name } = declaration;
+
+          // if it's an identifier, extract it to exports
+          if (isIdentifier(name)) {
+            const exportedName = String(name.escapedText);
+
+            exports.members.push(exportedName);
+          }
+        });
+      }
+    });
   });
 
   return exports;
+}
+
+function getKindInfo(node: Node) {
+  const { parent, modifiers, kind, ...nodeInfo } = node;
+  const parentKind = parent?.kind
+    ? `${parent.kind} (${SyntaxKind[parent.kind]})`
+    : 0;
+  const kinds = {
+    parentKind: `Parent kind: ${parentKind}`,
+    kind: `Kind: ${kind} (${SyntaxKind[kind]})`,
+  };
+  console.log(kinds);
+  // modifiers && console.log(modifiers)
+  // console.log(nodeInfo)
+}
+
+function isExport(node: Node) {
+  if (!node.modifiers) {
+    return false;
+  }
+
+  const result = node.modifiers.find(
+    (modifer) => modifer.kind === SyntaxKind.ExportKeyword
+  );
+
+  return Boolean(result);
 }

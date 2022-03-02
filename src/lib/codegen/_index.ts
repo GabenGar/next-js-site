@@ -1,10 +1,8 @@
 import path from "path";
 // doing relative imports to please `ts-node`
-import { CODEGEN_FOLDER } from "../../../environment/constants";
-import { readFolder } from "../../server/fs/_index";
-import {
-  generateTypescriptCode
-} from "./typescript/_index";
+import { CODEGEN_FOLDER } from "#environment/constants";
+import { readFolder, reduceFolder } from "#server/fs";
+import { generateTypescriptCode } from "./typescript/_index";
 import { excludedFolders, generatorFilename } from "./types";
 
 (async () => {
@@ -33,22 +31,27 @@ async function analyzeCodegen(codegenFolder: string) {}
  * @param codegenFolder
  */
 async function runCodegen(codegenFolder: string) {
-  const folderItems = await readFolder(codegenFolder);
-  const workableFolders = folderItems.filter(({ entry }) => {
-    return entry.isDirectory() && !excludedFolders.includes(entry.name);
-  });
+  await reduceFolder(
+    codegenFolder,
+    undefined,
+    { isShallow: false },
+    async (undef, folderItem) => {
+      const { entity, entry } = folderItem;
 
-  for await (const { entity } of workableFolders) {
-    const folderPath = path.format(entity);
-    const folderItems = await readFolder(folderPath);
-    const generator = folderItems.find(({ entity }) => entity.name === generatorFilename)
+      if (entry.isDirectory() && excludedFolders.includes(entry.name)) {
+        return undef;
+      }
 
-    if (!generator) {
-      throw Error(`No generators found at "${folderPath}".`)
+      const isGenerator =
+        entry.isFile() &&
+        entity.name === generatorFilename &&
+        entity.ext === ".ts";
+
+      if (isGenerator) {
+        await generateTypescriptCode(entity.dir);
+      }
+
+      return undef;
     }
-
-    if (generator.entity.ext === ".ts") {
-      await generateTypescriptCode(folderPath);
-    }
-  }
+  );
 }
