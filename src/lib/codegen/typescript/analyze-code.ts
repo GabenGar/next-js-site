@@ -7,6 +7,7 @@ import {
   forEachChild,
   isVariableDeclarationList,
   isIdentifier,
+  isTypeAliasDeclaration,
 } from "typescript";
 import { readFile } from "#server/fs";
 import { resultFilename } from "../types";
@@ -37,45 +38,41 @@ async function getExports(sourceFile: SourceFile): Promise<IExports> {
   };
 
   sourceFile.forEachChild((node) => {
+    if (!isExport(node)) {
+      return;
+    }
+
+    if (isTypeAliasDeclaration(node)) {
+      const { name } = node;
+      exports.types.push(String(name.escapedText));
+      return;
+    }
+
     if (isInterfaceDeclaration(node)) {
-      const { parent, modifiers, ...nodeInfo } = node;
-      if (!modifiers?.length) {
-        return;
-      }
+      const { name } = node;
 
-      const exportModifier = modifiers.find(
-        (modifier) => modifier.kind === SyntaxKind.ExportKeyword
-      );
-
-      if (!exportModifier) {
-        return;
-      }
-
-      exports.types.push(String(nodeInfo.name.escapedText));
+      exports.types.push(String(name.escapedText));
+      return;
     }
 
-    // detect exports 
-    if (isExport(node)) {
+    // iterate over children and find `VariableDeclarationList`
+    node.forEachChild((node: Node) => {
+      if (isVariableDeclarationList(node)) {
+        const { declarations } = node;
 
-      // iterate over children and find `VariableDeclarationList`
-      node.forEachChild((node: Node) => {
-        if (isVariableDeclarationList(node)) {
-          const { declarations } = node;
+        // iterate over declarations and find the `name` attribute
+        declarations.forEach((declaration) => {
+          const { name } = declaration;
 
-          // iterate over declarations and find the `name` attribute
-          declarations.forEach((declaration) => {
-            const { name } = declaration;
+          // if it's an identifier, extract it to exports
+          if (isIdentifier(name)) {
+            const exportedName = String(name.escapedText);
 
-            // if it's an identifier, extract it to exports
-            if (isIdentifier(name)) {
-              const exportedName = String(name.escapedText);
-
-              exports.members.push(exportedName);
-            }
-          });
-        }
-      });
-    }
+            exports.members.push(exportedName);
+          }
+        });
+      }
+    });
   });
 
   return exports;
