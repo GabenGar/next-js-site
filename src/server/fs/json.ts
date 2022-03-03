@@ -5,6 +5,6 @@ export async function readJSON<Type extends unknown>(jsonPath: string) {
   return output;
 }
 
-export async function saveJSON(outputPath: string, value: any) {
+export async function saveToJSON(outputPath: string, value: any) {
   await fse.writeJSON(outputPath, value);
 }

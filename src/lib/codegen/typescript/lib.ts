@@ -39,11 +39,14 @@ async function saveGeneratedCode(folder: string, code: string) {
 async function createIndex(folder: string, exports: IExports) {
   const indexFilePath = path.join(folder, `${indexFilename}.ts`);
   const { members, types } = exports;
+  // doing this hack because `schema-to-interface` package
+  // doesn't allow to configure output interface name
+  const reexportedTypes = types.map((name) => `${name} as I${name}`);
   const content = [
     Boolean(members.length) &&
       `export { ${members.join(", ")} } from "./result";`,
     Boolean(types.length) &&
-      `export type { ${types.join(", ")} } from "./result";`,
+      `export type { ${reexportedTypes.join(", ")} } from "./result";`,
   ]
     .filter((statement) => statement !== false)
     .join("\n");
