@@ -1,4 +1,11 @@
-export const accountSchema =  {
+import Ajv from "ajv";
+import addFormats from "ajv-formats";
+
+const ajv = new Ajv();
+addFormats(ajv);
+
+import { IAccount } from "#codegen/schema/interfaces";
+export const validateAccountFields = ajv.compile<IAccount>({
 	$schema: 'http://json-schema.org/draft-07/schema#',
 	$id: '/account.schema.json',
 	title: 'Account',
@@ -46,12 +53,10 @@ export const accountSchema =  {
 		}
 	},
 	additionalProperties: false
-} as const;
+})
 
-export type AccountSchema = typeof accountSchema;
-
-
-export const blogPostSchema =  {
+import { IBlogPost } from "#codegen/schema/interfaces";
+export const validateBlogPostFields = ajv.compile<IBlogPost>({
 	title: 'BlogPost',
 	description: 'The post of the blog.',
 	required: [
@@ -90,12 +95,10 @@ export const blogPostSchema =  {
 		}
 	},
 	additionalProperties: false
-} as const;
+})
 
-export type BlogPostSchema = typeof blogPostSchema;
-
-
-export const calendarNoteSchema =  {
+import { ICalendarNote } from "#codegen/schema/interfaces";
+export const validateCalendarNoteFields = ajv.compile<ICalendarNote>({
 	title: 'CalendarNote',
 	description: 'A note in the calendar.',
 	properties: {
@@ -121,12 +124,10 @@ export const calendarNoteSchema =  {
 		},
 		additionalProperties: false
 	}
-} as const;
+})
 
-export type CalendarNoteSchema = typeof calendarNoteSchema;
-
-
-export const projectConfigSchema =  {
+import { IProjectConfig } from "#codegen/schema/interfaces";
+export const validateProjectConfigFields = ajv.compile<IProjectConfig>({
 	title: 'ProjectConfig',
 	description: 'Config for the project.',
 	properties: {
@@ -202,12 +203,10 @@ export const projectConfigSchema =  {
 		}
 	},
 	additionalProperties: false
-} as const;
+})
 
-export type ProjectConfigSchema = typeof projectConfigSchema;
-
-
-export const projectDatabaseSchema =  {
+import { IProjectDatabase } from "#codegen/schema/interfaces";
+export const validateProjectDatabaseFields = ajv.compile<IProjectDatabase>({
 	title: 'ProjectDatabase',
 	description: 'Various database details.',
 	properties: {
@@ -229,12 +228,10 @@ export const projectDatabaseSchema =  {
 		}
 	},
 	additionalProperties: false
-} as const;
+})
 
-export type ProjectDatabaseSchema = typeof projectDatabaseSchema;
-
-
-export const emailConfimationSchema =  {
+import { IEmailConfimation } from "#codegen/schema/interfaces";
+export const validateEmailConfimationFields = ajv.compile<IEmailConfimation>({
 	title: 'EmailConfimation',
 	description: 'Confirmation data for email.',
 	properties: {
@@ -261,37 +258,28 @@ export const emailConfimationSchema =  {
 		}
 	},
 	additionalProperties: false
-} as const;
+})
 
-export type EmailConfimationSchema = typeof emailConfimationSchema;
-
-
-export const iSODateSchema =  {
+import { IISODate } from "#codegen/schema/interfaces";
+export const validateISODateFields = ajv.compile<IISODate>({
 	title: 'ISODate',
 	description: 'ISO string representing date.',
 	type: 'string',
 	format: 'date'
-} as const;
+})
 
-export type ISODateSchema = typeof iSODateSchema;
-
-
-export const iSODateTimeSchema =  {
+import { IISODateTime } from "#codegen/schema/interfaces";
+export const validateISODateTimeFields = ajv.compile<IISODateTime>({
 	title: 'ISODateTime',
 	description: 'ISO string representing datetime.',
 	type: 'string',
 	format: 'date-time'
-} as const;
+})
 
-export type ISODateTimeSchema = typeof iSODateTimeSchema;
-
-
-export const iSOTimeSchema =  {
+import { IISOTime } from "#codegen/schema/interfaces";
+export const validateISOTimeFields = ajv.compile<IISOTime>({
 	title: 'ISOTime',
 	description: 'ISO string representing time.',
 	type: 'string',
 	format: 'time'
-} as const;
-
-export type ISOTimeSchema = typeof iSOTimeSchema;
-
+})

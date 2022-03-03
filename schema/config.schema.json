@@ -72,5 +72,6 @@
       "type": "string",
       "default": "FLYING POLAR BUFFALO ERROR"
     }
-  }
+  },
+  "additionalProperties": false
 }

@@ -1,4 +1,6 @@
 {
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "/blog-post.schema.json",
   "title": "BlogPost",
   "description": "The post of the blog.",
   "required": ["slug", "title", "created_at", "content"],
@@ -30,5 +32,6 @@
       "type": "string",
       "description": "The slug of the next article of the series."
     }
-  }
+  },
+  "additionalProperties": false
 }

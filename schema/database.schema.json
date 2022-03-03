@@ -3,16 +3,21 @@
   "description": "Various database details.",
   "properties": {
     "pgmigrations": {
+      "type": "object",
       "description": "Migrations."
     },
     "accounts": {
+      "type": "object",
       "description": "Accounts."
     },
     "email_confirmations": {
+      "type": "object",
       "description": "Pending email confirmations for accounts."
     },
     "calendar_notes": {
+      "type": "object",
       "description": "Account notes for calendar."
     }
-  }
+  },
+  "additionalProperties": false
 }

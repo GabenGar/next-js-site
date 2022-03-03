@@ -13,7 +13,6 @@ export interface Account {
    * Is `true` after account confirms its email.
    */
   is_verified: boolean;
-  [k: string]: unknown;
 }
 
 
@@ -32,7 +31,6 @@ export interface BlogPost {
    * The slug of the next article of the series.
    */
   next_slug?: string;
-  [k: string]: unknown;
 }
 
 
@@ -54,6 +52,7 @@ export interface CalendarNote {
    * The content of the note.
    */
   note?: string;
+  additionalProperties?: false;
   [k: string]: unknown;
 }
 
@@ -87,7 +86,6 @@ export interface ProjectConfig {
   EMAIL_PORT?: number;
   EMAIL_USERNAME?: string;
   EMAIL_PASSWORD?: string;
-  [k: string]: unknown;
 }
 
 
@@ -119,7 +117,6 @@ export interface ProjectDatabase {
   calendar_notes?: {
     [k: string]: unknown;
   };
-  [k: string]: unknown;
 }
 
 
@@ -133,7 +130,6 @@ export interface EmailConfimation {
   email?: string;
   created_at?: string;
   expires_at?: string;
-  [k: string]: unknown;
 }
 
 
