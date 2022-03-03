@@ -52,8 +52,11 @@ export type AccountSchema = typeof accountSchema;
 
 
 export const blogPostSchema =  {
+	$schema: 'http://json-schema.org/draft-07/schema#',
+	$id: '/blog-post.schema.json',
 	title: 'BlogPost',
 	description: 'The post of the blog.',
+	type: 'object',
 	required: [
 		'slug',
 		'title',
@@ -96,8 +99,11 @@ export type BlogPostSchema = typeof blogPostSchema;
 
 
 export const calendarNoteSchema =  {
+	$schema: 'http://json-schema.org/draft-07/schema#',
+	$id: '/calendar-note.schema.json',
 	title: 'CalendarNote',
 	description: 'A note in the calendar.',
+	type: 'object',
 	properties: {
 		id: {
 			type: 'integer'
@@ -129,6 +135,7 @@ export type CalendarNoteSchema = typeof calendarNoteSchema;
 export const projectConfigSchema =  {
 	title: 'ProjectConfig',
 	description: 'Config for the project.',
+	type: 'object',
 	properties: {
 		NEXT_PUBLIC_SITE_ORIGIN: {
 			type: 'string',
@@ -210,6 +217,7 @@ export type ProjectConfigSchema = typeof projectConfigSchema;
 export const projectDatabaseSchema =  {
 	title: 'ProjectDatabase',
 	description: 'Various database details.',
+	type: 'object',
 	properties: {
 		pgmigrations: {
 			type: 'object',
@@ -237,6 +245,7 @@ export type ProjectDatabaseSchema = typeof projectDatabaseSchema;
 export const emailConfimationSchema =  {
 	title: 'EmailConfimation',
 	description: 'Confirmation data for email.',
+	type: 'object',
 	properties: {
 		id: {
 			type: 'integer'
@@ -267,6 +276,8 @@ export type EmailConfimationSchema = typeof emailConfimationSchema;
 
 
 export const iSODateSchema =  {
+	$schema: 'http://json-schema.org/draft-07/schema#',
+	$id: '/types/dates/iso-date.schema.json',
 	title: 'ISODate',
 	description: 'ISO string representing date.',
 	type: 'string',
@@ -277,6 +288,8 @@ export type ISODateSchema = typeof iSODateSchema;
 
 
 export const iSODateTimeSchema =  {
+	$schema: 'http://json-schema.org/draft-07/schema#',
+	$id: '/types/dates/iso-datetime.schema.json',
 	title: 'ISODateTime',
 	description: 'ISO string representing datetime.',
 	type: 'string',
@@ -287,6 +300,8 @@ export type ISODateTimeSchema = typeof iSODateTimeSchema;
 
 
 export const iSOTimeSchema =  {
+	$schema: 'http://json-schema.org/draft-07/schema#',
+	$id: '/types/dates/iso-time.schema.json',
 	title: 'ISOTime',
 	description: 'ISO string representing time.',
 	type: 'string',

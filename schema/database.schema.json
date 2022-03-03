@@ -1,6 +1,7 @@
 {
   "title": "ProjectDatabase",
   "description": "Various database details.",
+  "type": "object",
   "properties": {
     "pgmigrations": {
       "type": "object",

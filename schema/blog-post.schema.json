@@ -3,6 +3,7 @@
   "$id": "/blog-post.schema.json",
   "title": "BlogPost",
   "description": "The post of the blog.",
+  "type": "object",
   "required": ["slug", "title", "created_at", "content"],
   "properties": {
     "slug": {

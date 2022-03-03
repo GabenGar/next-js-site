@@ -3,6 +3,7 @@
   "$id": "/calendar-note.schema.json",
   "title": "CalendarNote",
   "description": "A note in the calendar.",
+  "type": "object",
   "properties": {
     "id": {
       "type": "integer"

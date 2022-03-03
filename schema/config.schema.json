@@ -1,6 +1,7 @@
 {
   "title": "ProjectConfig",
   "description": "Config for the project.",
+  "type": "object",
   "properties": {
     "NEXT_PUBLIC_SITE_ORIGIN": {
       "type": "string",

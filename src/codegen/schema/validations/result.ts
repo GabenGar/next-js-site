@@ -57,8 +57,11 @@ export const validateAccountFields = ajv.compile<IAccount>({
 
 import { IBlogPost } from "#codegen/schema/interfaces";
 export const validateBlogPostFields = ajv.compile<IBlogPost>({
+	$schema: 'http://json-schema.org/draft-07/schema#',
+	$id: '/blog-post.schema.json',
 	title: 'BlogPost',
 	description: 'The post of the blog.',
+	type: 'object',
 	required: [
 		'slug',
 		'title',
@@ -99,8 +102,11 @@ export const validateBlogPostFields = ajv.compile<IBlogPost>({
 
 import { ICalendarNote } from "#codegen/schema/interfaces";
 export const validateCalendarNoteFields = ajv.compile<ICalendarNote>({
+	$schema: 'http://json-schema.org/draft-07/schema#',
+	$id: '/calendar-note.schema.json',
 	title: 'CalendarNote',
 	description: 'A note in the calendar.',
+	type: 'object',
 	properties: {
 		id: {
 			type: 'integer'
@@ -130,6 +136,7 @@ import { IProjectConfig } from "#codegen/schema/interfaces";
 export const validateProjectConfigFields = ajv.compile<IProjectConfig>({
 	title: 'ProjectConfig',
 	description: 'Config for the project.',
+	type: 'object',
 	properties: {
 		NEXT_PUBLIC_SITE_ORIGIN: {
 			type: 'string',
@@ -209,6 +216,7 @@ import { IProjectDatabase } from "#codegen/schema/interfaces";
 export const validateProjectDatabaseFields = ajv.compile<IProjectDatabase>({
 	title: 'ProjectDatabase',
 	description: 'Various database details.',
+	type: 'object',
 	properties: {
 		pgmigrations: {
 			type: 'object',
@@ -234,6 +242,7 @@ import { IEmailConfimation } from "#codegen/schema/interfaces";
 export const validateEmailConfimationFields = ajv.compile<IEmailConfimation>({
 	title: 'EmailConfimation',
 	description: 'Confirmation data for email.',
+	type: 'object',
 	properties: {
 		id: {
 			type: 'integer'
@@ -262,6 +271,8 @@ export const validateEmailConfimationFields = ajv.compile<IEmailConfimation>({
 
 import { IISODate } from "#codegen/schema/interfaces";
 export const validateISODateFields = ajv.compile<IISODate>({
+	$schema: 'http://json-schema.org/draft-07/schema#',
+	$id: '/types/dates/iso-date.schema.json',
 	title: 'ISODate',
 	description: 'ISO string representing date.',
 	type: 'string',
@@ -270,6 +281,8 @@ export const validateISODateFields = ajv.compile<IISODate>({
 
 import { IISODateTime } from "#codegen/schema/interfaces";
 export const validateISODateTimeFields = ajv.compile<IISODateTime>({
+	$schema: 'http://json-schema.org/draft-07/schema#',
+	$id: '/types/dates/iso-datetime.schema.json',
 	title: 'ISODateTime',
 	description: 'ISO string representing datetime.',
 	type: 'string',
@@ -278,6 +291,8 @@ export const validateISODateTimeFields = ajv.compile<IISODateTime>({
 
 import { IISOTime } from "#codegen/schema/interfaces";
 export const validateISOTimeFields = ajv.compile<IISOTime>({
+	$schema: 'http://json-schema.org/draft-07/schema#',
+	$id: '/types/dates/iso-time.schema.json',
 	title: 'ISOTime',
 	description: 'ISO string representing time.',
 	type: 'string',
