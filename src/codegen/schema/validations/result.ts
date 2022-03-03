@@ -134,6 +134,8 @@ export const validateCalendarNoteFields = ajv.compile<ICalendarNote>({
 
 import { IProjectConfig } from "#codegen/schema/interfaces";
 export const validateProjectConfigFields = ajv.compile<IProjectConfig>({
+	$schema: 'http://json-schema.org/draft-07/schema#',
+	$id: '/config.schema.json',
 	title: 'ProjectConfig',
 	description: 'Config for the project.',
 	type: 'object',
@@ -214,6 +216,8 @@ export const validateProjectConfigFields = ajv.compile<IProjectConfig>({
 
 import { IProjectDatabase } from "#codegen/schema/interfaces";
 export const validateProjectDatabaseFields = ajv.compile<IProjectDatabase>({
+	$schema: 'http://json-schema.org/draft-07/schema#',
+	$id: '/database.schema.json',
 	title: 'ProjectDatabase',
 	description: 'Various database details.',
 	type: 'object',
@@ -240,6 +244,8 @@ export const validateProjectDatabaseFields = ajv.compile<IProjectDatabase>({
 
 import { IEmailConfimation } from "#codegen/schema/interfaces";
 export const validateEmailConfimationFields = ajv.compile<IEmailConfimation>({
+	$schema: 'http://json-schema.org/draft-07/schema#',
+	$id: '/email-confirmation.schema.json',
 	title: 'EmailConfimation',
 	description: 'Confirmation data for email.',
 	type: 'object',

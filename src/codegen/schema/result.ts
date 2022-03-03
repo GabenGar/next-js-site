@@ -133,6 +133,8 @@ export type CalendarNoteSchema = typeof calendarNoteSchema;
 
 
 export const projectConfigSchema =  {
+	$schema: 'http://json-schema.org/draft-07/schema#',
+	$id: '/config.schema.json',
 	title: 'ProjectConfig',
 	description: 'Config for the project.',
 	type: 'object',
@@ -215,6 +217,8 @@ export type ProjectConfigSchema = typeof projectConfigSchema;
 
 
 export const projectDatabaseSchema =  {
+	$schema: 'http://json-schema.org/draft-07/schema#',
+	$id: '/database.schema.json',
 	title: 'ProjectDatabase',
 	description: 'Various database details.',
 	type: 'object',
@@ -243,6 +247,8 @@ export type ProjectDatabaseSchema = typeof projectDatabaseSchema;
 
 
 export const emailConfimationSchema =  {
+	$schema: 'http://json-schema.org/draft-07/schema#',
+	$id: '/email-confirmation.schema.json',
 	title: 'EmailConfimation',
 	description: 'Confirmation data for email.',
 	type: 'object',

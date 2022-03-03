@@ -1,4 +1,6 @@
 {
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "/email-confirmation.schema.json",
   "title": "EmailConfimation",
   "description": "Confirmation data for email.",
   "type": "object",
