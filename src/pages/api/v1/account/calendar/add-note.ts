@@ -51,11 +51,9 @@ export default withSessionRoute<APIResponse<ICalendarNote>>(
       const noteInit = await validateCalendarNoteInitFields(req.body.data);
 
       if (!noteInit) {
-        const validationErrors = !validateCalendarNoteInitFields.errors?.length
-          ? []
-          : validateCalendarNoteInitFields.errors.map((errorObj) =>
-              JSON.stringify(errorObj)
-            );
+        const validationErrors = validateCalendarNoteInitFields.errors!.map(
+          (errorObj) => JSON.stringify(errorObj)
+        );
 
         return res.status(UNPROCESSABLE_ENTITY).json({
           success: false,
