@@ -33,10 +33,10 @@ async function generateValidations() {
   const ajv = new Ajv();
   addFormats(ajv);
   const imports = [
-    `import Ajv from "ajv";`,
-    `import addFormats from "ajv-formats";\n`,
-    `const ajv = new Ajv();`,
-    `addFormats(ajv);\n`,
+    [`import Ajv from "ajv";`, `import addFormats from "ajv-formats";`].join(
+      "\n"
+    ),
+    [`const ajv = new Ajv();`, `addFormats(ajv);\n`].join("\n"),
   ].join("\n");
 
   const validations = await reduceFolder<string[]>(

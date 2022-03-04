@@ -2,13 +2,13 @@
  * Account on the resource.
  */
 export interface Account {
-  id: number;
+  id?: number;
   created_at: string;
   updated_at?: string;
   name: string;
-  password: string;
+  password?: string;
   email?: string;
-  role: string;
+  role: "user";
   /**
    * Is `true` after account confirms its email.
    */
@@ -38,8 +38,8 @@ export interface BlogPost {
  * A note in the calendar.
  */
 export interface CalendarNote {
-  id?: number;
-  created_at?: string;
+  id: number;
+  created_at: string;
   /**
    * ID of the account making the note.
    */
@@ -47,11 +47,28 @@ export interface CalendarNote {
   /**
    * The timestamp of the note.
    */
-  date?: string;
+  date: string;
   /**
    * The content of the note.
    */
-  note?: string;
+  note: string;
+  additionalProperties?: false;
+  [k: string]: unknown;
+}
+
+
+/**
+ * Init for the note in calendar.
+ */
+export interface CalendarNoteInit {
+  /**
+   * The timestamp of the note.
+   */
+  date: string;
+  /**
+   * The content of the note.
+   */
+  note: string;
   additionalProperties?: false;
   [k: string]: unknown;
 }

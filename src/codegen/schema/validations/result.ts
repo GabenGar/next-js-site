@@ -1,6 +1,5 @@
 import Ajv from "ajv";
 import addFormats from "ajv-formats";
-
 const ajv = new Ajv();
 addFormats(ajv);
 
@@ -12,10 +11,8 @@ export const validateAccountFields = ajv.compile<IAccount>({
 	description: 'Account on the resource.',
 	type: 'object',
 	required: [
-		'id',
 		'created_at',
 		'name',
-		'password',
 		'role',
 		'is_verified'
 	],
@@ -33,18 +30,24 @@ export const validateAccountFields = ajv.compile<IAccount>({
 		},
 		name: {
 			type: 'string',
-			minLength: 5
+			minLength: 5,
+			maxLength: 15
 		},
 		password: {
 			type: 'string',
-			minLength: 8
+			minLength: 8,
+			maxLength: 256
 		},
 		email: {
 			type: 'string',
-			format: 'email'
+			format: 'email',
+			maxLength: 512
 		},
 		role: {
-			type: 'string'
+			type: 'string',
+			enum: [
+				'user'
+			]
 		},
 		is_verified: {
 			type: 'boolean',
@@ -103,10 +106,16 @@ export const validateBlogPostFields = ajv.compile<IBlogPost>({
 import { ICalendarNote } from "#codegen/schema/interfaces";
 export const validateCalendarNoteFields = ajv.compile<ICalendarNote>({
 	$schema: 'http://json-schema.org/draft-07/schema#',
-	$id: '/calendar-note.schema.json',
+	$id: '/calendar-note/base.schema.json',
 	title: 'CalendarNote',
 	description: 'A note in the calendar.',
 	type: 'object',
+	required: [
+		'id',
+		'created_at',
+		'date',
+		'note'
+	],
 	properties: {
 		id: {
 			type: 'integer'
@@ -122,11 +131,42 @@ export const validateCalendarNoteFields = ajv.compile<ICalendarNote>({
 		date: {
 			type: 'string',
 			format: 'date-time',
-			description: 'The timestamp of the note.'
+			description: 'The timestamp of the note.',
+			maxLength: 1024
 		},
 		note: {
 			type: 'string',
-			description: 'The content of the note.'
+			description: 'The content of the note.',
+			minLength: 5,
+			maxLength: 1024
+		},
+		additionalProperties: false
+	}
+})
+
+import { ICalendarNoteInit } from "#codegen/schema/interfaces";
+export const validateCalendarNoteInitFields = ajv.compile<ICalendarNoteInit>({
+	$schema: 'http://json-schema.org/draft-07/schema#',
+	$id: '/calendar-note/init.schema.json',
+	title: 'CalendarNoteInit',
+	description: 'Init for the note in calendar.',
+	type: 'object',
+	required: [
+		'date',
+		'note'
+	],
+	properties: {
+		date: {
+			type: 'string',
+			format: 'date-time',
+			description: 'The timestamp of the note.',
+			maxLength: 1024
+		},
+		note: {
+			type: 'string',
+			description: 'The content of the note.',
+			minLength: 5,
+			maxLength: 1024
 		},
 		additionalProperties: false
 	}

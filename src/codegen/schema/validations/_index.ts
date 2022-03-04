@@ -1,1 +1,1 @@
-export { validateAccountFields, validateBlogPostFields, validateCalendarNoteFields, validateProjectConfigFields, validateProjectDatabaseFields, validateEmailConfimationFields, validateISODateFields, validateISODateTimeFields, validateISOTimeFields } from "./result";
+export { validateAccountFields, validateBlogPostFields, validateCalendarNoteFields, validateCalendarNoteInitFields, validateProjectConfigFields, validateProjectDatabaseFields, validateEmailConfimationFields, validateISODateFields, validateISODateTimeFields, validateISOTimeFields } from "./result";

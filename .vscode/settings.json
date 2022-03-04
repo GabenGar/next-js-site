@@ -9,6 +9,12 @@
   "[xml]": {
     "editor.defaultFormatter": "DotJoshJohnson.xml"
   },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "typescript.preferences.quoteStyle": "double",
   "typescript.preferences.useAliasesForRenames": false,
   "typescript.preferences.importModuleSpecifier": "non-relative",
@@ -28,5 +34,5 @@
     }
   ],
   "xmlTools.enforcePrettySelfClosingTagOnFormat": true,
-  "xmlTools.splitAttributesOnFormat": true,
+  "xmlTools.splitAttributesOnFormat": true
 }
