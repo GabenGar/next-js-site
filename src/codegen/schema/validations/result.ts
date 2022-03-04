@@ -6,11 +6,12 @@ addFormats(ajv);
 import { IAccount } from "#codegen/schema/interfaces";
 export const validateAccountFields = ajv.compile<IAccount>({
 	$schema: 'http://json-schema.org/draft-07/schema#',
-	$id: '/account.schema.json',
+	$id: '/account/base.schema.json',
 	title: 'Account',
 	description: 'Account on the resource.',
 	type: 'object',
 	required: [
+		'id',
 		'created_at',
 		'name',
 		'role',
@@ -53,6 +54,79 @@ export const validateAccountFields = ajv.compile<IAccount>({
 			type: 'boolean',
 			default: false,
 			description: 'Is `true` after account confirms its email.'
+		}
+	},
+	additionalProperties: false
+})
+
+import { IAccountClient } from "#codegen/schema/interfaces";
+export const validateAccountClientFields = ajv.compile<IAccountClient>({
+	$schema: 'http://json-schema.org/draft-07/schema#',
+	$id: '/account/client.schema.json',
+	title: 'AccountClient',
+	description: 'Account representation for client.',
+	type: 'object',
+	required: [
+		'created_at',
+		'name',
+		'role',
+		'is_verified'
+	],
+	properties: {
+		created_at: {
+			type: 'string',
+			format: 'date-time'
+		},
+		updated_at: {
+			type: 'string',
+			format: 'date-time'
+		},
+		name: {
+			type: 'string',
+			minLength: 5,
+			maxLength: 15
+		},
+		email: {
+			type: 'string',
+			format: 'email',
+			maxLength: 512
+		},
+		role: {
+			type: 'string',
+			enum: [
+				'user'
+			]
+		},
+		is_verified: {
+			type: 'boolean',
+			default: false,
+			description: 'Is `true` after account confirms its email.'
+		}
+	},
+	additionalProperties: false
+})
+
+import { IAccountInit } from "#codegen/schema/interfaces";
+export const validateAccountInitFields = ajv.compile<IAccountInit>({
+	$schema: 'http://json-schema.org/draft-07/schema#',
+	$id: '/account/init.schema.json',
+	title: 'AccountInit',
+	description: 'Initializer for account.',
+	type: 'object',
+	required: [
+		'name',
+		'password'
+	],
+	properties: {
+		name: {
+			type: 'string',
+			minLength: 5,
+			maxLength: 15
+		},
+		password: {
+			type: 'string',
+			minLength: 8,
+			maxLength: 256
 		}
 	},
 	additionalProperties: false

@@ -2,7 +2,7 @@
  * Account on the resource.
  */
 export interface Account {
-  id?: number;
+  id: number;
   created_at: string;
   updated_at?: string;
   name: string;
@@ -13,6 +13,31 @@ export interface Account {
    * Is `true` after account confirms its email.
    */
   is_verified: boolean;
+}
+
+
+/**
+ * Account representation for client.
+ */
+export interface AccountClient {
+  created_at: string;
+  updated_at?: string;
+  name: string;
+  email?: string;
+  role: "user";
+  /**
+   * Is `true` after account confirms its email.
+   */
+  is_verified: boolean;
+}
+
+
+/**
+ * Initializer for account.
+ */
+export interface AccountInit {
+  name: string;
+  password: string;
 }
 
 

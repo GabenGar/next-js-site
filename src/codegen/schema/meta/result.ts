@@ -171,7 +171,7 @@ export interface MetaSchema1 {
 
 export const metaSchema =  {
 	$schema: 'http://json-schema.org/draft-07/schema#',
-	$id: 'http://json-schema.org/draft-07/schema#',
+	$id: '/_meta.schema.json',
 	title: 'MetaSchema',
 	definitions: {
 		schemaArray: {
