@@ -90,7 +90,14 @@ export type MetaSchema2 =
   | boolean;
 export type SchemaArray = [MetaSchema2, ...MetaSchema2[]];
 export type StringArray = string[];
-export type SimpleTypes = "array" | "boolean" | "integer" | "null" | "number" | "object" | "string";
+export type SimpleTypes =
+  | "array"
+  | "boolean"
+  | "integer"
+  | "null"
+  | "number"
+  | "object"
+  | "string";
 
 export interface MetaSchema1 {
   $id?: string;
@@ -168,347 +175,331 @@ export interface MetaSchema1 {
   [k: string]: unknown;
 }
 
-
-export const metaSchema =  {
-	$schema: 'http://json-schema.org/draft-07/schema#',
-	$id: '/_meta.schema.json',
-	title: 'MetaSchema',
-	definitions: {
-		schemaArray: {
-			type: 'array',
-			minItems: 1,
-			items: [
-				"[Circular]"
-			],
-			additionalItems: "[Circular]"
-		},
-		nonNegativeInteger: {
-			type: 'integer',
-			minimum: 0
-		},
-		nonNegativeIntegerDefault0: {
-			allOf: [
-				{
-					type: 'integer',
-					minimum: 0
-				},
-				{
-					default: 0
-				}
-			]
-		},
-		simpleTypes: {
-			enum: [
-				'array',
-				'boolean',
-				'integer',
-				'null',
-				'number',
-				'object',
-				'string'
-			]
-		},
-		stringArray: {
-			type: 'array',
-			items: {
-				type: 'string'
-			},
-			uniqueItems: true,
-			default: [],
-			minItems: 0
-		}
-	},
-	type: [
-		'object',
-		'boolean'
-	],
-	properties: {
-		$id: {
-			type: 'string',
-			format: 'uri-reference'
-		},
-		$schema: {
-			type: 'string',
-			format: 'uri'
-		},
-		$ref: {
-			type: 'string',
-			format: 'uri-reference'
-		},
-		$comment: {
-			type: 'string'
-		},
-		title: {
-			type: 'string'
-		},
-		description: {
-			type: 'string'
-		},
-		default: true,
-		readOnly: {
-			type: 'boolean',
-			default: false
-		},
-		writeOnly: {
-			type: 'boolean',
-			default: false
-		},
-		examples: {
-			type: 'array',
-			items: true,
-			minItems: 0
-		},
-		multipleOf: {
-			type: 'number',
-			exclusiveMinimum: 0
-		},
-		maximum: {
-			type: 'number'
-		},
-		exclusiveMaximum: {
-			type: 'number'
-		},
-		minimum: {
-			type: 'number'
-		},
-		exclusiveMinimum: {
-			type: 'number'
-		},
-		maxLength: {
-			type: 'integer',
-			minimum: 0
-		},
-		minLength: {
-			allOf: [
-				{
-					type: 'integer',
-					minimum: 0
-				},
-				{
-					default: 0
-				}
-			]
-		},
-		pattern: {
-			type: 'string',
-			format: 'regex'
-		},
-		additionalItems: "[Circular]",
-		items: {
-			anyOf: [
-				"[Circular]",
-				{
-					type: 'array',
-					minItems: 1,
-					items: [
-						"[Circular]"
-					],
-					additionalItems: "[Circular]"
-				}
-			],
-			default: true
-		},
-		maxItems: {
-			type: 'integer',
-			minimum: 0
-		},
-		minItems: {
-			allOf: [
-				{
-					type: 'integer',
-					minimum: 0
-				},
-				{
-					default: 0
-				}
-			]
-		},
-		uniqueItems: {
-			type: 'boolean',
-			default: false
-		},
-		contains: "[Circular]",
-		maxProperties: {
-			type: 'integer',
-			minimum: 0
-		},
-		minProperties: {
-			allOf: [
-				{
-					type: 'integer',
-					minimum: 0
-				},
-				{
-					default: 0
-				}
-			]
-		},
-		required: {
-			type: 'array',
-			items: {
-				type: 'string'
-			},
-			uniqueItems: true,
-			default: [],
-			minItems: 0
-		},
-		additionalProperties: "[Circular]",
-		definitions: {
-			type: 'object',
-			additionalProperties: "[Circular]",
-			default: {},
-			required: []
-		},
-		properties: {
-			type: 'object',
-			additionalProperties: "[Circular]",
-			default: {},
-			required: []
-		},
-		patternProperties: {
-			type: 'object',
-			additionalProperties: "[Circular]",
-			propertyNames: {
-				format: 'regex'
-			},
-			default: {},
-			required: []
-		},
-		dependencies: {
-			type: 'object',
-			additionalProperties: {
-				anyOf: [
-					"[Circular]",
-					{
-						type: 'array',
-						items: {
-							type: 'string'
-						},
-						uniqueItems: true,
-						default: [],
-						minItems: 0
-					}
-				]
-			},
-			required: []
-		},
-		propertyNames: "[Circular]",
-		const: true,
-		enum: {
-			type: 'array',
-			items: [
-				true
-			],
-			minItems: 1,
-			uniqueItems: true,
-			additionalItems: true
-		},
-		type: {
-			anyOf: [
-				{
-					enum: [
-						'array',
-						'boolean',
-						'integer',
-						'null',
-						'number',
-						'object',
-						'string'
-					]
-				},
-				{
-					type: 'array',
-					items: [
-						{
-							enum: [
-								'array',
-								'boolean',
-								'integer',
-								'null',
-								'number',
-								'object',
-								'string'
-							]
-						}
-					],
-					minItems: 1,
-					uniqueItems: true,
-					additionalItems: {
-						enum: [
-							'array',
-							'boolean',
-							'integer',
-							'null',
-							'number',
-							'object',
-							'string'
-						]
-					}
-				}
-			]
-		},
-		format: {
-			type: 'string',
-			default: 'plain',
-			enum: [
-				'plain',
-				'date-time',
-				'time',
-				'date',
-				'email',
-				'idn-email',
-				'hostname',
-				'idn-hostname',
-				'ipv4',
-				'ipv6',
-				'uri',
-				'uri-reference',
-				'iri',
-				'iri-reference',
-				'uri-template',
-				'json-pointer',
-				'relative-json-pointer',
-				'regex'
-			],
-			$comment: 'https://json-schema.org/understanding-json-schema/reference/string.html#format'
-		},
-		contentMediaType: {
-			type: 'string'
-		},
-		contentEncoding: {
-			type: 'string'
-		},
-		if: "[Circular]",
-		then: "[Circular]",
-		else: "[Circular]",
-		allOf: {
-			type: 'array',
-			minItems: 1,
-			items: [
-				"[Circular]"
-			],
-			additionalItems: "[Circular]"
-		},
-		anyOf: {
-			type: 'array',
-			minItems: 1,
-			items: [
-				"[Circular]"
-			],
-			additionalItems: "[Circular]"
-		},
-		oneOf: {
-			type: 'array',
-			minItems: 1,
-			items: [
-				"[Circular]"
-			],
-			additionalItems: "[Circular]"
-		},
-		not: "[Circular]"
-	},
-	default: true,
-	required: [],
-	additionalProperties: true
+export const metaSchema = {
+  $schema: "http://json-schema.org/draft-07/schema#",
+  $id: "/_meta.schema.json",
+  title: "MetaSchema",
+  definitions: {
+    schemaArray: {
+      type: "array",
+      minItems: 1,
+      items: ["[Circular]"],
+      additionalItems: "[Circular]",
+    },
+    nonNegativeInteger: {
+      type: "integer",
+      minimum: 0,
+    },
+    nonNegativeIntegerDefault0: {
+      allOf: [
+        {
+          type: "integer",
+          minimum: 0,
+        },
+        {
+          default: 0,
+        },
+      ],
+    },
+    simpleTypes: {
+      enum: [
+        "array",
+        "boolean",
+        "integer",
+        "null",
+        "number",
+        "object",
+        "string",
+      ],
+    },
+    stringArray: {
+      type: "array",
+      items: {
+        type: "string",
+      },
+      uniqueItems: true,
+      default: [],
+      minItems: 0,
+    },
+  },
+  type: ["object", "boolean"],
+  properties: {
+    $id: {
+      type: "string",
+      format: "uri-reference",
+    },
+    $schema: {
+      type: "string",
+      format: "uri",
+    },
+    $ref: {
+      type: "string",
+      format: "uri-reference",
+    },
+    $comment: {
+      type: "string",
+    },
+    title: {
+      type: "string",
+    },
+    description: {
+      type: "string",
+    },
+    default: true,
+    readOnly: {
+      type: "boolean",
+      default: false,
+    },
+    writeOnly: {
+      type: "boolean",
+      default: false,
+    },
+    examples: {
+      type: "array",
+      items: true,
+      minItems: 0,
+    },
+    multipleOf: {
+      type: "number",
+      exclusiveMinimum: 0,
+    },
+    maximum: {
+      type: "number",
+    },
+    exclusiveMaximum: {
+      type: "number",
+    },
+    minimum: {
+      type: "number",
+    },
+    exclusiveMinimum: {
+      type: "number",
+    },
+    maxLength: {
+      type: "integer",
+      minimum: 0,
+    },
+    minLength: {
+      allOf: [
+        {
+          type: "integer",
+          minimum: 0,
+        },
+        {
+          default: 0,
+        },
+      ],
+    },
+    pattern: {
+      type: "string",
+      format: "regex",
+    },
+    additionalItems: "[Circular]",
+    items: {
+      anyOf: [
+        "[Circular]",
+        {
+          type: "array",
+          minItems: 1,
+          items: ["[Circular]"],
+          additionalItems: "[Circular]",
+        },
+      ],
+      default: true,
+    },
+    maxItems: {
+      type: "integer",
+      minimum: 0,
+    },
+    minItems: {
+      allOf: [
+        {
+          type: "integer",
+          minimum: 0,
+        },
+        {
+          default: 0,
+        },
+      ],
+    },
+    uniqueItems: {
+      type: "boolean",
+      default: false,
+    },
+    contains: "[Circular]",
+    maxProperties: {
+      type: "integer",
+      minimum: 0,
+    },
+    minProperties: {
+      allOf: [
+        {
+          type: "integer",
+          minimum: 0,
+        },
+        {
+          default: 0,
+        },
+      ],
+    },
+    required: {
+      type: "array",
+      items: {
+        type: "string",
+      },
+      uniqueItems: true,
+      default: [],
+      minItems: 0,
+    },
+    additionalProperties: "[Circular]",
+    definitions: {
+      type: "object",
+      additionalProperties: "[Circular]",
+      default: {},
+      required: [],
+    },
+    properties: {
+      type: "object",
+      additionalProperties: "[Circular]",
+      default: {},
+      required: [],
+    },
+    patternProperties: {
+      type: "object",
+      additionalProperties: "[Circular]",
+      propertyNames: {
+        format: "regex",
+      },
+      default: {},
+      required: [],
+    },
+    dependencies: {
+      type: "object",
+      additionalProperties: {
+        anyOf: [
+          "[Circular]",
+          {
+            type: "array",
+            items: {
+              type: "string",
+            },
+            uniqueItems: true,
+            default: [],
+            minItems: 0,
+          },
+        ],
+      },
+      required: [],
+    },
+    propertyNames: "[Circular]",
+    const: true,
+    enum: {
+      type: "array",
+      items: [true],
+      minItems: 1,
+      uniqueItems: true,
+      additionalItems: true,
+    },
+    type: {
+      anyOf: [
+        {
+          enum: [
+            "array",
+            "boolean",
+            "integer",
+            "null",
+            "number",
+            "object",
+            "string",
+          ],
+        },
+        {
+          type: "array",
+          items: [
+            {
+              enum: [
+                "array",
+                "boolean",
+                "integer",
+                "null",
+                "number",
+                "object",
+                "string",
+              ],
+            },
+          ],
+          minItems: 1,
+          uniqueItems: true,
+          additionalItems: {
+            enum: [
+              "array",
+              "boolean",
+              "integer",
+              "null",
+              "number",
+              "object",
+              "string",
+            ],
+          },
+        },
+      ],
+    },
+    format: {
+      type: "string",
+      default: "plain",
+      enum: [
+        "plain",
+        "date-time",
+        "time",
+        "date",
+        "email",
+        "idn-email",
+        "hostname",
+        "idn-hostname",
+        "ipv4",
+        "ipv6",
+        "uri",
+        "uri-reference",
+        "iri",
+        "iri-reference",
+        "uri-template",
+        "json-pointer",
+        "relative-json-pointer",
+        "regex",
+      ],
+      $comment:
+        "https://json-schema.org/understanding-json-schema/reference/string.html#format",
+    },
+    contentMediaType: {
+      type: "string",
+    },
+    contentEncoding: {
+      type: "string",
+    },
+    if: "[Circular]",
+    then: "[Circular]",
+    else: "[Circular]",
+    allOf: {
+      type: "array",
+      minItems: 1,
+      items: ["[Circular]"],
+      additionalItems: "[Circular]",
+    },
+    anyOf: {
+      type: "array",
+      minItems: 1,
+      items: ["[Circular]"],
+      additionalItems: "[Circular]",
+    },
+    oneOf: {
+      type: "array",
+      minItems: 1,
+      items: ["[Circular]"],
+      additionalItems: "[Circular]",
+    },
+    not: "[Circular]",
+  },
+  default: true,
+  required: [],
+  additionalProperties: true,
 } as const;
-

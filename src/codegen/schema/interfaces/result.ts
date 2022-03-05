@@ -21,7 +21,6 @@ export interface Account {
   is_verified: boolean;
 }
 
-
 /**
  * Account representation for client.
  */
@@ -37,7 +36,6 @@ export interface AccountClient {
   is_verified: boolean;
 }
 
-
 /**
  * Initializer for account.
  */
@@ -45,7 +43,6 @@ export interface AccountInit {
   name: string;
   password: string;
 }
-
 
 /**
  * The post of the blog.
@@ -63,7 +60,6 @@ export interface BlogPost {
    */
   next_slug?: string;
 }
-
 
 /**
  * A note in the calendar.
@@ -85,7 +81,6 @@ export interface CalendarNote {
   note: string;
 }
 
-
 /**
  * A note in the calendar as shown to client.
  */
@@ -102,7 +97,6 @@ export interface CalendarNoteClient {
   note: string;
 }
 
-
 /**
  * Init for the note in calendar.
  */
@@ -116,7 +110,6 @@ export interface CalendarNoteInit {
    */
   note: string;
 }
-
 
 /**
  * Config for the project.
@@ -149,7 +142,6 @@ export interface ProjectConfig {
   EMAIL_PASSWORD?: string;
 }
 
-
 /**
  * Various database details.
  */
@@ -180,7 +172,6 @@ export interface ProjectDatabase {
   };
 }
 
-
 /**
  * Confirmation data for email.
  */
@@ -193,18 +184,15 @@ export interface EmailConfirmation {
   expires_at: string;
 }
 
-
 /**
  * ISO string representing date.
  */
 export type ISODate = string;
 
-
 /**
  * ISO string representing datetime.
  */
 export type ISODateTime = string;
-
 
 /**
  * ISO string representing time.
