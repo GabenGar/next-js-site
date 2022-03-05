@@ -1,13 +1,13 @@
 import { blockComponent } from "#components/meta";
 import { HTMLDiv } from "#components/html/div";
 import styles from "./_index.module.scss";
-import { ErrorDict } from "./dict";
 import { ErrorList } from "./list";
 
 import type { HTMLDivProps } from "#components/html/div";
+import type { ISchemaValidationError } from "#types/pages";
 
 export interface ErrorViewProps extends HTMLDivProps {
-  errors: Record<string, string[]> | string[];
+  errors: Array<string | ISchemaValidationError>;
 }
 
 export const ErrorsView = blockComponent<ErrorViewProps>(
@@ -15,11 +15,7 @@ export const ErrorsView = blockComponent<ErrorViewProps>(
   ({ errors, ...blockProps }) => {
     return (
       <HTMLDiv {...blockProps}>
-        {Array.isArray(errors) ? (
-          <ErrorList errors={errors} />
-        ) : (
-          <ErrorDict errors={errors} />
-        )}
+        <ErrorList errors={errors} />
       </HTMLDiv>
     );
   }

@@ -1,9 +1,9 @@
 import { apiV1Fetch } from "./fetch";
 
 import type { APIResponse } from "#types/api";
-import type { AccCreds, IAccountClient } from "#types/entities";
+import type { IAccountInit, IAccountClient } from "#types/entities";
 
-export async function registerAccount(accCreds: AccCreds) {
+export async function registerAccount(accCreds: IAccountInit) {
   try {
     const response = await apiV1Fetch("/auth/register", {
       method: "POST",
@@ -17,7 +17,7 @@ export async function registerAccount(accCreds: AccCreds) {
   }
 }
 
-export async function loginAccount(accCreds: AccCreds) {
+export async function loginAccount(accCreds: IAccountInit) {
   try {
     const response = await apiV1Fetch("/auth/login", {
       method: "POST",

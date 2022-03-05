@@ -2,7 +2,11 @@ import { DAY } from "#environment/constants/durations";
 import { toISODateTime } from "#lib/dates";
 import { getDB } from "#database";
 
-import type { IAccount, AccCreds, IEmailConfirmation } from "#types/entities";
+import type {
+  IAccount,
+  IAccountInit,
+  IEmailConfirmation,
+} from "#types/entities";
 
 const { db } = getDB();
 
@@ -39,7 +43,7 @@ export async function addAccountEmail(account_id: number, email: string) {
   return account;
 }
 
-export async function findAccount({ name, password }: AccCreds) {
+export async function findAccount({ name, password }: IAccountInit) {
   const query = `
     SELECT *
     FROM accounts
@@ -52,7 +56,7 @@ export async function findAccount({ name, password }: AccCreds) {
   return account;
 }
 
-export async function findAccountByName({ name }: AccCreds) {
+export async function findAccountByName({ name }: IAccountInit) {
   const query = `
     SELECT *
     FROM accounts

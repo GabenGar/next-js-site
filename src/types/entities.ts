@@ -5,11 +5,5 @@ export type {
   IAccount,
   IAccountClient,
   IAccountInit,
-  IEmailConfirmation
+  IEmailConfirmation,
 } from "#codegen/schema/interfaces";
-
-export interface AccCreds {
-  name: string;
-  password: string;
-  email?: string;
-}
