@@ -3,21 +3,15 @@ import {
   findAccountByName,
   findAccount,
 } from "#database/queries/account";
-import { createSchemaValidation } from "#lib/json-schema/validation";
-import { accountSchema } from "#types/schemas";
 import { AuthError } from "#types/errors";
-
-import { AccCreds, IAccount } from "#types/entities";
 import { sha3Encryption } from "#lib/encryption";
+
+import type { IAccountInit } from "#types/entities";
 
 const { encryptString } = sha3Encryption;
 
-export const validateAccountFields = createSchemaValidation<IAccount | AccCreds>(
-  accountSchema
-);
-
-export async function registerAccount(accCreds: AccCreds) {
-  const encryptedAccCreds: AccCreds = {
+export async function registerAccount(accCreds: IAccountInit) {
+  const encryptedAccCreds: IAccountInit = {
     ...accCreds,
     password: encryptString(accCreds.password),
   };
@@ -36,8 +30,8 @@ export async function registerAccount(accCreds: AccCreds) {
   return account;
 }
 
-export async function loginAccount(accCreds: AccCreds) {
-  const encryptedAccCreds: AccCreds = {
+export async function loginAccount(accCreds: IAccountInit) {
+  const encryptedAccCreds: IAccountInit = {
     ...accCreds,
     password: encryptString(accCreds.password),
   };
