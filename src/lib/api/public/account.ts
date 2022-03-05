@@ -1,7 +1,7 @@
 import { apiV1Fetch } from "./fetch";
 
 import type { APIResponse } from "#types/api";
-import type { AccCreds, AccountClient } from "#types/entities";
+import type { AccCreds, IAccountClient } from "#types/entities";
 
 export async function registerAccount(accCreds: AccCreds) {
   try {
@@ -23,7 +23,7 @@ export async function loginAccount(accCreds: AccCreds) {
       method: "POST",
       body: JSON.stringify({ data: accCreds }),
     });
-    const result: APIResponse<{ account: AccountClient }> =
+    const result: APIResponse<{ account: IAccountClient }> =
       await response.json();
     return result;
   } catch (error) {
@@ -34,7 +34,7 @@ export async function loginAccount(accCreds: AccCreds) {
 
 export async function getAccount(
   key: string = "/account"
-): Promise<APIResponse<AccountClient> | undefined> {
+): Promise<APIResponse<IAccountClient> | undefined> {
   try {
     const response = await apiV1Fetch(key, {
       method: "POST",

@@ -83,8 +83,6 @@ export interface CalendarNote {
    * The content of the note.
    */
   note: string;
-  additionalProperties?: false;
-  [k: string]: unknown;
 }
 
 
@@ -102,8 +100,6 @@ export interface CalendarNoteClient {
    * The content of the note.
    */
   note: string;
-  additionalProperties?: false;
-  [k: string]: unknown;
 }
 
 
@@ -119,8 +115,6 @@ export interface CalendarNoteInit {
    * The content of the note.
    */
   note: string;
-  additionalProperties?: false;
-  [k: string]: unknown;
 }
 
 
@@ -190,13 +184,13 @@ export interface ProjectDatabase {
 /**
  * Confirmation data for email.
  */
-export interface EmailConfimation {
-  id?: number;
-  account_id?: number;
-  confirmation_key?: string;
-  email?: string;
-  created_at?: string;
-  expires_at?: string;
+export interface EmailConfirmation {
+  id: number;
+  account_id: number;
+  confirmation_key: string;
+  email: string;
+  created_at: string;
+  expires_at: string;
 }
 
 

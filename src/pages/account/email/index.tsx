@@ -6,7 +6,7 @@ import { Form } from "#components/forms";
 import { FormSectionEmail } from "#components/forms/sections";
 
 import type { InferGetServerSidePropsType } from "next";
-import type { AccountClient } from "#types/entities";
+import type { IAccountClient } from "#types/entities";
 import type { BasePageProps } from "#types/pages";
 import {
   sendEmailConfirmation,
@@ -15,7 +15,7 @@ import {
 import { ErrorsView } from "#components/errors";
 
 interface AccountEmailProps extends BasePageProps {
-  account: AccountClient;
+  account: IAccountClient;
   newEmail?: string;
   isSent?: boolean;
 }

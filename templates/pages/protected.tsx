@@ -6,11 +6,11 @@ import { Page } from "#components/pages";
 import { JSONView } from "#components/json"
 
 import type { InferGetServerSidePropsType } from "next";
-import type { AccountClient } from "#types/entities";
+import type { IAccountClient } from "#types/entities";
 import type { BasePageProps } from "#types/pages";
 
 interface ITemplatePageProps extends BasePageProps {
-  account: AccountClient;
+  account: IAccountClient;
 }
 
 function TemplatePage({

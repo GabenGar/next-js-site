@@ -215,9 +215,9 @@ export const validateCalendarNoteFields = ajv.compile<ICalendarNote>({
 			description: 'The content of the note.',
 			minLength: 5,
 			maxLength: 1024
-		},
-		additionalProperties: false
-	}
+		}
+	},
+	additionalProperties: false
 })
 
 import { ICalendarNoteClient } from "#codegen/schema/interfaces";
@@ -252,9 +252,9 @@ export const validateCalendarNoteClientFields = ajv.compile<ICalendarNoteClient>
 			description: 'The content of the note.',
 			minLength: 5,
 			maxLength: 1024
-		},
-		additionalProperties: false
-	}
+		}
+	},
+	additionalProperties: false
 })
 
 import { ICalendarNoteInit } from "#codegen/schema/interfaces";
@@ -280,9 +280,9 @@ export const validateCalendarNoteInitFields = ajv.compile<ICalendarNoteInit>({
 			description: 'The content of the note.',
 			minLength: 5,
 			maxLength: 1024
-		},
-		additionalProperties: false
-	}
+		}
+	},
+	additionalProperties: false
 })
 
 import { IProjectConfig } from "#codegen/schema/interfaces";
@@ -395,13 +395,21 @@ export const validateProjectDatabaseFields = ajv.compile<IProjectDatabase>({
 	additionalProperties: false
 })
 
-import { IEmailConfimation } from "#codegen/schema/interfaces";
-export const validateEmailConfimationFields = ajv.compile<IEmailConfimation>({
+import { IEmailConfirmation } from "#codegen/schema/interfaces";
+export const validateEmailConfirmationFields = ajv.compile<IEmailConfirmation>({
 	$schema: 'http://json-schema.org/draft-07/schema#',
 	$id: '/email-confirmation.schema.json',
-	title: 'EmailConfimation',
+	title: 'EmailConfirmation',
 	description: 'Confirmation data for email.',
 	type: 'object',
+	required: [
+		'id',
+		'account_id',
+		'confirmation_key',
+		'email',
+		'created_at',
+		'expires_at'
+	],
 	properties: {
 		id: {
 			type: 'integer'

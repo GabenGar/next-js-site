@@ -24,7 +24,7 @@
       "description": "The content of the note.",
       "minLength": 5,
       "maxLength": 1024
-    },
-    "additionalProperties": false
-  }
+    }
+  },
+  "additionalProperties": false
 }

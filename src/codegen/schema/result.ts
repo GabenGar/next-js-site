@@ -217,9 +217,9 @@ export const calendarNoteSchema =  {
 			description: 'The content of the note.',
 			minLength: 5,
 			maxLength: 1024
-		},
-		additionalProperties: false
-	}
+		}
+	},
+	additionalProperties: false
 } as const;
 
 export type CalendarNoteSchema = typeof calendarNoteSchema;
@@ -256,9 +256,9 @@ export const calendarNoteClientSchema =  {
 			description: 'The content of the note.',
 			minLength: 5,
 			maxLength: 1024
-		},
-		additionalProperties: false
-	}
+		}
+	},
+	additionalProperties: false
 } as const;
 
 export type CalendarNoteClientSchema = typeof calendarNoteClientSchema;
@@ -286,9 +286,9 @@ export const calendarNoteInitSchema =  {
 			description: 'The content of the note.',
 			minLength: 5,
 			maxLength: 1024
-		},
-		additionalProperties: false
-	}
+		}
+	},
+	additionalProperties: false
 } as const;
 
 export type CalendarNoteInitSchema = typeof calendarNoteInitSchema;
@@ -408,12 +408,20 @@ export const projectDatabaseSchema =  {
 export type ProjectDatabaseSchema = typeof projectDatabaseSchema;
 
 
-export const emailConfimationSchema =  {
+export const emailConfirmationSchema =  {
 	$schema: 'http://json-schema.org/draft-07/schema#',
 	$id: '/email-confirmation.schema.json',
-	title: 'EmailConfimation',
+	title: 'EmailConfirmation',
 	description: 'Confirmation data for email.',
 	type: 'object',
+	required: [
+		'id',
+		'account_id',
+		'confirmation_key',
+		'email',
+		'created_at',
+		'expires_at'
+	],
 	properties: {
 		id: {
 			type: 'integer'
@@ -440,7 +448,7 @@ export const emailConfimationSchema =  {
 	additionalProperties: false
 } as const;
 
-export type EmailConfimationSchema = typeof emailConfimationSchema;
+export type EmailConfirmationSchema = typeof emailConfirmationSchema;
 
 
 export const iSODateSchema =  {

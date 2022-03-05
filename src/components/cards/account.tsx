@@ -5,12 +5,12 @@ import { DL, DS } from "#components/lists/d-list";
 import { DateTimeView } from "#components/dates";
 import styles from "./account.module.scss";
 
-import type { Account } from "#types/entities";
+import type { IAccountClient } from "#types/entities";
 import type { ICardProps } from "./base";
 import { fromISOString } from "#lib/dates";
 
 export interface AccountCardCardProps extends ICardProps {
-  account: Account;
+  account: IAccountClient;
 }
 
 export const AccountCard = blockComponent<AccountCardCardProps>(

@@ -7,12 +7,12 @@ import { createSchemaValidation } from "#lib/json-schema/validation";
 import { accountSchema } from "#types/schemas";
 import { AuthError } from "#types/errors";
 
-import { AccCreds, Account } from "#types/entities";
+import { AccCreds, IAccount } from "#types/entities";
 import { sha3Encryption } from "#lib/encryption";
 
 const { encryptString } = sha3Encryption;
 
-export const validateAccountFields = createSchemaValidation<Account | AccCreds>(
+export const validateAccountFields = createSchemaValidation<IAccount | AccCreds>(
   accountSchema
 );
 
