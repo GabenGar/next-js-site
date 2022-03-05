@@ -1,6 +1,9 @@
 import type { DateLike } from "#lib/dates";
-
-export type { ICalendarNoteInit } from "#codegen/schema/interfaces"
+export type {
+  ICalendarNoteInit,
+  ICalendarNote,
+  ICalendarNoteClient
+} from "#codegen/schema/interfaces";
 
 export interface Account {
   id?: number;
@@ -28,14 +31,3 @@ export interface EmailConfirmation {
   created_at: string;
   expires_at: string;
 }
-
-export interface ICalendarNote {
-  id: number;
-  created_at: DateLike;
-  date: DateLike;
-  note: string;
-  account_id?: number;
-}
-
-export interface ICalendarNotePublic
-  extends Omit<ICalendarNote, "account_id"> {}

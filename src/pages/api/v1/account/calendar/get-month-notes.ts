@@ -9,7 +9,7 @@ import { getCalendarNotesForMonth } from "#database/queries/account/calendar";
 import { fromISOString, IISODateString } from "#lib/dates";
 
 import type { APIRequest, APIResponse } from "#types/api";
-import type { ICalendarNote, ICalendarNotePublic } from "#types/entities";
+import type { ICalendarNote, ICalendarNoteClient } from "#types/entities";
 
 interface RequestBody extends APIRequest<{ date: IISODateString }> {}
 
@@ -60,7 +60,7 @@ export default withSessionRoute<APIResponse<ICalendarNote[]>>(
         fromISOString(date)
       );
 
-      const clientNotes = notes.map<ICalendarNotePublic>(
+      const clientNotes = notes.map<ICalendarNoteClient>(
         ({ created_at, date, id, note }) => {
           return {
             created_at,

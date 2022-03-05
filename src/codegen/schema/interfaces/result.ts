@@ -2,10 +2,16 @@
  * Account on the resource.
  */
 export interface Account {
+  /**
+   * Is not shown to clients.
+   */
   id: number;
   created_at: string;
   updated_at?: string;
   name: string;
+  /**
+   * Is not shown to clients.
+   */
   password?: string;
   email?: string;
   role: "user";
@@ -69,6 +75,25 @@ export interface CalendarNote {
    * ID of the account making the note.
    */
   account_id?: number;
+  /**
+   * The timestamp of the note.
+   */
+  date: string;
+  /**
+   * The content of the note.
+   */
+  note: string;
+  additionalProperties?: false;
+  [k: string]: unknown;
+}
+
+
+/**
+ * A note in the calendar as shown to client.
+ */
+export interface CalendarNoteClient {
+  id: number;
+  created_at: string;
   /**
    * The timestamp of the note.
    */

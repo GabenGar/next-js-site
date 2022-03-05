@@ -7,7 +7,8 @@
   "required": ["id", "created_at", "name", "role", "is_verified"],
   "properties": {
     "id": {
-      "type": "integer"
+      "type": "integer",
+      "description": "Is not shown to clients."
     },
     "created_at": {
       "type": "string",
@@ -24,6 +25,7 @@
     },
     "password": {
       "type": "string",
+      "description": "Is not shown to clients.",
       "minLength": 8,
       "maxLength": 256
     },

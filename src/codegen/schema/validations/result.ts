@@ -19,7 +19,8 @@ export const validateAccountFields = ajv.compile<IAccount>({
 	],
 	properties: {
 		id: {
-			type: 'integer'
+			type: 'integer',
+			description: 'Is not shown to clients.'
 		},
 		created_at: {
 			type: 'string',
@@ -36,6 +37,7 @@ export const validateAccountFields = ajv.compile<IAccount>({
 		},
 		password: {
 			type: 'string',
+			description: 'Is not shown to clients.',
 			minLength: 8,
 			maxLength: 256
 		},
@@ -201,6 +203,43 @@ export const validateCalendarNoteFields = ajv.compile<ICalendarNote>({
 		account_id: {
 			type: 'integer',
 			description: 'ID of the account making the note.'
+		},
+		date: {
+			type: 'string',
+			format: 'date-time',
+			description: 'The timestamp of the note.',
+			maxLength: 1024
+		},
+		note: {
+			type: 'string',
+			description: 'The content of the note.',
+			minLength: 5,
+			maxLength: 1024
+		},
+		additionalProperties: false
+	}
+})
+
+import { ICalendarNoteClient } from "#codegen/schema/interfaces";
+export const validateCalendarNoteClientFields = ajv.compile<ICalendarNoteClient>({
+	$schema: 'http://json-schema.org/draft-07/schema#',
+	$id: '/calendar-note/client.schema.json',
+	title: 'CalendarNoteClient',
+	description: 'A note in the calendar as shown to client.',
+	type: 'object',
+	required: [
+		'id',
+		'created_at',
+		'date',
+		'note'
+	],
+	properties: {
+		id: {
+			type: 'integer'
+		},
+		created_at: {
+			type: 'string',
+			format: 'date-time'
 		},
 		date: {
 			type: 'string',

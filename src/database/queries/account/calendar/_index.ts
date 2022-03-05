@@ -52,7 +52,7 @@ export async function addCalendarNote(
 export async function removeCalendarNote(accountID: number, noteID: number) {
   const query = `
     DELETE FROM calendar_notes
-    WHERE 
+    WHERE
       id = $(note_id)
       AND account_id = $(account_id)
     RETURNING *
