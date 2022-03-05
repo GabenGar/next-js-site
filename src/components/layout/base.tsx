@@ -12,6 +12,8 @@ import { SVGIcon } from "#components/icons";
 import { Button } from "#components/fancy";
 import { LinkExternal, LinkInternal, LinkEmail } from "#components/links";
 import { FancyNav, NavList, NavItem } from "#components/fancy/nav";
+import { Form } from "#components/forms";
+import { ButtonSubmit } from "#components/buttons";
 import styles from "./base.module.scss";
 
 import type { RootlessProps } from "#types/props";
@@ -127,10 +129,17 @@ function AccountNav() {
               </LinkInternal>
             </NavItem>
             <NavItem>
-              <LinkInternal href="/auth/logout" className={styles.navLink}>
-                <span>Logout</span>
-                <SVGIcon iconID="sign-out-alt" />
-              </LinkInternal>
+              <Form
+                className={styles.logout}
+                method="POST"
+                action="/auth/logout"
+                submitButton={
+                  <ButtonSubmit className={styles.button}>
+                    <span>Logout</span>
+                    <SVGIcon iconID="sign-out-alt" />
+                  </ButtonSubmit>
+                }
+              />
             </NavItem>
           </>
         ) : (
