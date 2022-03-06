@@ -2,12 +2,12 @@ import path from "path";
 import stringifyObject from "stringify-object";
 import { SCHEMA_FOLDER } from "#environment/constants";
 import { readJSON } from "#server/fs";
-import { fromSchemaToInterface, getSchemaNames } from "#lib/json";
+import { fromSchemaToInterface, getSchemaNames } from "#lib/json/schema";
 
 import type { JSONSchema } from "json-schema-to-typescript";
 
 async function generateMetaSchema() {
-  const schemaPath = path.join(SCHEMA_FOLDER, "_meta.schema.json");
+  const schemaPath = path.join(SCHEMA_FOLDER, "meta.schema.json");
 
   const schemaObj: { title: string } = await readJSON(schemaPath);
   const schemaInterface = await fromSchemaToInterface(

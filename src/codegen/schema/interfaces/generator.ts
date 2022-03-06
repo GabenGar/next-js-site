@@ -5,7 +5,7 @@ import { fromSchemaToInterface } from "#lib/json/schema";
 import type { JSONSchema } from "json-schema-to-typescript";
 
 /**
- * @todo: fix `$ref` parsing 
+ * @todo: fix `$ref` parsing
  */
 async function generateInterfacesFromSchemas() {
   const interfaces = await reduceFolder<string[]>(
@@ -19,27 +19,28 @@ async function generateInterfacesFromSchemas() {
       const isValidfile =
         entry.isFile() &&
         entity.ext === ".json" &&
-        entity.name !== "_meta.schema";
+        entity.name !== "meta.schema";
 
       if (!isValidfile) {
         return interfaces;
       }
 
-      const jsonObj = await readJSON<JSONSchema>(folderItem.toString());
+      const schemaObj = await readJSON<JSONSchema>(folderItem.toString());
 
       // file-level schemas always have to have `title` property
-      if (!jsonObj.title) {
+      if (!schemaObj.title) {
         throw Error(
           `Schema at ${folderItem.toString()} is missing "title" attribue.`
         );
       }
 
       const interfaceString = await fromSchemaToInterface(
-        jsonObj,
-        jsonObj.title,
+        schemaObj,
+        schemaObj.title,
         {
           bannerComment: "",
           cwd: SCHEMA_FOLDER,
+          declareExternallyReferenced: false,
         }
       );
 

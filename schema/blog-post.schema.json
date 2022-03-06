@@ -1,5 +1,5 @@
 {
-  "$id": "/blog-post.schema.json",
+  "$id": "blog-post.schema.json",
   "title": "BlogPost",
   "description": "The post of the blog.",
   "type": "object",
@@ -21,10 +21,10 @@
       "type": "string"
     },
     "created_at": {
-      "$ref": "/types/dates/iso-datetime.schema.json"
+      "$ref": "types/dates/iso-datetime.schema.json"
     },
     "edited_at": {
-      "$ref": "/types/dates/iso-datetime.schema.json"
+      "$ref": "types/dates/iso-datetime.schema.json"
     },
     "next_slug": {
       "type": "string",

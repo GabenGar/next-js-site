@@ -1,5 +1,5 @@
 {
-  "$id": "/types/dates/iso-time.schema.json",
+  "$id": "types/dates/iso-time.schema.json",
   "title": "ISOTime",
   "description": "ISO string representing time.",
   "type": "string",

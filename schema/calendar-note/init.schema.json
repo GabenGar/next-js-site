@@ -1,13 +1,12 @@
 {
-  "$id": "/calendar-note/init.schema.json",
+  "$id": "calendar-note/init.schema.json",
   "title": "CalendarNoteInit",
   "description": "Init for the note in calendar.",
   "type": "object",
   "required": ["date", "note"],
   "properties": {
     "date": {
-      "$ref": "/types/dates/iso-datetime.schema.json",
-      "description": "The timestamp of the note."
+      "$ref": "types/dates/iso-datetime.schema.json"
     },
     "note": {
       "type": "string",

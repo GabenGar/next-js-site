@@ -1,15 +1,15 @@
 {
-  "$id": "/account/client.schema.json",
+  "$id": "account/client.schema.json",
   "title": "AccountClient",
   "description": "Account representation for client.",
   "type": "object",
   "required": ["created_at", "name", "role", "is_verified"],
   "properties": {
     "created_at": {
-      "$ref": "/types/dates/iso-datetime.schema.json"
+      "$ref": "types/dates/iso-datetime.schema.json"
     },
     "updated_at": {
-      "$ref": "/types/dates/iso-datetime.schema.json"
+      "$ref": "types/dates/iso-datetime.schema.json"
     },
     "name": {
       "type": "string",

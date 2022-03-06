@@ -39,7 +39,7 @@ async function generateValidations() {
       const isValidFile =
         entry.isFile() &&
         entity.ext === ".json" &&
-        entity.name !== "_meta.schema";
+        entity.name !== "meta.schema";
 
       if (!isValidFile) {
         return schemas;

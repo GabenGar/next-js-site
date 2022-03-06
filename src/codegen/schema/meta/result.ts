@@ -6,7 +6,7 @@
  */
 
 /**
- * Slightly extended base schema.
+ * Slightly extended `draft-07` meta schema.
  */
 export type MetaSchema = MetaSchema1 & MetaSchema2;
 export type NonNegativeInteger = number;
@@ -177,7 +177,7 @@ export interface MetaSchema1 {
 
 export const metaSchema = {
   $schema: "http://json-schema.org/draft-07/schema#",
-  $id: "/_meta.schema.json",
+  $id: "meta.schema.json",
   title: "MetaSchema",
   definitions: {
     schemaArray: {

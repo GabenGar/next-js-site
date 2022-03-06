@@ -12,4 +12,5 @@ export type {
   ISODate as IISODate,
   ISODateTime as IISODateTime,
   ISOTime as IISOTime,
+  SerialInteger as ISerialInteger,
 } from "./result";

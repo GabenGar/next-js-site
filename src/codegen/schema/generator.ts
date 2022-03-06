@@ -6,7 +6,7 @@ import { getSchemaNames } from "#lib/json/schema";
 /**
  * Generated separately.
  */
-const excludedSchema = "_meta.schema.json";
+const excludedSchema = "meta.schema.json";
 
 async function generateSchemas() {
   const schemas = await getSchemas();

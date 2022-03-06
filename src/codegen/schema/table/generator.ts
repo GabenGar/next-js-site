@@ -48,7 +48,7 @@ async function generateSchemaTable() {
   const topImports = `import { SchemaObject } from "ajv";`;
   const jsonImports = result.imports
     .map(({ folderItem, schemaID, symbolName }) => {
-      const importPath = `#schema${schemaID}`;
+      const importPath = `#schema/${schemaID}`;
       return `import ${symbolName} from "${importPath}";`;
     })
     .join("\n");

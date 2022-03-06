@@ -1,18 +1,18 @@
 {
-  "$id": "/account/base.schema.json",
+  "$id": "account/base.schema.json",
   "title": "Account",
   "description": "Account on the resource.",
   "type": "object",
   "required": ["id", "created_at", "name", "role", "is_verified"],
   "properties": {
     "id": {
-      "$ref": "/types/serial.schema.json"
+      "$ref": "types/serial.schema.json"
     },
     "created_at": {
-      "$ref": "/types/dates/iso-datetime.schema.json"
+      "$ref": "types/dates/iso-datetime.schema.json"
     },
     "updated_at": {
-      "$ref": "/types/dates/iso-datetime.schema.json"
+      "$ref": "types/dates/iso-datetime.schema.json"
     },
     "name": {
       "type": "string",
