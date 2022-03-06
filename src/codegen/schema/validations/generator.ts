@@ -46,7 +46,7 @@ async function generateValidations() {
       }
 
       const schemaObj = await readJSON<AnySchemaObject>(folderItem.toString());
-      const typeImport = `import { I${schemaObj.title} } from "#codegen/schema/interfaces";`;
+      const typeImport = `import type { I${schemaObj.title} } from "#codegen/schema/interfaces";`;
       const content = `export const validate${
         schemaObj.title
       }Fields = createValidator<I${schemaObj.title}>(${stringifyObject(
