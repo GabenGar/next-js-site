@@ -26,6 +26,7 @@ interface LoginPageProps extends BasePageProps {
 export function LoginPage({
   errors,
   accCreds,
+  schemaValidationErrors
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <Page heading="Login">
@@ -55,7 +56,13 @@ export function LoginPage({
         >
           Password
         </FormSectionPassword>
-        {errors && <ErrorsView errors={errors} />}
+        {errors ? (
+          <ErrorsView errors={errors} />
+        ) : (
+          schemaValidationErrors && (
+            <ErrorsView errors={schemaValidationErrors} />
+          )
+        )}
       </Form>
     </Page>
   );
