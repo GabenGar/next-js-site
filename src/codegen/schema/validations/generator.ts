@@ -63,7 +63,7 @@ async function generateValidations() {
 
   const content = validations.join("\n\n");
 
-  return `${imports}\n${content}`;
+  return `${imports}\n\n${content}`;
 }
 
 export default generateValidations;

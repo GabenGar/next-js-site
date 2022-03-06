@@ -10,7 +10,7 @@ const ajv = new Ajv({
   schemas: Object.values(schemaMap),
 });
 addFormats(ajv);
- 
+
 async function findSchema(schemaID: string) {
   return schemaMap[schemaID];
 }

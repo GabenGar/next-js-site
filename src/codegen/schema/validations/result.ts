@@ -1,5 +1,6 @@
 import { createValidator } from "#lib/json/schema";
-import { IAccount } from "#codegen/schema/interfaces";
+
+import type { IAccount } from "#codegen/schema/interfaces";
 export const validateAccountFields = createValidator<IAccount>({
   $id: "account/base.schema.json",
   title: "Account",
@@ -45,7 +46,7 @@ export const validateAccountFields = createValidator<IAccount>({
   additionalProperties: false,
 });
 
-import { IAccountClient } from "#codegen/schema/interfaces";
+import type { IAccountClient } from "#codegen/schema/interfaces";
 export const validateAccountClientFields = createValidator<IAccountClient>({
   $id: "account/client.schema.json",
   title: "AccountClient",
@@ -82,7 +83,7 @@ export const validateAccountClientFields = createValidator<IAccountClient>({
   additionalProperties: false,
 });
 
-import { IAccountInit } from "#codegen/schema/interfaces";
+import type { IAccountInit } from "#codegen/schema/interfaces";
 export const validateAccountInitFields = createValidator<IAccountInit>({
   $id: "account/init.schema.json",
   title: "AccountInit",
@@ -104,7 +105,7 @@ export const validateAccountInitFields = createValidator<IAccountInit>({
   additionalProperties: false,
 });
 
-import { IBlogPost } from "#codegen/schema/interfaces";
+import type { IBlogPost } from "#codegen/schema/interfaces";
 export const validateBlogPostFields = createValidator<IBlogPost>({
   $id: "blog-post.schema.json",
   title: "BlogPost",
@@ -141,7 +142,7 @@ export const validateBlogPostFields = createValidator<IBlogPost>({
   additionalProperties: false,
 });
 
-import { ICalendarNote } from "#codegen/schema/interfaces";
+import type { ICalendarNote } from "#codegen/schema/interfaces";
 export const validateCalendarNoteFields = createValidator<ICalendarNote>({
   $id: "calendar-note/base.schema.json",
   title: "CalendarNote",
@@ -172,7 +173,7 @@ export const validateCalendarNoteFields = createValidator<ICalendarNote>({
   additionalProperties: false,
 });
 
-import { ICalendarNoteClient } from "#codegen/schema/interfaces";
+import type { ICalendarNoteClient } from "#codegen/schema/interfaces";
 export const validateCalendarNoteClientFields =
   createValidator<ICalendarNoteClient>({
     $id: "calendar-note/client.schema.json",
@@ -200,7 +201,7 @@ export const validateCalendarNoteClientFields =
     additionalProperties: false,
   });
 
-import { ICalendarNoteInit } from "#codegen/schema/interfaces";
+import type { ICalendarNoteInit } from "#codegen/schema/interfaces";
 export const validateCalendarNoteInitFields =
   createValidator<ICalendarNoteInit>({
     $id: "calendar-note/init.schema.json",
@@ -222,7 +223,7 @@ export const validateCalendarNoteInitFields =
     additionalProperties: false,
   });
 
-import { IProjectConfig } from "#codegen/schema/interfaces";
+import type { IProjectConfig } from "#codegen/schema/interfaces";
 export const validateProjectConfigFields = createValidator<IProjectConfig>({
   $id: "config.schema.json",
   title: "ProjectConfig",
@@ -303,7 +304,7 @@ export const validateProjectConfigFields = createValidator<IProjectConfig>({
   additionalProperties: false,
 });
 
-import { IProjectDatabase } from "#codegen/schema/interfaces";
+import type { IProjectDatabase } from "#codegen/schema/interfaces";
 export const validateProjectDatabaseFields = createValidator<IProjectDatabase>({
   $id: "database.schema.json",
   title: "ProjectDatabase",
@@ -330,7 +331,7 @@ export const validateProjectDatabaseFields = createValidator<IProjectDatabase>({
   additionalProperties: false,
 });
 
-import { IEmailConfirmation } from "#codegen/schema/interfaces";
+import type { IEmailConfirmation } from "#codegen/schema/interfaces";
 export const validateEmailConfirmationFields =
   createValidator<IEmailConfirmation>({
     $id: "email-confirmation.schema.json",
@@ -369,7 +370,7 @@ export const validateEmailConfirmationFields =
     additionalProperties: false,
   });
 
-import { IISODate } from "#codegen/schema/interfaces";
+import type { IISODate } from "#codegen/schema/interfaces";
 export const validateISODateFields = createValidator<IISODate>({
   $id: "types/dates/iso-date.schema.json",
   title: "ISODate",
@@ -378,7 +379,7 @@ export const validateISODateFields = createValidator<IISODate>({
   format: "date",
 });
 
-import { IISODateTime } from "#codegen/schema/interfaces";
+import type { IISODateTime } from "#codegen/schema/interfaces";
 export const validateISODateTimeFields = createValidator<IISODateTime>({
   $id: "types/dates/iso-datetime.schema.json",
   title: "ISODateTime",
@@ -389,7 +390,7 @@ export const validateISODateTimeFields = createValidator<IISODateTime>({
   maxLength: 128,
 });
 
-import { IISOTime } from "#codegen/schema/interfaces";
+import type { IISOTime } from "#codegen/schema/interfaces";
 export const validateISOTimeFields = createValidator<IISOTime>({
   $id: "types/dates/iso-time.schema.json",
   title: "ISOTime",
@@ -398,7 +399,7 @@ export const validateISOTimeFields = createValidator<IISOTime>({
   format: "time",
 });
 
-import { ISerialInteger } from "#codegen/schema/interfaces";
+import type { ISerialInteger } from "#codegen/schema/interfaces";
 export const validateSerialIntegerFields = createValidator<ISerialInteger>({
   $id: "types/serial.schema.json",
   title: "SerialInteger",
