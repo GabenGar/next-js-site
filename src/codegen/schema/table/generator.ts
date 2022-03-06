@@ -3,14 +3,13 @@ import { getSchemaNames, isJSONSchema } from "#lib/json/schema";
 import { FolderItem, readJSON, reduceFolder } from "#server/fs";
 
 import type { SchemaObject } from "ajv";
+import stringifyObject from "stringify-object";
 
 interface IResult {
+  schemaMap: string[];
   imports: {
     symbolName: string;
     schemaID: string;
-    /**
-     * Relative to the `SCHEMA_FOLDER`.
-     */
     folderItem: FolderItem;
   }[];
 }
@@ -24,7 +23,7 @@ interface IResult {
 async function generateSchemaTable() {
   const result = await reduceFolder<IResult>(
     SCHEMA_FOLDER,
-    { imports: [] },
+    { imports: [], schemaMap: [] },
     { isShallow: false },
     async (result, folderItem) => {
       if (!isJSONSchema(folderItem)) {
@@ -40,17 +39,27 @@ async function generateSchemaTable() {
         schemaID: schemaObj.$id!,
       });
 
+      result.schemaMap.push(`"${schemaObj.$id!}": ${objName}`);
+
       return result;
     }
   );
 
-  const jsonImports = result.imports.map(
-    ({ folderItem, schemaID, symbolName }) => {
-      return `import ${symbolName} from ${folderItem.toString()}`
-    }
-  ).join("\n");
+  const topImports = `import { SchemaObject } from "ajv";`;
+  const jsonImports = result.imports
+    .map(({ folderItem, schemaID, symbolName }) => {
+      const importPath = `#schema${schemaID}`;
+      return `import ${symbolName} from "${importPath}";`;
+    })
+    .join("\n");
 
-  return jsonImports
+  const mapExport = `export const schemaMap: Record<string, SchemaObject> = {${result.schemaMap.join(
+    ",\n"
+  )}};\n`;
+
+  const content = [topImports, jsonImports, mapExport].join("\n\n");
+
+  return content;
 }
 
 export default generateSchemaTable;

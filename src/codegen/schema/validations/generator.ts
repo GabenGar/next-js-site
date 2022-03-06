@@ -28,13 +28,7 @@ interface ICodegenPrep {
  * @todo Place imports at the top.
  */
 async function generateValidations() {
-  
-  const imports = [
-    [`import Ajv from "ajv";`, `import addFormats from "ajv-formats";`].join(
-      "\n"
-    ),
-    [`const ajv = new Ajv();`, `addFormats(ajv);\n`].join("\n"),
-  ].join("\n");
+  const imports = `import { createValidator } from "#lib/json/schema"`;
 
   const validations = await reduceFolder<string[]>(
     SCHEMA_FOLDER,
@@ -55,7 +49,7 @@ async function generateValidations() {
       const typeImport = `import { I${schemaObj.title} } from "#codegen/schema/interfaces";`;
       const content = `export const validate${
         schemaObj.title
-      }Fields = ajv.compile<I${schemaObj.title}>(${stringifyObject(
+      }Fields = createValidator<I${schemaObj.title}>(${stringifyObject(
         schemaObj
       )})`;
 
