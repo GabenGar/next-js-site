@@ -1,6 +1,6 @@
 import { SCHEMA_FOLDER } from "#environment/constants";
 import { reduceFolder, readJSON } from "#server/fs";
-import { fromSchemaToInterface } from "#lib/json";
+import { fromSchemaToInterface } from "#lib/json/schema";
 
 import type { JSONSchema } from "json-schema-to-typescript";
 

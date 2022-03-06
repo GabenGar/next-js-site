@@ -2,10 +2,16 @@ import Ajv from "ajv";
 import addFormats from "ajv-formats";
 import metaSchema from "#schema/meta.schema.json";
 
-export const schemaValidator = new Ajv({
+import type { SchemaObject } from "ajv";
+
+const ajv = new Ajv({
   meta: metaSchema,
   loadSchema: async (uri) => {
     return {};
   },
 });
-addFormats(schemaValidator);
+addFormats(ajv);
+
+export function createValidator(schema: SchemaObject) {
+  return ajv.compile(schema)
+}

@@ -1,5 +1,4 @@
 export const accountSchema = {
-  $schema: "http://json-schema.org/draft-07/schema#",
   $id: "/account/base.schema.json",
   title: "Account",
   description: "Account on the resource.",
@@ -47,7 +46,6 @@ export const accountSchema = {
 export type AccountSchema = typeof accountSchema;
 
 export const accountClientSchema = {
-  $schema: "http://json-schema.org/draft-07/schema#",
   $id: "/account/client.schema.json",
   title: "AccountClient",
   description: "Account representation for client.",
@@ -86,7 +84,6 @@ export const accountClientSchema = {
 export type AccountClientSchema = typeof accountClientSchema;
 
 export const accountInitSchema = {
-  $schema: "http://json-schema.org/draft-07/schema#",
   $id: "/account/init.schema.json",
   title: "AccountInit",
   description: "Initializer for account.",
@@ -110,7 +107,6 @@ export const accountInitSchema = {
 export type AccountInitSchema = typeof accountInitSchema;
 
 export const blogPostSchema = {
-  $schema: "http://json-schema.org/draft-07/schema#",
   $id: "/blog-post.schema.json",
   title: "BlogPost",
   description: "The post of the blog.",
@@ -133,12 +129,10 @@ export const blogPostSchema = {
       type: "string",
     },
     created_at: {
-      type: "string",
-      format: "date-time",
+      $ref: "/types/dates/iso-datetime.schema.json",
     },
     edited_at: {
-      type: "string",
-      format: "date-time",
+      $ref: "/types/dates/iso-datetime.schema.json",
     },
     next_slug: {
       type: "string",
@@ -151,7 +145,6 @@ export const blogPostSchema = {
 export type BlogPostSchema = typeof blogPostSchema;
 
 export const calendarNoteSchema = {
-  $schema: "http://json-schema.org/draft-07/schema#",
   $id: "/calendar-note/base.schema.json",
   title: "CalendarNote",
   description: "A note in the calendar.",
@@ -159,7 +152,7 @@ export const calendarNoteSchema = {
   required: ["id", "created_at", "date", "note"],
   properties: {
     id: {
-      type: "integer",
+      $ref: "/types/serial.schema.json",
     },
     created_at: {
       $ref: "/types/dates/iso-datetime.schema.json",
@@ -185,7 +178,6 @@ export const calendarNoteSchema = {
 export type CalendarNoteSchema = typeof calendarNoteSchema;
 
 export const calendarNoteClientSchema = {
-  $schema: "http://json-schema.org/draft-07/schema#",
   $id: "/calendar-note/client.schema.json",
   title: "CalendarNoteClient",
   description: "A note in the calendar as shown to client.",
@@ -193,7 +185,7 @@ export const calendarNoteClientSchema = {
   required: ["id", "created_at", "date", "note"],
   properties: {
     id: {
-      type: "integer",
+      $ref: "/types/serial.schema.json",
     },
     created_at: {
       $ref: "/types/dates/iso-datetime.schema.json",
@@ -215,7 +207,6 @@ export const calendarNoteClientSchema = {
 export type CalendarNoteClientSchema = typeof calendarNoteClientSchema;
 
 export const calendarNoteInitSchema = {
-  $schema: "http://json-schema.org/draft-07/schema#",
   $id: "/calendar-note/init.schema.json",
   title: "CalendarNoteInit",
   description: "Init for the note in calendar.",
@@ -239,7 +230,6 @@ export const calendarNoteInitSchema = {
 export type CalendarNoteInitSchema = typeof calendarNoteInitSchema;
 
 export const projectConfigSchema = {
-  $schema: "http://json-schema.org/draft-07/schema#",
   $id: "/config.schema.json",
   title: "ProjectConfig",
   description: "Config for the project.",
@@ -322,7 +312,6 @@ export const projectConfigSchema = {
 export type ProjectConfigSchema = typeof projectConfigSchema;
 
 export const projectDatabaseSchema = {
-  $schema: "http://json-schema.org/draft-07/schema#",
   $id: "/database.schema.json",
   title: "ProjectDatabase",
   description: "Various database details.",
@@ -351,7 +340,6 @@ export const projectDatabaseSchema = {
 export type ProjectDatabaseSchema = typeof projectDatabaseSchema;
 
 export const emailConfirmationSchema = {
-  $schema: "http://json-schema.org/draft-07/schema#",
   $id: "/email-confirmation.schema.json",
   title: "EmailConfirmation",
   description: "Confirmation data for email.",
@@ -366,10 +354,10 @@ export const emailConfirmationSchema = {
   ],
   properties: {
     id: {
-      type: "integer",
+      $ref: "/types/serial.schema.json",
     },
     account_id: {
-      type: "integer",
+      $ref: "/types/serial.schema.json",
     },
     confirmation_key: {
       type: "string",
@@ -379,12 +367,10 @@ export const emailConfirmationSchema = {
       format: "email",
     },
     created_at: {
-      type: "string",
-      format: "date-time",
+      $ref: "/types/dates/iso-datetime.schema.json",
     },
     expires_at: {
-      type: "string",
-      format: "date-time",
+      $ref: "/types/dates/iso-datetime.schema.json",
     },
   },
   additionalProperties: false,
@@ -392,8 +378,276 @@ export const emailConfirmationSchema = {
 
 export type EmailConfirmationSchema = typeof emailConfirmationSchema;
 
-export const iSODateSchema = {
+export const metaSchemaSchema = {
   $schema: "http://json-schema.org/draft-07/schema#",
+  $id: "/meta.schema.json",
+  title: "MetaSchema",
+  description: "Slightly extended `draft-07` meta schema.",
+  definitions: {
+    schemaArray: {
+      type: "array",
+      minItems: 1,
+      items: {
+        $ref: "#",
+      },
+    },
+    nonNegativeInteger: {
+      type: "integer",
+      minimum: 0,
+    },
+    nonNegativeIntegerDefault0: {
+      allOf: [
+        {
+          $ref: "#/definitions/nonNegativeInteger",
+        },
+        {
+          default: 0,
+        },
+      ],
+    },
+    simpleTypes: {
+      enum: [
+        "array",
+        "boolean",
+        "integer",
+        "null",
+        "number",
+        "object",
+        "string",
+      ],
+    },
+    stringArray: {
+      type: "array",
+      items: {
+        type: "string",
+      },
+      uniqueItems: true,
+      default: [],
+    },
+  },
+  type: ["object", "boolean"],
+  properties: {
+    $id: {
+      type: "string",
+      format: "uri-reference",
+    },
+    $schema: {
+      type: "string",
+      format: "uri",
+    },
+    $ref: {
+      type: "string",
+      format: "uri-reference",
+    },
+    $comment: {
+      type: "string",
+    },
+    title: {
+      type: "string",
+    },
+    description: {
+      type: "string",
+    },
+    default: true,
+    readOnly: {
+      type: "boolean",
+      default: false,
+    },
+    writeOnly: {
+      type: "boolean",
+      default: false,
+    },
+    examples: {
+      type: "array",
+      items: true,
+    },
+    multipleOf: {
+      type: "number",
+      exclusiveMinimum: 0,
+    },
+    maximum: {
+      type: "number",
+    },
+    exclusiveMaximum: {
+      type: "number",
+    },
+    minimum: {
+      type: "number",
+    },
+    exclusiveMinimum: {
+      type: "number",
+    },
+    maxLength: {
+      $ref: "#/definitions/nonNegativeInteger",
+    },
+    minLength: {
+      $ref: "#/definitions/nonNegativeIntegerDefault0",
+    },
+    pattern: {
+      type: "string",
+      format: "regex",
+    },
+    additionalItems: {
+      $ref: "#",
+    },
+    items: {
+      anyOf: [
+        {
+          $ref: "#",
+        },
+        {
+          $ref: "#/definitions/schemaArray",
+        },
+      ],
+      default: true,
+    },
+    maxItems: {
+      $ref: "#/definitions/nonNegativeInteger",
+    },
+    minItems: {
+      $ref: "#/definitions/nonNegativeIntegerDefault0",
+    },
+    uniqueItems: {
+      type: "boolean",
+      default: false,
+    },
+    contains: {
+      $ref: "#",
+    },
+    maxProperties: {
+      $ref: "#/definitions/nonNegativeInteger",
+    },
+    minProperties: {
+      $ref: "#/definitions/nonNegativeIntegerDefault0",
+    },
+    required: {
+      $ref: "#/definitions/stringArray",
+    },
+    additionalProperties: {
+      $ref: "#",
+    },
+    definitions: {
+      type: "object",
+      additionalProperties: {
+        $ref: "#",
+      },
+      default: {},
+    },
+    properties: {
+      type: "object",
+      additionalProperties: {
+        $ref: "#",
+      },
+      default: {},
+    },
+    patternProperties: {
+      type: "object",
+      additionalProperties: {
+        $ref: "#",
+      },
+      propertyNames: {
+        format: "regex",
+      },
+      default: {},
+    },
+    dependencies: {
+      type: "object",
+      additionalProperties: {
+        anyOf: [
+          {
+            $ref: "#",
+          },
+          {
+            $ref: "#/definitions/stringArray",
+          },
+        ],
+      },
+    },
+    propertyNames: {
+      $ref: "#",
+    },
+    const: true,
+    enum: {
+      type: "array",
+      items: true,
+      minItems: 1,
+      uniqueItems: true,
+    },
+    type: {
+      anyOf: [
+        {
+          $ref: "#/definitions/simpleTypes",
+        },
+        {
+          type: "array",
+          items: {
+            $ref: "#/definitions/simpleTypes",
+          },
+          minItems: 1,
+          uniqueItems: true,
+        },
+      ],
+    },
+    format: {
+      type: "string",
+      default: "plain",
+      enum: [
+        "plain",
+        "date-time",
+        "time",
+        "date",
+        "email",
+        "idn-email",
+        "hostname",
+        "idn-hostname",
+        "ipv4",
+        "ipv6",
+        "uri",
+        "uri-reference",
+        "iri",
+        "iri-reference",
+        "uri-template",
+        "json-pointer",
+        "relative-json-pointer",
+        "regex",
+      ],
+      $comment:
+        "https://json-schema.org/understanding-json-schema/reference/string.html#format",
+    },
+    contentMediaType: {
+      type: "string",
+    },
+    contentEncoding: {
+      type: "string",
+    },
+    if: {
+      $ref: "#",
+    },
+    then: {
+      $ref: "#",
+    },
+    else: {
+      $ref: "#",
+    },
+    allOf: {
+      $ref: "#/definitions/schemaArray",
+    },
+    anyOf: {
+      $ref: "#/definitions/schemaArray",
+    },
+    oneOf: {
+      $ref: "#/definitions/schemaArray",
+    },
+    not: {
+      $ref: "#",
+    },
+  },
+  default: true,
+} as const;
+
+export type MetaSchemaSchema = typeof metaSchemaSchema;
+
+export const iSODateSchema = {
   $id: "/types/dates/iso-date.schema.json",
   title: "ISODate",
   description: "ISO string representing date.",
@@ -404,7 +658,6 @@ export const iSODateSchema = {
 export type ISODateSchema = typeof iSODateSchema;
 
 export const iSODateTimeSchema = {
-  $schema: "http://json-schema.org/draft-07/schema#",
   $id: "/types/dates/iso-datetime.schema.json",
   title: "ISODateTime",
   description: "ISO string representing datetime.",
@@ -417,7 +670,6 @@ export const iSODateTimeSchema = {
 export type ISODateTimeSchema = typeof iSODateTimeSchema;
 
 export const iSOTimeSchema = {
-  $schema: "http://json-schema.org/draft-07/schema#",
   $id: "/types/dates/iso-time.schema.json",
   title: "ISOTime",
   description: "ISO string representing time.",
@@ -428,7 +680,6 @@ export const iSOTimeSchema = {
 export type ISOTimeSchema = typeof iSOTimeSchema;
 
 export const serialIntegerSchema = {
-  $schema: "http://json-schema.org/draft-07/schema#",
   $id: "/types/serial.schema.json",
   title: "SerialInteger",
   description: "Integer equivalent of `SERIAL` type",

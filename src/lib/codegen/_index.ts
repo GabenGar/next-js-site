@@ -1,7 +1,5 @@
-import path from "path";
-// doing relative imports to please `ts-node`
 import { CODEGEN_FOLDER } from "#environment/constants";
-import { readFolder, reduceFolder } from "#server/fs";
+import { reduceFolder } from "#server/fs";
 import { generateTypescriptCode } from "./typescript/_index";
 import { excludedFolders, generatorFilename } from "./types";
 
@@ -42,12 +40,12 @@ async function runCodegen(codegenFolder: string) {
         return undef;
       }
 
-      const isGenerator =
+      const isTypescriptGenerator =
         entry.isFile() &&
         entity.name === generatorFilename &&
         entity.ext === ".ts";
 
-      if (isGenerator) {
+      if (isTypescriptGenerator) {
         await generateTypescriptCode(entity.dir);
       }
 

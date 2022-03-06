@@ -1,7 +1,7 @@
 import stringifyObject from "stringify-object";
 import { SCHEMA_FOLDER } from "#environment/constants";
 import { readJSON, reduceFolder } from "#server/fs";
-import { getSchemaNames } from "#lib/json";
+import { getSchemaNames } from "#lib/json/schema";
 
 /**
  * Generated separately.
