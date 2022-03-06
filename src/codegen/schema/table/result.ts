@@ -31,3 +31,18 @@ export const schemaMap: Record<string, SchemaObject> = {
   "types/dates/iso-time.schema.json": iSOTime,
   "types/serial.schema.json": serialInteger,
 };
+
+export const accountSchema = account;
+export const accountClientSchema = accountClient;
+export const accountInitSchema = accountInit;
+export const blogPostSchema = blogPost;
+export const calendarNoteSchema = calendarNote;
+export const calendarNoteClientSchema = calendarNoteClient;
+export const calendarNoteInitSchema = calendarNoteInit;
+export const projectConfigSchema = projectConfig;
+export const projectDatabaseSchema = projectDatabase;
+export const emailConfirmationSchema = emailConfirmation;
+export const iSODateSchema = iSODate;
+export const iSODateTimeSchema = iSODateTime;
+export const iSOTimeSchema = iSOTime;
+export const serialIntegerSchema = serialInteger;

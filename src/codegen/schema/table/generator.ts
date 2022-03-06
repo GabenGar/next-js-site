@@ -1,10 +1,8 @@
 import { SCHEMA_FOLDER } from "#environment/constants";
-import { getSchemaNames, isJSONSchema } from "#lib/json/schema";
 import { FolderItem, readJSON, reduceFolder } from "#server/fs";
 
 import type { SchemaObject } from "ajv";
-import stringifyObject from "stringify-object";
-
+import type { JSONSchema } from "json-schema-to-typescript";
 interface IResult {
   schemaMap: string[];
   imports: {
@@ -62,9 +60,39 @@ async function generateSchemaTable() {
     ",\n"
   )}};\n`;
 
-  const content = [topImports, jsonImports, mapExport].join("\n\n");
+  const reExports = result.imports
+    .map(({ symbolName }) => {
+      return `export const ${symbolName}Schema = ${symbolName};`;
+    })
+    .join("\n");
+
+  const content = [topImports, jsonImports, mapExport, reExports].join("\n\n");
 
   return content;
+}
+
+/**
+ * @returns camelCased and PascalCased names
+ */
+export function getSchemaNames({ title }: JSONSchema): {
+  objName: string;
+  typeName: string;
+} {
+  const objName = `${title![0].toLowerCase()}${title!.slice(1)}`;
+  const typeName = title!;
+
+  return {
+    objName,
+    typeName,
+  };
+}
+
+function isJSONSchema({ entity, entry }: FolderItem) {
+  return (
+    entry.isFile() &&
+    entity.ext === ".json" &&
+    entity.name.endsWith(".schema")
+  );
 }
 
 export default generateSchemaTable;

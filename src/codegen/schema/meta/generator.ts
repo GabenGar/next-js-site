@@ -2,7 +2,8 @@ import path from "path";
 import stringifyObject from "stringify-object";
 import { SCHEMA_FOLDER } from "#environment/constants";
 import { readJSON } from "#server/fs";
-import { fromSchemaToInterface, getSchemaNames } from "#lib/json/schema";
+import { fromSchemaToInterface } from "#lib/json/schema";
+import { getSchemaNames } from "../table/generator";
 
 import type { JSONSchema } from "json-schema-to-typescript";
 
