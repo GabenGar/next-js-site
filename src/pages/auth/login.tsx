@@ -3,7 +3,7 @@ import { AuthError } from "#types/errors";
 import { getReqBody } from "#lib/util";
 import {
   loginAccount,
-  validateAccountFields,
+  validateAccountInitFields,
   withSessionSSR,
 } from "#lib/account";
 import { Page } from "#components/pages";
@@ -16,16 +16,17 @@ import {
 import { LinkInternal } from "#components/links";
 
 import type { BasePageProps } from "#types/pages";
-import type { AccCreds } from "#types/entities";
+import type { IAccountInit } from "#types/entities";
 import type { InferGetServerSidePropsType } from "next";
 
 interface LoginPageProps extends BasePageProps {
-  accCreds?: AccCreds;
+  accCreds?: IAccountInit;
 }
 
 export function LoginPage({
   errors,
   accCreds,
+  schemaValidationErrors
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <Page heading="Login">
@@ -55,7 +56,13 @@ export function LoginPage({
         >
           Password
         </FormSectionPassword>
-        {errors && <ErrorsView errors={errors} />}
+        {errors ? (
+          <ErrorsView errors={errors} />
+        ) : (
+          schemaValidationErrors && (
+            <ErrorsView errors={schemaValidationErrors} />
+          )
+        )}
       </Form>
     </Page>
   );
@@ -75,13 +82,17 @@ export const getServerSideProps = withSessionSSR<LoginPageProps>(
     }
 
     if (req.method === "POST") {
-      const accCreds = await getReqBody<AccCreds>(req);
-      const { isValid, errors } = validateAccountFields(accCreds);
+      const accCreds = await getReqBody<IAccountInit>(req);
+      const isValid = validateAccountInitFields(accCreds);
 
       if (!isValid) {
+        const errors = validateAccountInitFields.errors
+          ? [...validateAccountInitFields.errors]
+          : [];
+          
         return {
           props: {
-            errors: errors!.toDict(),
+            schemaValidationErrors: errors,
             accCreds,
           },
         };

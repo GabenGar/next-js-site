@@ -1,4 +1,6 @@
 {
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "/types/dates/iso-date.schema.json",
   "title": "ISODate",
   "description": "ISO string representing date.",
   "type": "string",

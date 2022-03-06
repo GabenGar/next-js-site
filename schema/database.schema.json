@@ -1,18 +1,26 @@
 {
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "/database.schema.json",
   "title": "ProjectDatabase",
   "description": "Various database details.",
+  "type": "object",
   "properties": {
     "pgmigrations": {
+      "type": "object",
       "description": "Migrations."
     },
     "accounts": {
+      "type": "object",
       "description": "Accounts."
     },
     "email_confirmations": {
+      "type": "object",
       "description": "Pending email confirmations for accounts."
     },
     "calendar_notes": {
+      "type": "object",
       "description": "Account notes for calendar."
     }
-  }
+  },
+  "additionalProperties": false
 }

@@ -1,6 +1,6 @@
 import { getDB } from "#database";
 
-import type { Account } from "#types/entities";
+import type { IAccount } from "#types/entities";
 import type { PaginationDB } from "#lib/pagination";
 
 const { db } = getDB();
@@ -15,7 +15,7 @@ export async function getAccounts({ offset, limit }: PaginationDB) {
     LIMIT $(limit)
   `;
 
-  const accounts = await db.manyOrNone<Account>(query, { offset, limit });
+  const accounts = await db.manyOrNone<IAccount>(query, { offset, limit });
   return accounts;
 }
 

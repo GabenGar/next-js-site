@@ -8,6 +8,7 @@ import { getAccountDetails, withSessionRoute } from "#lib/account";
 import { addCalendarNote } from "#database/queries/account/calendar";
 import type { APIRequest, APIResponse } from "#types/api";
 import type { ICalendarNote, ICalendarNoteInit } from "#types/entities";
+import { validateCalendarNoteInitFields } from "#codegen/schema/validations";
 
 interface RequestBody extends APIRequest<ICalendarNoteInit> {}
 
@@ -37,27 +38,33 @@ export default withSessionRoute<APIResponse<ICalendarNote>>(
           errors: ["Unknown Error."],
         });
       }
-      const { data }:RequestBody = req.body;
-      const isValidBody = [
-        data,
-        "date" in data,
-        typeof data.date === "string",
-        "note" in data,
-        typeof data.note === "string",
-      ].every((value) => value);
 
-      if (!isValidBody) {
+      const isBodyPresent = "data" in req.body;
+
+      if (!isBodyPresent) {
         return res.status(UNPROCESSABLE_ENTITY).json({
           success: false,
           errors: ["Invalid body."],
         });
       }
 
-      const { date, note } = data;
+      const noteInit = await validateCalendarNoteInitFields(req.body.data);
+
+      if (!noteInit) {
+        const validationErrors = validateCalendarNoteInitFields.errors!.map(
+          (errorObj) => JSON.stringify(errorObj)
+        );
+
+        return res.status(UNPROCESSABLE_ENTITY).json({
+          success: false,
+          errors: validationErrors,
+        });
+      }
+
+      const { date, note }: ICalendarNoteInit = req.body.data;
 
       const { account_id: accID, ...newNote } = await addCalendarNote(
         account_id,
-        // @ts-expect-error TODO: fix Date conversions
         date,
         note
       );

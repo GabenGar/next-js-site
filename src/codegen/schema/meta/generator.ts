@@ -14,7 +14,7 @@ async function generateMetaSchema() {
     schemaObj as JSONSchema,
     schemaObj.title
   );
-  const { objName, typeName } = getSchemaNames(schemaObj)
+  const { objName, typeName } = getSchemaNames(schemaObj);
   const exportLine = `export const ${objName} = `;
   const objString = stringifyObject(schemaObj, {});
   const constDeclaration = `as const;`;

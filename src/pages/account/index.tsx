@@ -9,11 +9,11 @@ import { SVGIcon } from "#components/icons";
 import styles from "./index.module.scss";
 
 import type { InferGetServerSidePropsType } from "next";
-import type { AccountClient } from "#types/entities";
+import type { IAccountClient } from "#types/entities";
 import type { BasePageProps } from "#types/pages";
 
 interface AccountPageProps extends BasePageProps {
-  account: AccountClient;
+  account: IAccountClient;
 }
 
 function AccountPage({

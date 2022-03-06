@@ -1,6 +1,17 @@
 {
-  "title": "EmailConfimation",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "/email-confirmation.schema.json",
+  "title": "EmailConfirmation",
   "description": "Confirmation data for email.",
+  "type": "object",
+  "required": [
+    "id",
+    "account_id",
+    "confirmation_key",
+    "email",
+    "created_at",
+    "expires_at"
+  ],
   "properties": {
     "id": {
       "type": "integer"
@@ -23,5 +34,6 @@
       "type": "string",
       "format": "date-time"
     }
-  }
+  },
+  "additionalProperties": false
 }

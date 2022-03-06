@@ -1,11 +1,15 @@
 {
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "/account/base.schema.json",
   "title": "Account",
   "description": "Account on the resource.",
   "type": "object",
-  "required": ["id", "created_at", "name", "password", "role", "is_verified"],
+  "required": ["id", "created_at", "name", "role", "is_verified"],
   "properties": {
     "id": {
-      "type": "integer"
+      "type": "integer",
+      "description": "Is not shown to clients.",
+      "minimum": 1
     },
     "created_at": {
       "type": "string",
@@ -17,23 +21,29 @@
     },
     "name": {
       "type": "string",
-      "minLength": 5
+      "minLength": 5,
+      "maxLength": 15
     },
     "password": {
       "type": "string",
-      "minLength": 8
+      "description": "Is not shown to clients.",
+      "minLength": 8,
+      "maxLength": 256
     },
     "email": {
       "type": "string",
-      "format": "email"
+      "format": "email",
+      "maxLength": 512
     },
     "role": {
-      "type": "string"
+      "type": "string",
+      "enum": ["user"]
     },
     "is_verified": {
       "type": "boolean",
       "default": false,
       "description": "Is `true` after account confirms its email."
     }
-  }
+  },
+  "additionalProperties": false
 }

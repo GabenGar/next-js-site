@@ -1,4 +1,5 @@
 import path from "path";
+import prettier from "prettier";
 import { saveToFile } from "#server/fs";
 import { generatorFilename, resultFilename, indexFilename } from "../types";
 import { analyzeGeneratedCode } from "./analyze-code";
@@ -30,7 +31,8 @@ async function runGenerator(folder: string): Promise<string> {
 
 async function saveGeneratedCode(folder: string, code: string) {
   const resultFilePath = path.join(folder, `${resultFilename}.ts`);
-  await saveToFile(resultFilePath, code);
+  const formattedCode = prettier.format(code, { filepath: resultFilePath });
+  await saveToFile(resultFilePath, formattedCode);
   const esModule: ESModule = await import(resultFilePath);
 
   return esModule;
@@ -51,5 +53,9 @@ async function createIndex(folder: string, exports: IExports) {
     .filter((statement) => statement !== false)
     .join("\n");
 
-  await saveToFile(indexFilePath, content);
+  const formattedContent = prettier.format(content, {
+    filepath: indexFilePath,
+  });
+
+  await saveToFile(indexFilePath, formattedContent);
 }

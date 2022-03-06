@@ -2,7 +2,7 @@ import Head from "next/head";
 import { AuthError } from "#types/errors";
 import { getReqBody } from "#lib/util";
 import {
-  validateAccountFields,
+  validateAccountInitFields,
   registerAccount,
   withSessionSSR,
 } from "#lib/account";
@@ -16,16 +16,17 @@ import {
 import { LinkInternal } from "#components/links";
 
 import type { InferGetServerSidePropsType } from "next";
-import type { AccCreds } from "#types/entities";
+import type { IAccountInit } from "#types/entities";
 import type { BasePageProps } from "#types/pages";
 
 interface RegisterPageProps extends BasePageProps {
-  accCreds?: AccCreds;
+  accCreds?: IAccountInit;
 }
 
 function RegisterPage({
   accCreds,
   errors,
+  schemaValidationErrors,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <Page heading="Registration">
@@ -54,7 +55,13 @@ function RegisterPage({
         >
           Password
         </FormSectionPassword>
-        {errors && <ErrorsView errors={errors} />}
+        {errors ? (
+          <ErrorsView errors={errors} />
+        ) : (
+          schemaValidationErrors && (
+            <ErrorsView errors={schemaValidationErrors} />
+          )
+        )}
       </Form>
     </Page>
   );
@@ -74,25 +81,29 @@ export const getServerSideProps = withSessionSSR<RegisterPageProps>(
     }
 
     if (req.method === "POST") {
-      const accCreds = await getReqBody<AccCreds>(req);
-      const { isValid, errors } = validateAccountFields(accCreds);
+      const accInit = await getReqBody<IAccountInit>(req);
+      const result = validateAccountInitFields(accInit);
 
-      if (!isValid) {
+      if (!result) {
+        const errors = Array.isArray(validateAccountInitFields.errors)
+          ? [...validateAccountInitFields.errors]
+          : [];
+
         return {
           props: {
-            errors: errors!.toDict(),
-            accCreds,
+            schemaValidationErrors: errors,
+            accInit,
           },
         };
       }
 
-      const newAcc = await registerAccount(accCreds);
+      const newAcc = await registerAccount(accInit);
 
       if (newAcc instanceof AuthError) {
         return {
           props: {
             errors: [newAcc.message],
-            accCreds,
+            accInit,
           },
         };
       }

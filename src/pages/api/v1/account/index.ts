@@ -1,8 +1,8 @@
 import { getAccountDetails, withSessionRoute } from "#lib/account";
 import type { APIResponse } from "#types/api";
-import type { AccountClient } from "#types/entities";
+import type { IAccountClient } from "#types/entities";
 
-export default withSessionRoute<APIResponse<AccountClient>>(
+export default withSessionRoute<APIResponse<IAccountClient>>(
   async (req, res) => {
     if (req.method === "POST") {
       const { account_id } = req.session;

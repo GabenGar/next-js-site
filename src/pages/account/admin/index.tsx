@@ -4,10 +4,10 @@ import { getAccountList } from "#lib/account/admin";
 import { LinkInternal } from "#components/links";
 
 import type { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import type { Account } from "#types/entities";
+import type { IAccount } from "#types/entities";
 
 interface AdminPageProps {
-  accounts: Account[];
+  accounts: IAccount[];
 }
 
 function AdminPage({

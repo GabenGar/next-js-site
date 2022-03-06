@@ -1,4 +1,10 @@
-export const accountSchema = {
+import Ajv from "ajv";
+import addFormats from "ajv-formats";
+const ajv = new Ajv();
+addFormats(ajv);
+
+import { IAccount } from "#codegen/schema/interfaces";
+export const validateAccountFields = ajv.compile<IAccount>({
   $schema: "http://json-schema.org/draft-07/schema#",
   $id: "/account/base.schema.json",
   title: "Account",
@@ -45,11 +51,10 @@ export const accountSchema = {
     },
   },
   additionalProperties: false,
-} as const;
+});
 
-export type AccountSchema = typeof accountSchema;
-
-export const accountClientSchema = {
+import { IAccountClient } from "#codegen/schema/interfaces";
+export const validateAccountClientFields = ajv.compile<IAccountClient>({
   $schema: "http://json-schema.org/draft-07/schema#",
   $id: "/account/client.schema.json",
   title: "AccountClient",
@@ -86,11 +91,10 @@ export const accountClientSchema = {
     },
   },
   additionalProperties: false,
-} as const;
+});
 
-export type AccountClientSchema = typeof accountClientSchema;
-
-export const accountInitSchema = {
+import { IAccountInit } from "#codegen/schema/interfaces";
+export const validateAccountInitFields = ajv.compile<IAccountInit>({
   $schema: "http://json-schema.org/draft-07/schema#",
   $id: "/account/init.schema.json",
   title: "AccountInit",
@@ -110,11 +114,10 @@ export const accountInitSchema = {
     },
   },
   additionalProperties: false,
-} as const;
+});
 
-export type AccountInitSchema = typeof accountInitSchema;
-
-export const blogPostSchema = {
+import { IBlogPost } from "#codegen/schema/interfaces";
+export const validateBlogPostFields = ajv.compile<IBlogPost>({
   $schema: "http://json-schema.org/draft-07/schema#",
   $id: "/blog-post.schema.json",
   title: "BlogPost",
@@ -151,11 +154,10 @@ export const blogPostSchema = {
     },
   },
   additionalProperties: false,
-} as const;
+});
 
-export type BlogPostSchema = typeof blogPostSchema;
-
-export const calendarNoteSchema = {
+import { ICalendarNote } from "#codegen/schema/interfaces";
+export const validateCalendarNoteFields = ajv.compile<ICalendarNote>({
   $schema: "http://json-schema.org/draft-07/schema#",
   $id: "/calendar-note/base.schema.json",
   title: "CalendarNote",
@@ -188,44 +190,43 @@ export const calendarNoteSchema = {
     },
   },
   additionalProperties: false,
-} as const;
+});
 
-export type CalendarNoteSchema = typeof calendarNoteSchema;
+import { ICalendarNoteClient } from "#codegen/schema/interfaces";
+export const validateCalendarNoteClientFields =
+  ajv.compile<ICalendarNoteClient>({
+    $schema: "http://json-schema.org/draft-07/schema#",
+    $id: "/calendar-note/client.schema.json",
+    title: "CalendarNoteClient",
+    description: "A note in the calendar as shown to client.",
+    type: "object",
+    required: ["id", "created_at", "date", "note"],
+    properties: {
+      id: {
+        type: "integer",
+      },
+      created_at: {
+        type: "string",
+        format: "date-time",
+      },
+      date: {
+        type: "string",
+        format: "date-time",
+        description: "The timestamp of the note.",
+        maxLength: 1024,
+      },
+      note: {
+        type: "string",
+        description: "The content of the note.",
+        minLength: 5,
+        maxLength: 1024,
+      },
+    },
+    additionalProperties: false,
+  });
 
-export const calendarNoteClientSchema = {
-  $schema: "http://json-schema.org/draft-07/schema#",
-  $id: "/calendar-note/client.schema.json",
-  title: "CalendarNoteClient",
-  description: "A note in the calendar as shown to client.",
-  type: "object",
-  required: ["id", "created_at", "date", "note"],
-  properties: {
-    id: {
-      type: "integer",
-    },
-    created_at: {
-      type: "string",
-      format: "date-time",
-    },
-    date: {
-      type: "string",
-      format: "date-time",
-      description: "The timestamp of the note.",
-      maxLength: 1024,
-    },
-    note: {
-      type: "string",
-      description: "The content of the note.",
-      minLength: 5,
-      maxLength: 1024,
-    },
-  },
-  additionalProperties: false,
-} as const;
-
-export type CalendarNoteClientSchema = typeof calendarNoteClientSchema;
-
-export const calendarNoteInitSchema = {
+import { ICalendarNoteInit } from "#codegen/schema/interfaces";
+export const validateCalendarNoteInitFields = ajv.compile<ICalendarNoteInit>({
   $schema: "http://json-schema.org/draft-07/schema#",
   $id: "/calendar-note/init.schema.json",
   title: "CalendarNoteInit",
@@ -247,11 +248,10 @@ export const calendarNoteInitSchema = {
     },
   },
   additionalProperties: false,
-} as const;
+});
 
-export type CalendarNoteInitSchema = typeof calendarNoteInitSchema;
-
-export const projectConfigSchema = {
+import { IProjectConfig } from "#codegen/schema/interfaces";
+export const validateProjectConfigFields = ajv.compile<IProjectConfig>({
   $schema: "http://json-schema.org/draft-07/schema#",
   $id: "/config.schema.json",
   title: "ProjectConfig",
@@ -330,11 +330,10 @@ export const projectConfigSchema = {
     },
   },
   additionalProperties: false,
-} as const;
+});
 
-export type ProjectConfigSchema = typeof projectConfigSchema;
-
-export const projectDatabaseSchema = {
+import { IProjectDatabase } from "#codegen/schema/interfaces";
+export const validateProjectDatabaseFields = ajv.compile<IProjectDatabase>({
   $schema: "http://json-schema.org/draft-07/schema#",
   $id: "/database.schema.json",
   title: "ProjectDatabase",
@@ -359,11 +358,10 @@ export const projectDatabaseSchema = {
     },
   },
   additionalProperties: false,
-} as const;
+});
 
-export type ProjectDatabaseSchema = typeof projectDatabaseSchema;
-
-export const emailConfirmationSchema = {
+import { IEmailConfirmation } from "#codegen/schema/interfaces";
+export const validateEmailConfirmationFields = ajv.compile<IEmailConfirmation>({
   $schema: "http://json-schema.org/draft-07/schema#",
   $id: "/email-confirmation.schema.json",
   title: "EmailConfirmation",
@@ -401,39 +399,34 @@ export const emailConfirmationSchema = {
     },
   },
   additionalProperties: false,
-} as const;
+});
 
-export type EmailConfirmationSchema = typeof emailConfirmationSchema;
-
-export const iSODateSchema = {
+import { IISODate } from "#codegen/schema/interfaces";
+export const validateISODateFields = ajv.compile<IISODate>({
   $schema: "http://json-schema.org/draft-07/schema#",
   $id: "/types/dates/iso-date.schema.json",
   title: "ISODate",
   description: "ISO string representing date.",
   type: "string",
   format: "date",
-} as const;
+});
 
-export type ISODateSchema = typeof iSODateSchema;
-
-export const iSODateTimeSchema = {
+import { IISODateTime } from "#codegen/schema/interfaces";
+export const validateISODateTimeFields = ajv.compile<IISODateTime>({
   $schema: "http://json-schema.org/draft-07/schema#",
   $id: "/types/dates/iso-datetime.schema.json",
   title: "ISODateTime",
   description: "ISO string representing datetime.",
   type: "string",
   format: "date-time",
-} as const;
+});
 
-export type ISODateTimeSchema = typeof iSODateTimeSchema;
-
-export const iSOTimeSchema = {
+import { IISOTime } from "#codegen/schema/interfaces";
+export const validateISOTimeFields = ajv.compile<IISOTime>({
   $schema: "http://json-schema.org/draft-07/schema#",
   $id: "/types/dates/iso-time.schema.json",
   title: "ISOTime",
   description: "ISO string representing time.",
   type: "string",
   format: "time",
-} as const;
-
-export type ISOTimeSchema = typeof iSOTimeSchema;
+});

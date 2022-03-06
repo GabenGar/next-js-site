@@ -2,20 +2,47 @@
  * Account on the resource.
  */
 export interface Account {
+  /**
+   * Is not shown to clients.
+   */
   id: number;
   created_at: string;
   updated_at?: string;
   name: string;
-  password: string;
+  /**
+   * Is not shown to clients.
+   */
+  password?: string;
   email?: string;
-  role: string;
+  role: "user";
   /**
    * Is `true` after account confirms its email.
    */
   is_verified: boolean;
-  [k: string]: unknown;
 }
 
+/**
+ * Account representation for client.
+ */
+export interface AccountClient {
+  created_at: string;
+  updated_at?: string;
+  name: string;
+  email?: string;
+  role: "user";
+  /**
+   * Is `true` after account confirms its email.
+   */
+  is_verified: boolean;
+}
+
+/**
+ * Initializer for account.
+ */
+export interface AccountInit {
+  name: string;
+  password: string;
+}
 
 /**
  * The post of the blog.
@@ -32,16 +59,14 @@ export interface BlogPost {
    * The slug of the next article of the series.
    */
   next_slug?: string;
-  [k: string]: unknown;
 }
-
 
 /**
  * A note in the calendar.
  */
 export interface CalendarNote {
-  id?: number;
-  created_at?: string;
+  id: number;
+  created_at: string;
   /**
    * ID of the account making the note.
    */
@@ -49,14 +74,42 @@ export interface CalendarNote {
   /**
    * The timestamp of the note.
    */
-  date?: string;
+  date: string;
   /**
    * The content of the note.
    */
-  note?: string;
-  [k: string]: unknown;
+  note: string;
 }
 
+/**
+ * A note in the calendar as shown to client.
+ */
+export interface CalendarNoteClient {
+  id: number;
+  created_at: string;
+  /**
+   * The timestamp of the note.
+   */
+  date: string;
+  /**
+   * The content of the note.
+   */
+  note: string;
+}
+
+/**
+ * Init for the note in calendar.
+ */
+export interface CalendarNoteInit {
+  /**
+   * The timestamp of the note.
+   */
+  date: string;
+  /**
+   * The content of the note.
+   */
+  note: string;
+}
 
 /**
  * Config for the project.
@@ -87,9 +140,7 @@ export interface ProjectConfig {
   EMAIL_PORT?: number;
   EMAIL_USERNAME?: string;
   EMAIL_PASSWORD?: string;
-  [k: string]: unknown;
 }
-
 
 /**
  * Various database details.
@@ -119,35 +170,29 @@ export interface ProjectDatabase {
   calendar_notes?: {
     [k: string]: unknown;
   };
-  [k: string]: unknown;
 }
-
 
 /**
  * Confirmation data for email.
  */
-export interface EmailConfimation {
-  id?: number;
-  account_id?: number;
-  confirmation_key?: string;
-  email?: string;
-  created_at?: string;
-  expires_at?: string;
-  [k: string]: unknown;
+export interface EmailConfirmation {
+  id: number;
+  account_id: number;
+  confirmation_key: string;
+  email: string;
+  created_at: string;
+  expires_at: string;
 }
-
 
 /**
  * ISO string representing date.
  */
 export type ISODate = string;
 
-
 /**
  * ISO string representing datetime.
  */
 export type ISODateTime = string;
-
 
 /**
  * ISO string representing time.

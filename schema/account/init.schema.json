@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "/account/init.schema.json",
+  "title": "AccountInit",
+  "description": "Initializer for account.",
+  "type": "object",
+  "required": ["name", "password"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 15
+    },
+    "password": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 256
+    }
+  },
+  "additionalProperties": false
+}

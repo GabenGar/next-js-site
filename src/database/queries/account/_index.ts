@@ -2,7 +2,11 @@ import { DAY } from "#environment/constants/durations";
 import { toISODateTime } from "#lib/dates";
 import { getDB } from "#database";
 
-import type { Account, AccCreds, EmailConfirmation } from "#types/entities";
+import type {
+  IAccount,
+  IAccountInit,
+  IEmailConfirmation,
+} from "#types/entities";
 
 const { db } = getDB();
 
@@ -12,7 +16,7 @@ export async function addAccount(name: string, password: string) {
     VALUES ($(name), $(password))
     RETURNING *
   `;
-  const account = await db.one<Account>(query, { name, password });
+  const account = await db.one<IAccount>(query, { name, password });
   return account;
 }
 
@@ -28,18 +32,18 @@ export async function addAccountEmail(account_id: number, email: string) {
     WHERE account_id = $(account_id)
     RETURNING *
   `;
-  const account = await db.one<Account>(emailQuery, {
+  const account = await db.one<IAccount>(emailQuery, {
     account_id,
     email,
   });
-  await db.one<EmailConfirmation>(confirmationQuery, {
+  await db.one<IEmailConfirmation>(confirmationQuery, {
     account_id,
   });
 
   return account;
 }
 
-export async function findAccount({ name, password }: AccCreds) {
+export async function findAccount({ name, password }: IAccountInit) {
   const query = `
     SELECT *
     FROM accounts
@@ -48,11 +52,11 @@ export async function findAccount({ name, password }: AccCreds) {
       AND password = $(password)
   `;
 
-  const account = await db.oneOrNone<Account>(query, { name, password });
+  const account = await db.oneOrNone<IAccount>(query, { name, password });
   return account;
 }
 
-export async function findAccountByName({ name }: AccCreds) {
+export async function findAccountByName({ name }: IAccountInit) {
   const query = `
     SELECT *
     FROM accounts
@@ -60,7 +64,7 @@ export async function findAccountByName({ name }: AccCreds) {
       name = $(name)
   `;
 
-  const account = await db.oneOrNone<Account>(query, { name });
+  const account = await db.oneOrNone<IAccount>(query, { name });
   return account;
 }
 
@@ -71,7 +75,7 @@ export async function getAccount(id: number) {
     WHERE id = $(id)
   `;
 
-  const account = await db.oneOrNone<Account>(query, { id });
+  const account = await db.oneOrNone<IAccount>(query, { id });
   return account;
 }
 
@@ -83,13 +87,13 @@ export async function createEmailConfirmation(
   const expirationDate = new Date(Date.now() + DAY);
   const expires_at = toISODateTime(expirationDate);
   const query = `
-    INSERT INTO email_confirmations 
+    INSERT INTO email_confirmations
       (account_id, confirmation_key, email, expires_at)
     VALUES ($(account_id), $(confirmation_key), $(email), $(expires_at))
     RETURNING *
   `;
 
-  const confirmation = await db.one<EmailConfirmation>(query, {
+  const confirmation = await db.one<IEmailConfirmation>(query, {
     account_id,
     confirmation_key,
     email,
@@ -109,7 +113,7 @@ export async function findEmailConfirmationByKey(
       confirmation_key = $(confirmation_key)
       AND account_id = $(account_id)
   `;
-  const confirmation = await db.oneOrNone<EmailConfirmation>(query, {
+  const confirmation = await db.oneOrNone<IEmailConfirmation>(query, {
     confirmation_key,
     account_id,
   });

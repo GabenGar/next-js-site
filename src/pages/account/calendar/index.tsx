@@ -11,11 +11,11 @@ import { DateTimeView } from "#components/dates";
 import { Calendar } from "#components/calendar";
 
 import type { InferGetServerSidePropsType } from "next";
-import type { AccountClient } from "#types/entities";
+import type { IAccountClient } from "#types/entities";
 import type { BasePageProps } from "#types/pages";
 
 interface ICalendarPageProps extends BasePageProps {
-  account: AccountClient;
+  account: IAccountClient;
 }
 
 function CalendarPage({
