@@ -21,12 +21,8 @@
   "typescript.preferences.jsxAttributeCompletionStyle": "braces",
   "json.schemas": [
     {
-      "fileMatch": ["schema/*schema.json"],
-      "url": "./schema/_meta.schema.json"
-    },
-    {
-      "fileMatch": ["schema/types/dates/*.schema.json"],
-      "url": "./schema/_meta.schema.json"
+      "fileMatch": ["schema/**/*schema.json"],
+      "url": "./schema/meta.schema.json"
     },
     {
       "fileMatch": ["config.json"],

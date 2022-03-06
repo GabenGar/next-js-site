@@ -4,6 +4,9 @@ import { fromSchemaToInterface } from "#lib/json/schema";
 
 import type { JSONSchema } from "json-schema-to-typescript";
 
+/**
+ * @todo: fix `$ref` parsing 
+ */
 async function generateInterfacesFromSchemas() {
   const interfaces = await reduceFolder<string[]>(
     SCHEMA_FOLDER,
@@ -36,6 +39,7 @@ async function generateInterfacesFromSchemas() {
         jsonObj.title,
         {
           bannerComment: "",
+          cwd: SCHEMA_FOLDER,
         }
       );
 
