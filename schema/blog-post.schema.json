@@ -1,5 +1,4 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "/blog-post.schema.json",
   "title": "BlogPost",
   "description": "The post of the blog.",

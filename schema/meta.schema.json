@@ -1,8 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "/_meta.schema.json",
+  "$id": "/meta.schema.json",
   "title": "MetaSchema",
-  "description": "Slightly extended base schema.",
+  "description": "Slightly extended `draft-07` meta schema.",
   "definitions": {
     "schemaArray": {
       "type": "array",

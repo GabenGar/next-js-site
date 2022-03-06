@@ -1,5 +1,3 @@
-import Ajv from "ajv";
-import addFormats from "ajv-formats";
 import stringifyObject from "stringify-object";
 import { SCHEMA_FOLDER } from "#environment/constants";
 import { reduceFolder, readJSON } from "#server/fs";
@@ -30,8 +28,7 @@ interface ICodegenPrep {
  * @todo Place imports at the top.
  */
 async function generateValidations() {
-  const ajv = new Ajv({ loadSchema: async (uri) => {} });
-  addFormats(ajv);
+  
   const imports = [
     [`import Ajv from "ajv";`, `import addFormats from "ajv-formats";`].join(
       "\n"

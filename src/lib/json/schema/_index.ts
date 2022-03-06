@@ -1,1 +1,2 @@
-export { ValidationErrors } from "./validation-errors"
+export { schemaValidator } from "./validator";
+export { ValidationErrors } from "./errors";
