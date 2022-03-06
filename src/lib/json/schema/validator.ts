@@ -7,10 +7,10 @@ import type { SchemaObject } from "ajv";
 
 const ajv = new Ajv({
   meta: metaSchema,
-  loadSchema: findSchema,
+  schemas: Object.values(schemaMap),
 });
 addFormats(ajv);
-
+ 
 async function findSchema(schemaID: string) {
   return schemaMap[schemaID];
 }

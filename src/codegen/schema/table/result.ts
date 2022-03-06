@@ -10,7 +10,6 @@ import calendarNoteInit from "#schema/calendar-note/init.schema.json";
 import projectConfig from "#schema/config.schema.json";
 import projectDatabase from "#schema/database.schema.json";
 import emailConfirmation from "#schema/email-confirmation.schema.json";
-import metaSchema from "#schema/meta.schema.json";
 import iSODate from "#schema/types/dates/iso-date.schema.json";
 import iSODateTime from "#schema/types/dates/iso-datetime.schema.json";
 import iSOTime from "#schema/types/dates/iso-time.schema.json";
@@ -27,7 +26,6 @@ export const schemaMap: Record<string, SchemaObject> = {
   "config.schema.json": projectConfig,
   "database.schema.json": projectDatabase,
   "email-confirmation.schema.json": emailConfirmation,
-  "meta.schema.json": metaSchema,
   "types/dates/iso-date.schema.json": iSODate,
   "types/dates/iso-datetime.schema.json": iSODateTime,
   "types/dates/iso-time.schema.json": iSOTime,

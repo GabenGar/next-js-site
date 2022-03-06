@@ -19,6 +19,7 @@ interface IResult {
  * and assign them into hash table,
  * where its `$id` is the key
  * and the schema object is the value.
+ * @todo fix recursive dependancy on validator codegen
  */
 async function generateSchemaTable() {
   const result = await reduceFolder<IResult>(
@@ -26,7 +27,11 @@ async function generateSchemaTable() {
     { imports: [], schemaMap: [] },
     { isShallow: false },
     async (result, folderItem) => {
-      if (!isJSONSchema(folderItem)) {
+      if (
+        !isJSONSchema(folderItem) ||
+        // meta schema is excluded because it gets fed separately
+        folderItem.entity.name === "meta.schema"
+      ) {
         return result;
       }
 

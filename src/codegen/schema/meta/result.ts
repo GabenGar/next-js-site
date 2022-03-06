@@ -58,7 +58,6 @@ export type MetaSchema2 =
       enum?: [true, ...unknown[]];
       type?: SimpleTypes | [SimpleTypes, ...SimpleTypes[]];
       format?:
-        | "plain"
         | "date-time"
         | "time"
         | "date"
@@ -145,7 +144,6 @@ export interface MetaSchema1 {
   enum?: [true, ...unknown[]];
   type?: SimpleTypes | [SimpleTypes, ...SimpleTypes[]];
   format?:
-    | "plain"
     | "date-time"
     | "time"
     | "date"
@@ -448,7 +446,6 @@ export const metaSchema = {
       type: "string",
       default: "plain",
       enum: [
-        "plain",
         "date-time",
         "time",
         "date",

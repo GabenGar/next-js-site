@@ -7,7 +7,9 @@ import type { FolderItem } from "#server/fs";
 
 export function isJSONSchema({ entity, entry }: FolderItem) {
   return (
-    entry.isFile() && entity.ext === ".json" && entity.name.endsWith(".schema")
+    entry.isFile() &&
+    entity.ext === ".json" &&
+    entity.name.endsWith(".schema")
   );
 }
 

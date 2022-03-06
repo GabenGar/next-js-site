@@ -215,7 +215,6 @@
       "type": "string",
       "default": "plain",
       "enum": [
-        "plain",
         "date-time",
         "time",
         "date",
