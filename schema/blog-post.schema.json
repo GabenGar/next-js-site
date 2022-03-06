@@ -22,12 +22,10 @@
       "type": "string"
     },
     "created_at": {
-      "type": "string",
-      "format": "date-time"
+      "$ref": "/types/dates/iso-datetime.schema.json"
     },
     "edited_at": {
-      "type": "string",
-      "format": "date-time"
+      "$ref": "/types/dates/iso-datetime.schema.json"
     },
     "next_slug": {
       "type": "string",

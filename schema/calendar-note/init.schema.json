@@ -7,10 +7,8 @@
   "required": ["date", "note"],
   "properties": {
     "date": {
-      "type": "string",
-      "format": "date-time",
-      "description": "The timestamp of the note.",
-      "maxLength": 1024
+      "$ref": "/types/dates/iso-datetime.schema.json",
+      "description": "The timestamp of the note."
     },
     "note": {
       "type": "string",

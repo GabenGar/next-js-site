@@ -30,7 +30,7 @@ interface ICodegenPrep {
  * @todo Place imports at the top.
  */
 async function generateValidations() {
-  const ajv = new Ajv();
+  const ajv = new Ajv({ loadSchema: async (uri) => {} });
   addFormats(ajv);
   const imports = [
     [`import Ajv from "ajv";`, `import addFormats from "ajv-formats";`].join(

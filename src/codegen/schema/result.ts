@@ -7,16 +7,13 @@ export const accountSchema = {
   required: ["id", "created_at", "name", "role", "is_verified"],
   properties: {
     id: {
-      type: "integer",
-      description: "Is not shown to clients.",
+      $ref: "/types/serial.schema.json",
     },
     created_at: {
-      type: "string",
-      format: "date-time",
+      $ref: "/types/dates/iso-datetime.schema.json",
     },
     updated_at: {
-      type: "string",
-      format: "date-time",
+      $ref: "/types/dates/iso-datetime.schema.json",
     },
     name: {
       type: "string",
@@ -58,12 +55,10 @@ export const accountClientSchema = {
   required: ["created_at", "name", "role", "is_verified"],
   properties: {
     created_at: {
-      type: "string",
-      format: "date-time",
+      $ref: "/types/dates/iso-datetime.schema.json",
     },
     updated_at: {
-      type: "string",
-      format: "date-time",
+      $ref: "/types/dates/iso-datetime.schema.json",
     },
     name: {
       type: "string",
@@ -167,18 +162,15 @@ export const calendarNoteSchema = {
       type: "integer",
     },
     created_at: {
-      type: "string",
-      format: "date-time",
+      $ref: "/types/dates/iso-datetime.schema.json",
     },
     account_id: {
       type: "integer",
       description: "ID of the account making the note.",
     },
     date: {
-      type: "string",
-      format: "date-time",
+      $ref: "/types/dates/iso-datetime.schema.json",
       description: "The timestamp of the note.",
-      maxLength: 1024,
     },
     note: {
       type: "string",
@@ -204,14 +196,11 @@ export const calendarNoteClientSchema = {
       type: "integer",
     },
     created_at: {
-      type: "string",
-      format: "date-time",
+      $ref: "/types/dates/iso-datetime.schema.json",
     },
     date: {
-      type: "string",
-      format: "date-time",
+      $ref: "/types/dates/iso-datetime.schema.json",
       description: "The timestamp of the note.",
-      maxLength: 1024,
     },
     note: {
       type: "string",
@@ -234,10 +223,8 @@ export const calendarNoteInitSchema = {
   required: ["date", "note"],
   properties: {
     date: {
-      type: "string",
-      format: "date-time",
+      $ref: "/types/dates/iso-datetime.schema.json",
       description: "The timestamp of the note.",
-      maxLength: 1024,
     },
     note: {
       type: "string",
@@ -423,6 +410,8 @@ export const iSODateTimeSchema = {
   description: "ISO string representing datetime.",
   type: "string",
   format: "date-time",
+  minLength: 5,
+  maxLength: 128,
 } as const;
 
 export type ISODateTimeSchema = typeof iSODateTimeSchema;
@@ -437,3 +426,14 @@ export const iSOTimeSchema = {
 } as const;
 
 export type ISOTimeSchema = typeof iSOTimeSchema;
+
+export const serialIntegerSchema = {
+  $schema: "http://json-schema.org/draft-07/schema#",
+  $id: "/types/serial.schema.json",
+  title: "SerialInteger",
+  description: "Integer equivalent of `SERIAL` type",
+  type: "integer",
+  minimum: 1,
+} as const;
+
+export type SerialIntegerSchema = typeof serialIntegerSchema;

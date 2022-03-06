@@ -7,21 +7,18 @@
   "required": ["id", "created_at", "date", "note"],
   "properties": {
     "id": {
-      "type": "integer"
+      "$ref": "/types/serial.schema.json"
     },
     "created_at": {
-      "type": "string",
-      "format": "date-time"
+      "$ref": "/types/dates/iso-datetime.schema.json"
     },
     "account_id": {
       "type": "integer",
       "description": "ID of the account making the note."
     },
     "date": {
-      "type": "string",
-      "format": "date-time",
-      "description": "The timestamp of the note.",
-      "maxLength": 1024
+      "$ref": "/types/dates/iso-datetime.schema.json",
+      "description": "The timestamp of the note."
     },
     "note": {
       "type": "string",
