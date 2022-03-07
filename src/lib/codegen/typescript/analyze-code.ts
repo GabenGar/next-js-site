@@ -44,66 +44,45 @@ async function getExports(sourceFile: SourceFile): Promise<IExports> {
     if (isExportDeclaration(node)) {
       const { isTypeOnly, parent, name, exportClause, ...nodeInfo } = node;
 
-      if (isTypeOnly) {
-        console.log("TYPE EXPORT: ", name);
-        if (isInterfaceDeclaration(name))
-
-
-        // if (isTypeAliasDeclaration(node)) {
-        //   const { name } = node;
-        //   exports.types.push(String(name.escapedText));
-        //   return;
-        // }
-
-        // if (isInterfaceDeclaration(node)) {
-        //   const { name } = node;
-
-        //   exports.types.push(String(name.escapedText));
-        //   return;
-        // }
-
-        return;
-      }
-
       exportClause?.forEachChild((node) => {
         if (isExportSpecifier(node)) {
           const { name } = node;
-          exports.members.push(String(name.escapedText))
+          exports.members.push(String(name.escapedText));
         }
       });
     }
 
-    // if (isTypeAliasDeclaration(node)) {
-    //   const { name } = node;
-    //   exports.types.push(String(name.escapedText));
-    //   return;
-    // }
+    if (isTypeAliasDeclaration(node)) {
+      const { name } = node;
+      exports.types.push(String(name.escapedText));
+      return;
+    }
 
-    // if (isInterfaceDeclaration(node)) {
-    //   const { name } = node;
+    if (isInterfaceDeclaration(node)) {
+      const { name } = node;
 
-    //   exports.types.push(String(name.escapedText));
-    //   return;
-    // }
+      exports.types.push(String(name.escapedText));
+      return;
+    }
 
-    // // iterate over children and find `VariableDeclarationList`
-    // node.forEachChild((node: Node) => {
-    //   if (isVariableDeclarationList(node)) {
-    //     const { declarations } = node;
+    // iterate over children and find `VariableDeclarationList`
+    node.forEachChild((node: Node) => {
+      if (isVariableDeclarationList(node)) {
+        const { declarations } = node;
 
-    //     // iterate over declarations and find the `name` attribute
-    //     declarations.forEach((declaration) => {
-    //       const { name } = declaration;
+        // iterate over declarations and find the `name` attribute
+        declarations.forEach((declaration) => {
+          const { name } = declaration;
 
-    //       // if it's an identifier, extract it to exports
-    //       if (isIdentifier(name)) {
-    //         const exportedName = String(name.escapedText);
+          // if it's an identifier, extract it to exports
+          if (isIdentifier(name)) {
+            const exportedName = String(name.escapedText);
 
-    //         exports.members.push(exportedName);
-    //       }
-    //     });
-    //   }
-    // });
+            exports.members.push(exportedName);
+          }
+        });
+      }
+    });
   });
 
   return exports;

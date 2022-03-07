@@ -12,4 +12,5 @@ export {
   validateISODateFields,
   validateISODateTimeFields,
   validateISOTimeFields,
+  validateSerialIntegerFields,
 } from "./result";

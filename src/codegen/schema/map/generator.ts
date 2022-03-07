@@ -41,31 +41,20 @@ async function generateSchemaTable() {
         schemaID: schemaObj.$id!,
       });
 
-      result.schemaMap.push(`"${schemaObj.$id!}": ${objName}`);
+      result.schemaMap.push(`"${schemaObj.$id!}": ${objName}Schema`);
 
       return result;
     }
   );
 
   const topImports = `import { SchemaObject } from "ajv";`;
-  const jsonImports = result.imports
-    .map(({ schemaID, symbolName }) => {
-      const importPath = `#schema/assets/${schemaID}`;
-      return `import ${symbolName} from "${importPath}";`;
-    })
-    .join("\n");
+  const jsonImports = `import {${result.imports.map(({ symbolName }) => `${symbolName}Schema`).join(", ")}} from "#codegen/schema/assets"`
 
   const mapExport = `export const schemaMap: Record<string, SchemaObject> = {${result.schemaMap.join(
-    ",\n"
+    ","
   )}};\n`;
 
-  const reExports = result.imports
-    .map(({ symbolName }) => {
-      return `export const ${symbolName}Schema = ${symbolName};`;
-    })
-    .join("\n");
-
-  const content = [topImports, jsonImports, mapExport, reExports].join("\n\n");
+  const content = [topImports, jsonImports, mapExport].join("\n\n");
 
   return content;
 }
