@@ -6,29 +6,25 @@ import {
   findEmailConfirmationByKey,
 } from "#database/queries/account";
 import { sendEmail } from "#lib/email";
-import { ValidationErrors, ValidationResult } from "#lib/json-schema/types";
-import { isEmail } from "#lib/util/validator";
+import { validateEmailStringFields } from "#codegen/schema/validations";
 
-export function validateEmailString(
+import type { IValidationResult } from "#types/pages";
+
+export async function validateEmailString(
   emailString: string
-): ValidationResult<string> {
-  const formattedEmail = emailString.trim();
-  const errors = new ValidationErrors();
+): Promise<IValidationResult<typeof emailString>> {
+  const result = await validateEmailStringFields(emailString);
 
-  if (!isEmail(formattedEmail)) {
-    errors.addError("email", "Not a valid email string.");
-  }
-
-  if (errors.size) {
+  if (!result) {
     return {
       isValid: false,
-      errors,
+      schemaValidationErrors: [...validateEmailStringFields.errors!],
     };
   }
 
   return {
     isValid: true,
-    modifiedResult: formattedEmail,
+    formattedResult: result as string,
   };
 }
 
@@ -65,7 +61,9 @@ export async function confirmNewEmail(
   );
 
   if (!confirmation) {
-    throw new Error( `Confirmation key for the accountID "${account_id}" does not exist.`)
+    throw new Error(
+      `Confirmation key for the accountID "${account_id}" does not exist.`
+    );
   }
 
   const account = await addAccountEmail(account_id, confirmation.email);

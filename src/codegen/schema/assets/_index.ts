@@ -12,5 +12,6 @@ export {
   iSODateSchema,
   iSODateTimeSchema,
   iSOTimeSchema,
+  emailStringSchema,
   serialIntegerSchema,
 } from "./result";

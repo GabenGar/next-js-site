@@ -188,6 +188,11 @@ export type ISODateTime = string;
 export type ISOTime = string;
 
 /**
+ * A type to validate email strings separately.
+ */
+export type EmailString = string;
+
+/**
  * Integer equivalent of `SERIAL` type
  */
 export type SerialInteger = number;

@@ -407,6 +407,18 @@ export const iSOTimeSchema = {
 
 export type ISOTimeSchema = typeof iSOTimeSchema;
 
+export const emailStringSchema = {
+  $id: "types/email.schema.json",
+  title: "EmailString",
+  description: "A type to validate email strings separately.",
+  type: "string",
+  format: "email",
+  minLength: 3,
+  maxLength: 256,
+} as const;
+
+export type EmailStringSchema = typeof emailStringSchema;
+
 export const serialIntegerSchema = {
   $id: "types/serial.schema.json",
   title: "SerialInteger",

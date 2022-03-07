@@ -14,6 +14,7 @@ import {
   iSODateSchema,
   iSODateTimeSchema,
   iSOTimeSchema,
+  emailStringSchema,
   serialIntegerSchema,
 } from "#codegen/schema/assets";
 
@@ -31,5 +32,6 @@ export const schemaMap: Record<string, SchemaObject> = {
   "types/dates/iso-date.schema.json": iSODateSchema,
   "types/dates/iso-datetime.schema.json": iSODateTimeSchema,
   "types/dates/iso-time.schema.json": iSOTimeSchema,
+  "types/email.schema.json": emailStringSchema,
   "types/serial.schema.json": serialIntegerSchema,
 };

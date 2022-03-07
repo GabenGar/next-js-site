@@ -14,6 +14,7 @@ import {
   iSODateSchema,
   iSODateTimeSchema,
   iSOTimeSchema,
+  emailStringSchema,
   serialIntegerSchema,
 } from "#codegen/schema/assets";
 
@@ -31,6 +32,7 @@ import type {
   IISODate,
   IISODateTime,
   IISOTime,
+  IEmailString,
   ISerialInteger,
 } from "#codegen/schema/interfaces";
 
@@ -69,6 +71,9 @@ export const validateISODateTimeFields = createValidator<IISODateTime>(
 );
 export const validateISOTimeFields = createValidator<IISOTime>(
   iSOTimeSchema.$id
+);
+export const validateEmailStringFields = createValidator<IEmailString>(
+  emailStringSchema.$id
 );
 export const validateSerialIntegerFields = createValidator<ISerialInteger>(
   serialIntegerSchema.$id

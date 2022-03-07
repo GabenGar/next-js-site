@@ -1,0 +1,9 @@
+{
+  "$id": "types/email.schema.json",
+  "title": "EmailString",
+  "description": "A type to validate email strings separately.",
+  "type": "string",
+  "format": "email",
+  "minLength": 3,
+  "maxLength": 256
+}

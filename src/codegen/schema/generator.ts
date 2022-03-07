@@ -15,6 +15,9 @@ async function generateSchemas() {
   return content;
 }
 
+/**
+ * @todo Nuke this generator
+ */
 async function getSchemas() {
   const schemas = await reduceFolder<string[]>(
     SCHEMA_FOLDER,

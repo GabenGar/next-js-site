@@ -213,7 +213,6 @@
     },
     "format": {
       "type": "string",
-      "default": "plain",
       "enum": [
         "date-time",
         "time",
