@@ -79,4 +79,4 @@ This truncates all non-migration project tables.
 ## TODOs
 - figure out the problem between typescript, `ts-node` and  `stringify-object` being a pure ESM package.
 - one-button validation interface
-
+- prettier validation errors
