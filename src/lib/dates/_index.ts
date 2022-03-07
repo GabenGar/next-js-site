@@ -6,7 +6,4 @@ export {
   toISODateTime,
   toISOTime,
   toISODate,
-  validateDateLike
 } from "./lib";
-
-export type { IISODateString, DateLike } from "./types";
