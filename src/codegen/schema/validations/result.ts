@@ -1,55 +1,75 @@
 import { createValidator } from "#lib/json/schema";
 
-import type { IAccount } from "#codegen/schema/interfaces";
-import type { IAccountClient } from "#codegen/schema/interfaces";
-import type { IAccountInit } from "#codegen/schema/interfaces";
-import type { IBlogPost } from "#codegen/schema/interfaces";
-import type { ICalendarNote } from "#codegen/schema/interfaces";
-import type { ICalendarNoteClient } from "#codegen/schema/interfaces";
-import type { ICalendarNoteInit } from "#codegen/schema/interfaces";
-import type { IProjectConfig } from "#codegen/schema/interfaces";
-import type { IProjectDatabase } from "#codegen/schema/interfaces";
-import type { IEmailConfirmation } from "#codegen/schema/interfaces";
-import type { IISODate } from "#codegen/schema/interfaces";
-import type { IISODateTime } from "#codegen/schema/interfaces";
-import type { IISOTime } from "#codegen/schema/interfaces";
-import type { ISerialInteger } from "#codegen/schema/interfaces";
+import {
+  accountSchema,
+  accountClientSchema,
+  accountInitSchema,
+  blogPostSchema,
+  calendarNoteSchema,
+  calendarNoteClientSchema,
+  calendarNoteInitSchema,
+  projectConfigSchema,
+  projectDatabaseSchema,
+  emailConfirmationSchema,
+  iSODateSchema,
+  iSODateTimeSchema,
+  iSOTimeSchema,
+  serialIntegerSchema,
+} from "#codegen/schema/assets";
+
+import type {
+  IAccount,
+  IAccountClient,
+  IAccountInit,
+  IBlogPost,
+  ICalendarNote,
+  ICalendarNoteClient,
+  ICalendarNoteInit,
+  IProjectConfig,
+  IProjectDatabase,
+  IEmailConfirmation,
+  IISODate,
+  IISODateTime,
+  IISOTime,
+  ISerialInteger,
+} from "#codegen/schema/interfaces";
 
 export const validateAccountFields = createValidator<IAccount>(
-  "account/base.schema.json"
+  accountSchema.$id
 );
 export const validateAccountClientFields = createValidator<IAccountClient>(
-  "account/client.schema.json"
+  accountClientSchema.$id
 );
 export const validateAccountInitFields = createValidator<IAccountInit>(
-  "account/init.schema.json"
+  accountInitSchema.$id
 );
 export const validateBlogPostFields = createValidator<IBlogPost>(
-  "blog-post.schema.json"
+  blogPostSchema.$id
 );
 export const validateCalendarNoteFields = createValidator<ICalendarNote>(
-  "calendar-note/base.schema.json"
+  calendarNoteSchema.$id
 );
 export const validateCalendarNoteClientFields =
-  createValidator<ICalendarNoteClient>("calendar-note/client.schema.json");
+  createValidator<ICalendarNoteClient>(calendarNoteClientSchema.$id);
 export const validateCalendarNoteInitFields =
-  createValidator<ICalendarNoteInit>("calendar-note/init.schema.json");
-export const validateProjectConfigFields =
-  createValidator<IProjectConfig>("config.schema.json");
+  createValidator<ICalendarNoteInit>(calendarNoteInitSchema.$id);
+export const validateProjectConfigFields = createValidator<IProjectConfig>(
+  projectConfigSchema.$id
+);
 export const validateProjectDatabaseFields = createValidator<IProjectDatabase>(
-  "database.schema.json"
+  projectDatabaseSchema.$id
 );
 export const validateEmailConfirmationFields =
-  createValidator<IEmailConfirmation>("email-confirmation.schema.json");
+  createValidator<IEmailConfirmation>(emailConfirmationSchema.$id);
 export const validateISODateFields = createValidator<IISODate>(
-  "types/dates/iso-date.schema.json"
+  iSODateSchema.$id
 );
 export const validateISODateTimeFields = createValidator<IISODateTime>(
-  "types/dates/iso-datetime.schema.json"
+  iSODateTimeSchema.$id
 );
 export const validateISOTimeFields = createValidator<IISOTime>(
-  "types/dates/iso-time.schema.json"
+  iSOTimeSchema.$id
 );
 export const validateSerialIntegerFields = createValidator<ISerialInteger>(
-  "types/serial.schema.json"
+  serialIntegerSchema.$id
 );

@@ -3,8 +3,6 @@ import addFormats from "ajv-formats";
 import metaSchema from "#schema/meta.schema.json";
 import { schemaMap } from "#codegen/schema/map";
 
-import type { SchemaObject } from "ajv";
-
 const ajv = new Ajv({
   meta: metaSchema,
 });
@@ -15,5 +13,5 @@ async function findSchema(schemaID: string) {
 }
 
 export function createValidator<Schema>(schemaID: string) {
-  return ajv.getSchema<Schema>(schemaID);
+  return ajv.getSchema<Schema>(schemaID)!;
 }

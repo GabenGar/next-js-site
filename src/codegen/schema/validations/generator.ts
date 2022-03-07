@@ -1,6 +1,5 @@
 import { schemaMap } from "#codegen/schema/map";
-
-import type { AnySchemaObject } from "ajv";
+import { getSchemaNames } from "../map/generator";
 
 interface IResult {
   imports: string[];
@@ -20,9 +19,12 @@ async function generateValidations() {
 
   const result = schemaList.reduce<IResult>(
     (result, schema) => {
-      const typeImport = `import type { I${schema.title} } from "#codegen/schema/interfaces";`;
-      const content = `export const validate${schema.title}Fields = createValidator<I${schema.title}>("${schema.$id}")`;
+      const { objName, typeName } = getSchemaNames(schema);
+      const schemaImport = `${objName}Schema`;
+      const typeImport = `I${schema.title}`;
+      const content = `export const validate${schema.title}Fields = createValidator<${typeImport}>(${schemaImport}.$id)`;
 
+      result.imports.push(schemaImport);
       result.typeImports.push(typeImport);
       result.exports.push(content);
 
@@ -31,9 +33,17 @@ async function generateValidations() {
     { imports: [], typeImports: [], exports: [], typeExports: [] }
   );
 
+  const schemaImports = `import { ${result.imports.join(
+    ", "
+  )} } from "#codegen/schema/assets"`;
+  const typeImports = `import type { ${result.typeImports.join(
+    ", "
+  )} } from "#codegen/schema/interfaces"`;
+
   const content = [
     imports,
-    result.typeImports.join("\n"),
+    schemaImports,
+    typeImports,
     result.exports.join("\n"),
   ].join("\n\n");
 
