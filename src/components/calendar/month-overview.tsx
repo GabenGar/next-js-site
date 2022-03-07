@@ -1,25 +1,30 @@
 import { useEffect, useState } from "react";
 import {
   getDate,
-  isWeekend,
-  isSameDay,
-  isSameMonth,
-  subDays,
-  getDaysInMonth,
-  startOfMonth,
-  addDays,
-  getDay,
   daysInWeek,
 } from "date-fns";
 import clsx from "clsx";
+import {
+  startOfMonth,
+  getDaysInMonth,
+  addDays,
+  getDayNumber,
+  substractDays,
+  isSameDay,
+  isSameMonth,
+  isWeekend,
+  getDayOfMonth
+} from "#lib/dates";
+import { getMonthNotes } from "#lib/api/public";
 import { DayOverview } from "./day-overview";
 import styles from "./_index.module.scss";
-import { ICalendarNoteClient } from "#types/entities";
-import { getMonthNotes } from "#lib/api/public";
+
+import type { ICalendarNoteClient } from "#types/entities";
+import type { IISODateTime } from "#codegen/schema/interfaces";
 
 interface IMonthOverviewProps {
-  selectedDate: Date;
-  currentDate: Date;
+  selectedDate: IISODateTime;
+  currentDate: IISODateTime;
 }
 
 /**
@@ -30,11 +35,11 @@ export function MonthOverview({
   selectedDate,
   currentDate,
 }: IMonthOverviewProps) {
-  const [selectedDay, selectDay] = useState<Date>(currentDate);
+  const [selectedDay, selectDay] = useState<IISODateTime>(currentDate);
   const [monthNotes, changeMonthNotes] = useState<ICalendarNoteClient[]>([]);
   const days = populateDays(selectedDate);
 
-  function handleSelection(dayDate: Date) {
+  function handleSelection(dayDate: IISODateTime) {
     selectDay(dayDate);
   }
 
@@ -77,7 +82,7 @@ export function MonthOverview({
                 handleSelection(dayDate);
               }}
             >
-              {getDate(dayDate)}
+              {getDayOfMonth(dayDate)}
             </span>
           );
         })}
@@ -90,7 +95,7 @@ export function MonthOverview({
 /**
  * TODO: fixed length array
  */
-function populateDays(selectedDate: Date) {
+function populateDays(selectedDate: IISODateTime) {
   /**
    * The amount of day to have consistent amount of rows between months.
    */
@@ -101,10 +106,10 @@ function populateDays(selectedDate: Date) {
 
   // if the first day of month not monday
   // prepend needed amount of days to have full week
-  const prevDays = getDay(monthStart);
+  const prevDays = getDayNumber(monthStart);
   const previousMonth = new Array(prevDays)
     .fill(null)
-    .map((_, index) => subDays(monthStart, index + 1))
+    .map((_, index) => substractDays(monthStart, index + 1))
     .reverse();
 
   const currentMonth = new Array(daysInMonth)

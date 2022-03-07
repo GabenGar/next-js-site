@@ -1,9 +1,35 @@
-import { parseISO, formatISO, minTime, maxTime } from "date-fns";
+import {
+  parseISO,
+  formatISO,
+  startOfMonth as startOfMonthfn,
+  getDaysInMonth as getDaysInMonthfn,
+  getDay,
+  getDate as getDatefn,
+} from "date-fns";
 
 import type { IISODateTime } from "#codegen/schema/interfaces";
 
-export function isAllowedTime(time: number) {
-  return time >= minTime && time <= maxTime;
+export function getDayOfMonth(date: IISODateTime) {
+  return getDatefn(fromISOString(date));
+}
+
+export function getDaysInMonth(date: IISODateTime) {
+  return getDaysInMonthfn(fromISOString(date));
+}
+
+export function getDayNumber(date: IISODateTime) {
+  return getDay(fromISOString(date));
+}
+
+export function startOfMonth(date: IISODateTime) {
+  return toISODateTime(startOfMonthfn(fromISOString(date)));
+}
+
+/**
+ * @returns An ISO timestamp equivalent of `new Date()`.
+ */
+export function getNowISO() {
+  return toISODateTime(new Date());
 }
 
 export function fromISOString(dateString: IISODateTime): Date {
@@ -20,13 +46,4 @@ export function toISOTime(date: Date): string {
 
 export function toISODate(date: Date): string {
   return formatISO(date, { representation: "date" });
-}
-
-export function isISOString(dateString: IISODateTime) {
-  try {
-    parseISO(dateString);
-    return true;
-  } catch (error) {
-    return false;
-  }
 }

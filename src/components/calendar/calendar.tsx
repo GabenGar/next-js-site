@@ -1,11 +1,5 @@
 import { useState } from "react";
-import {
-  addMonths,
-  subMonths,
-  subYears,
-  addYears,
-} from "date-fns";
-import { formatMonth, formatYear } from "#lib/dates";
+import { formatMonth, formatYear, addMonths, addYears, subtractMonths, subtractYears  } from "#lib/dates";
 import { blockComponent } from "#components/meta";
 import { Button } from "#components/buttons";
 import { SVGIcon } from "#components/icons";
@@ -13,9 +7,10 @@ import { MonthOverview } from "./month-overview";
 import styles from "./_index.module.scss";
 
 import type { IDivProps } from "#types/props";
+import type { IISODateTime } from "#codegen/schema/interfaces";
 
 export interface ICalendarProps extends IDivProps {
-  currentDate: Date;
+  currentDate: IISODateTime;
 }
 
 export const Calendar = blockComponent<ICalendarProps>(
@@ -25,7 +20,7 @@ export const Calendar = blockComponent<ICalendarProps>(
     
 
     function previousYear() {
-      const newDate = subYears(selectedDate, 1);
+      const newDate = subtractYears(selectedDate, 1);
       changeSelectedDate(newDate);
     }
 
@@ -35,7 +30,7 @@ export const Calendar = blockComponent<ICalendarProps>(
     }
 
     function previousMonth() {
-      const newDate = subMonths(selectedDate, 1);
+      const newDate = subtractMonths(selectedDate, 1);
       changeSelectedDate(newDate);
     }
     function nextMonth() {
