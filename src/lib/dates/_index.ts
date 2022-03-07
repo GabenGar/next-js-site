@@ -4,11 +4,14 @@ export {
   toISODateTime,
   toISOTime,
   toISODate,
-  getNowISO,
+  nowISO,
   startOfMonth,
   getDayNumber,
   getDaysInMonth,
-  getDayOfMonth
+  getDayOfMonth,
+  startOfDay,
+  getMonth,
+  getYear
 } from "./lib";
 export {
   isAllowedTime,

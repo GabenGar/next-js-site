@@ -1,6 +1,14 @@
 import { useEffect, useState } from "react";
-import { getDate, getMonth, getYear, isSameDay, startOfDay } from "date-fns";
-import { fromISOString, toISODateTime } from "#lib/dates";
+import {
+  fromISOString,
+  toISODateTime,
+  startOfDay,
+  nowISO,
+  getDayOfMonth,
+  getYear,
+  getMonth,
+  isSameDay,
+} from "#lib/dates";
 import { createNewNote, removeNote } from "#lib/api/public";
 import { Heading } from "#components/headings";
 import { DateTimeView } from "#components/dates";
@@ -13,23 +21,25 @@ import styles from "./day-overview.module.scss";
 
 import type { ICalendarNoteClient, ICalendarNoteInit } from "#types/entities";
 import type { ISubmitEvent, IFormElements } from "#components/forms";
+import type { IISODateTime } from "#codegen/schema/interfaces";
 
 interface IDayoveriewProps {
-  selectedDay?: Date;
+  selectedDay?: IISODateTime;
   monthNotes: ICalendarNoteClient[];
 }
 
 export function DayOverview({ selectedDay, monthNotes }: IDayoveriewProps) {
-  const dayStart = selectedDay
-    ? startOfDay(selectedDay)
-    : startOfDay(new Date());
+  const dayStart = selectedDay ? startOfDay(selectedDay) : startOfDay(nowISO());
   const [notes, changeNotes] = useState<ICalendarNoteClient[]>(
     (selectedDay && getDayNotes(monthNotes, selectedDay)) || []
   );
 
-  function getDayNotes(monthNotes: ICalendarNoteClient[], selectedDay: Date) {
+  function getDayNotes(
+    monthNotes: ICalendarNoteClient[],
+    selectedDay: IISODateTime
+  ) {
     const dayNotes = monthNotes.filter((note) =>
-      isSameDay(fromISOString(note.date as string), selectedDay)
+      isSameDay(note.date, selectedDay)
     );
     return dayNotes;
   }
@@ -60,7 +70,7 @@ export function DayOverview({ selectedDay, monthNotes }: IDayoveriewProps) {
     date.setFullYear(
       getYear(selectedDay),
       getMonth(selectedDay),
-      getDate(selectedDay)
+      getDayOfMonth(selectedDay)
     );
 
     const isoDate = toISODateTime(date);
@@ -107,7 +117,7 @@ export function DayOverview({ selectedDay, monthNotes }: IDayoveriewProps) {
                 id="new-time"
                 name="time"
                 required
-                defaultValue={dayStart}
+                defaultValue={fromISOString(dayStart)}
               >
                 Time
               </FormSectionTime>

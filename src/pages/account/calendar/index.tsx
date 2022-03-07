@@ -2,7 +2,7 @@ import { useState } from "react";
 import Head from "next/head";
 import { siteTitle } from "#lib/util";
 import { getAccountDetails, withSessionSSR } from "#lib/account";
-import { getNowISO } from "#lib/dates";
+import { nowISO } from "#lib/dates";
 import { Page } from "#components/pages";
 import { Article, ArticleBody, ArticleHeader } from "#components/articles";
 import { DL, DS } from "#components/lists/d-list";
@@ -21,7 +21,7 @@ interface ICalendarPageProps extends BasePageProps {
 function CalendarPage({
   account,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const [currentDate, changeCurrentDate] = useState(getNowISO());
+  const [currentDate, changeCurrentDate] = useState(nowISO());
 
   return (
     <Page heading="Calendar">
