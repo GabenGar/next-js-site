@@ -1,7 +1,7 @@
 import Ajv from "ajv";
 import addFormats from "ajv-formats";
 import metaSchema from "#schema/meta.schema.json";
-import { schemaMap } from "#codegen/schema/table";
+import { schemaMap } from "#codegen/schema/map";
 
 import type { SchemaObject } from "ajv";
 

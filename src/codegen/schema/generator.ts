@@ -2,7 +2,7 @@ import stringifyObject from "stringify-object";
 import { SCHEMA_FOLDER } from "#environment/constants";
 import { readJSON, reduceFolder } from "#server/fs";
 // quick fix for module conflict
-import { getSchemaNames } from "./table/generator";
+import { getSchemaNames } from "./map/generator";
 
 /**
  * Generated separately.

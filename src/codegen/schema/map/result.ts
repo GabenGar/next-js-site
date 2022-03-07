@@ -1,19 +1,19 @@
 import { SchemaObject } from "ajv";
 
-import account from "#schema/account/base.schema.json";
-import accountClient from "#schema/account/client.schema.json";
-import accountInit from "#schema/account/init.schema.json";
-import blogPost from "#schema/blog-post.schema.json";
-import calendarNote from "#schema/calendar-note/base.schema.json";
-import calendarNoteClient from "#schema/calendar-note/client.schema.json";
-import calendarNoteInit from "#schema/calendar-note/init.schema.json";
-import projectConfig from "#schema/config.schema.json";
-import projectDatabase from "#schema/database.schema.json";
-import emailConfirmation from "#schema/email-confirmation.schema.json";
-import iSODate from "#schema/types/dates/iso-date.schema.json";
-import iSODateTime from "#schema/types/dates/iso-datetime.schema.json";
-import iSOTime from "#schema/types/dates/iso-time.schema.json";
-import serialInteger from "#schema/types/serial.schema.json";
+import account from "#schema/assets/account/base.schema.json";
+import accountClient from "#schema/assets/account/client.schema.json";
+import accountInit from "#schema/assets/account/init.schema.json";
+import blogPost from "#schema/assets/blog-post.schema.json";
+import calendarNote from "#schema/assets/calendar-note/base.schema.json";
+import calendarNoteClient from "#schema/assets/calendar-note/client.schema.json";
+import calendarNoteInit from "#schema/assets/calendar-note/init.schema.json";
+import projectConfig from "#schema/assets/config.schema.json";
+import projectDatabase from "#schema/assets/database.schema.json";
+import emailConfirmation from "#schema/assets/email-confirmation.schema.json";
+import iSODate from "#schema/assets/types/dates/iso-date.schema.json";
+import iSODateTime from "#schema/assets/types/dates/iso-datetime.schema.json";
+import iSOTime from "#schema/assets/types/dates/iso-time.schema.json";
+import serialInteger from "#schema/assets/types/serial.schema.json";
 
 export const schemaMap: Record<string, SchemaObject> = {
   "account/base.schema.json": account,

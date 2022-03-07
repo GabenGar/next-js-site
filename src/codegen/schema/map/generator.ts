@@ -3,12 +3,12 @@ import { FolderItem, readJSON, reduceFolder } from "#server/fs";
 
 import type { SchemaObject } from "ajv";
 import type { JSONSchema } from "json-schema-to-typescript";
+
 interface IResult {
   schemaMap: string[];
   imports: {
     symbolName: string;
     schemaID: string;
-    folderItem: FolderItem;
   }[];
 }
 
@@ -38,7 +38,6 @@ async function generateSchemaTable() {
 
       result.imports.push({
         symbolName: objName,
-        folderItem,
         schemaID: schemaObj.$id!,
       });
 
@@ -50,8 +49,8 @@ async function generateSchemaTable() {
 
   const topImports = `import { SchemaObject } from "ajv";`;
   const jsonImports = result.imports
-    .map(({ folderItem, schemaID, symbolName }) => {
-      const importPath = `#schema/${schemaID}`;
+    .map(({ schemaID, symbolName }) => {
+      const importPath = `#schema/assets/${schemaID}`;
       return `import ${symbolName} from "${importPath}";`;
     })
     .join("\n");

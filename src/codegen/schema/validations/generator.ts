@@ -1,6 +1,6 @@
 import stringifyObject from "stringify-object";
 import { SCHEMA_FOLDER } from "#environment/constants";
-import { schemaMap } from "#codegen/schema/table";
+import { schemaMap } from "#codegen/schema/map";
 import { reduceFolder, readJSON } from "#server/fs";
 
 import type { AnySchemaObject } from "ajv";

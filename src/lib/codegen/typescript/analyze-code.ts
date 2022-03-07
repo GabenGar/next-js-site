@@ -46,6 +46,8 @@ async function getExports(sourceFile: SourceFile): Promise<IExports> {
 
       if (isTypeOnly) {
         console.log("TYPE EXPORT: ", name);
+        if (isInterfaceDeclaration(name))
+
 
         // if (isTypeAliasDeclaration(node)) {
         //   const { name } = node;
