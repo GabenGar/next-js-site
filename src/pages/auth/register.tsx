@@ -82,7 +82,7 @@ export const getServerSideProps = withSessionSSR<RegisterPageProps>(
 
     if (req.method === "POST") {
       const accInit = await getReqBody<IAccountInit>(req);
-      const result = validateAccountInitFields(accInit);
+      const result = await validateAccountInitFields(accInit);
 
       if (!result) {
         const errors = Array.isArray(validateAccountInitFields.errors)

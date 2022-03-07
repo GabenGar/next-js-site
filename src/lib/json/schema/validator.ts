@@ -5,6 +5,7 @@ import { schemaMap } from "#codegen/schema/map";
 
 const ajv = new Ajv({
   meta: metaSchema,
+  schemas: schemaMap
 });
 addFormats(ajv);
 
