@@ -2,17 +2,14 @@ import { SCHEMA_FOLDER } from "#environment/constants";
 import { fromSchemaToInterface } from "#lib/json/schema";
 import { schemaMap } from "#codegen/schema/map";
 
-import type { JSONSchema } from "json-schema-to-typescript";
+import type { SchemaObject } from "ajv";
 
-/**
- * @todo: fix `$ref` parsing
- */
 async function generateInterfacesFromSchemas() {
   const interfaces: string[] = [];
 
   for await (const schema of Object.values(schemaMap)) {
-    // doing this because the package mutates the schema object
-    const schemaCopy: typeof schema = { ...schema };
+    //
+    const schemaCopy = transformSchema(schema);
     const interfaceString = await fromSchemaToInterface(
       schemaCopy,
       schema.title,
@@ -27,6 +24,35 @@ async function generateInterfacesFromSchemas() {
 
   const content = interfaces.join("\n\n");
   return content;
+}
+
+/**
+ * Doing this because the package mutates the schema object.
+ *
+ * @param schema
+ */
+function transformSchema(schema: SchemaObject) {
+  const newSchema: typeof schema = { ...schema };
+  changeRefs(newSchema);
+  return newSchema;
+}
+
+/**
+ * A ducttape for `ajv` and `json-schema-to-typescript`
+ * parsing `$ref`s differently.
+ */
+function changeRefs(obj: Record<string, unknown>) {
+  for (const [key, value] of Object.entries(obj)) {
+    if (value && typeof value === "object") {
+      changeRefs(value as Record<string, unknown>);
+    }
+
+    if (key === "$ref") {
+      if (typeof value === "string" && value.startsWith("/")) {
+        obj[key] = value.slice(1);
+      }
+    }
+  }
 }
 
 export default generateInterfacesFromSchemas;
