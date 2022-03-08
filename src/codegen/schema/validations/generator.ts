@@ -22,7 +22,7 @@ async function generateValidations() {
       const { objName, typeName } = getSchemaNames(schema);
       const schemaImport = `${objName}Schema`;
       const typeImport = `I${schema.title}`;
-      const content = `export const validate${schema.title}Fields = createValidator<${typeImport}>(${schemaImport}.$id)`;
+      const content = `export const validate${schema.title}Fields = createValidator<${typeImport}>(${schemaImport})`;
 
       result.imports.push(schemaImport);
       result.typeImports.push(typeImport);

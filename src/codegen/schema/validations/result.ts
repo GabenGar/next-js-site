@@ -36,45 +36,31 @@ import type {
   ISerialInteger,
 } from "#codegen/schema/interfaces";
 
-export const validateAccountFields = createValidator<IAccount>(
-  accountSchema.$id
-);
-export const validateAccountClientFields = createValidator<IAccountClient>(
-  accountClientSchema.$id
-);
-export const validateAccountInitFields = createValidator<IAccountInit>(
-  accountInitSchema.$id
-);
-export const validateBlogPostFields = createValidator<IBlogPost>(
-  blogPostSchema.$id
-);
-export const validateCalendarNoteFields = createValidator<ICalendarNote>(
-  calendarNoteSchema.$id
-);
+export const validateAccountFields = createValidator<IAccount>(accountSchema);
+export const validateAccountClientFields =
+  createValidator<IAccountClient>(accountClientSchema);
+export const validateAccountInitFields =
+  createValidator<IAccountInit>(accountInitSchema);
+export const validateBlogPostFields =
+  createValidator<IBlogPost>(blogPostSchema);
+export const validateCalendarNoteFields =
+  createValidator<ICalendarNote>(calendarNoteSchema);
 export const validateCalendarNoteClientFields =
-  createValidator<ICalendarNoteClient>(calendarNoteClientSchema.$id);
+  createValidator<ICalendarNoteClient>(calendarNoteClientSchema);
 export const validateCalendarNoteInitFields =
-  createValidator<ICalendarNoteInit>(calendarNoteInitSchema.$id);
-export const validateProjectConfigFields = createValidator<IProjectConfig>(
-  projectConfigSchema.$id
-);
+  createValidator<ICalendarNoteInit>(calendarNoteInitSchema);
+export const validateProjectConfigFields =
+  createValidator<IProjectConfig>(projectConfigSchema);
 export const validateProjectDatabaseFields = createValidator<IProjectDatabase>(
-  projectDatabaseSchema.$id
+  projectDatabaseSchema
 );
 export const validateEmailConfirmationFields =
-  createValidator<IEmailConfirmation>(emailConfirmationSchema.$id);
-export const validateISODateFields = createValidator<IISODate>(
-  iSODateSchema.$id
-);
-export const validateISODateTimeFields = createValidator<IISODateTime>(
-  iSODateTimeSchema.$id
-);
-export const validateISOTimeFields = createValidator<IISOTime>(
-  iSOTimeSchema.$id
-);
-export const validateEmailStringFields = createValidator<IEmailString>(
-  emailStringSchema.$id
-);
-export const validateSerialIntegerFields = createValidator<ISerialInteger>(
-  serialIntegerSchema.$id
-);
+  createValidator<IEmailConfirmation>(emailConfirmationSchema);
+export const validateISODateFields = createValidator<IISODate>(iSODateSchema);
+export const validateISODateTimeFields =
+  createValidator<IISODateTime>(iSODateTimeSchema);
+export const validateISOTimeFields = createValidator<IISOTime>(iSOTimeSchema);
+export const validateEmailStringFields =
+  createValidator<IEmailString>(emailStringSchema);
+export const validateSerialIntegerFields =
+  createValidator<ISerialInteger>(serialIntegerSchema);
