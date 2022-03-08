@@ -42,7 +42,7 @@ async function createSchemaImports() {
 
   const jsonImports = result.imports
     .map(({ schemaID, symbolName }) => {
-      const idPath = schemaID.replace("http://example.com/schemas/", "");
+      const idPath = schemaID.replace("http://schemas.com/", "");
       const importPath = `#schema/${idPath}`;
       return `export { default as ${symbolName}Schema} from "${importPath}";`;
     })

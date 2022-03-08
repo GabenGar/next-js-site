@@ -19,24 +19,20 @@ import {
 } from "#codegen/schema/assets";
 
 export const schemaMap: Record<string, SchemaObject> = {
-  "http://example.com/schemas/account/base.schema.json": accountSchema,
-  "http://example.com/schemas/account/client.schema.json": accountClientSchema,
-  "http://example.com/schemas/account/init.schema.json": accountInitSchema,
-  "http://example.com/schemas/blog-post.schema.json": blogPostSchema,
-  "http://example.com/schemas/calendar-note/base.schema.json":
-    calendarNoteSchema,
-  "http://example.com/schemas/calendar-note/client.schema.json":
+  "http://schemas.com/account/base.schema.json": accountSchema,
+  "http://schemas.com/account/client.schema.json": accountClientSchema,
+  "http://schemas.com/account/init.schema.json": accountInitSchema,
+  "http://schemas.com/blog-post.schema.json": blogPostSchema,
+  "http://schemas.com/calendar-note/base.schema.json": calendarNoteSchema,
+  "http://schemas.com/calendar-note/client.schema.json":
     calendarNoteClientSchema,
-  "http://example.com/schemas/calendar-note/init.schema.json":
-    calendarNoteInitSchema,
-  "http://example.com/schemas/config.schema.json": projectConfigSchema,
-  "http://example.com/schemas/database.schema.json": projectDatabaseSchema,
-  "http://example.com/schemas/email-confirmation.schema.json":
-    emailConfirmationSchema,
-  "http://example.com/schemas/types/dates/iso-date.schema.json": iSODateSchema,
-  "http://example.com/schemas/types/dates/iso-datetime.schema.json":
-    iSODateTimeSchema,
-  "http://example.com/schemas/types/dates/iso-time.schema.json": iSOTimeSchema,
-  "http://example.com/schemas/types/email.schema.json": emailStringSchema,
-  "http://example.com/schemas/types/serial.schema.json": serialIntegerSchema,
+  "http://schemas.com/calendar-note/init.schema.json": calendarNoteInitSchema,
+  "http://schemas.com/config.schema.json": projectConfigSchema,
+  "http://schemas.com/database.schema.json": projectDatabaseSchema,
+  "http://schemas.com/email-confirmation.schema.json": emailConfirmationSchema,
+  "http://schemas.com/types/dates/iso-date.schema.json": iSODateSchema,
+  "http://schemas.com/types/dates/iso-datetime.schema.json": iSODateTimeSchema,
+  "http://schemas.com/types/dates/iso-time.schema.json": iSOTimeSchema,
+  "http://schemas.com/types/email.schema.json": emailStringSchema,
+  "http://schemas.com/types/serial.schema.json": serialIntegerSchema,
 };

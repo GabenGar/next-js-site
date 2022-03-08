@@ -14,5 +14,9 @@ async function findSchema(schemaID: string) {
 }
 
 export function createValidator<Schema>(schemaID: string) {
-  return ajv.getSchema<Schema>(schemaID)!;
+  try {
+    return ajv.getSchema<Schema>(schemaID)!;
+  } catch (error) {
+    console.error(`SCHEMA "${schemaID}" ERROR:\n`, error);
+  }
 }
