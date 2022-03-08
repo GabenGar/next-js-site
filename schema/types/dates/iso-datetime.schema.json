@@ -1,8 +1,9 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "/types/dates/iso-datetime.schema.json",
+  "$id": "http://schemas.com/types/dates/iso-datetime.schema.json",
   "title": "ISODateTime",
   "description": "ISO string representing datetime.",
   "type": "string",
-  "format": "date-time"
+  "format": "date-time",
+  "minLength": 5,
+  "maxLength": 128
 }

@@ -2,12 +2,9 @@
  * Account on the resource.
  */
 export interface Account {
-  /**
-   * Is not shown to clients.
-   */
-  id: number;
-  created_at: string;
-  updated_at?: string;
+  id: SerialInteger;
+  created_at: ISODateTime;
+  updated_at?: ISODateTime;
   name: string;
   /**
    * Is not shown to clients.
@@ -25,8 +22,8 @@ export interface Account {
  * Account representation for client.
  */
 export interface AccountClient {
-  created_at: string;
-  updated_at?: string;
+  created_at: ISODateTime;
+  updated_at?: ISODateTime;
   name: string;
   email?: string;
   role: "user";
@@ -53,8 +50,8 @@ export interface BlogPost {
   excerpt?: string;
   content: string;
   author?: string;
-  created_at: string;
-  edited_at?: string;
+  created_at: ISODateTime;
+  edited_at?: ISODateTime;
   /**
    * The slug of the next article of the series.
    */
@@ -65,16 +62,13 @@ export interface BlogPost {
  * A note in the calendar.
  */
 export interface CalendarNote {
-  id: number;
-  created_at: string;
+  id: SerialInteger;
+  created_at: ISODateTime;
   /**
    * ID of the account making the note.
    */
   account_id?: number;
-  /**
-   * The timestamp of the note.
-   */
-  date: string;
+  date: ISODateTime;
   /**
    * The content of the note.
    */
@@ -85,12 +79,9 @@ export interface CalendarNote {
  * A note in the calendar as shown to client.
  */
 export interface CalendarNoteClient {
-  id: number;
-  created_at: string;
-  /**
-   * The timestamp of the note.
-   */
-  date: string;
+  id: SerialInteger;
+  created_at: ISODateTime;
+  date: ISODateTime;
   /**
    * The content of the note.
    */
@@ -101,10 +92,7 @@ export interface CalendarNoteClient {
  * Init for the note in calendar.
  */
 export interface CalendarNoteInit {
-  /**
-   * The timestamp of the note.
-   */
-  date: string;
+  date: ISODateTime;
   /**
    * The content of the note.
    */
@@ -176,12 +164,12 @@ export interface ProjectDatabase {
  * Confirmation data for email.
  */
 export interface EmailConfirmation {
-  id: number;
-  account_id: number;
+  id: SerialInteger;
+  account_id: SerialInteger;
   confirmation_key: string;
   email: string;
-  created_at: string;
-  expires_at: string;
+  created_at: ISODateTime;
+  expires_at: ISODateTime;
 }
 
 /**
@@ -198,3 +186,13 @@ export type ISODateTime = string;
  * ISO string representing time.
  */
 export type ISOTime = string;
+
+/**
+ * A type to validate email strings separately.
+ */
+export type EmailString = string;
+
+/**
+ * Integer equivalent of `SERIAL` type
+ */
+export type SerialInteger = number;

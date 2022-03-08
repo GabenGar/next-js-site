@@ -78,6 +78,6 @@ This truncates all non-migration project tables.
 
 ## TODOs
 - figure out the problem between typescript, `ts-node` and  `stringify-object` being a pure ESM package.
-- replace `$ref`s in generated schemas with references to the object/interface
-- figure out how to prepend `I` to interface names in the `json-schema-to-typescript` package.
-- init/client subschema generator
+- one-button validation interface
+- prettier validation errors
+- fix `$ref` parsing inconsistencies between `json-schema-to-typescript` and `ajv`

@@ -7,7 +7,6 @@ import styles from "./account.module.scss";
 
 import type { IAccountClient } from "#types/entities";
 import type { ICardProps } from "./base";
-import { fromISOString } from "#lib/dates";
 
 export interface AccountCardCardProps extends ICardProps {
   account: IAccountClient;
@@ -35,11 +34,7 @@ export const AccountCard = blockComponent<AccountCardCardProps>(
           <DL>
             <DS
               dKey="Joined at"
-              dValue={
-                created_at && (
-                  <DateTimeView dateTime={fromISOString(created_at)} />
-                )
-              }
+              dValue={created_at && <DateTimeView dateTime={created_at} />}
             />
           </DL>
         </CardFooter>

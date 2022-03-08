@@ -1,51 +1,58 @@
 import { SCHEMA_FOLDER } from "#environment/constants";
-import { reduceFolder, readJSON } from "#server/fs";
-import { fromSchemaToInterface } from "#lib/json";
+import { fromSchemaToInterface } from "#lib/json/schema";
+import { schemaMap } from "#codegen/schema/map";
 
-import type { JSONSchema } from "json-schema-to-typescript";
+import type { SchemaObject } from "ajv";
 
 async function generateInterfacesFromSchemas() {
-  const interfaces = await reduceFolder<string[]>(
-    SCHEMA_FOLDER,
-    [],
-    { isShallow: false },
-    async (interfaces, folderItem) => {
-      const { entry, entity } = folderItem;
+  const interfaces: string[] = [];
 
-      // meta-schema gets generated separately
-      const isValidfile =
-        entry.isFile() &&
-        entity.ext === ".json" &&
-        entity.name !== "_meta.schema";
-
-      if (!isValidfile) {
-        return interfaces;
+  for await (const schema of Object.values(schemaMap)) {
+    //
+    const schemaCopy = transformSchema(schema);
+    const interfaceString = await fromSchemaToInterface(
+      schemaCopy,
+      schema.title,
+      {
+        bannerComment: "",
+        cwd: SCHEMA_FOLDER,
+        declareExternallyReferenced: false,
       }
-
-      const jsonObj = await readJSON<JSONSchema>(folderItem.toString());
-
-      // file-level schemas always have to have `title` property
-      if (!jsonObj.title) {
-        throw Error(
-          `Schema at ${folderItem.toString()} is missing "title" attribue.`
-        );
-      }
-
-      const interfaceString = await fromSchemaToInterface(
-        jsonObj,
-        jsonObj.title,
-        {
-          bannerComment: "",
-        }
-      );
-
-      interfaces.push(interfaceString);
-      return interfaces;
-    }
-  );
+    );
+    interfaces.push(interfaceString);
+  }
 
   const content = interfaces.join("\n\n");
   return content;
+}
+
+/**
+ * Doing this because the package mutates the schema object.
+ *
+ * @param schema
+ */
+function transformSchema(schema: SchemaObject) {
+  const newSchema: typeof schema = { ...schema };
+  changeRefs(newSchema);
+  return newSchema;
+}
+
+/**
+ * A ducttape for `ajv` and `json-schema-to-typescript`
+ * parsing `$ref`s differently.
+ */
+function changeRefs(obj: Record<string, unknown>) {
+  for (const [key, value] of Object.entries(obj)) {
+    if (value && typeof value === "object") {
+      changeRefs(value as Record<string, unknown>);
+    }
+
+    if (key === "$ref") {
+      if (typeof value === "string" && value.startsWith("/")) {
+        obj[key] = value.slice(1);
+      }
+    }
+  }
 }
 
 export default generateInterfacesFromSchemas;

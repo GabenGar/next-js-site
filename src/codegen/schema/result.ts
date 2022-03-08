@@ -1,22 +1,18 @@
 export const accountSchema = {
-  $schema: "http://json-schema.org/draft-07/schema#",
-  $id: "/account/base.schema.json",
+  $id: "http://schemas.com/account/base.schema.json",
   title: "Account",
   description: "Account on the resource.",
   type: "object",
   required: ["id", "created_at", "name", "role", "is_verified"],
   properties: {
     id: {
-      type: "integer",
-      description: "Is not shown to clients.",
+      $ref: "/types/serial.schema.json",
     },
     created_at: {
-      type: "string",
-      format: "date-time",
+      $ref: "/types/dates/iso-datetime.schema.json",
     },
     updated_at: {
-      type: "string",
-      format: "date-time",
+      $ref: "/types/dates/iso-datetime.schema.json",
     },
     name: {
       type: "string",
@@ -50,20 +46,17 @@ export const accountSchema = {
 export type AccountSchema = typeof accountSchema;
 
 export const accountClientSchema = {
-  $schema: "http://json-schema.org/draft-07/schema#",
-  $id: "/account/client.schema.json",
+  $id: "http://schemas.com/account/client.schema.json",
   title: "AccountClient",
   description: "Account representation for client.",
   type: "object",
   required: ["created_at", "name", "role", "is_verified"],
   properties: {
     created_at: {
-      type: "string",
-      format: "date-time",
+      $ref: "/types/dates/iso-datetime.schema.json",
     },
     updated_at: {
-      type: "string",
-      format: "date-time",
+      $ref: "/types/dates/iso-datetime.schema.json",
     },
     name: {
       type: "string",
@@ -91,8 +84,7 @@ export const accountClientSchema = {
 export type AccountClientSchema = typeof accountClientSchema;
 
 export const accountInitSchema = {
-  $schema: "http://json-schema.org/draft-07/schema#",
-  $id: "/account/init.schema.json",
+  $id: "http://schemas.com/account/init.schema.json",
   title: "AccountInit",
   description: "Initializer for account.",
   type: "object",
@@ -115,8 +107,7 @@ export const accountInitSchema = {
 export type AccountInitSchema = typeof accountInitSchema;
 
 export const blogPostSchema = {
-  $schema: "http://json-schema.org/draft-07/schema#",
-  $id: "/blog-post.schema.json",
+  $id: "http://schemas.com/blog-post.schema.json",
   title: "BlogPost",
   description: "The post of the blog.",
   type: "object",
@@ -138,12 +129,10 @@ export const blogPostSchema = {
       type: "string",
     },
     created_at: {
-      type: "string",
-      format: "date-time",
+      $ref: "/types/dates/iso-datetime.schema.json",
     },
     edited_at: {
-      type: "string",
-      format: "date-time",
+      $ref: "/types/dates/iso-datetime.schema.json",
     },
     next_slug: {
       type: "string",
@@ -156,29 +145,24 @@ export const blogPostSchema = {
 export type BlogPostSchema = typeof blogPostSchema;
 
 export const calendarNoteSchema = {
-  $schema: "http://json-schema.org/draft-07/schema#",
-  $id: "/calendar-note/base.schema.json",
+  $id: "http://schemas.com/calendar-note/base.schema.json",
   title: "CalendarNote",
   description: "A note in the calendar.",
   type: "object",
   required: ["id", "created_at", "date", "note"],
   properties: {
     id: {
-      type: "integer",
+      $ref: "/types/serial.schema.json",
     },
     created_at: {
-      type: "string",
-      format: "date-time",
+      $ref: "/types/dates/iso-datetime.schema.json",
     },
     account_id: {
       type: "integer",
       description: "ID of the account making the note.",
     },
     date: {
-      type: "string",
-      format: "date-time",
-      description: "The timestamp of the note.",
-      maxLength: 1024,
+      $ref: "/types/dates/iso-datetime.schema.json",
     },
     note: {
       type: "string",
@@ -193,25 +177,20 @@ export const calendarNoteSchema = {
 export type CalendarNoteSchema = typeof calendarNoteSchema;
 
 export const calendarNoteClientSchema = {
-  $schema: "http://json-schema.org/draft-07/schema#",
-  $id: "/calendar-note/client.schema.json",
+  $id: "http://schemas.com/calendar-note/client.schema.json",
   title: "CalendarNoteClient",
   description: "A note in the calendar as shown to client.",
   type: "object",
   required: ["id", "created_at", "date", "note"],
   properties: {
     id: {
-      type: "integer",
+      $ref: "/types/serial.schema.json",
     },
     created_at: {
-      type: "string",
-      format: "date-time",
+      $ref: "/types/dates/iso-datetime.schema.json",
     },
     date: {
-      type: "string",
-      format: "date-time",
-      description: "The timestamp of the note.",
-      maxLength: 1024,
+      $ref: "/types/dates/iso-datetime.schema.json",
     },
     note: {
       type: "string",
@@ -226,18 +205,14 @@ export const calendarNoteClientSchema = {
 export type CalendarNoteClientSchema = typeof calendarNoteClientSchema;
 
 export const calendarNoteInitSchema = {
-  $schema: "http://json-schema.org/draft-07/schema#",
-  $id: "/calendar-note/init.schema.json",
+  $id: "http://schemas.com/calendar-note/init.schema.json",
   title: "CalendarNoteInit",
   description: "Init for the note in calendar.",
   type: "object",
   required: ["date", "note"],
   properties: {
     date: {
-      type: "string",
-      format: "date-time",
-      description: "The timestamp of the note.",
-      maxLength: 1024,
+      $ref: "/types/dates/iso-datetime.schema.json",
     },
     note: {
       type: "string",
@@ -252,8 +227,7 @@ export const calendarNoteInitSchema = {
 export type CalendarNoteInitSchema = typeof calendarNoteInitSchema;
 
 export const projectConfigSchema = {
-  $schema: "http://json-schema.org/draft-07/schema#",
-  $id: "/config.schema.json",
+  $id: "http://schemas.com/config.schema.json",
   title: "ProjectConfig",
   description: "Config for the project.",
   type: "object",
@@ -335,8 +309,7 @@ export const projectConfigSchema = {
 export type ProjectConfigSchema = typeof projectConfigSchema;
 
 export const projectDatabaseSchema = {
-  $schema: "http://json-schema.org/draft-07/schema#",
-  $id: "/database.schema.json",
+  $id: "http://schemas.com/database.schema.json",
   title: "ProjectDatabase",
   description: "Various database details.",
   type: "object",
@@ -364,8 +337,7 @@ export const projectDatabaseSchema = {
 export type ProjectDatabaseSchema = typeof projectDatabaseSchema;
 
 export const emailConfirmationSchema = {
-  $schema: "http://json-schema.org/draft-07/schema#",
-  $id: "/email-confirmation.schema.json",
+  $id: "http://schemas.com/email-confirmation.schema.json",
   title: "EmailConfirmation",
   description: "Confirmation data for email.",
   type: "object",
@@ -379,10 +351,10 @@ export const emailConfirmationSchema = {
   ],
   properties: {
     id: {
-      type: "integer",
+      $ref: "/types/serial.schema.json",
     },
     account_id: {
-      type: "integer",
+      $ref: "/types/serial.schema.json",
     },
     confirmation_key: {
       type: "string",
@@ -392,12 +364,10 @@ export const emailConfirmationSchema = {
       format: "email",
     },
     created_at: {
-      type: "string",
-      format: "date-time",
+      $ref: "/types/dates/iso-datetime.schema.json",
     },
     expires_at: {
-      type: "string",
-      format: "date-time",
+      $ref: "/types/dates/iso-datetime.schema.json",
     },
   },
   additionalProperties: false,
@@ -406,8 +376,7 @@ export const emailConfirmationSchema = {
 export type EmailConfirmationSchema = typeof emailConfirmationSchema;
 
 export const iSODateSchema = {
-  $schema: "http://json-schema.org/draft-07/schema#",
-  $id: "/types/dates/iso-date.schema.json",
+  $id: "http://schemas.com/types/dates/iso-date.schema.json",
   title: "ISODate",
   description: "ISO string representing date.",
   type: "string",
@@ -417,19 +386,19 @@ export const iSODateSchema = {
 export type ISODateSchema = typeof iSODateSchema;
 
 export const iSODateTimeSchema = {
-  $schema: "http://json-schema.org/draft-07/schema#",
-  $id: "/types/dates/iso-datetime.schema.json",
+  $id: "http://schemas.com/types/dates/iso-datetime.schema.json",
   title: "ISODateTime",
   description: "ISO string representing datetime.",
   type: "string",
   format: "date-time",
+  minLength: 5,
+  maxLength: 128,
 } as const;
 
 export type ISODateTimeSchema = typeof iSODateTimeSchema;
 
 export const iSOTimeSchema = {
-  $schema: "http://json-schema.org/draft-07/schema#",
-  $id: "/types/dates/iso-time.schema.json",
+  $id: "http://schemas.com/types/dates/iso-time.schema.json",
   title: "ISOTime",
   description: "ISO string representing time.",
   type: "string",
@@ -437,3 +406,25 @@ export const iSOTimeSchema = {
 } as const;
 
 export type ISOTimeSchema = typeof iSOTimeSchema;
+
+export const emailStringSchema = {
+  $id: "http://schemas.com/types/email.schema.json",
+  title: "EmailString",
+  description: "A type to validate email strings separately.",
+  type: "string",
+  format: "email",
+  minLength: 3,
+  maxLength: 256,
+} as const;
+
+export type EmailStringSchema = typeof emailStringSchema;
+
+export const serialIntegerSchema = {
+  $id: "http://schemas.com/types/serial.schema.json",
+  title: "SerialInteger",
+  description: "Integer equivalent of `SERIAL` type",
+  type: "integer",
+  minimum: 1,
+} as const;
+
+export type SerialIntegerSchema = typeof serialIntegerSchema;

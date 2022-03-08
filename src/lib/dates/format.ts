@@ -1,28 +1,24 @@
 import { format } from "date-fns";
-import { validateDateLike } from "./lib";
+import { fromISOString } from "./lib";
 
-import type { DateLike } from "./types";
+import type { IISODateTime } from "#codegen/schema/interfaces";
 
-export function formatDate(date: DateLike) {
-  const finalDate = validateDateLike(date);
-  const formatedDate = format(finalDate, "do MMMM yyyy GG");
+export function formatDate(date: IISODateTime) {
+  const formatedDate = format(fromISOString(date), "do MMMM yyyy GG");
   return formatedDate;
 }
 
-export function formatYear(date: DateLike) {
-  const finalDate = validateDateLike(date);
-  const formatedYear = format(finalDate, "yyyy");
+export function formatYear(date: IISODateTime) {
+  const formatedYear = format(fromISOString(date), "yyyy");
   return formatedYear;
 }
 
-export function formatMonth(date: DateLike) {
-  const finalDate = validateDateLike(date);
-  const formatedMonth = format(finalDate, "MMMM");
+export function formatMonth(date: IISODateTime) {
+  const formatedMonth = format(fromISOString(date), "MMMM");
   return formatedMonth;
 }
 
-export function formatTime(date: DateLike) {
-  const finalDate = validateDateLike(date);
-  const formatedTime = format(finalDate, "HH':'mm");
+export function formatTime(date: IISODateTime) {
+  const formatedTime = format(fromISOString(date), "HH':'mm");
   return formatedTime;
 }

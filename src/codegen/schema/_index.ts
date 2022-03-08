@@ -12,6 +12,8 @@ export {
   iSODateSchema,
   iSODateTimeSchema,
   iSOTimeSchema,
+  emailStringSchema,
+  serialIntegerSchema,
 } from "./result";
 export type {
   AccountSchema as IAccountSchema,
@@ -27,4 +29,6 @@ export type {
   ISODateSchema as IISODateSchema,
   ISODateTimeSchema as IISODateTimeSchema,
   ISOTimeSchema as IISOTimeSchema,
+  EmailStringSchema as IEmailStringSchema,
+  SerialIntegerSchema as ISerialIntegerSchema,
 } from "./result";

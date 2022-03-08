@@ -8,6 +8,9 @@ import {
   isVariableDeclarationList,
   isIdentifier,
   isTypeAliasDeclaration,
+  isExportDeclaration,
+  isNamedExports,
+  isExportSpecifier,
 } from "typescript";
 import { readFile } from "#server/fs";
 import { resultFilename } from "../types";
@@ -38,8 +41,15 @@ async function getExports(sourceFile: SourceFile): Promise<IExports> {
   };
 
   sourceFile.forEachChild((node) => {
-    if (!isExport(node)) {
-      return;
+    if (isExportDeclaration(node)) {
+      const { isTypeOnly, parent, name, exportClause, ...nodeInfo } = node;
+
+      exportClause?.forEachChild((node) => {
+        if (isExportSpecifier(node)) {
+          const { name } = node;
+          exports.members.push(String(name.escapedText));
+        }
+      });
     }
 
     if (isTypeAliasDeclaration(node)) {
@@ -89,17 +99,5 @@ function getKindInfo(node: Node) {
   };
   console.log(kinds);
   // modifiers && console.log(modifiers)
-  // console.log(nodeInfo)
-}
-
-function isExport(node: Node) {
-  if (!node.modifiers) {
-    return false;
-  }
-
-  const result = node.modifiers.find(
-    (modifer) => modifer.kind === SyntaxKind.ExportKeyword
-  );
-
-  return Boolean(result);
+  // console.log(nodeInfo);
 }

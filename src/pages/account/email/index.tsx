@@ -89,34 +89,18 @@ export const getServerSideProps = withSessionSSR<AccountEmailProps>(
     if (req.method === "POST") {
       const { new_email } = await getReqBody<{ new_email: string }>(req);
 
-      if (!new_email?.trim()) {
+      const result = await validateEmailString(new_email);
+
+      if (!result.isValid) {
         return {
           props: {
-            errors: ["No email address provided."],
             account: accountClient,
+            schemaValidationErrors: result.schemaValidationErrors,
           },
         };
       }
 
-      const {
-        isValid,
-        errors,
-        modifiedResult: formattedEmail,
-      } = validateEmailString(new_email);
-
-      if (!isValid) {
-        return {
-          props: {
-            account: accountClient,
-            errors: errors!.toDict(),
-          },
-        };
-      }
-
-      const confirmation = await sendEmailConfirmation(
-        formattedEmail!,
-        account_id
-      );
+      const confirmation = await sendEmailConfirmation(new_email, account_id);
 
       return {
         props: {

@@ -1,12 +1,13 @@
 import stringifyObject from "stringify-object";
 import { SCHEMA_FOLDER } from "#environment/constants";
 import { readJSON, reduceFolder } from "#server/fs";
-import { getSchemaNames } from "#lib/json";
+// quick fix for module conflict
+import { getSchemaNames } from "./map/generator";
 
 /**
  * Generated separately.
  */
-const excludedSchema = "_meta.schema.json";
+const excludedSchema = "meta.schema.json";
 
 async function generateSchemas() {
   const schemas = await getSchemas();
@@ -14,6 +15,9 @@ async function generateSchemas() {
   return content;
 }
 
+/**
+ * @todo Nuke this generator
+ */
 async function getSchemas() {
   const schemas = await reduceFolder<string[]>(
     SCHEMA_FOLDER,

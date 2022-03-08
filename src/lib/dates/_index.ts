@@ -1,12 +1,30 @@
 export { formatDate, formatMonth, formatYear, formatTime } from "./format";
 export {
-  isAllowedTime,
   fromISOString,
-  isISOString,
   toISODateTime,
   toISOTime,
   toISODate,
-  validateDateLike
+  nowISO,
+  startOfMonth,
+  getDayNumber,
+  getDaysInMonth,
+  getDayOfMonth,
+  startOfDay,
+  getMonth,
+  getYear
 } from "./lib";
-
-export type { IISODateString, DateLike } from "./types";
+export {
+  isAllowedTime,
+  isISOString,
+  isSameDay,
+  isSameMonth,
+  isWeekend,
+} from "./comparisons";
+export {
+  addDays,
+  addMonths,
+  addYears,
+  substractDays,
+  subtractMonths,
+  subtractYears,
+} from "./operations";

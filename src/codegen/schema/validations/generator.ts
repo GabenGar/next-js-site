@@ -1,78 +1,53 @@
-import Ajv from "ajv";
-import addFormats from "ajv-formats";
-import stringifyObject from "stringify-object";
-import { SCHEMA_FOLDER } from "#environment/constants";
-import { reduceFolder, readJSON } from "#server/fs";
+import { schemaMap } from "#codegen/schema/map";
+import { getSchemaNames } from "../map/generator";
 
-import type { AnySchemaObject } from "ajv";
-
-interface ICodegenPrep {
-  /**
-   * The base name of the generated code.
-   * Most of the time it's `JSONSchema.title` value.
-   */
-  title: string;
-  /**
-   * Imports related to the generated code.
-   */
+interface IResult {
   imports: string[];
-  /**
-   * Type imports related to the generated code.
-   */
   typeImports: string[];
-  /**
-   * The content of the generated code.
-   */
-  content: string;
+  exports: string[];
+  typeExports: string[];
 }
 
 /**
  * @todo Place imports at the top.
  */
 async function generateValidations() {
-  const ajv = new Ajv();
-  addFormats(ajv);
-  const imports = [
-    [`import Ajv from "ajv";`, `import addFormats from "ajv-formats";`].join(
-      "\n"
-    ),
-    [`const ajv = new Ajv();`, `addFormats(ajv);\n`].join("\n"),
-  ].join("\n");
-
-  const validations = await reduceFolder<string[]>(
-    SCHEMA_FOLDER,
-    [],
-    { isShallow: false },
-    async (schemas, folderItem) => {
-      const { entity, entry } = folderItem;
-      const isValidFile =
-        entry.isFile() &&
-        entity.ext === ".json" &&
-        entity.name !== "_meta.schema";
-
-      if (!isValidFile) {
-        return schemas;
-      }
-
-      const schemaObj = await readJSON<AnySchemaObject>(folderItem.toString());
-      const typeImport = `import { I${schemaObj.title} } from "#codegen/schema/interfaces";`;
-      const content = `export const validate${
-        schemaObj.title
-      }Fields = ajv.compile<I${schemaObj.title}>(${stringifyObject(
-        schemaObj
-      )})`;
-
-      const finalContent = [typeImport, content].join("\n");
-
-      schemas.push(finalContent);
-
-      return schemas;
-    }
+  const schemaList = Object.values(schemaMap);
+  const imports = [`import { createValidator } from "#lib/json/schema"`].join(
+    "\n"
   );
 
-  const content = validations.join("\n\n");
+  const result = schemaList.reduce<IResult>(
+    (result, schema) => {
+      const { objName, typeName } = getSchemaNames(schema);
+      const schemaImport = `${objName}Schema`;
+      const typeImport = `I${schema.title}`;
+      const content = `export const validate${schema.title}Fields = createValidator<${typeImport}>(${schemaImport})`;
 
-  return `${imports}\n${content}`;
+      result.imports.push(schemaImport);
+      result.typeImports.push(typeImport);
+      result.exports.push(content);
+
+      return result;
+    },
+    { imports: [], typeImports: [], exports: [], typeExports: [] }
+  );
+
+  const schemaImports = `import { ${result.imports.join(
+    ", "
+  )} } from "#codegen/schema/assets"`;
+  const typeImports = `import type { ${result.typeImports.join(
+    ", "
+  )} } from "#codegen/schema/interfaces"`;
+
+  const content = [
+    imports,
+    schemaImports,
+    typeImports,
+    result.exports.join("\n"),
+  ].join("\n\n");
+
+  return content;
 }
 
 export default generateValidations;

@@ -1,12 +1,11 @@
-import { validateDateLike } from "#lib/dates";
 import { HTMLUl } from "#components/html/ul";
 import { HTMLLi } from "#components/html/li";
 import { Button } from "#components/buttons";
 import { SVGIcon } from "#components/icons";
 import { TimeView } from "#components/dates";
 import styles from "./notes.module.scss";
-import { ICalendarNoteClient } from "#types/entities";
 
+import type { ICalendarNoteClient } from "#types/entities";
 
 interface INotesProps {
   notes: ICalendarNoteClient[];
@@ -23,7 +22,7 @@ export function Notes({ notes, onNoteRemoval }: INotesProps) {
           notes.map((note) => (
             <HTMLLi key={note.id} className={styles.note}>
               <div className={styles.info}>
-                <TimeView dateTime={validateDateLike(note.date)} />
+                <TimeView dateTime={note.date} />
                 <p>{note.note}</p>
               </div>
 
