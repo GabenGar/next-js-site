@@ -1,0 +1,25 @@
+{
+  "$id": "http://schemas.com/calendar-note/client.schema.json",
+  "title": "CalendarNoteClient",
+  "description": "A note in the calendar as shown to client.",
+  "type": "object",
+  "required": ["id", "created_at", "date", "note"],
+  "properties": {
+    "id": {
+      "$ref": "/types/serial.schema.json"
+    },
+    "created_at": {
+      "$ref": "/types/dates/iso-datetime.schema.json"
+    },
+    "date": {
+      "$ref": "/types/dates/iso-datetime.schema.json"
+    },
+    "note": {
+      "type": "string",
+      "description": "The content of the note.",
+      "minLength": 5,
+      "maxLength": 1024
+    }
+  },
+  "additionalProperties": false
+}

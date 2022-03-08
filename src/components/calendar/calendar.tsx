@@ -1,17 +1,23 @@
-import { addMonths, subMonths, subYears, addYears } from "date-fns";
-import { formatMonth, formatYear } from "#lib/dates";
+import {
+  formatMonth,
+  formatYear,
+  addMonths,
+  addYears,
+  subtractMonths,
+  subtractYears,
+} from "#lib/dates";
 import { useAppDispatch, useAppSelector } from "#store/redux";
 import { changeSelectedDate, selectCalendar } from "#store/redux/reducers";
 import { blockComponent } from "#components/meta";
 import { Button } from "#components/buttons";
-import { SVGIcon } from "#components/icons";
 import { MonthOverview } from "./month-overview";
 import styles from "./_index.module.scss";
 
 import type { IDivProps } from "#types/props";
+import type { IISODateTime } from "#codegen/schema/interfaces";
 
 export interface ICalendarProps extends IDivProps {
-  currentDate: Date;
+  currentDate: IISODateTime;
 }
 
 export const Calendar = blockComponent<ICalendarProps>(
@@ -21,7 +27,7 @@ export const Calendar = blockComponent<ICalendarProps>(
     const { selectedDate } = useAppSelector(selectCalendar);
 
     function previousYear() {
-      const newDate = subYears(selectedDate, 1);
+      const newDate = subtractYears(selectedDate, 1);
       dispatch(changeSelectedDate(newDate));
     }
 
@@ -31,7 +37,7 @@ export const Calendar = blockComponent<ICalendarProps>(
     }
 
     function previousMonth() {
-      const newDate = subMonths(selectedDate, 1);
+      const newDate = subtractMonths(selectedDate, 1);
       dispatch(changeSelectedDate(newDate));
     }
     function nextMonth() {
@@ -75,7 +81,7 @@ export const Calendar = blockComponent<ICalendarProps>(
             Next
           </Button>
         </div>
-        <MonthOverview currentDate={currentDate} />
+        <MonthOverview />
       </div>
     );
   }

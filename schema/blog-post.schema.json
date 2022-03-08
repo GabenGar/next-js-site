@@ -1,6 +1,8 @@
 {
+  "$id": "http://schemas.com/blog-post.schema.json",
   "title": "BlogPost",
   "description": "The post of the blog.",
+  "type": "object",
   "required": ["slug", "title", "created_at", "content"],
   "properties": {
     "slug": {
@@ -19,16 +21,15 @@
       "type": "string"
     },
     "created_at": {
-      "type": "string",
-      "format": "date-time"
+      "$ref": "/types/dates/iso-datetime.schema.json"
     },
     "edited_at": {
-      "type": "string",
-      "format": "date-time"
+      "$ref": "/types/dates/iso-datetime.schema.json"
     },
     "next_slug": {
       "type": "string",
       "description": "The slug of the next article of the series."
     }
-  }
+  },
+  "additionalProperties": false
 }

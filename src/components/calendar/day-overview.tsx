@@ -1,11 +1,17 @@
-import { useEffect } from "react";
-import { getDate, getMonth, getYear, startOfDay } from "date-fns";
-import { toISODateTime } from "#lib/dates";
 import { useAppDispatch, useAppSelector } from "#store/redux";
 import {
   addNoteAsync,
   selectNotesForDay,
 } from "#store/redux/reducers";
+import {
+  fromISOString,
+  toISODateTime,
+  startOfDay,
+  nowISO,
+  getDayOfMonth,
+  getYear,
+  getMonth,
+} from "#lib/dates";
 import { Heading } from "#components/headings";
 import { DateTimeView } from "#components/dates";
 import { Form } from "#components/forms";
@@ -16,9 +22,10 @@ import styles from "./day-overview.module.scss";
 
 import type { ICalendarNoteInit } from "#types/entities";
 import type { ISubmitEvent, IFormElements } from "#components/forms";
+import type { IISODateTime } from "#codegen/schema/interfaces";
 
 interface IDayoveriewProps {
-  selectedDay: Date;
+  selectedDay: IISODateTime;
 }
 
 export function DayOverview({ selectedDay }: IDayoveriewProps) {
@@ -26,10 +33,8 @@ export function DayOverview({ selectedDay }: IDayoveriewProps) {
   const dayNotes = useAppSelector(selectNotesForDay(selectedDay));
   const dayStart = selectedDay
     ? startOfDay(selectedDay)
-    : startOfDay(new Date());
+    : startOfDay(nowISO());
 
-
-  
   async function addNote(event: ISubmitEvent) {
     event.preventDefault();
     const formFields = ["time", "note"] as const;
@@ -46,7 +51,7 @@ export function DayOverview({ selectedDay }: IDayoveriewProps) {
     date.setFullYear(
       getYear(selectedDay),
       getMonth(selectedDay),
-      getDate(selectedDay)
+      getDayOfMonth(selectedDay)
     );
 
     const isoDate = toISODateTime(date);
@@ -85,7 +90,7 @@ export function DayOverview({ selectedDay }: IDayoveriewProps) {
                 id="new-time"
                 name="time"
                 required
-                defaultValue={dayStart}
+                defaultValue={fromISOString(dayStart)}
               >
                 Time
               </FormSectionTime>

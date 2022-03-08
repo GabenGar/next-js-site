@@ -1,12 +1,22 @@
 {
-  "title": "EmailConfimation",
+  "$id": "http://schemas.com/email-confirmation.schema.json",
+  "title": "EmailConfirmation",
   "description": "Confirmation data for email.",
+  "type": "object",
+  "required": [
+    "id",
+    "account_id",
+    "confirmation_key",
+    "email",
+    "created_at",
+    "expires_at"
+  ],
   "properties": {
     "id": {
-      "type": "integer"
+      "$ref": "/types/serial.schema.json"
     },
     "account_id": {
-      "type": "integer"
+      "$ref": "/types/serial.schema.json"
     },
     "confirmation_key": {
       "type": "string"
@@ -16,12 +26,11 @@
       "format": "email"
     },
     "created_at": {
-      "type": "string",
-      "format": "date-time"
+      "$ref": "/types/dates/iso-datetime.schema.json"
     },
     "expires_at": {
-      "type": "string",
-      "format": "date-time"
+      "$ref": "/types/dates/iso-datetime.schema.json"
     }
-  }
+  },
+  "additionalProperties": false
 }

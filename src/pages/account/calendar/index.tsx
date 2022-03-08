@@ -1,27 +1,27 @@
 import { useState } from "react";
 import Head from "next/head";
-import { IS_DEVELOPMENT } from "#environment/derived";
 import { siteTitle } from "#lib/util";
 import { getAccountDetails, withSessionSSR } from "#lib/account";
+import { nowISO } from "#lib/dates";
 import { Page } from "#components/pages";
-import { JSONView } from "#components/json";
 import { Article, ArticleBody, ArticleHeader } from "#components/articles";
 import { DL, DS } from "#components/lists/d-list";
 import { DateTimeView } from "#components/dates";
 import { Calendar } from "#components/calendar";
 
 import type { InferGetServerSidePropsType } from "next";
-import type { AccountClient } from "#types/entities";
+import type { IAccountClient } from "#types/entities";
 import type { BasePageProps } from "#types/pages";
 
+
 interface ICalendarPageProps extends BasePageProps {
-  account: AccountClient;
+  account: IAccountClient;
 }
 
 function CalendarPage({
   account,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const [currentDate, changeCurrentDate] = useState(new Date());
+  const [currentDate, changeCurrentDate] = useState(nowISO());
 
   return (
     <Page heading="Calendar">

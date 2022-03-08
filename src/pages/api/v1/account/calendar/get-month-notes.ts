@@ -6,12 +6,13 @@ import {
 } from "#environment/constants/http";
 import { getAccountDetails, withSessionRoute } from "#lib/account";
 import { getCalendarNotesForMonth } from "#database/queries/account/calendar";
-import { fromISOString, IISODateString } from "#lib/dates";
+import { fromISOString } from "#lib/dates";
 
 import type { APIRequest, APIResponse } from "#types/api";
 import type { ICalendarNote, ICalendarNoteClient } from "#types/entities";
+import type { IISODateTime } from "#codegen/schema/interfaces";
 
-interface RequestBody extends APIRequest<{ date: IISODateString }> {}
+interface RequestBody extends APIRequest<{ date: IISODateTime }> {}
 
 export default withSessionRoute<APIResponse<ICalendarNote[]>>(
   async (req, res) => {

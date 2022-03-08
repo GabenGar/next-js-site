@@ -1,0 +1,1 @@
+export { generateTypescriptCode } from "./lib"

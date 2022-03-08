@@ -1,19 +1,19 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { compareAsc, isSameDay } from "date-fns";
 import {
   createNewNote,
   removeNote,
   getMonthNotes as fetchMonthNotes,
 } from "#lib/api/public";
-import { fromISOString } from "#lib/dates";
+import { nowISO, compareAscending, isSameDay } from "#lib/dates";
 
 import type { ICalendarNoteClient, ICalendarNoteInit } from "#types/entities";
 import type { AppState, AppThunk, Status } from "#store/redux";
+import type { IISODateTime } from "#codegen/schema/interfaces";
 
 export interface CalendarState {
-  currentDate: Date;
-  selectedDate: Date;
-  selectedDay: Date;
+  currentDate: IISODateTime;
+  selectedDate: IISODateTime;
+  selectedDay: IISODateTime;
   status: Status;
   notes: ICalendarNoteClient[];
 }
@@ -21,16 +21,16 @@ export interface CalendarState {
 const reducerName = "calendar";
 
 const initialState: CalendarState = {
-  currentDate: new Date(),
-  selectedDate: new Date(),
-  selectedDay: new Date(),
+  currentDate: nowISO(),
+  selectedDate: nowISO(),
+  selectedDay: nowISO(),
   status: "idle",
   notes: [],
 };
 
 export const getMonthNotes = createAsyncThunk(
   `${reducerName}/getMonthNotes`,
-  async (monthDate: Date) => {
+  async (monthDate: IISODateTime) => {
     const response = await fetchMonthNotes(monthDate);
     return response;
   }
@@ -56,7 +56,7 @@ export const calendarSlice = createSlice({
   name: reducerName,
   initialState,
   reducers: {
-    changeSelectedDate: (state, action: PayloadAction<Date>) => {
+    changeSelectedDate: (state, action: PayloadAction<IISODateTime>) => {
       state.selectedDate = action.payload;
     },
     /**
@@ -64,7 +64,7 @@ export const calendarSlice = createSlice({
      * A separate value to preserve the day selection
      * regardless of curetly viewed date.
      */
-    changeSelectedDay: (state, action: PayloadAction<Date>) => {
+    changeSelectedDay: (state, action: PayloadAction<IISODateTime>) => {
       state.selectedDay = action.payload;
     },
   },
@@ -85,11 +85,9 @@ export const calendarSlice = createSlice({
       })
       .addCase(addNoteAsync.fulfilled, (state, action) => {
         const newNote = action.payload.data!;
-        const noteDate = fromISOString(newNote.date as string);
-        newNote.date = noteDate;
 
         state.notes = [...state.notes, newNote].sort((prevNote, nextNote) =>
-          compareAsc(prevNote.date as Date, nextNote.date as Date)
+          compareAscending(prevNote.date, nextNote.date)
         );
 
         state.status = "idle";
@@ -110,10 +108,8 @@ export function selectCalendar(state: AppState) {
   return state.calendar;
 }
 
-export function selectNotesForDay(day: Date) {
+export function selectNotesForDay(day: IISODateTime) {
   return (state: AppState) => {
-    return state.calendar.notes.filter((note) =>
-      isSameDay(note.date as Date, day)
-    );
+    return state.calendar.notes.filter((note) => isSameDay(note.date, day));
   };
 }

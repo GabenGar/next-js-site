@@ -1,0 +1,29 @@
+{
+  "$id": "http://schemas.com/calendar-note/base.schema.json",
+  "title": "CalendarNote",
+  "description": "A note in the calendar.",
+  "type": "object",
+  "required": ["id", "created_at", "date", "note"],
+  "properties": {
+    "id": {
+      "$ref": "/types/serial.schema.json"
+    },
+    "created_at": {
+      "$ref": "/types/dates/iso-datetime.schema.json"
+    },
+    "account_id": {
+      "type": "integer",
+      "description": "ID of the account making the note."
+    },
+    "date": {
+      "$ref": "/types/dates/iso-datetime.schema.json"
+    },
+    "note": {
+      "type": "string",
+      "description": "The content of the note.",
+      "minLength": 5,
+      "maxLength": 1024
+    }
+  },
+  "additionalProperties": false
+}

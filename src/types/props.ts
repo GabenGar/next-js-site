@@ -1,3 +1,4 @@
+import { ErrorObject } from "ajv";
 import type { PropsWithChildren, ComponentPropsWithoutRef } from "react";
 
 /**

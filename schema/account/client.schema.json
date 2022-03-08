@@ -1,0 +1,35 @@
+{
+  "$id": "http://schemas.com/account/client.schema.json",
+  "title": "AccountClient",
+  "description": "Account representation for client.",
+  "type": "object",
+  "required": ["created_at", "name", "role", "is_verified"],
+  "properties": {
+    "created_at": {
+      "$ref": "/types/dates/iso-datetime.schema.json"
+    },
+    "updated_at": {
+      "$ref": "/types/dates/iso-datetime.schema.json"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 15
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "maxLength": 512
+    },
+    "role": {
+      "type": "string",
+      "enum": ["user"]
+    },
+    "is_verified": {
+      "type": "boolean",
+      "default": false,
+      "description": "Is `true` after account confirms its email."
+    }
+  },
+  "additionalProperties": false
+}

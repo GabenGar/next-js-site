@@ -1,4 +1,3 @@
-import { validateDateLike } from "#lib/dates";
 import { useAppDispatch } from "#store/redux";
 import { removeNoteAsync } from "#store/redux/reducers";
 import { HTMLUl } from "#components/html/ul";
@@ -24,7 +23,7 @@ export function Notes({ notes }: INotesProps) {
           notes.map((note) => (
             <HTMLLi key={note.id} className={styles.note}>
               <div className={styles.info}>
-                <TimeView dateTime={validateDateLike(note.date)} />
+                <TimeView dateTime={note.date} />
                 <p>{note.note}</p>
               </div>
 

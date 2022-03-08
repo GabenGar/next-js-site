@@ -9,14 +9,20 @@
   "[xml]": {
     "editor.defaultFormatter": "DotJoshJohnson.xml"
   },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "typescript.preferences.quoteStyle": "double",
   "typescript.preferences.useAliasesForRenames": false,
   "typescript.preferences.importModuleSpecifier": "non-relative",
   "typescript.preferences.jsxAttributeCompletionStyle": "braces",
   "json.schemas": [
     {
-      "fileMatch": ["schema/*schema.json"],
-      "url": "./schema/_meta.schema.json"
+      "fileMatch": ["schema/**/*schema.json"],
+      "url": "./schema/meta.schema.json"
     },
     {
       "fileMatch": ["config.json"],
@@ -24,5 +30,5 @@
     }
   ],
   "xmlTools.enforcePrettySelfClosingTagOnFormat": true,
-  "xmlTools.splitAttributesOnFormat": true,
+  "xmlTools.splitAttributesOnFormat": true
 }

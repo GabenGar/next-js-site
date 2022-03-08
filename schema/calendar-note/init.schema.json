@@ -1,0 +1,19 @@
+{
+  "$id": "http://schemas.com/calendar-note/init.schema.json",
+  "title": "CalendarNoteInit",
+  "description": "Init for the note in calendar.",
+  "type": "object",
+  "required": ["date", "note"],
+  "properties": {
+    "date": {
+      "$ref": "/types/dates/iso-datetime.schema.json"
+    },
+    "note": {
+      "type": "string",
+      "description": "The content of the note.",
+      "minLength": 5,
+      "maxLength": 1024
+    }
+  },
+  "additionalProperties": false
+}

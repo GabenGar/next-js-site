@@ -1,23 +1,53 @@
-import { parseISO, formatISO, minTime, maxTime } from "date-fns";
+import {
+  parseISO,
+  formatISO,
+  startOfMonth as startOfMonthfn,
+  getDaysInMonth as getDaysInMonthfn,
+  getDay,
+  getDate as getDatefn,
+  startOfDay as startOfDayfn,
+  getYear as getYearfn,
+  getMonth as getMonthfn,
+} from "date-fns";
 
-import type { IISODateString, DateLike } from "./types";
+import type { IISODateTime } from "#codegen/schema/interfaces";
+import type { IWeekDay } from "./types";
+
+export function getYear(date: IISODateTime) {
+  return getYearfn(fromISOString(date))
+} 
+  export function getMonth(date: IISODateTime) {
+    return getMonthfn(fromISOString(date))
+  } 
+
+export function startOfDay(date: IISODateTime): IISODateTime {
+  return toISODateTime(startOfDayfn(fromISOString(date)));
+}
+
+export function getDayOfMonth(date: IISODateTime): number {
+  return getDatefn(fromISOString(date));
+}
+
+export function getDaysInMonth(date: IISODateTime): number {
+  return getDaysInMonthfn(fromISOString(date));
+}
+
+export function getDayNumber(date: IISODateTime): IWeekDay {
+  return getDay(fromISOString(date));
+}
+
+export function startOfMonth(date: IISODateTime): IISODateTime {
+  return toISODateTime(startOfMonthfn(fromISOString(date)));
+}
 
 /**
- * Validates `DateLike` value and casts it to `Date` if needed.
+ * @returns An ISO timestamp equivalent of `new Date()`.
  */
-export function validateDateLike(date: DateLike) {
-  if (date instanceof Date) {
-    return date;
-  }
-
-  return fromISOString(date);
+export function nowISO(): IISODateTime {
+  return toISODateTime(new Date());
 }
 
-export function isAllowedTime(time: number) {
-  return time >= minTime && time <= maxTime;
-}
-
-export function fromISOString(dateString: IISODateString): Date {
+export function fromISOString(dateString: IISODateTime): Date {
   return parseISO(dateString);
 }
 
@@ -31,13 +61,4 @@ export function toISOTime(date: Date): string {
 
 export function toISODate(date: Date): string {
   return formatISO(date, { representation: "date" });
-}
-
-export function isISOString(dateString: IISODateString) {
-  try {
-    parseISO(dateString);
-    return true;
-  } catch (error) {
-    return false;
-  }
 }

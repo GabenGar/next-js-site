@@ -143,6 +143,14 @@
   }
 }
 
+.logout {
+  padding: 0;
+
+  & .button {
+    border-radius: $radius-small;
+  }
+}
+
 .button {
   --local-width: 1.5em;
   --local-height: 1.5em;

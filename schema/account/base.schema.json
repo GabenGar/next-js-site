@@ -1,0 +1,44 @@
+{
+  "$id": "http://schemas.com/account/base.schema.json",
+  "title": "Account",
+  "description": "Account on the resource.",
+  "type": "object",
+  "required": ["id", "created_at", "name", "role", "is_verified"],
+  "properties": {
+    "id": {
+      "$ref": "/types/serial.schema.json"
+    },
+    "created_at": {
+      "$ref": "/types/dates/iso-datetime.schema.json"
+    },
+    "updated_at": {
+      "$ref": "/types/dates/iso-datetime.schema.json"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 15
+    },
+    "password": {
+      "type": "string",
+      "description": "Is not shown to clients.",
+      "minLength": 8,
+      "maxLength": 256
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "maxLength": 512
+    },
+    "role": {
+      "type": "string",
+      "enum": ["user"]
+    },
+    "is_verified": {
+      "type": "boolean",
+      "default": false,
+      "description": "Is `true` after account confirms its email."
+    }
+  },
+  "additionalProperties": false
+}
