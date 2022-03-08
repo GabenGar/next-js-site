@@ -1,5 +1,4 @@
 import { SCHEMA_FOLDER } from "#environment/constants";
-import { reduceFolder, readJSON } from "#server/fs";
 import { fromSchemaToInterface } from "#lib/json/schema";
 import { schemaMap } from "#codegen/schema/map";
 
@@ -12,31 +11,17 @@ async function generateInterfacesFromSchemas() {
   const interfaces: string[] = [];
 
   for await (const schema of Object.values(schemaMap)) {
-    const interfaceString = await fromSchemaToInterface(schema, schema.title, {
-      bannerComment: "",
-      cwd: SCHEMA_FOLDER,
-      declareExternallyReferenced: false,
-      // $refOptions: {
-      //   parse: {
-      //     json: {
-      //       parse: async (file) => {
-      //         console.log("PARSE URL: ", file.url);
-      //         return file.data
-      //       }
-      //     }
-      //   },
-      //   resolve: {
-      //     file: {
-      //       read: async (file) => {
-      //         const schemaID: string = (file.data as JSONSchema).$id;
-      //         console.log("ID: ", schemaID);
-
-      //         return schemaMap[schemaID];
-      //       },
-      //     },
-      //   },
-      // },
-    });
+    // doing this because the package mutates the schema object
+    const schemaCopy: typeof schema = { ...schema };
+    const interfaceString = await fromSchemaToInterface(
+      schemaCopy,
+      schema.title,
+      {
+        bannerComment: "",
+        cwd: SCHEMA_FOLDER,
+        declareExternallyReferenced: false,
+      }
+    );
     interfaces.push(interfaceString);
   }
 

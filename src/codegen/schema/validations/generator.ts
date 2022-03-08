@@ -17,6 +17,9 @@ async function generateValidations() {
     "\n"
   );
 
+  
+  
+
   const result = schemaList.reduce<IResult>(
     (result, schema) => {
       const { objName, typeName } = getSchemaNames(schema);
