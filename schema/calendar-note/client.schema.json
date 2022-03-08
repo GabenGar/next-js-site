@@ -6,13 +6,13 @@
   "required": ["id", "created_at", "date", "note"],
   "properties": {
     "id": {
-      "$ref": "types/serial.schema.json"
+      "$ref": "/types/serial.schema.json"
     },
     "created_at": {
-      "$ref": "types/dates/iso-datetime.schema.json"
+      "$ref": "/types/dates/iso-datetime.schema.json"
     },
     "date": {
-      "$ref": "types/dates/iso-datetime.schema.json"
+      "$ref": "/types/dates/iso-datetime.schema.json"
     },
     "note": {
       "type": "string",

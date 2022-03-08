@@ -6,13 +6,13 @@ export const accountSchema = {
   required: ["id", "created_at", "name", "role", "is_verified"],
   properties: {
     id: {
-      $ref: "types/serial.schema.json",
+      $ref: "/types/serial.schema.json",
     },
     created_at: {
-      $ref: "types/dates/iso-datetime.schema.json",
+      $ref: "/types/dates/iso-datetime.schema.json",
     },
     updated_at: {
-      $ref: "types/dates/iso-datetime.schema.json",
+      $ref: "/types/dates/iso-datetime.schema.json",
     },
     name: {
       type: "string",
@@ -53,10 +53,10 @@ export const accountClientSchema = {
   required: ["created_at", "name", "role", "is_verified"],
   properties: {
     created_at: {
-      $ref: "types/dates/iso-datetime.schema.json",
+      $ref: "/types/dates/iso-datetime.schema.json",
     },
     updated_at: {
-      $ref: "types/dates/iso-datetime.schema.json",
+      $ref: "/types/dates/iso-datetime.schema.json",
     },
     name: {
       type: "string",
@@ -129,10 +129,10 @@ export const blogPostSchema = {
       type: "string",
     },
     created_at: {
-      $ref: "types/dates/iso-datetime.schema.json",
+      $ref: "/types/dates/iso-datetime.schema.json",
     },
     edited_at: {
-      $ref: "types/dates/iso-datetime.schema.json",
+      $ref: "/types/dates/iso-datetime.schema.json",
     },
     next_slug: {
       type: "string",
@@ -152,17 +152,17 @@ export const calendarNoteSchema = {
   required: ["id", "created_at", "date", "note"],
   properties: {
     id: {
-      $ref: "types/serial.schema.json",
+      $ref: "/types/serial.schema.json",
     },
     created_at: {
-      $ref: "types/dates/iso-datetime.schema.json",
+      $ref: "/types/dates/iso-datetime.schema.json",
     },
     account_id: {
       type: "integer",
       description: "ID of the account making the note.",
     },
     date: {
-      $ref: "types/dates/iso-datetime.schema.json",
+      $ref: "/types/dates/iso-datetime.schema.json",
     },
     note: {
       type: "string",
@@ -184,13 +184,13 @@ export const calendarNoteClientSchema = {
   required: ["id", "created_at", "date", "note"],
   properties: {
     id: {
-      $ref: "types/serial.schema.json",
+      $ref: "/types/serial.schema.json",
     },
     created_at: {
-      $ref: "types/dates/iso-datetime.schema.json",
+      $ref: "/types/dates/iso-datetime.schema.json",
     },
     date: {
-      $ref: "types/dates/iso-datetime.schema.json",
+      $ref: "/types/dates/iso-datetime.schema.json",
     },
     note: {
       type: "string",
@@ -212,7 +212,7 @@ export const calendarNoteInitSchema = {
   required: ["date", "note"],
   properties: {
     date: {
-      $ref: "types/dates/iso-datetime.schema.json",
+      $ref: "/types/dates/iso-datetime.schema.json",
     },
     note: {
       type: "string",
@@ -351,10 +351,10 @@ export const emailConfirmationSchema = {
   ],
   properties: {
     id: {
-      $ref: "types/serial.schema.json",
+      $ref: "/types/serial.schema.json",
     },
     account_id: {
-      $ref: "types/serial.schema.json",
+      $ref: "/types/serial.schema.json",
     },
     confirmation_key: {
       type: "string",
@@ -364,10 +364,10 @@ export const emailConfirmationSchema = {
       format: "email",
     },
     created_at: {
-      $ref: "types/dates/iso-datetime.schema.json",
+      $ref: "/types/dates/iso-datetime.schema.json",
     },
     expires_at: {
-      $ref: "types/dates/iso-datetime.schema.json",
+      $ref: "/types/dates/iso-datetime.schema.json",
     },
   },
   additionalProperties: false,

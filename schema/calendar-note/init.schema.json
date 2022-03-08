@@ -6,7 +6,7 @@
   "required": ["date", "note"],
   "properties": {
     "date": {
-      "$ref": "types/dates/iso-datetime.schema.json"
+      "$ref": "/types/dates/iso-datetime.schema.json"
     },
     "note": {
       "type": "string",

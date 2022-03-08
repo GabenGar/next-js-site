@@ -6,10 +6,10 @@
   "required": ["created_at", "name", "role", "is_verified"],
   "properties": {
     "created_at": {
-      "$ref": "types/dates/iso-datetime.schema.json"
+      "$ref": "/types/dates/iso-datetime.schema.json"
     },
     "updated_at": {
-      "$ref": "types/dates/iso-datetime.schema.json"
+      "$ref": "/types/dates/iso-datetime.schema.json"
     },
     "name": {
       "type": "string",

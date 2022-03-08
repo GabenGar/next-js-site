@@ -13,10 +13,10 @@
   ],
   "properties": {
     "id": {
-      "$ref": "types/serial.schema.json"
+      "$ref": "/types/serial.schema.json"
     },
     "account_id": {
-      "$ref": "types/serial.schema.json"
+      "$ref": "/types/serial.schema.json"
     },
     "confirmation_key": {
       "type": "string"
@@ -26,10 +26,10 @@
       "format": "email"
     },
     "created_at": {
-      "$ref": "types/dates/iso-datetime.schema.json"
+      "$ref": "/types/dates/iso-datetime.schema.json"
     },
     "expires_at": {
-      "$ref": "types/dates/iso-datetime.schema.json"
+      "$ref": "/types/dates/iso-datetime.schema.json"
     }
   },
   "additionalProperties": false
