@@ -1,5 +1,5 @@
 {
-  "$id": "account/client.schema.json",
+  "$id": "http://schemas.com/account/client.schema.json",
   "title": "AccountClient",
   "description": "Account representation for client.",
   "type": "object",

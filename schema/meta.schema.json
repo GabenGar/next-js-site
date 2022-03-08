@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "meta.schema.json",
+  "$id": "http://schemas.com/meta.schema.json",
   "title": "MetaSchema",
   "description": "Slightly extended `draft-07` meta schema.",
   "definitions": {

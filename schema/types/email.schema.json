@@ -1,5 +1,5 @@
 {
-  "$id": "types/email.schema.json",
+  "$id": "http://schemas.com/types/email.schema.json",
   "title": "EmailString",
   "description": "A type to validate email strings separately.",
   "type": "string",

@@ -1,5 +1,5 @@
 {
-  "$id": "email-confirmation.schema.json",
+  "$id": "http://schemas.com/email-confirmation.schema.json",
   "title": "EmailConfirmation",
   "description": "Confirmation data for email.",
   "type": "object",

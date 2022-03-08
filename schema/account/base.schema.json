@@ -1,5 +1,5 @@
 {
-  "$id": "account/base.schema.json",
+  "$id": "http://schemas.com/account/base.schema.json",
   "title": "Account",
   "description": "Account on the resource.",
   "type": "object",

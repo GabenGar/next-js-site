@@ -1,5 +1,5 @@
 export const accountSchema = {
-  $id: "account/base.schema.json",
+  $id: "http://example.com/schemas/account/base.schema.json",
   title: "Account",
   description: "Account on the resource.",
   type: "object",
@@ -46,7 +46,7 @@ export const accountSchema = {
 export type AccountSchema = typeof accountSchema;
 
 export const accountClientSchema = {
-  $id: "account/client.schema.json",
+  $id: "http://example.com/schemas/account/client.schema.json",
   title: "AccountClient",
   description: "Account representation for client.",
   type: "object",
@@ -84,7 +84,7 @@ export const accountClientSchema = {
 export type AccountClientSchema = typeof accountClientSchema;
 
 export const accountInitSchema = {
-  $id: "account/init.schema.json",
+  $id: "http://example.com/schemas/account/init.schema.json",
   title: "AccountInit",
   description: "Initializer for account.",
   type: "object",
@@ -107,7 +107,7 @@ export const accountInitSchema = {
 export type AccountInitSchema = typeof accountInitSchema;
 
 export const blogPostSchema = {
-  $id: "blog-post.schema.json",
+  $id: "http://example.com/schemas/blog-post.schema.json",
   title: "BlogPost",
   description: "The post of the blog.",
   type: "object",
@@ -145,7 +145,7 @@ export const blogPostSchema = {
 export type BlogPostSchema = typeof blogPostSchema;
 
 export const calendarNoteSchema = {
-  $id: "calendar-note/base.schema.json",
+  $id: "http://example.com/schemas/calendar-note/base.schema.json",
   title: "CalendarNote",
   description: "A note in the calendar.",
   type: "object",
@@ -177,7 +177,7 @@ export const calendarNoteSchema = {
 export type CalendarNoteSchema = typeof calendarNoteSchema;
 
 export const calendarNoteClientSchema = {
-  $id: "calendar-note/client.schema.json",
+  $id: "http://example.com/schemas/calendar-note/client.schema.json",
   title: "CalendarNoteClient",
   description: "A note in the calendar as shown to client.",
   type: "object",
@@ -205,7 +205,7 @@ export const calendarNoteClientSchema = {
 export type CalendarNoteClientSchema = typeof calendarNoteClientSchema;
 
 export const calendarNoteInitSchema = {
-  $id: "calendar-note/init.schema.json",
+  $id: "http://example.com/schemas/calendar-note/init.schema.json",
   title: "CalendarNoteInit",
   description: "Init for the note in calendar.",
   type: "object",
@@ -227,7 +227,7 @@ export const calendarNoteInitSchema = {
 export type CalendarNoteInitSchema = typeof calendarNoteInitSchema;
 
 export const projectConfigSchema = {
-  $id: "config.schema.json",
+  $id: "http://example.com/schemas/config.schema.json",
   title: "ProjectConfig",
   description: "Config for the project.",
   type: "object",
@@ -309,7 +309,7 @@ export const projectConfigSchema = {
 export type ProjectConfigSchema = typeof projectConfigSchema;
 
 export const projectDatabaseSchema = {
-  $id: "database.schema.json",
+  $id: "http://example.com/schemas/database.schema.json",
   title: "ProjectDatabase",
   description: "Various database details.",
   type: "object",
@@ -337,7 +337,7 @@ export const projectDatabaseSchema = {
 export type ProjectDatabaseSchema = typeof projectDatabaseSchema;
 
 export const emailConfirmationSchema = {
-  $id: "email-confirmation.schema.json",
+  $id: "http://example.com/schemas/email-confirmation.schema.json",
   title: "EmailConfirmation",
   description: "Confirmation data for email.",
   type: "object",
@@ -376,7 +376,7 @@ export const emailConfirmationSchema = {
 export type EmailConfirmationSchema = typeof emailConfirmationSchema;
 
 export const iSODateSchema = {
-  $id: "types/dates/iso-date.schema.json",
+  $id: "http://example.com/schemas/types/dates/iso-date.schema.json",
   title: "ISODate",
   description: "ISO string representing date.",
   type: "string",
@@ -386,7 +386,7 @@ export const iSODateSchema = {
 export type ISODateSchema = typeof iSODateSchema;
 
 export const iSODateTimeSchema = {
-  $id: "types/dates/iso-datetime.schema.json",
+  $id: "http://example.com/schemas/types/dates/iso-datetime.schema.json",
   title: "ISODateTime",
   description: "ISO string representing datetime.",
   type: "string",
@@ -398,7 +398,7 @@ export const iSODateTimeSchema = {
 export type ISODateTimeSchema = typeof iSODateTimeSchema;
 
 export const iSOTimeSchema = {
-  $id: "types/dates/iso-time.schema.json",
+  $id: "http://example.com/schemas/types/dates/iso-time.schema.json",
   title: "ISOTime",
   description: "ISO string representing time.",
   type: "string",
@@ -408,7 +408,7 @@ export const iSOTimeSchema = {
 export type ISOTimeSchema = typeof iSOTimeSchema;
 
 export const emailStringSchema = {
-  $id: "types/email.schema.json",
+  $id: "http://example.com/schemas/types/email.schema.json",
   title: "EmailString",
   description: "A type to validate email strings separately.",
   type: "string",
@@ -420,7 +420,7 @@ export const emailStringSchema = {
 export type EmailStringSchema = typeof emailStringSchema;
 
 export const serialIntegerSchema = {
-  $id: "types/serial.schema.json",
+  $id: "http://example.com/schemas/types/serial.schema.json",
   title: "SerialInteger",
   description: "Integer equivalent of `SERIAL` type",
   type: "integer",

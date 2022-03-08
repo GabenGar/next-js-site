@@ -1,6 +1,7 @@
 import { SCHEMA_FOLDER } from "#environment/constants";
 import { reduceFolder, readJSON } from "#server/fs";
 import { fromSchemaToInterface } from "#lib/json/schema";
+import { schemaMap } from "#codegen/schema/map";
 
 import type { JSONSchema } from "json-schema-to-typescript";
 
@@ -8,46 +9,36 @@ import type { JSONSchema } from "json-schema-to-typescript";
  * @todo: fix `$ref` parsing
  */
 async function generateInterfacesFromSchemas() {
-  const interfaces = await reduceFolder<string[]>(
-    SCHEMA_FOLDER,
-    [],
-    { isShallow: false },
-    async (interfaces, folderItem) => {
-      const { entry, entity } = folderItem;
+  const interfaces: string[] = [];
 
-      // meta-schema gets generated separately
-      const isValidfile =
-        entry.isFile() &&
-        entity.ext === ".json" &&
-        entity.name !== "meta.schema";
+  for await (const schema of Object.values(schemaMap)) {
+    const interfaceString = await fromSchemaToInterface(schema, schema.title, {
+      bannerComment: "",
+      cwd: SCHEMA_FOLDER,
+      declareExternallyReferenced: false,
+      // $refOptions: {
+      //   parse: {
+      //     json: {
+      //       parse: async (file) => {
+      //         console.log("PARSE URL: ", file.url);
+      //         return file.data
+      //       }
+      //     }
+      //   },
+      //   resolve: {
+      //     file: {
+      //       read: async (file) => {
+      //         const schemaID: string = (file.data as JSONSchema).$id;
+      //         console.log("ID: ", schemaID);
 
-      if (!isValidfile) {
-        return interfaces;
-      }
-
-      const schemaObj = await readJSON<JSONSchema>(folderItem.toString());
-
-      // file-level schemas always have to have `title` property
-      if (!schemaObj.title) {
-        throw Error(
-          `Schema at ${folderItem.toString()} is missing "title" attribue.`
-        );
-      }
-
-      const interfaceString = await fromSchemaToInterface(
-        schemaObj,
-        schemaObj.title,
-        {
-          bannerComment: "",
-          cwd: SCHEMA_FOLDER,
-          declareExternallyReferenced: false,
-        }
-      );
-
-      interfaces.push(interfaceString);
-      return interfaces;
-    }
-  );
+      //         return schemaMap[schemaID];
+      //       },
+      //     },
+      //   },
+      // },
+    });
+    interfaces.push(interfaceString);
+  }
 
   const content = interfaces.join("\n\n");
   return content;

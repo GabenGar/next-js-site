@@ -1,5 +1,5 @@
 {
-  "$id": "types/serial.schema.json",
+  "$id": "http://schemas.com/types/serial.schema.json",
   "title": "SerialInteger",
   "description": "Integer equivalent of `SERIAL` type",
   "type": "integer",

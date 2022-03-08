@@ -1,5 +1,5 @@
 {
-  "$id": "database.schema.json",
+  "$id": "http://schemas.com/database.schema.json",
   "title": "ProjectDatabase",
   "description": "Various database details.",
   "type": "object",

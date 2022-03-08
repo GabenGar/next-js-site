@@ -1,5 +1,5 @@
 {
-  "$id": "account/init.schema.json",
+  "$id": "http://schemas.com/account/init.schema.json",
   "title": "AccountInit",
   "description": "Initializer for account.",
   "type": "object",

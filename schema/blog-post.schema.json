@@ -1,5 +1,5 @@
 {
-  "$id": "blog-post.schema.json",
+  "$id": "http://schemas.com/blog-post.schema.json",
   "title": "BlogPost",
   "description": "The post of the blog.",
   "type": "object",

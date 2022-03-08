@@ -1,5 +1,5 @@
 {
-  "$id": "config.schema.json",
+  "$id": "http://schemas.com/config.schema.json",
   "title": "ProjectConfig",
   "description": "Config for the project.",
   "type": "object",

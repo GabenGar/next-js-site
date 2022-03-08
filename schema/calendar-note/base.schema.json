@@ -1,5 +1,5 @@
 {
-  "$id": "calendar-note/base.schema.json",
+  "$id": "http://schemas.com/calendar-note/base.schema.json",
   "title": "CalendarNote",
   "description": "A note in the calendar.",
   "type": "object",
