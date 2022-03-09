@@ -1,15 +1,16 @@
+import { useState } from "react";
 import clsx from "clsx";
 import { blockComponent } from "#components/meta";
 import { HTMLDiv } from "#components/html/div";
 import { HTMLLabel } from "#components/html/label";
 import { InputPassword } from "#components/inputs";
+import { Button } from "#components/buttons";
+import { SVGIcon } from "#components/icons";
 import { FormSection } from "./base";
 import styles from "./password.module.scss";
 
 import type { FormSectionProps } from "./base";
-import { Button } from "#components/buttons";
-import { SVGIcon } from "#components/icons";
-import { useState } from "react";
+
 
 export interface FormSectionPasswordProps extends FormSectionProps {
   id: string;

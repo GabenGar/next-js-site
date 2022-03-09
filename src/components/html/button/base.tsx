@@ -13,8 +13,14 @@ export const HTMLButton = blockComponent<HTMLButtonProps>(
   ({ iconID, children, ...blockProps }) => {
     return (
       <button {...blockProps}>
-        {iconID && <SVGIcon className={styles.icon} iconID={iconID} />}
-        <span>{children}</span>
+        {!iconID ? (
+          children
+        ) : (
+          <>
+            <SVGIcon className={styles.icon} iconID={iconID} />
+            <span>{children}</span>
+          </>
+        )}
       </button>
     );
   }
