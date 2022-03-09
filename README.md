@@ -81,3 +81,4 @@ This truncates all non-migration project tables.
 - one-button validation interface
 - prettier validation errors
 - fix `$ref` parsing inconsistencies between `json-schema-to-typescript` and `ajv`
+- fix `useSWR` fetching account info when not needed.
