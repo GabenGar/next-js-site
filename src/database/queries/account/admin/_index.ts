@@ -1,4 +1,5 @@
 import { getDB } from "#database";
+import databaseSchema from "#schema/database.schema.json";
 
 import type { IAccount } from "#types/entities";
 import type { PaginationDB } from "#lib/pagination";
@@ -24,4 +25,10 @@ export async function clearAccounts() {
 
   await db.none(query);
   return true;
+}
+
+async function getDBInfo() {
+  const query = `
+  `
+  const tableInfo = await db.none(query);
 }

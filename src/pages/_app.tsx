@@ -1,4 +1,6 @@
 import "#styles/globals.scss";
+import { Provider as ReduxProvider } from "react-redux";
+import { reduxStore } from "#store/redux";
 import { BaseLayout } from "#components/layout";
 
 import type { AppProps } from "next/app";
@@ -16,7 +18,11 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout =
     Component.getLayout ?? ((page) => <BaseLayout>{page}</BaseLayout>);
 
-  return getLayout(<Component {...pageProps} />);
+  return (
+    <ReduxProvider store={reduxStore}>
+      {getLayout(<Component {...pageProps} />)}
+    </ReduxProvider>
+  );
 }
 
 export default MyApp;

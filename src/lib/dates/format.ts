@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+import { format, formatISO9075 } from "date-fns";
 import { fromISOString } from "./lib";
 
 import type { IISODateTime } from "#codegen/schema/interfaces";
@@ -20,5 +20,16 @@ export function formatMonth(date: IISODateTime) {
 
 export function formatTime(date: IISODateTime) {
   const formatedTime = format(fromISOString(date), "HH':'mm");
+  return formatedTime;
+}
+
+/**
+ * @returns A string in format `yyyy-mm-dd`.
+ * Values are numbers.
+ */
+export function formatDateStamp(date: IISODateTime) {
+  const formatedTime = formatISO9075(fromISOString(date), {
+    representation: "date",
+  });
   return formatedTime;
 }

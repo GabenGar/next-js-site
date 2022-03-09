@@ -12,8 +12,8 @@
       "#assets": ["src/assets/_index.ts"],
       "#assets/*": ["src/assets/*"],
       "#lib/*": ["src/lib/*/_index.ts"],
+      "#store/*": ["src/store/*/_index.ts"],
       "#components/*": ["src/components/*/_index.ts"],
-      "#pages/*": ["src/pages/*"],
       "#styles/*": ["src/styles/*"],
       "#types/*": ["src/types/*"]
     },
@@ -38,5 +38,5 @@
     }
   },
   "include": ["next-env.d.ts", "additional.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "templates"]
 }

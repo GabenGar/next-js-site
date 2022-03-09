@@ -5,10 +5,26 @@ import {
   isSameMonth as isSameMonthfn,
   isWeekend as isWeekendfn,
   isSameDay as isSameDayfn,
+  compareAsc,
+  compareDesc
 } from "date-fns";
 import { fromISOString } from "./lib";
 
 import type { IISODateTime } from "#codegen/schema/interfaces";
+
+export function compareDescending(
+  dateLeft: IISODateTime,
+  dateRight: IISODateTime
+) {
+  return compareDesc(fromISOString(dateLeft), fromISOString(dateRight));
+}
+
+export function compareAscending(
+  dateLeft: IISODateTime,
+  dateRight: IISODateTime
+) {
+  return compareAsc(fromISOString(dateLeft), fromISOString(dateRight));
+}
 
 export function isSameMonth(dateLeft: IISODateTime, dateRight: IISODateTime) {
   return isSameMonthfn(fromISOString(dateLeft), fromISOString(dateRight));

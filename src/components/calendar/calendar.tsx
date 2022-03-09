@@ -1,8 +1,15 @@
-import { useState } from "react";
-import { formatMonth, formatYear, addMonths, addYears, subtractMonths, subtractYears  } from "#lib/dates";
+import {
+  formatMonth,
+  formatYear,
+  addMonths,
+  addYears,
+  subtractMonths,
+  subtractYears,
+} from "#lib/dates";
+import { useAppDispatch, useAppSelector } from "#store/redux";
+import { changeSelectedDate, selectCalendar } from "#store/redux/reducers";
 import { blockComponent } from "#components/meta";
 import { Button } from "#components/buttons";
-import { SVGIcon } from "#components/icons";
 import { MonthOverview } from "./month-overview";
 import styles from "./_index.module.scss";
 
@@ -16,59 +23,66 @@ export interface ICalendarProps extends IDivProps {
 export const Calendar = blockComponent<ICalendarProps>(
   styles.block,
   ({ currentDate, ...blockProps }) => {
-    const [selectedDate, changeSelectedDate] = useState(currentDate);
-    
+    const dispatch = useAppDispatch();
+    const { selectedDate } = useAppSelector(selectCalendar);
 
     function previousYear() {
       const newDate = subtractYears(selectedDate, 1);
-      changeSelectedDate(newDate);
+      dispatch(changeSelectedDate(newDate));
     }
 
     function nextYear() {
       const newDate = addYears(selectedDate, 1);
-      changeSelectedDate(newDate);
+      dispatch(changeSelectedDate(newDate));
     }
 
     function previousMonth() {
       const newDate = subtractMonths(selectedDate, 1);
-      changeSelectedDate(newDate);
+      dispatch(changeSelectedDate(newDate));
     }
     function nextMonth() {
       const newDate = addMonths(selectedDate, 1);
-      changeSelectedDate(newDate);
+      dispatch(changeSelectedDate(newDate));
     }
 
     return (
       <div {...blockProps}>
         <div className={styles.year}>
-          <Button className={styles.button} onClick={previousYear}>
-            <SVGIcon iconID="chevron-left" />
-            <span>Previous</span>
+          <Button
+            className={styles.button}
+            iconID="chevron-left"
+            onClick={previousYear}
+          >
+            Previous
           </Button>
           <span>{formatYear(selectedDate)}</span>
-          <Button className={styles.button} onClick={nextYear}>
-            <SVGIcon iconID="chevron-right" />
-            <span>Next</span>
+          <Button
+            className={styles.button}
+            iconID="chevron-right"
+            onClick={nextYear}
+          >
+            Next
           </Button>
         </div>
         <div className={styles.month}>
-          <Button className={styles.button} onClick={previousMonth}>
-            <SVGIcon iconID="chevron-left" />
-            <span>Previous</span>
+          <Button
+            className={styles.button}
+            iconID="chevron-left"
+            onClick={previousMonth}
+          >
+            Previous
           </Button>
           <span>{formatMonth(selectedDate)}</span>
-          <Button className={styles.button} onClick={nextMonth}>
-            <SVGIcon iconID="chevron-right" />
-            <span>Next</span>
+          <Button
+            className={styles.button}
+            iconID="chevron-right"
+            onClick={nextMonth}
+          >
+            Next
           </Button>
         </div>
-        <MonthOverview
-          selectedDate={selectedDate}
-          currentDate={currentDate}
-        />
+        <MonthOverview />
       </div>
     );
   }
 );
-
-

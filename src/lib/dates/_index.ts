@@ -1,4 +1,10 @@
-export { formatDate, formatMonth, formatYear, formatTime } from "./format";
+export {
+  formatDate,
+  formatMonth,
+  formatYear,
+  formatTime,
+  formatDateStamp,
+} from "./format";
 export {
   fromISOString,
   toISODateTime,
@@ -11,7 +17,7 @@ export {
   getDayOfMonth,
   startOfDay,
   getMonth,
-  getYear
+  getYear,
 } from "./lib";
 export {
   isAllowedTime,
@@ -19,6 +25,8 @@ export {
   isSameDay,
   isSameMonth,
   isWeekend,
+  compareAscending,
+  compareDescending,
 } from "./comparisons";
 export {
   addDays,
@@ -28,3 +36,5 @@ export {
   subtractMonths,
   subtractYears,
 } from "./operations";
+export { daysInWeek } from "./types"
+export type { IWeekDay } from "./types"

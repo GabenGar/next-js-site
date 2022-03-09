@@ -1,8 +1,4 @@
 import { useEffect, useState } from "react";
-import {
-  getDate,
-  daysInWeek,
-} from "date-fns";
 import clsx from "clsx";
 import {
   startOfMonth,
@@ -13,30 +9,26 @@ import {
   isSameDay,
   isSameMonth,
   isWeekend,
-  getDayOfMonth
+  getDayOfMonth,
+  daysInWeek
 } from "#lib/dates";
-import { getMonthNotes } from "#lib/api/public";
+import { useAppDispatch, useAppSelector } from "#store/redux";
+import { selectCalendar, getMonthNotes } from "#store/redux/reducers";
 import { DayOverview } from "./day-overview";
 import styles from "./_index.module.scss";
 
-import type { ICalendarNoteClient } from "#types/entities";
 import type { IISODateTime } from "#codegen/schema/interfaces";
 
-interface IMonthOverviewProps {
-  selectedDate: IISODateTime;
-  currentDate: IISODateTime;
-}
+interface IMonthOverviewProps {}
 
 /**
  * @todo Fix notes not syncing with state.
  * @todo Fix notes sorting after state change.
  */
-export function MonthOverview({
-  selectedDate,
-  currentDate,
-}: IMonthOverviewProps) {
+export function MonthOverview({}: IMonthOverviewProps) {
+  const dispatch = useAppDispatch();
+  const { selectedDate, currentDate } = useAppSelector(selectCalendar);
   const [selectedDay, selectDay] = useState<IISODateTime>(currentDate);
-  const [monthNotes, changeMonthNotes] = useState<ICalendarNoteClient[]>([]);
   const days = populateDays(selectedDate);
 
   function handleSelection(dayDate: IISODateTime) {
@@ -44,21 +36,8 @@ export function MonthOverview({
   }
 
   useEffect(() => {
-    (async () => {
-      const {
-        success,
-        data: newNotes,
-        errors,
-      } = await getMonthNotes(selectedDate);
-
-      if (!success || !newNotes) {
-        console.error(errors);
-        return;
-      }
-
-      changeMonthNotes(newNotes);
-    })();
-  }, [selectedDate]);
+    dispatch(getMonthNotes(selectedDate));
+  }, [dispatch, selectedDate]);
 
   return (
     <>
@@ -87,7 +66,7 @@ export function MonthOverview({
           );
         })}
       </div>
-      <DayOverview selectedDay={selectedDay} monthNotes={monthNotes} />
+      <DayOverview selectedDay={selectedDay} />
     </>
   );
 }
@@ -97,7 +76,7 @@ export function MonthOverview({
  */
 function populateDays(selectedDate: IISODateTime) {
   /**
-   * The amount of day to have consistent amount of rows between months.
+   * The amount of days to have consistent amount of rows between months.
    */
   const totalDays = daysInWeek * 6;
   const monthStart = startOfMonth(selectedDate);
