@@ -1,0 +1,16 @@
+{
+  "$id": "http://schemas.com/{path-to-schema}.schema.json",
+  "title": "TemplateSchema",
+  "description": "Description of TemplateSchema",
+  "type": "object",
+  "required": ["id", "created_at"],
+  "properties": {
+    "id": {
+      "$ref": "/types/serial.schema.json"
+    },
+    "created_at": {
+      "$ref": "/types/dates/iso-datetime.schema.json"
+    }
+  },
+  "additionalProperties": false
+}

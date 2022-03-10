@@ -1,0 +1,30 @@
+{
+  "$id": "http://schemas.com/account/invite/base.schema.json",
+  "title": "Invite",
+  "description": "Invite for an account.",
+  "type": "object",
+  "required": ["id", "created_at", "account_id", "expires_at", "uses_left"],
+  "properties": {
+    "id": {
+      "$ref": "/types/serial.schema.json"
+    },
+    "created_at": {
+      "$ref": "/types/dates/iso-datetime.schema.json"
+    },
+    "account_id": {
+      "$ref": "/types/serial.schema.json",
+      "description": "Account which created the invite."
+    },
+    "expires_at": {
+      "$ref": "/types/dates/iso-datetime.schema.json",
+      "description": "Expiration date of the invite."
+    },
+    "uses_left": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 20,
+      "default": 20
+    }
+  },
+  "additionalProperties": false
+}
