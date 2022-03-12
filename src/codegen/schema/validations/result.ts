@@ -5,6 +5,7 @@ import {
   accountClientSchema,
   accountInitSchema,
   inviteSchema,
+  inviteClientSchema,
   inviteInitSchema,
   blogPostSchema,
   calendarNoteSchema,
@@ -13,6 +14,7 @@ import {
   projectConfigSchema,
   projectDatabaseSchema,
   emailConfirmationSchema,
+  codeStringSchema,
   iSODateSchema,
   iSODateTimeSchema,
   iSOTimeSchema,
@@ -25,6 +27,7 @@ import type {
   IAccountClient,
   IAccountInit,
   IInvite,
+  IInviteClient,
   IInviteInit,
   IBlogPost,
   ICalendarNote,
@@ -33,6 +36,7 @@ import type {
   IProjectConfig,
   IProjectDatabase,
   IEmailConfirmation,
+  ICodeString,
   IISODate,
   IISODateTime,
   IISOTime,
@@ -46,6 +50,8 @@ export const validateAccountClientFields =
 export const validateAccountInitFields =
   createValidator<IAccountInit>(accountInitSchema);
 export const validateInviteFields = createValidator<IInvite>(inviteSchema);
+export const validateInviteClientFields =
+  createValidator<IInviteClient>(inviteClientSchema);
 export const validateInviteInitFields =
   createValidator<IInviteInit>(inviteInitSchema);
 export const validateBlogPostFields =
@@ -63,6 +69,8 @@ export const validateProjectDatabaseFields = createValidator<IProjectDatabase>(
 );
 export const validateEmailConfirmationFields =
   createValidator<IEmailConfirmation>(emailConfirmationSchema);
+export const validateCodeStringFields =
+  createValidator<ICodeString>(codeStringSchema);
 export const validateISODateFields = createValidator<IISODate>(iSODateSchema);
 export const validateISODateTimeFields =
   createValidator<IISODateTime>(iSODateTimeSchema);

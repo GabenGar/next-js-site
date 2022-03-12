@@ -83,6 +83,10 @@
       "type": "boolean",
       "description": "Require invites for registrations or not.",
       "default": true
+    },
+    "ADMIN_INVITE_CODE": {
+      "type": "string",
+      "description": "Admin-exclusive invite."
     }
   },
   "additionalProperties": false

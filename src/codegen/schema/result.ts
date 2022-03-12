@@ -39,6 +39,9 @@ export const accountSchema = {
       default: false,
       description: "Is `true` after account confirms its email.",
     },
+    invite_id: {
+      $ref: "/types/serial.schema.json",
+    },
   },
   additionalProperties: false,
 } as const;
@@ -111,7 +114,14 @@ export const inviteSchema = {
   title: "Invite",
   description: "Invite for an account.",
   type: "object",
-  required: ["id", "created_at", "account_id", "expires_at", "uses_left"],
+  required: [
+    "id",
+    "created_at",
+    "account_id",
+    "code",
+    "expires_at",
+    "uses_left",
+  ],
   properties: {
     id: {
       $ref: "/types/serial.schema.json",
@@ -125,6 +135,9 @@ export const inviteSchema = {
     expires_at: {
       $ref: "/types/dates/iso-datetime.schema.json",
     },
+    code: {
+      $ref: "/types/code.schema.json",
+    },
     uses_left: {
       type: "integer",
       minimum: 0,
@@ -136,6 +149,37 @@ export const inviteSchema = {
 } as const;
 
 export type InviteSchema = typeof inviteSchema;
+
+export const inviteClientSchema = {
+  $id: "http://schemas.com/account/invite/client.schema.json",
+  title: "InviteClient",
+  description: "Invite representation for client.",
+  type: "object",
+  required: ["id", "created_at", "code", "expires_at", "uses_left"],
+  properties: {
+    id: {
+      $ref: "/types/serial.schema.json",
+    },
+    created_at: {
+      $ref: "/types/dates/iso-datetime.schema.json",
+    },
+    expires_at: {
+      $ref: "/types/dates/iso-datetime.schema.json",
+    },
+    code: {
+      $ref: "/types/code.schema.json",
+    },
+    uses_left: {
+      type: "integer",
+      minimum: 0,
+      maximum: 20,
+      default: 20,
+    },
+  },
+  additionalProperties: false,
+} as const;
+
+export type InviteClientSchema = typeof inviteClientSchema;
 
 export const inviteInitSchema = {
   $id: "http://schemas.com/account/invite/init.schema.json",
@@ -365,6 +409,10 @@ export const projectConfigSchema = {
       description: "Require invites for registrations or not.",
       default: true,
     },
+    ADMIN_INVITE_CODE: {
+      type: "string",
+      description: "Admin-exclusive invite.",
+    },
   },
   additionalProperties: false,
 } as const;
@@ -437,6 +485,17 @@ export const emailConfirmationSchema = {
 } as const;
 
 export type EmailConfirmationSchema = typeof emailConfirmationSchema;
+
+export const codeStringSchema = {
+  $id: "http://schemas.com/types/code.schema.json",
+  title: "CodeString",
+  description: "`nanoid` default output basically.",
+  type: "string",
+  maxLength: 21,
+  minLength: 21,
+} as const;
+
+export type CodeStringSchema = typeof codeStringSchema;
 
 export const iSODateSchema = {
   $id: "http://schemas.com/types/dates/iso-date.schema.json",

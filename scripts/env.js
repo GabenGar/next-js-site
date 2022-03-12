@@ -49,7 +49,8 @@ function setupEnvFile() {
    */
   const envMap = Object.entries(schemaJSON.properties).reduce(
     (envMap, [key, props]) => {
-      const value = envTypes[props.type](props.default);
+
+      const value = props.default ? envTypes[props.type](props.default) : "";
       envMap.set(key, value);
       return envMap;
     },

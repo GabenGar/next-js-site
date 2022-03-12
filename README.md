@@ -82,3 +82,4 @@ This truncates all non-migration project tables.
 - prettier validation errors
 - fix `$ref` parsing inconsistencies between `json-schema-to-typescript` and `ajv`
 - fix `useSWR` fetching account info when not needed.
+- scripts relying on `config.json.schema` to work with ref schemas

@@ -16,6 +16,7 @@ export interface Account {
    * Is `true` after account confirms its email.
    */
   is_verified: boolean;
+  invite_id?: SerialInteger;
 }
 
 /**
@@ -49,6 +50,18 @@ export interface Invite {
   created_at: ISODateTime;
   account_id: SerialInteger;
   expires_at: ISODateTime;
+  code: CodeString;
+  uses_left: number;
+}
+
+/**
+ * Invite representation for client.
+ */
+export interface InviteClient {
+  id: SerialInteger;
+  created_at: ISODateTime;
+  expires_at: ISODateTime;
+  code: CodeString;
   uses_left: number;
 }
 
@@ -155,6 +168,10 @@ export interface ProjectConfig {
    * Require invites for registrations or not.
    */
   IS_INVITE_ONLY?: boolean;
+  /**
+   * Admin-exclusive invite.
+   */
+  ADMIN_INVITE_CODE?: string;
 }
 
 /**
@@ -198,6 +215,11 @@ export interface EmailConfirmation {
   created_at: ISODateTime;
   expires_at: ISODateTime;
 }
+
+/**
+ * `nanoid` default output basically.
+ */
+export type CodeString = string;
 
 /**
  * ISO string representing date.

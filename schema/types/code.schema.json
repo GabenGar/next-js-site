@@ -1,0 +1,8 @@
+{
+  "$id": "http://schemas.com/types/code.schema.json",
+  "title": "CodeString",
+  "description": "`nanoid` default output basically.",
+  "type": "string",
+  "maxLength": 21,
+  "minLength": 21
+}

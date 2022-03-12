@@ -1,12 +1,11 @@
 {
-  "$id": "http://schemas.com/account/invite/base.schema.json",
-  "title": "Invite",
-  "description": "Invite for an account.",
+  "$id": "http://schemas.com/account/invite/client.schema.json",
+  "title": "InviteClient",
+  "description": "Invite representation for client.",
   "type": "object",
   "required": [
     "id",
     "created_at",
-    "account_id",
     "code",
     "expires_at",
     "uses_left"
@@ -17,9 +16,6 @@
     },
     "created_at": {
       "$ref": "/types/dates/iso-datetime.schema.json"
-    },
-    "account_id": {
-      "$ref": "/types/serial.schema.json"
     },
     "expires_at": {
       "$ref": "/types/dates/iso-datetime.schema.json"
