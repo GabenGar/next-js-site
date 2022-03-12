@@ -2,6 +2,8 @@ export {
   accountSchema,
   accountClientSchema,
   accountInitSchema,
+  inviteSchema,
+  inviteInitSchema,
   blogPostSchema,
   calendarNoteSchema,
   calendarNoteClientSchema,

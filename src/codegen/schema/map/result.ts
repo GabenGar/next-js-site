@@ -4,6 +4,8 @@ import {
   accountSchema,
   accountClientSchema,
   accountInitSchema,
+  inviteSchema,
+  inviteInitSchema,
   blogPostSchema,
   calendarNoteSchema,
   calendarNoteClientSchema,
@@ -22,6 +24,8 @@ export const schemaMap: Record<string, SchemaObject> = {
   "http://schemas.com/account/base.schema.json": accountSchema,
   "http://schemas.com/account/client.schema.json": accountClientSchema,
   "http://schemas.com/account/init.schema.json": accountInitSchema,
+  "http://schemas.com/account/invite/base.schema.json": inviteSchema,
+  "http://schemas.com/account/invite/init.schema.json": inviteInitSchema,
   "http://schemas.com/blog-post.schema.json": blogPostSchema,
   "http://schemas.com/calendar-note/base.schema.json": calendarNoteSchema,
   "http://schemas.com/calendar-note/client.schema.json":

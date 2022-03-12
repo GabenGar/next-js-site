@@ -1,23 +1,12 @@
 {
-  "$id": "http://schemas.com/account/invite/base.schema.json",
+  "$id": "http://schemas.com/account/invite/init.schema.json",
   "title": "InviteInit",
   "description": "Invite initializer for an account.",
   "type": "object",
-  "required": ["id", "created_at", "name", "role", "is_verified"],
+  "required": ["expires_at", "uses_left"],
   "properties": {
-    "id": {
-      "$ref": "/types/serial.schema.json"
-    },
-    "created_at": {
-      "$ref": "/types/dates/iso-datetime.schema.json"
-    },
-    "account_id": {
-      "$ref": "/types/serial.schema.json",
-      "description": "Account which created the invite."
-    },
     "expires_at": {
-      "$ref": "/types/dates/iso-datetime.schema.json",
-      "description": "Expiration date of the invite."
+      "$ref": "/types/dates/iso-datetime.schema.json"
     },
     "uses_left": {
       "type": "integer",

@@ -1,6 +1,8 @@
 export { default as accountSchema } from "#schema/account/base.schema.json";
 export { default as accountClientSchema } from "#schema/account/client.schema.json";
 export { default as accountInitSchema } from "#schema/account/init.schema.json";
+export { default as inviteSchema } from "#schema/account/invite/base.schema.json";
+export { default as inviteInitSchema } from "#schema/account/invite/init.schema.json";
 export { default as blogPostSchema } from "#schema/blog-post.schema.json";
 export { default as calendarNoteSchema } from "#schema/calendar-note/base.schema.json";
 export { default as calendarNoteClientSchema } from "#schema/calendar-note/client.schema.json";

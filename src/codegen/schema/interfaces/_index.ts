@@ -2,6 +2,8 @@ export type {
   Account as IAccount,
   AccountClient as IAccountClient,
   AccountInit as IAccountInit,
+  Invite as IInvite,
+  InviteInit as IInviteInit,
   BlogPost as IBlogPost,
   CalendarNote as ICalendarNote,
   CalendarNoteClient as ICalendarNoteClient,

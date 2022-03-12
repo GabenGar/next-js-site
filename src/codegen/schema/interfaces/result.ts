@@ -42,6 +42,25 @@ export interface AccountInit {
 }
 
 /**
+ * Invite for an account.
+ */
+export interface Invite {
+  id: SerialInteger;
+  created_at: ISODateTime;
+  account_id: SerialInteger;
+  expires_at: ISODateTime;
+  uses_left: number;
+}
+
+/**
+ * Invite initializer for an account.
+ */
+export interface InviteInit {
+  expires_at: ISODateTime;
+  uses_left: number;
+}
+
+/**
  * The post of the blog.
  */
 export interface BlogPost {
@@ -128,6 +147,14 @@ export interface ProjectConfig {
   EMAIL_PORT?: number;
   EMAIL_USERNAME?: string;
   EMAIL_PASSWORD?: string;
+  /**
+   * Require account for everything on the site or not.
+   */
+  IS_PUBLIC?: boolean;
+  /**
+   * Require invites for registrations or not.
+   */
+  IS_INVITE_ONLY?: boolean;
 }
 
 /**

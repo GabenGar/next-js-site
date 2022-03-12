@@ -12,12 +12,10 @@
       "$ref": "/types/dates/iso-datetime.schema.json"
     },
     "account_id": {
-      "$ref": "/types/serial.schema.json",
-      "description": "Account which created the invite."
+      "$ref": "/types/serial.schema.json"
     },
     "expires_at": {
-      "$ref": "/types/dates/iso-datetime.schema.json",
-      "description": "Expiration date of the invite."
+      "$ref": "/types/dates/iso-datetime.schema.json"
     },
     "uses_left": {
       "type": "integer",

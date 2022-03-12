@@ -4,6 +4,8 @@ import {
   accountSchema,
   accountClientSchema,
   accountInitSchema,
+  inviteSchema,
+  inviteInitSchema,
   blogPostSchema,
   calendarNoteSchema,
   calendarNoteClientSchema,
@@ -22,6 +24,8 @@ import type {
   IAccount,
   IAccountClient,
   IAccountInit,
+  IInvite,
+  IInviteInit,
   IBlogPost,
   ICalendarNote,
   ICalendarNoteClient,
@@ -41,6 +45,9 @@ export const validateAccountClientFields =
   createValidator<IAccountClient>(accountClientSchema);
 export const validateAccountInitFields =
   createValidator<IAccountInit>(accountInitSchema);
+export const validateInviteFields = createValidator<IInvite>(inviteSchema);
+export const validateInviteInitFields =
+  createValidator<IInviteInit>(inviteInitSchema);
 export const validateBlogPostFields =
   createValidator<IBlogPost>(blogPostSchema);
 export const validateCalendarNoteFields =

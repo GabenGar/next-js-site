@@ -106,6 +106,59 @@ export const accountInitSchema = {
 
 export type AccountInitSchema = typeof accountInitSchema;
 
+export const inviteSchema = {
+  $id: "http://schemas.com/account/invite/base.schema.json",
+  title: "Invite",
+  description: "Invite for an account.",
+  type: "object",
+  required: ["id", "created_at", "account_id", "expires_at", "uses_left"],
+  properties: {
+    id: {
+      $ref: "/types/serial.schema.json",
+    },
+    created_at: {
+      $ref: "/types/dates/iso-datetime.schema.json",
+    },
+    account_id: {
+      $ref: "/types/serial.schema.json",
+    },
+    expires_at: {
+      $ref: "/types/dates/iso-datetime.schema.json",
+    },
+    uses_left: {
+      type: "integer",
+      minimum: 0,
+      maximum: 20,
+      default: 20,
+    },
+  },
+  additionalProperties: false,
+} as const;
+
+export type InviteSchema = typeof inviteSchema;
+
+export const inviteInitSchema = {
+  $id: "http://schemas.com/account/invite/init.schema.json",
+  title: "InviteInit",
+  description: "Invite initializer for an account.",
+  type: "object",
+  required: ["expires_at", "uses_left"],
+  properties: {
+    expires_at: {
+      $ref: "/types/dates/iso-datetime.schema.json",
+    },
+    uses_left: {
+      type: "integer",
+      minimum: 0,
+      maximum: 20,
+      default: 20,
+    },
+  },
+  additionalProperties: false,
+} as const;
+
+export type InviteInitSchema = typeof inviteInitSchema;
+
 export const blogPostSchema = {
   $id: "http://schemas.com/blog-post.schema.json",
   title: "BlogPost",
@@ -301,6 +354,16 @@ export const projectConfigSchema = {
     EMAIL_PASSWORD: {
       type: "string",
       default: "FLYING POLAR BUFFALO ERROR",
+    },
+    IS_PUBLIC: {
+      type: "boolean",
+      description: "Require account for everything on the site or not.",
+      default: false,
+    },
+    IS_INVITE_ONLY: {
+      type: "boolean",
+      description: "Require invites for registrations or not.",
+      default: true,
     },
   },
   additionalProperties: false,

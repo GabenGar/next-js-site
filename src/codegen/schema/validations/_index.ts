@@ -2,6 +2,8 @@ export {
   validateAccountFields,
   validateAccountClientFields,
   validateAccountInitFields,
+  validateInviteFields,
+  validateInviteInitFields,
   validateBlogPostFields,
   validateCalendarNoteFields,
   validateCalendarNoteClientFields,

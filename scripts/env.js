@@ -26,6 +26,9 @@ const envTypes = {
   integer(value) {
     return Number(value);
   },
+  boolean(value) {
+    return Boolean(value);
+  },
 };
 
 if (process.env.NODE_ENV !== "production") {
