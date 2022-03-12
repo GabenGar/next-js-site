@@ -40,6 +40,7 @@ export interface AccountClient {
 export interface AccountInit {
   name: string;
   password: string;
+  invite?: CodeString;
 }
 
 /**
