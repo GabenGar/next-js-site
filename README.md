@@ -77,9 +77,10 @@ npm run reset
 This truncates all non-migration project tables.
 
 ## TODOs
-- figure out the problem between typescript, `ts-node` and  `stringify-object` being a pure ESM package.
+- figure out the problem between typescript, `ts-node` and  `stringify-object` being a pure ESM package
 - one-button validation interface
 - prettier validation errors
 - fix `$ref` parsing inconsistencies between `json-schema-to-typescript` and `ajv`
 - fix `useSWR` fetching account info when not needed.
 - scripts relying on `config.json.schema` to work with ref schemas
+- make `pgFormatter` extenstion to work
