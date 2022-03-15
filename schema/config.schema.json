@@ -24,6 +24,16 @@
       "format": "email",
       "default": "FLYING POLAR BUFFALO ERROR"
     },
+    "NEXT_PUBLIC_IS_PUBLIC": {
+      "type": "boolean",
+      "description": "Require account for everything on the site or not.",
+      "default": false
+    },
+    "NEXT_PUBLIC_IS_INVITE_ONLY": {
+      "type": "boolean",
+      "description": "Require invites for registrations or not.",
+      "default": true
+    },
     "SECRET_KEY": {
       "type": "string",
       "default": "FLYING POLAR BUFFALO ERROR"
@@ -73,16 +83,6 @@
     "EMAIL_PASSWORD": {
       "type": "string",
       "default": "FLYING POLAR BUFFALO ERROR"
-    },
-    "IS_PUBLIC": {
-      "type": "boolean",
-      "description": "Require account for everything on the site or not.",
-      "default": false
-    },
-    "IS_INVITE_ONLY": {
-      "type": "boolean",
-      "description": "Require invites for registrations or not.",
-      "default": true
     },
     "ADMIN_INVITE_CODE": {
       "type": "string",
