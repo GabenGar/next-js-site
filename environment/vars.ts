@@ -16,4 +16,4 @@ export const EMAIL_SMTP_HOSTNAME = process.env.EMAIL_SMTP_HOSTNAME!;
 export const EMAIL_PORT = process.env.EMAIL_PORT!;
 export const EMAIL_USERNAME = process.env.EMAIL_USERNAME!;
 export const EMAIL_PASSWORD = process.env.EMAIL_PASSWORD!;
-
+export const ADMIN_INVITE_CODE = process.env.ADMIN_INVITE_CODE!;

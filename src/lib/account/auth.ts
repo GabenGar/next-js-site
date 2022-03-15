@@ -1,6 +1,8 @@
-import { IS_INVITE_ONLY } from "#environment/derived"
+import { ADMIN_INVITE_CODE } from "#environment/vars";
+import { IS_INVITE_ONLY } from "#environment/derived";
 import {
   addAccount,
+  addAdminAccount,
   findAccountByName,
   findAccount,
 } from "#database/queries/account";
@@ -21,6 +23,16 @@ export async function registerAccount(accCreds: IAccountInit) {
 
   if (existingAccount) {
     return new AuthError("Account with this name already exists.");
+  }
+
+  if (encryptedAccCreds.invite === ADMIN_INVITE_CODE) {
+    const adminAccount = await addAdminAccount(encryptedAccCreds);
+
+    return adminAccount;
+  }
+
+  if (IS_INVITE_ONLY) {
+    
   }
 
   const account = await addAccount(

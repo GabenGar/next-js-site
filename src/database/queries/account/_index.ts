@@ -10,6 +10,17 @@ import type {
 
 const { db } = getDB();
 
+export async function addAdminAccount({ name, password }: IAccountInit) {
+  const query = `
+    INSERT INTO accounts (name, password, role)
+    VALUES ($(name), $(password), 'administrator')
+    RETURNING *
+  `;
+  const adminAccount = await db.one<IAccount>(query, { name, password });
+
+  return adminAccount;
+}
+
 export async function addAccount(name: string, password: string) {
   const query = `
     INSERT INTO accounts (name, password)

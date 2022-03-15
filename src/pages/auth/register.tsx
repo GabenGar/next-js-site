@@ -115,8 +115,6 @@ export const getServerSideProps = withSessionSSR<RegisterPageProps>(
             }
           }
         }
-
-        
       }
 
       const newAcc = await registerAccount(accInit);

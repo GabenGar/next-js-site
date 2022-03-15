@@ -3,16 +3,13 @@
   "title": "InviteInit",
   "description": "Invite initializer for an account.",
   "type": "object",
-  "required": ["expires_at", "uses_left"],
   "properties": {
     "expires_at": {
       "$ref": "/types/dates/iso-datetime.schema.json"
     },
-    "uses_left": {
+    "max_uses": {
       "type": "integer",
-      "minimum": 0,
-      "maximum": 20,
-      "default": 20
+      "minimum": 1
     }
   },
   "additionalProperties": false
