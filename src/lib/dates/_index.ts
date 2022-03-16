@@ -27,6 +27,8 @@ export {
   isWeekend,
   compareAscending,
   compareDescending,
+  isBefore,
+  isAfter
 } from "./comparisons";
 export {
   addDays,

@@ -50,9 +50,10 @@ export interface Invite {
   id: SerialInteger;
   created_at: ISODateTime;
   account_id: SerialInteger;
-  expires_at: ISODateTime;
   code: CodeString;
-  uses_left: number;
+  expires_at?: ISODateTime;
+  max_uses?: number;
+  is_active: boolean;
 }
 
 /**
@@ -61,17 +62,18 @@ export interface Invite {
 export interface InviteClient {
   id: SerialInteger;
   created_at: ISODateTime;
-  expires_at: ISODateTime;
   code: CodeString;
-  uses_left: number;
+  expires_at?: ISODateTime;
+  max_uses?: number;
+  is_active: boolean;
 }
 
 /**
  * Invite initializer for an account.
  */
 export interface InviteInit {
-  expires_at: ISODateTime;
-  uses_left: number;
+  expires_at?: ISODateTime;
+  max_uses?: number;
 }
 
 /**
@@ -143,6 +145,14 @@ export interface ProjectConfig {
   NEXT_PUBLIC_SITE_NAME?: string;
   NEXT_PUBLIC_REPOSITORY?: string;
   NEXT_PUBLIC_EMAIL_ADDRESS?: string;
+  /**
+   * Require account for everything on the site or not.
+   */
+  NEXT_PUBLIC_IS_PUBLIC?: boolean;
+  /**
+   * Require invites for registrations or not.
+   */
+  NEXT_PUBLIC_IS_INVITE_ONLY?: boolean;
   SECRET_KEY?: string;
   DATABASE_HOSTNAME?: string;
   DATABASE_PORT?: number;
@@ -161,14 +171,6 @@ export interface ProjectConfig {
   EMAIL_PORT?: number;
   EMAIL_USERNAME?: string;
   EMAIL_PASSWORD?: string;
-  /**
-   * Require account for everything on the site or not.
-   */
-  IS_PUBLIC?: boolean;
-  /**
-   * Require invites for registrations or not.
-   */
-  IS_INVITE_ONLY?: boolean;
   /**
    * Admin-exclusive invite.
    */
