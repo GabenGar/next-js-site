@@ -11,7 +11,7 @@ export interface Account {
    */
   password?: string;
   email?: string;
-  role: "user";
+  role: "user" | "administrator";
   /**
    * Is `true` after account confirms its email.
    */
@@ -27,7 +27,7 @@ export interface AccountClient {
   updated_at?: ISODateTime;
   name: string;
   email?: string;
-  role: "user";
+  role: "user" | "administrator";
   /**
    * Is `true` after account confirms its email.
    */

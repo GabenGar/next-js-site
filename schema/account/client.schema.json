@@ -23,7 +23,7 @@
     },
     "role": {
       "type": "string",
-      "enum": ["user"]
+      "enum": ["user", "administrator"]
     },
     "is_verified": {
       "type": "boolean",

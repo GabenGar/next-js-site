@@ -27,6 +27,7 @@ function AdminPage({
         <pre>{JSON.stringify(accounts, null, 2)}</pre>
       </section>
       <section>
+        <LinkInternal href="/account/admin/accounts">Accounts</LinkInternal>
         <LinkInternal href="/account/admin/tables">Tables</LinkInternal>
       </section>
     </>
