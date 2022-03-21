@@ -6,6 +6,7 @@ import { validateInviteInitFields } from "#codegen/schema/validations";
 import { Page } from "#components/pages";
 import { Form } from "#components/forms";
 import { ErrorsView } from "#components/errors";
+import { Number } from "#components/forms/sections";
 
 import type { InferGetServerSidePropsType } from "next";
 import type { BasePageProps } from "#types/pages";
@@ -29,6 +30,16 @@ function InviteCreationPage({
         <meta name="description" content={`${title} info"`} />
       </Head>
       <Form method="POST" submitButton="Create">
+        <Number
+          id="max-uses"
+          name="max_uses"
+          // @ts-expect-error TODO: fix nullish type
+          defaultValue={inviteInit?.max_uses}
+          minValue={1}
+          valueStep={1}
+        >
+          Maximum uses:
+        </Number>
         {errors ? (
           <ErrorsView errors={errors} />
         ) : (
@@ -87,7 +98,7 @@ export const getServerSideProps = withSessionSSR<IInviteCreationProps>(
 
       return {
         redirect: {
-          destination: "/account/admin",
+          destination: "/account/admin/invites",
           permanent: false,
         },
       };

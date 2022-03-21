@@ -10,3 +10,5 @@ export { FormSectionTime } from "./time";
 export type { IFormSectionTimeProps } from "./time";
 export { TextArea } from "./text-area";
 export type { ITextAreaProps } from "./text-area";
+export { Number } from "./number";
+export type { INumberProps } from "./number";

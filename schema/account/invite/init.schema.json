@@ -8,7 +8,7 @@
       "$ref": "/types/dates/iso-datetime.schema.json"
     },
     "max_uses": {
-      "type": "integer",
+      "type": ["integer", "null"],
       "minimum": 1
     }
   },

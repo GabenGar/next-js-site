@@ -73,7 +73,7 @@ export interface InviteClient {
  */
 export interface InviteInit {
   expires_at?: ISODateTime;
-  max_uses?: number;
+  max_uses?: number | null;
 }
 
 /**
