@@ -6,11 +6,13 @@ import { validateInviteInitFields } from "#codegen/schema/validations";
 import { Page } from "#components/pages";
 import { Form } from "#components/forms";
 import { ErrorsView } from "#components/errors";
-import { Number } from "#components/forms/sections";
+import { Number, Select } from "#components/forms/sections";
+import { addWeeks, addMonths, nowISO, addYears } from "#lib/dates";
 
 import type { InferGetServerSidePropsType } from "next";
 import type { BasePageProps } from "#types/pages";
 import type { IInviteInit } from "#codegen/schema/interfaces";
+import type { IOptionProps } from "#components/forms/sections";
 
 interface IInviteCreationProps extends BasePageProps {
   inviteInit?: IInviteInit;
@@ -22,6 +24,15 @@ function InviteCreationPage({
   schemaValidationErrors,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const title = "New Invite";
+  const selectOptions: IOptionProps[] = [
+    {
+      optionTitle: "Never",
+      value: "",
+    },
+    { optionTitle: "1 week", value: addWeeks(nowISO(), 1) },
+    { optionTitle: "1 month", value: addMonths(nowISO(), 1) },
+    { optionTitle: "1 year", value: addYears(nowISO(), 1) },
+  ];
 
   return (
     <Page heading={title}>
@@ -30,6 +41,17 @@ function InviteCreationPage({
         <meta name="description" content={`${title} info"`} />
       </Head>
       <Form method="POST" submitButton="Create">
+        <Select id="expires-at" name="expires_at" options={selectOptions}>
+          Expires in:
+        </Select>
+        {/* <DateTime
+          id="expires-at"
+          name="expires_at"
+          defaultValue={inviteInit?.expires_at ?? addWeeks(nowISO(), 1)}
+          minDate={nowISO()}
+        >
+          Expires at:
+        </DateTime> */}
         <Number
           id="max-uses"
           name="max_uses"

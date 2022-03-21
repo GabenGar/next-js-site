@@ -72,7 +72,7 @@ export interface InviteClient {
  * Invite initializer for an account.
  */
 export interface InviteInit {
-  expires_at?: ISODateTime;
+  expires_at?: ISODateTime | null;
   max_uses?: number | null;
 }
 

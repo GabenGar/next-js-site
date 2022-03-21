@@ -12,3 +12,7 @@ export { TextArea } from "./text-area";
 export type { ITextAreaProps } from "./text-area";
 export { Number } from "./number";
 export type { INumberProps } from "./number";
+export { DateTime } from "./datetime";
+export type { IDateTimeProps } from "./datetime";
+export { Select } from "./select";
+export type { ISelectProps, IOptionProps } from "./select";
