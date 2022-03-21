@@ -4,7 +4,8 @@ import { getAccountDetails, withSessionSSR } from "#lib/account";
 import { getInvites } from "#database/queries/account/admin";
 import { Page } from "#components/pages";
 import { JSONView } from "#components/json";
-import { Article, ArticleBody } from "#components/articles";
+import { CardList } from "#components/lists";
+import { Card, CardBody } from "#components/cards";
 
 import type { InferGetServerSidePropsType } from "next";
 import type { BasePageProps } from "#types/pages";
@@ -25,13 +26,15 @@ function InvitesPage({
         <title>{siteTitle(title)}</title>
         <meta name="description" content={`${title} info"`} />
       </Head>
-      {invites.map((invite) => (
-        <Article key={invite.code}>
-          <ArticleBody>
-            <JSONView json={invite} />
-          </ArticleBody>
-        </Article>
-      ))}
+      <CardList>
+        {invites.map((invite) => (
+          <Card key={invite.code}>
+            <CardBody>
+              <JSONView json={invite} />
+            </CardBody>
+          </Card>
+        ))}
+      </CardList>
     </Page>
   );
 }

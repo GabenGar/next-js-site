@@ -76,6 +76,12 @@ npm run reset
 
 This truncates all non-migration project tables.
 
+## MISC
+Bind the specific ssh key to the git repo:
+```sh
+git config core.sshCommand "ssh -i ~/.ssh/id_rsa_file -F /dev/null"
+```
+
 ## TODOs
 - figure out the problem between typescript, `ts-node` and  `stringify-object` being a pure ESM package
 - one-button validation interface
