@@ -1,18 +1,20 @@
 import { getDB } from "#database";
 
 import type { IAccount } from "#types/entities";
-import type { IInvite, IISODateTime } from "#codegen/schema/interfaces";
+import type {
+  IInvite,
+  IInviteInit
+} from "#codegen/schema/interfaces";
 
 const { db } = getDB();
 
 export async function addInvite(
   accountID: number,
   code: string,
-  expiresAt?: IISODateTime,
-  maxUses?: number
+  { expires_at, max_uses }: IInviteInit
 ) {
   const query = `
-    INSERT INTO invites 
+    INSERT INTO invites
       (account_id, code, expires_at, max_uses)
     VALUES ($(account_id), $(code), $(expires_at), $(max_uses))
     RETURNING *
@@ -20,8 +22,8 @@ export async function addInvite(
   const newInvite = await db.one<IInvite>(query, {
     account_id: accountID,
     code: code,
-    expires_at: expiresAt,
-    max_uses: maxUses,
+    expires_at: expires_at,
+    max_uses: max_uses,
   });
 
   return newInvite;
@@ -54,7 +56,7 @@ export async function deactivateInvite(inviteID: number) {
   const query = `
     UPDATE invites
     SET is_active = false
-    WHERE 
+    WHERE
       id = $(invite_id)
     RETURNING *
   `;

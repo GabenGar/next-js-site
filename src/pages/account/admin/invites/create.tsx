@@ -1,23 +1,26 @@
 import Head from "next/head";
-import { siteTitle } from "#lib/util";
+import { getReqBody, siteTitle } from "#lib/util";
 import { getAccountDetails, withSessionSSR } from "#lib/account";
-import { getInvites } from "#database/queries/account/admin";
+import { createInvite } from "#lib/account/admin";
+import { validateInviteInitFields } from "#codegen/schema/validations";
 import { Page } from "#components/pages";
-import { JSONView } from "#components/json";
-import { Article, ArticleBody } from "#components/articles";
+import { Form } from "#components/forms";
+import { ErrorsView } from "#components/errors";
 
 import type { InferGetServerSidePropsType } from "next";
 import type { BasePageProps } from "#types/pages";
-import type { IInvite } from "#codegen/schema/interfaces";
+import type { IInviteInit } from "#codegen/schema/interfaces";
 
-interface IInvitesPageProps extends BasePageProps {
-  invites: IInvite[];
+interface IInviteCreationProps extends BasePageProps {
+  inviteInit?: IInviteInit;
 }
 
-function InvitesPage({
-  invites,
+function InviteCreationPage({
+  inviteInit,
+  errors,
+  schemaValidationErrors,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const title = "Invites";
+  const title = "New Invite";
 
   return (
     <Page heading={title}>
@@ -25,18 +28,20 @@ function InvitesPage({
         <title>{siteTitle(title)}</title>
         <meta name="description" content={`${title} info"`} />
       </Head>
-      {invites.map((invite) => (
-        <Article key={invite.code}>
-          <ArticleBody>
-            <JSONView json={invite} />
-          </ArticleBody>
-        </Article>
-      ))}
+      <Form method="POST" submitButton="Create">
+        {errors ? (
+          <ErrorsView errors={errors} />
+        ) : (
+          schemaValidationErrors && (
+            <ErrorsView errors={schemaValidationErrors} />
+          )
+        )}
+      </Form>
     </Page>
   );
 }
 
-export const getServerSideProps = withSessionSSR<IInvitesPageProps>(
+export const getServerSideProps = withSessionSSR<IInviteCreationProps>(
   async ({ req }) => {
     const { account_id } = req.session;
 
@@ -65,14 +70,33 @@ export const getServerSideProps = withSessionSSR<IInvitesPageProps>(
       };
     }
 
-    const invites = await getInvites();
+    if (req.method === "POST") {
+      const inviteInit = await getReqBody<IInviteInit>(req);
+      const result = await validateInviteInitFields(inviteInit);
+
+      if (!result) {
+        return {
+          props: {
+            schemaValidationErrors: validateInviteInitFields.errors!,
+            inviteInit,
+          },
+        };
+      }
+
+      const newInvite = await createInvite(inviteInit, account);
+
+      return {
+        redirect: {
+          destination: "/account/admin",
+          permanent: false,
+        },
+      };
+    }
 
     return {
-      props: {
-        invites,
-      },
+      props: {},
     };
   }
 );
 
-export default InvitesPage;
+export default InviteCreationPage;
