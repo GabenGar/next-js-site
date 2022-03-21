@@ -1,8 +1,8 @@
 import { getDB } from "#database";
-import databaseSchema from "#schema/database.schema.json";
 
 import type { IAccount } from "#types/entities";
 import type { PaginationDB } from "#lib/pagination";
+import type { IInvite } from "#codegen/schema/interfaces";
 
 const { db } = getDB();
 
@@ -29,6 +29,21 @@ export async function clearAccounts() {
 
 async function getDBInfo() {
   const query = `
-  `
+  `;
   const tableInfo = await db.none(query);
+
+  return tableInfo;
+}
+
+export async function getInvites() {
+  const query = `
+    SELECT *
+    FROM invites
+    ORDER BY
+      created_at DESC
+  `;
+
+  const invites = await db.manyOrNone<IInvite>(query);
+
+  return invites;
 }

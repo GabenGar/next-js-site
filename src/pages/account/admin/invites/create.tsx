@@ -1,40 +1,43 @@
 import Head from "next/head";
-import { IS_DEVELOPMENT } from "#environment/derived";
 import { siteTitle } from "#lib/util";
 import { getAccountDetails, withSessionSSR } from "#lib/account";
+import { getInvites } from "#database/queries/account/admin";
 import { Page } from "#components/pages";
-import { JSONView } from "#components/json"
+import { JSONView } from "#components/json";
+import { Article, ArticleBody } from "#components/articles";
 
 import type { InferGetServerSidePropsType } from "next";
-import type { IAccountClient } from "#types/entities";
 import type { BasePageProps } from "#types/pages";
+import type { IInvite } from "#codegen/schema/interfaces";
 
-interface ITemplatePageProps extends BasePageProps {
-  account: IAccountClient;
+interface IInvitesPageProps extends BasePageProps {
+  invites: IInvite[];
 }
 
 function InvitesPage({
-  account,
+  invites,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const title = "Invites";
+
   return (
-    <Page heading="Template page">
+    <Page heading={title}>
       <Head>
-        <title>{siteTitle("Template page")}</title>
-        <meta name="description" content="Template page info" />
+        <title>{siteTitle(title)}</title>
+        <meta name="description" content={`${title} info"`} />
       </Head>
-      {IS_DEVELOPMENT && <JSONView json={account} />}
+      {invites.map((invite) => (
+        <Article key={invite.code}>
+          <ArticleBody>
+            <JSONView json={invite} />
+          </ArticleBody>
+        </Article>
+      ))}
     </Page>
   );
 }
 
-export const getServerSideProps = withSessionSSR<ITemplatePageProps>(
+export const getServerSideProps = withSessionSSR<IInvitesPageProps>(
   async ({ req }) => {
-    if (!IS_DEVELOPMENT) {
-      return {
-        notFound: true,
-      };
-    }
-
     const { account_id } = req.session;
 
     if (!account_id) {
@@ -59,13 +62,14 @@ export const getServerSideProps = withSessionSSR<ITemplatePageProps>(
     if (account.role !== "administrator") {
       return {
         notFound: true,
-      }
+      };
     }
 
-    const { id, password, ...accountClient } = account;
+    const invites = await getInvites();
+
     return {
       props: {
-        account: accountClient,
+        invites,
       },
     };
   }

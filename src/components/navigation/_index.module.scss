@@ -8,6 +8,10 @@
 }
 
 .list {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: flex-start;
+  gap: $size-small;
 }
 
 .item {

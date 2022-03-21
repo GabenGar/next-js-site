@@ -40,7 +40,7 @@ function AccountPage({
             </LinkInternal>
           </NavItem>
 
-          {IS_DEVELOPMENT && (
+          {account.role === "administrator" && (
             <NavItem>
               <LinkInternal href="/account/admin">
                 <SVGIcon iconID="screwdriver-wrench" />
