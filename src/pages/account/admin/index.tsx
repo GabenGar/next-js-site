@@ -1,54 +1,73 @@
 import Head from "next/head";
-import { IS_DEVELOPMENT } from "#environment/derived";
+import { getAccountDetails, withSessionSSR } from "#lib/account";
 import { getAccountList } from "#lib/account/admin";
 import { LinkInternal } from "#components/links";
+import { Page } from "#components/pages";
+import { Nav, NavList } from "#components/navigation";
 
-import type { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import type { InferGetServerSidePropsType } from "next";
 import type { IAccount } from "#types/entities";
+import type { BasePageProps } from "#types/pages";
 
-interface AdminPageProps {
+interface AdminPageProps extends BasePageProps {
   accounts: IAccount[];
 }
 
-function AdminPage({
-  accounts,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+function AdminPage({}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
-    <>
+    <Page heading={"Admin"}>
       <Head>
         <title>Admin</title>
         <meta name="description" content="Admin" />
       </Head>
-      <h1>Admin</h1>
-      <section>
-        <header>
-          <h2>Accounts</h2>
-        </header>
-        <pre>{JSON.stringify(accounts, null, 2)}</pre>
-      </section>
-      <section>
-        <LinkInternal href="/account/admin/tables">Tables</LinkInternal>
-      </section>
-    </>
+      <Nav>
+        <NavList>
+          <LinkInternal href="/account/admin/accounts">Accounts</LinkInternal>
+          <LinkInternal href="/account/admin/tables">Tables</LinkInternal>
+          <LinkInternal href="/account/admin/invites">Invites</LinkInternal>
+        </NavList>
+      </Nav>
+    </Page>
   );
 }
 
-export const getServerSideProps: GetServerSideProps<AdminPageProps> = async (
-  context
-) => {
-  if (!IS_DEVELOPMENT) {
+export const getServerSideProps = withSessionSSR<AdminPageProps>(
+  async ({ req }) => {
+    const { account_id } = req.session;
+
+    if (!account_id) {
+      return {
+        redirect: {
+          destination: "/auth/login",
+          permanent: false,
+        },
+      };
+    }
+
+    const account = await getAccountDetails(account_id);
+
+    if (!account) {
+      req.session.destroy();
+
+      return {
+        notFound: true,
+      };
+    }
+
+    if (account.role !== "administrator") {
+      return {
+        notFound: true,
+      };
+    }
+
+    const accounts = await getAccountList({ currentPage: 1, limit: 50 });
+
     return {
-      notFound: true,
+      props: {
+        accounts,
+      },
     };
   }
-
-  const accounts = await getAccountList({ currentPage: 1, limit: 50 });
-
-  return {
-    props: {
-      accounts,
-    },
-  };
-};
+);
 
 export default AdminPage;

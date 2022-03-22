@@ -27,14 +27,18 @@ export {
   isWeekend,
   compareAscending,
   compareDescending,
+  isBefore,
+  isAfter,
 } from "./comparisons";
 export {
   addDays,
   addMonths,
   addYears,
+  addWeeks,
   substractDays,
   subtractMonths,
   subtractYears,
+  substractWeeks,
 } from "./operations";
-export { daysInWeek } from "./types"
-export type { IWeekDay } from "./types"
+export { daysInWeek } from "./types";
+export type { IWeekDay } from "./types";

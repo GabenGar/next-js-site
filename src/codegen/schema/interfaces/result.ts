@@ -11,11 +11,12 @@ export interface Account {
    */
   password?: string;
   email?: string;
-  role: "user";
+  role: "user" | "administrator";
   /**
    * Is `true` after account confirms its email.
    */
   is_verified: boolean;
+  invite_id?: SerialInteger;
 }
 
 /**
@@ -26,7 +27,7 @@ export interface AccountClient {
   updated_at?: ISODateTime;
   name: string;
   email?: string;
-  role: "user";
+  role: "user" | "administrator";
   /**
    * Is `true` after account confirms its email.
    */
@@ -39,6 +40,40 @@ export interface AccountClient {
 export interface AccountInit {
   name: string;
   password: string;
+  invite?: CodeString;
+}
+
+/**
+ * Invite for an account.
+ */
+export interface Invite {
+  id: SerialInteger;
+  created_at: ISODateTime;
+  account_id: SerialInteger;
+  code: CodeString;
+  expires_at?: ISODateTime;
+  max_uses?: number;
+  is_active: boolean;
+}
+
+/**
+ * Invite representation for client.
+ */
+export interface InviteClient {
+  id: SerialInteger;
+  created_at: ISODateTime;
+  code: CodeString;
+  expires_at?: ISODateTime;
+  max_uses?: number;
+  is_active: boolean;
+}
+
+/**
+ * Invite initializer for an account.
+ */
+export interface InviteInit {
+  expires_at?: ISODateTime | null;
+  max_uses?: number | null;
 }
 
 /**
@@ -110,6 +145,14 @@ export interface ProjectConfig {
   NEXT_PUBLIC_SITE_NAME?: string;
   NEXT_PUBLIC_REPOSITORY?: string;
   NEXT_PUBLIC_EMAIL_ADDRESS?: string;
+  /**
+   * Require account for everything on the site or not.
+   */
+  NEXT_PUBLIC_IS_PUBLIC?: boolean;
+  /**
+   * Require invites for registrations or not.
+   */
+  NEXT_PUBLIC_IS_INVITE_ONLY?: boolean;
   SECRET_KEY?: string;
   DATABASE_HOSTNAME?: string;
   DATABASE_PORT?: number;
@@ -128,6 +171,10 @@ export interface ProjectConfig {
   EMAIL_PORT?: number;
   EMAIL_USERNAME?: string;
   EMAIL_PASSWORD?: string;
+  /**
+   * Admin-exclusive invite.
+   */
+  ADMIN_INVITE_CODE?: string;
 }
 
 /**
@@ -171,6 +218,11 @@ export interface EmailConfirmation {
   created_at: ISODateTime;
   expires_at: ISODateTime;
 }
+
+/**
+ * `nanoid` default output basically.
+ */
+export type CodeString = string;
 
 /**
  * ISO string representing date.

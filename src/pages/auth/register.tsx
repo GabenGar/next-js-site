@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { IS_INVITE_ONLY } from "#environment/derived"
 import { AuthError } from "#types/errors";
 import { getReqBody } from "#lib/util";
 import {
@@ -39,6 +40,14 @@ function RegisterPage({
           Already registered?{" "}
           <LinkInternal href="/auth/login">Log in</LinkInternal>
         </p>
+        {IS_INVITE_ONLY && (<FormSectionText
+          id="acc-invite"
+          name="invite"
+          required
+          defaultValue={accCreds?.invite}
+        >
+          Invite code
+        </FormSectionText>)}
         <FormSectionText
           id="acc-name"
           name="name"
@@ -95,6 +104,17 @@ export const getServerSideProps = withSessionSSR<RegisterPageProps>(
             accInit,
           },
         };
+      }
+
+      if (IS_INVITE_ONLY) {
+        if (!accInit.invite) {
+          return {
+            props: {
+              errors: ["No invite key is provided."],
+              accInit,
+            }
+          }
+        }
       }
 
       const newAcc = await registerAccount(accInit);

@@ -13,9 +13,6 @@ export interface InternalProps extends Omit<LinkProps, "passHref"> {
   children?: ReactNode;
 }
 
-/**
- * TODO: ref component
- */
 export const LinkInternal = blockComponent<InternalProps>(
   styles.block,
   ({ children, target = "_self", className, ...blockProps }) => {

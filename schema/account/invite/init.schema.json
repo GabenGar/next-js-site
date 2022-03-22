@@ -1,0 +1,19 @@
+{
+  "$id": "http://schemas.com/account/invite/init.schema.json",
+  "title": "InviteInit",
+  "description": "Invite initializer for an account.",
+  "type": "object",
+  "properties": {
+    "expires_at": {
+      "oneOf": [
+        { "$ref": "/types/dates/iso-datetime.schema.json" },
+        { "type": "null" }
+      ]
+    },
+    "max_uses": {
+      "type": ["integer", "null"],
+      "minimum": 1
+    }
+  },
+  "additionalProperties": false
+}

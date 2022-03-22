@@ -6,11 +6,21 @@ import {
   isWeekend as isWeekendfn,
   isSameDay as isSameDayfn,
   compareAsc,
-  compareDesc
+  compareDesc,
+  isBefore as isBeforefn,
+  isAfter as isAfterfn
 } from "date-fns";
 import { fromISOString } from "./lib";
 
 import type { IISODateTime } from "#codegen/schema/interfaces";
+
+export function isAfter(date: IISODateTime, dateToCompare: IISODateTime) {
+  return isAfterfn(fromISOString(date), fromISOString(dateToCompare));
+}
+
+export function isBefore(date: IISODateTime, dateToCompare: IISODateTime) {
+  return isBeforefn(fromISOString(date), fromISOString(dateToCompare));
+}
 
 export function compareDescending(
   dateLeft: IISODateTime,

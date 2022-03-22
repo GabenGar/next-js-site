@@ -7,13 +7,10 @@ import type { SchemaObject } from "ajv";
 
 const ajv = new Ajv({
   meta: metaSchema,
-  schemas: schemaMap
+  schemas: schemaMap,
+  coerceTypes: true
 });
 addFormats(ajv);
-
-async function findSchema(schemaID: string) {
-  return schemaMap[schemaID];
-}
 
 export function createValidator<Schema>(schema: SchemaObject) {
   return ajv.getSchema<Schema>(schema.$id!)!;

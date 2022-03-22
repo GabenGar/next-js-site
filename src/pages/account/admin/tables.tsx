@@ -5,24 +5,24 @@ import { clearAccounts } from "#database/queries/account/admin";
 
 import type { GetServerSideProps, InferGetServerSidePropsType } from "next";
 
-interface AdminPageProps {}
+interface TablesPageProps {}
 
-function AdminPage({}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+function TablesPage({}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
       <Head>
-        <title>Accounts</title>
-        <meta name="description" content="Accounts" />
+        <title>Tables</title>
+        <meta name="description" content="Tables" />
       </Head>
-      <h1>Accounts</h1>
+      <h1>Tables</h1>
+      <h2>Accounts</h2>
       <Form submitButton="Clear" method="POST">
-        <p>Accounts</p>
       </Form>
     </>
   );
 }
 
-export const getServerSideProps: GetServerSideProps<AdminPageProps> = async ({
+export const getServerSideProps: GetServerSideProps<TablesPageProps> = async ({
   req,
 }) => {
   if (!IS_DEVELOPMENT) {
@@ -40,4 +40,4 @@ export const getServerSideProps: GetServerSideProps<AdminPageProps> = async ({
   };
 };
 
-export default AdminPage;
+export default TablesPage;

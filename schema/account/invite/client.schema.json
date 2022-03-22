@@ -1,0 +1,29 @@
+{
+  "$id": "http://schemas.com/account/invite/client.schema.json",
+  "title": "InviteClient",
+  "description": "Invite representation for client.",
+  "type": "object",
+  "required": ["id", "created_at", "code", "is_active"],
+  "properties": {
+    "id": {
+      "$ref": "/types/serial.schema.json"
+    },
+    "created_at": {
+      "$ref": "/types/dates/iso-datetime.schema.json"
+    },
+    "code": {
+      "$ref": "/types/code.schema.json"
+    },
+    "expires_at": {
+      "$ref": "/types/dates/iso-datetime.schema.json"
+    },
+    "max_uses": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "is_active": {
+      "type": "boolean"
+    }
+  },
+  "additionalProperties": false
+}

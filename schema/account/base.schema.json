@@ -32,12 +32,15 @@
     },
     "role": {
       "type": "string",
-      "enum": ["user"]
+      "enum": ["user", "administrator"]
     },
     "is_verified": {
       "type": "boolean",
       "default": false,
       "description": "Is `true` after account confirms its email."
+    },
+    "invite_id": {
+      "$ref": "/types/serial.schema.json"
     }
   },
   "additionalProperties": false
