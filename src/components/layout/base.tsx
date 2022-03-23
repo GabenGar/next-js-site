@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import { REPOSITORY, EMAIL_ADDRESS } from "#environment/vars";
 import {
   AVAILABLE_THEMES,
@@ -16,6 +17,7 @@ import { Form } from "#components/forms";
 import { ButtonSubmit } from "#components/buttons";
 import styles from "./base.module.scss";
 
+import type { FocusEvent } from "react";
 import type { RootlessProps } from "#types/props";
 import type { ButtonClickEvent } from "#components/fancy";
 
@@ -98,12 +100,18 @@ export function BaseLayout({ children }: Props) {
 }
 
 function AccountNav() {
+  const router = useRouter();
   const { account, isLoading } = useAccount();
   const [isOpen, changeOpen] = useState(false);
   const isLoggedIn = Boolean(!isLoading && account);
+  const { locale, defaultLocale } = router;
+
+  function handleClosing(event: FocusEvent<HTMLLIElement>) {
+    
+  }
 
   return (
-    <NavItem
+    <NavItem onBlur={handleClosing}
       className={clsx(
         styles.account,
         isLoading && styles.account_loading,
@@ -122,6 +130,9 @@ function AccountNav() {
       <NavList className={clsx(styles.list)}>
         {isLoggedIn ? (
           <>
+            <NavItem>
+              <Language isoCode={locale ?? defaultLocale!} />
+            </NavItem>
             <NavItem>
               <LinkInternal href="/account" className={styles.navLink}>
                 <span>Information</span>
@@ -161,4 +172,8 @@ function AccountNav() {
       </NavList>
     </NavItem>
   );
+}
+
+function Language({ isoCode }: { isoCode: string }) {
+  return <span>{isoCode}</span>;
 }
