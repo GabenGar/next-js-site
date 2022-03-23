@@ -68,7 +68,7 @@ export function BaseLayout({ children }: Props) {
               </LinkInternal>
             </NavItem>
             <NavItem className={styles.lang}>
-              <LanguageView isoCode={locale ?? defaultLocale!} />
+              <LanguageView langString={locale ?? defaultLocale!} />
             </NavItem>
             <AccountNav />
           </NavList>

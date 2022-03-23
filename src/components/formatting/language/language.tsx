@@ -6,13 +6,13 @@ import type { BlockProps } from "#types/props";
 import type { BCPLangTag } from "#lib/language";
 
 export interface ILanguageViewProps extends BlockProps<"p"> {
-  isoCode: BCPLangTag;
+  langString: BCPLangTag;
 }
 
 export const LanguageView = blockComponent(
   styles.block,
-  ({ isoCode, ...blockProps }: ILanguageViewProps) => {
-    const { language } = parseLangTag(isoCode);
+  ({ langString, ...blockProps }: ILanguageViewProps) => {
+    const { language } = parseLangTag(langString);
 
     return (
       <p {...blockProps}>
