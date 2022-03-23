@@ -101,9 +101,13 @@
   text-transform: capitalize;
 }
 
+.lang {
+  margin-left: auto;
+}
+
 .account {
   position: relative;
-  margin-left: auto;
+
 
   & .list {
     position: absolute;

@@ -8,6 +8,7 @@ import {
   setCurrentTheme,
   getCurrentTheme,
 } from "#lib/theme";
+import { LanguageView } from "#components/formatting/language";
 import { useAccount } from "#lib/hooks";
 import { SVGIcon } from "#components/icons";
 import { Button } from "#components/fancy";
@@ -24,6 +25,9 @@ import type { ButtonClickEvent } from "#components/fancy";
 interface Props extends RootlessProps {}
 
 export function BaseLayout({ children }: Props) {
+  const router = useRouter();
+  const { locale, defaultLocale } = router;
+
   // const [currentTheme, switchCurrentTheme] = useState("");
 
   // useEffect(() => {
@@ -63,6 +67,9 @@ export function BaseLayout({ children }: Props) {
                 <span>About</span>
               </LinkInternal>
             </NavItem>
+            <NavItem className={styles.lang}>
+              <LanguageView isoCode={locale ?? defaultLocale!} />
+            </NavItem>
             <AccountNav />
           </NavList>
         </FancyNav>
@@ -100,18 +107,15 @@ export function BaseLayout({ children }: Props) {
 }
 
 function AccountNav() {
-  const router = useRouter();
   const { account, isLoading } = useAccount();
   const [isOpen, changeOpen] = useState(false);
   const isLoggedIn = Boolean(!isLoading && account);
-  const { locale, defaultLocale } = router;
 
-  function handleClosing(event: FocusEvent<HTMLLIElement>) {
-    
-  }
+  function handleClosing(event: FocusEvent<HTMLLIElement>) {}
 
   return (
-    <NavItem onBlur={handleClosing}
+    <NavItem
+      onBlur={handleClosing}
       className={clsx(
         styles.account,
         isLoading && styles.account_loading,
@@ -130,9 +134,6 @@ function AccountNav() {
       <NavList className={clsx(styles.list)}>
         {isLoggedIn ? (
           <>
-            <NavItem>
-              <Language isoCode={locale ?? defaultLocale!} />
-            </NavItem>
             <NavItem>
               <LinkInternal href="/account" className={styles.navLink}>
                 <span>Information</span>
@@ -172,8 +173,4 @@ function AccountNav() {
       </NavList>
     </NavItem>
   );
-}
-
-function Language({ isoCode }: { isoCode: string }) {
-  return <span>{isoCode}</span>;
 }
