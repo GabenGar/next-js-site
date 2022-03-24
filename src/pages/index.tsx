@@ -1,22 +1,31 @@
 import Head from "next/head";
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { siteTitle } from "#lib/util";
 import { Page } from "#components/pages";
 import { Nav, NavItem, NavList } from "#components/navigation";
 import { LinkInternal } from "#components/links";
 import { FELogo } from "#components/icons/logos";
 
-import type { NextPage } from "next";
+import type { ParsedUrlQuery } from "querystring";
+import type { GetStaticProps, InferGetStaticPropsType } from "next";
+import type { BasePageProps } from "#types/pages";
 
-const Home: NextPage = () => {
-  const pageTitle = "Welcome to my site!";
+interface IHomePageProps extends BasePageProps {}
+
+interface IHomePageParams extends ParsedUrlQuery {}
+
+function Home({}: InferGetStaticPropsType<typeof getStaticProps>) {
+  const { t } = useTranslation("common")
+  const pageTitle = t("title");
 
   return (
     <Page heading={pageTitle}>
       <Head>
-        <title>{siteTitle("Welcome page")}</title>
+        <title>{siteTitle(pageTitle)}</title>
         <meta
           name="description"
-          content="This is the site of mine made with nextjs."
+          content={t("description")}
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -33,6 +42,16 @@ const Home: NextPage = () => {
       </Nav>
     </Page>
   );
-};
+}
+
+export const getStaticProps: GetStaticProps<IHomePageProps, IHomePageParams> =
+  async ({ locale }) => {
+
+    return {
+      props: {
+        ...(await serverSideTranslations(locale!, ["common"])),
+      },
+    };
+  };
 
 export default Home;

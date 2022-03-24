@@ -33,6 +33,10 @@
     {
       "fileMatch": ["config.json"],
       "url": "./schema/config.schema.json"
+    },
+    {
+      "fileMatch": ["public/locales/**/*.json"],
+      "url": "./schema/localization.schema.json"
     }
   ],
   "xmlTools.enforcePrettySelfClosingTagOnFormat": true,

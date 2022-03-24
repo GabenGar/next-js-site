@@ -1,4 +1,5 @@
 import "#styles/globals.scss";
+import { appWithTranslation } from "next-i18next";
 import { Provider as ReduxProvider } from "react-redux";
 import { reduxStore } from "#store/redux";
 import { BaseLayout } from "#components/layout";
@@ -25,4 +26,4 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   );
 }
 
-export default MyApp;
+export default appWithTranslation(MyApp);
