@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
 import { REPOSITORY, EMAIL_ADDRESS } from "#environment/vars";
 import {
   AVAILABLE_THEMES,
@@ -26,6 +27,7 @@ interface Props extends RootlessProps {}
 
 export function BaseLayout({ children }: Props) {
   const router = useRouter();
+  const { t } = useTranslation("layout");
   const { locale, defaultLocale } = router;
 
   // const [currentTheme, switchCurrentTheme] = useState("");
@@ -52,19 +54,19 @@ export function BaseLayout({ children }: Props) {
             <NavItem>
               <LinkInternal href="/" className={styles.navLink}>
                 <SVGIcon iconID="react" />
-                <span>Home</span>
+                <span>{t("home")}</span>
               </LinkInternal>
             </NavItem>
             <NavItem>
               <LinkInternal href="/blog" className={styles.navLink}>
                 <SVGIcon iconID="blog" />
-                <span>Blog</span>
+                <span>{t("blog")}</span>
               </LinkInternal>
             </NavItem>
             <NavItem>
               <LinkInternal href="/about" className={styles.navLink}>
                 <SVGIcon iconID="biohazard" />
-                <span>About</span>
+                <span>{t("about")}</span>
               </LinkInternal>
             </NavItem>
             <NavItem className={styles.lang}>
@@ -91,13 +93,13 @@ export function BaseLayout({ children }: Props) {
             <NavItem>
               <LinkExternal href={REPOSITORY} className={styles.navLink}>
                 <SVGIcon iconID="github" />
-                <span>Source code</span>
+                <span>{t("source-code")}</span>
               </LinkExternal>
             </NavItem>
           </NavList>
         </FancyNav>
         <address className={styles.contacts}>
-          Contacts:
+          {t("contacts")}:
           <br />
           <LinkEmail email={EMAIL_ADDRESS}>Email</LinkEmail>
         </address>
@@ -107,15 +109,20 @@ export function BaseLayout({ children }: Props) {
 }
 
 function AccountNav() {
+  const { t } = useTranslation("layout");
   const { account, isLoading } = useAccount();
   const [isOpen, changeOpen] = useState(false);
   const isLoggedIn = Boolean(!isLoading && account);
 
-  function handleClosing(event: FocusEvent<HTMLLIElement>) {}
-
   return (
     <NavItem
-      onBlur={handleClosing}
+      onBlur={(event) => {
+        if (event.currentTarget.contains(event.relatedTarget as Node)) {
+          event.preventDefault();
+          return;
+        }
+        changeOpen(false);
+      }}
       className={clsx(
         styles.account,
         isLoading && styles.account_loading,
@@ -129,14 +136,14 @@ function AccountNav() {
         }}
       >
         <SVGIcon iconID="user-circle" />
-        <span>Account</span>
+        <span>{t("account")}</span>
       </Button>
       <NavList className={clsx(styles.list)}>
         {isLoggedIn ? (
           <>
             <NavItem>
               <LinkInternal href="/account" className={styles.navLink}>
-                <span>Information</span>
+                <span>{t("information")}</span>
                 <SVGIcon iconID="address-card" />
               </LinkInternal>
             </NavItem>
@@ -147,7 +154,7 @@ function AccountNav() {
                 action="/auth/logout"
                 submitButton={
                   <ButtonSubmit className={styles.button}>
-                    <span>Logout</span>
+                    <span>{t("logout")}</span>
                     <SVGIcon iconID="sign-out-alt" />
                   </ButtonSubmit>
                 }
@@ -158,13 +165,13 @@ function AccountNav() {
           <>
             <NavItem>
               <LinkInternal href="/auth/register" className={styles.navLink}>
-                <span>Register</span>
+                <span>{t("register")}</span>
                 <SVGIcon iconID="user-plus" />
               </LinkInternal>
             </NavItem>
             <NavItem>
               <LinkInternal href="/auth/login" className={styles.navLink}>
-                <span>Login</span>
+                <span>{t("login")}</span>
                 <SVGIcon iconID="sign-in-alt" />
               </LinkInternal>
             </NavItem>

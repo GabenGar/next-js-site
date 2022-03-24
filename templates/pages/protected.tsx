@@ -1,4 +1,6 @@
 import Head from "next/head";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { IS_DEVELOPMENT } from "#environment/derived";
 import { siteTitle } from "#lib/util";
 import { getAccountDetails, withSessionSSR } from "#lib/account";
@@ -28,7 +30,8 @@ function TemplatePage({
 }
 
 export const getServerSideProps = withSessionSSR<ITemplatePageProps>(
-  async ({ req }) => {
+  async (context) => {
+    const { req, locale } = context
     if (!IS_DEVELOPMENT) {
       return {
         notFound: true,
@@ -57,6 +60,7 @@ export const getServerSideProps = withSessionSSR<ITemplatePageProps>(
     const { id, password, ...accountClient } = account;
     return {
       props: {
+        ...(await serverSideTranslations(locale!, ["layout"])),
         account: accountClient,
       },
     };

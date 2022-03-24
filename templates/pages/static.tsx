@@ -1,4 +1,6 @@
 import Head from "next/head";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { IS_DEVELOPMENT } from "#environment/derived";
 import { siteTitle } from "#lib/util";
 import { Page } from "#components/pages";
@@ -38,8 +40,13 @@ TemplatePage.getLayout = function getLayout(page: NextPage) {
 export const getStaticPaths: GetStaticPaths<ITemplatePageParams> = async (
   context
 ) => {
+  const { locales } = context;
+  const paths = locales!.map((locale) => {
+    return { params: {}, locale }
+  })
+
   return {
-    paths: [{ params: {} }],
+    paths,
     fallback: false,
   };
 };
@@ -48,22 +55,17 @@ export const getStaticProps: GetStaticProps<
   ITemplatePageProps,
   ITemplatePageParams
 > = async (context) => {
+  const { locale } = context;
   if (!IS_DEVELOPMENT) {
     return {
       notFound: true,
     };
   }
 
-  const data = undefined;
-
-  if (!data) {
-    return {
-      notFound: true,
-    };
-  }
-
   return {
-    props: {},
+    props: {
+      ...(await serverSideTranslations(locale!, ["layout"])),
+    },
   };
 };
 

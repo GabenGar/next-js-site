@@ -1,3 +1,4 @@
+// @ts-check
 const IS_DEVELOPMENT = process.env.NODE_ENV === "development"
 
 /**
@@ -8,5 +9,5 @@ module.exports = {
     locales: ["en", "ru"],
     defaultLocale: "en"
   },
-  reloadOnPrerender: IS_DEVELOPMENT
+  reloadOnPrerender: IS_DEVELOPMENT,
 };

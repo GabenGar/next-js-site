@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { useTranslation } from "next-i18next";
 import { IS_INVITE_ONLY } from "#environment/derived"
 import { AuthError } from "#types/errors";
 import { getReqBody } from "#lib/util";

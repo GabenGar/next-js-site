@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { siteTitle } from "#lib/util";
 import { Page } from "#components/pages";
@@ -16,17 +16,14 @@ interface IHomePageProps extends BasePageProps {}
 interface IHomePageParams extends ParsedUrlQuery {}
 
 function Home({}: InferGetStaticPropsType<typeof getStaticProps>) {
-  const { t } = useTranslation("common")
+  const { t } = useTranslation("common");
   const pageTitle = t("title");
 
   return (
     <Page heading={pageTitle}>
       <Head>
         <title>{siteTitle(pageTitle)}</title>
-        <meta
-          name="description"
-          content={t("description")}
-        />
+        <meta name="description" content={t("description")} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -46,10 +43,9 @@ function Home({}: InferGetStaticPropsType<typeof getStaticProps>) {
 
 export const getStaticProps: GetStaticProps<IHomePageProps, IHomePageParams> =
   async ({ locale }) => {
-
     return {
       props: {
-        ...(await serverSideTranslations(locale!, ["common"])),
+        ...(await serverSideTranslations(locale!, ["layout", "common"])),
       },
     };
   };
