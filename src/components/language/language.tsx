@@ -17,7 +17,8 @@ export const LanguageView = blockComponent(
     return (
       <p {...blockProps}>
         <span className={styles.lang}>{language}</span>{" "}
-        <span className={styles.region}>{getLangName(language!, true)}</span>
+        <span className={styles.region}>{getLangName(language!, true)}</span> (
+        <span>{getLangName(language!)}</span>)
       </p>
     );
   }

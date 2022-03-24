@@ -8,7 +8,7 @@ import {
   setCurrentTheme,
   getCurrentTheme,
 } from "#lib/theme";
-import { LanguageView } from "#components/formatting/language";
+import { LanguageSwitcher } from "#components/language";
 import { useAccount } from "#lib/hooks";
 import { SVGIcon } from "#components/icons";
 import { Button } from "#components/fancy";
@@ -68,7 +68,7 @@ export function BaseLayout({ children }: Props) {
               </LinkInternal>
             </NavItem>
             <NavItem className={styles.lang}>
-              <LanguageView langString={locale ?? defaultLocale!} />
+              <LanguageSwitcher />
             </NavItem>
             <AccountNav />
           </NavList>

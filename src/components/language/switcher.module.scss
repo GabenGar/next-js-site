@@ -1,0 +1,34 @@
+@use "../../styles/variables/sass.scss" as *;
+
+.block {
+  position: relative;
+}
+
+.lang {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.region {
+}
+
+.list {
+  position: absolute;
+  right: 0;
+  visibility: hidden;
+  opacity: 0;
+  // @TODO: auto-width
+  width: 12em;
+  background-color: var(--colour1-primary);
+  border-radius: $radius-small 0 $radius-small $radius-small;
+  padding: $size-small;
+  box-shadow: 0 0 3px 3px var(--colour0-tertiary-transparent);
+
+  transition-duration: var(--duration-global);
+  transition-property: visibility, opacity;
+
+  &_open {
+    visibility: visible;
+    opacity: 1;
+  }
+}

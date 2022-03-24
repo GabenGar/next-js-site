@@ -1,3 +1,3 @@
 export { CardList, GalleryList } from "./card-list/_index";
-export { List } from "./list";
-export type { IListProps } from "./list";
+export { List, ListItem } from "./list";
+export type { IListProps, IListItemProps } from "./list";
