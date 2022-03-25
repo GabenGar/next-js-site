@@ -4,6 +4,7 @@ export {
   formatYear,
   formatTime,
   formatDateStamp,
+  formatWeekDay
 } from "./format";
 export {
   fromISOString,
@@ -18,6 +19,9 @@ export {
   startOfDay,
   getMonth,
   getYear,
+  startOfWeek,
+  endOfWeek,
+  eachDayOfInterval,
 } from "./lib";
 export {
   isAllowedTime,

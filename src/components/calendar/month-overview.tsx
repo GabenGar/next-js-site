@@ -10,10 +10,11 @@ import {
   isSameMonth,
   isWeekend,
   getDayOfMonth,
-  daysInWeek
+  daysInWeek,
 } from "#lib/dates";
 import { useAppDispatch, useAppSelector } from "#store/redux";
 import { selectCalendar, getMonthNotes } from "#store/redux/reducers";
+import { WeekDays } from "#components/dates"
 import { DayOverview } from "./day-overview";
 import styles from "./_index.module.scss";
 
@@ -22,8 +23,7 @@ import type { IISODateTime } from "#codegen/schema/interfaces";
 interface IMonthOverviewProps {}
 
 /**
- * @todo Fix notes not syncing with state.
- * @todo Fix notes sorting after state change.
+ * @TODO weekdays locale
  */
 export function MonthOverview({}: IMonthOverviewProps) {
   const dispatch = useAppDispatch();
@@ -41,6 +41,7 @@ export function MonthOverview({}: IMonthOverviewProps) {
 
   return (
     <>
+      <WeekDays />
       <div className={styles.days}>
         {days.map((dayDate, index) => {
           const className = clsx(
