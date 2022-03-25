@@ -4,5 +4,7 @@
   "account_role": "Role",
   "account_email": "Email",
   "account_joined_at": "Joined at",
-  "dd_unknown": "unknown"
+  "dd_unknown": "unknown",
+  "previous": "Previous",
+  "next": "Next"
 }

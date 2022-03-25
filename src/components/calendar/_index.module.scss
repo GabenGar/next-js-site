@@ -22,6 +22,7 @@
   border-bottom: none;
 }
 
+// @TODO: dynamic width
 .button {
   flex-basis: 3em;
 
@@ -30,7 +31,7 @@
   }
 
   @media (min-width: $width-tablet) {
-    flex-basis: 7em;
+    flex-basis: 9em;
 
     & span:nth-child(2) {
       display: initial;

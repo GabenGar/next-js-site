@@ -4,5 +4,7 @@
   "account_role": "Роль",
   "account_email": "Электронный ящик",
   "account_joined_at": "Присоединился",
-  "dd_unknown": "неизвестно"
+  "dd_unknown": "неизвестно",
+  "previous": "Предыдущий",
+  "next": "Следующий"
 }

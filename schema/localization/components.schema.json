@@ -9,6 +9,8 @@
     "account_email",
     "account_joined_at",
     "account_role",
-    "dd_unknown"
+    "dd_unknown",
+    "previous",
+    "next"
   ]
 }

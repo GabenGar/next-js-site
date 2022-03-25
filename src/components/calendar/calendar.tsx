@@ -1,3 +1,4 @@
+import { useTranslation } from "next-i18next";
 import {
   formatMonth,
   formatYear,
@@ -23,6 +24,7 @@ export interface ICalendarProps extends IDivProps {
 export const Calendar = blockComponent<ICalendarProps>(
   styles.block,
   ({ currentDate, ...blockProps }) => {
+    const { t } = useTranslation("components")
     const dispatch = useAppDispatch();
     const { selectedDate } = useAppSelector(selectCalendar);
 
@@ -53,7 +55,7 @@ export const Calendar = blockComponent<ICalendarProps>(
             iconID="chevron-left"
             onClick={previousYear}
           >
-            Previous
+            {t("previous")}
           </Button>
           <span>{formatYear(selectedDate)}</span>
           <Button
@@ -61,7 +63,7 @@ export const Calendar = blockComponent<ICalendarProps>(
             iconID="chevron-right"
             onClick={nextYear}
           >
-            Next
+            {t("next")}
           </Button>
         </div>
         <div className={styles.month}>
@@ -70,7 +72,7 @@ export const Calendar = blockComponent<ICalendarProps>(
             iconID="chevron-left"
             onClick={previousMonth}
           >
-            Previous
+            {t("previous")}
           </Button>
           <span>{formatMonth(selectedDate)}</span>
           <Button
@@ -78,7 +80,7 @@ export const Calendar = blockComponent<ICalendarProps>(
             iconID="chevron-right"
             onClick={nextMonth}
           >
-            Next
+            {t("next")}
           </Button>
         </div>
         <MonthOverview />
