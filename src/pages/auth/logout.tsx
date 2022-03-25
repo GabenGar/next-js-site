@@ -1,5 +1,8 @@
 import Head from "next/head";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { withSessionSSR } from "#lib/account";
+import { siteTitle } from "#lib/util";
 import { Page } from "#components/pages";
 import { Form } from "#components/forms";
 
@@ -11,19 +14,21 @@ interface LogoutPageProps extends BasePageProps {}
 export function LogoutPage({}: InferGetServerSidePropsType<
   typeof getServerSideProps
 >) {
+  const { t } = useTranslation("auth");
+  const title = t("logout_title");
   return (
-    <Page heading="Logout">
+    <Page heading={title}>
       <Head>
-        <title>Logout</title>
-        <meta name="description" content="Logout" />
+        <title>{siteTitle(title)}</title>
+        <meta name="description" content={t("logout_desc")} />
       </Head>
-      <Form method="POST" submitButton="Logout"/>
+      <Form method="POST" submitButton={t("log_out")} />
     </Page>
   );
 }
 
 export const getServerSideProps = withSessionSSR<LogoutPageProps>(
-  async ({ req }) => {
+  async ({ req, locale }) => {
     const { account_id } = req.session;
 
     if (!account_id) {
@@ -34,6 +39,12 @@ export const getServerSideProps = withSessionSSR<LogoutPageProps>(
         },
       };
     }
+
+    const localization = await serverSideTranslations(locale!, [
+      "layout",
+      "components",
+      "auth",
+    ]);
 
     if (req.method === "POST") {
       req.session.destroy();
@@ -47,7 +58,9 @@ export const getServerSideProps = withSessionSSR<LogoutPageProps>(
     }
 
     return {
-      props: {},
+      props: {
+        ...localization,
+      },
     };
   }
 );

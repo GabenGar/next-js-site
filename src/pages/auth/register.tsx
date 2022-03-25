@@ -39,7 +39,7 @@ function RegisterPage({
         <title>{siteTitle(title)}</title>
         <meta name="description" content={t("reg_desc")} />
       </Head>
-      <Form method="POST">
+      <Form method="POST" submitButton={t("register")}>
         <p>
           {t("already_registered")}?{" "}
           <LinkInternal href="/auth/login">{t("log_in")}</LinkInternal>

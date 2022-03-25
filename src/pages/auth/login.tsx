@@ -39,7 +39,7 @@ export function LoginPage({
         <title>{title}</title>
         <meta name="description" content={t("login_desc")} />
       </Head>
-      <Form method="POST">
+      <Form method="POST" submitButton={t("log_in")}>
         <p>
           {t("not_registered")}?{" "}
           <LinkInternal href="/auth/register">{t("register")}</LinkInternal>

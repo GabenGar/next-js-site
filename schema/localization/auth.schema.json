@@ -10,6 +10,13 @@
     "log_in",
     "invite_code",
     "acc_name",
-    "acc_password"
+    "acc_password",
+    "login_title",
+    "login_desc",
+    "not_registered",
+    "register",
+    "logout_title",
+    "logout_desc",
+    "log_out"
   ]
 }
