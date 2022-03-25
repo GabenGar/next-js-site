@@ -1,4 +1,6 @@
 import Head from "next/head";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { siteTitle } from "#lib/util";
 import { getAllSlugs, getBlogPost } from "#lib/blog";
 import { Page } from "#components/pages";
@@ -8,7 +10,6 @@ import type {
   GetStaticPaths,
   GetStaticProps,
   InferGetStaticPropsType,
-  NextPage,
 } from "next";
 import type { ParsedUrlQuery } from "querystring";
 import type { BasePageProps } from "#types/pages";
@@ -36,9 +37,9 @@ function BlogPostPage({
   );
 }
 
-export const getStaticPaths: GetStaticPaths<BlogPostPageParams> = async (
-  context
-) => {
+export const getStaticPaths: GetStaticPaths<BlogPostPageParams> = async ({
+  locales,
+}) => {
   const allSlugs = await getAllSlugs();
   const paths = allSlugs.map<{ params: BlogPostPageParams }>((slug) => {
     return { params: { slug } };
@@ -53,13 +54,19 @@ export const getStaticPaths: GetStaticPaths<BlogPostPageParams> = async (
 export const getStaticProps: GetStaticProps<
   BlogPostPageProps,
   BlogPostPageParams
-> = async (context) => {
-  const { slug } = context.params!;
+> = async ({ locale, params }) => {
+  const { slug } = params!;
 
   const post = await getBlogPost(slug);
+  const localization = await serverSideTranslations(locale!, [
+    "layout",
+    "components",
+    "blog",
+  ]);
 
   return {
     props: {
+      ...localization,
       post,
     },
   };
