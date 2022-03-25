@@ -5,7 +5,7 @@ import { IS_DEVELOPMENT } from "#environment/derived";
 import { siteTitle } from "#lib/util";
 import { getAccountDetails, withSessionSSR } from "#lib/account";
 import { Page } from "#components/pages";
-import { JSONView } from "#components/json"
+import { JSONView } from "#components/json";
 
 import type { InferGetServerSidePropsType } from "next";
 import type { IAccountClient } from "#types/entities";
@@ -31,7 +31,7 @@ function TemplatePage({
 
 export const getServerSideProps = withSessionSSR<ITemplatePageProps>(
   async (context) => {
-    const { req, locale } = context
+    const { req, locale } = context;
     if (!IS_DEVELOPMENT) {
       return {
         notFound: true,
@@ -58,9 +58,14 @@ export const getServerSideProps = withSessionSSR<ITemplatePageProps>(
       };
     }
     const { id, password, ...accountClient } = account;
+    const localization = await serverSideTranslations(locale!, [
+      "layout",
+      "components",
+    ]);
+
     return {
       props: {
-        ...(await serverSideTranslations(locale!, ["layout"])),
+        ...localization,
         account: accountClient,
       },
     };

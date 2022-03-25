@@ -56,9 +56,14 @@ export const getServerSideProps: GetServerSideProps<
     };
   }
 
+  const localization = await serverSideTranslations(locale!, [
+    "layout",
+    "components",
+  ]);
+
   return {
     props: {
-      ...(await serverSideTranslations(locale!, ["layout"])),
+      ...localization,
     },
   };
 };

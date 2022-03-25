@@ -97,6 +97,7 @@ export const getServerSideProps = withSessionSSR<RegisterPageProps>(
 
     const localization = await serverSideTranslations(locale!, [
       "layout",
+      "components",
       "auth",
     ]);
 

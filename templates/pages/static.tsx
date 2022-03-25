@@ -42,8 +42,8 @@ export const getStaticPaths: GetStaticPaths<ITemplatePageParams> = async (
 ) => {
   const { locales } = context;
   const paths = locales!.map((locale) => {
-    return { params: {}, locale }
-  })
+    return { params: {}, locale };
+  });
 
   return {
     paths,
@@ -56,15 +56,21 @@ export const getStaticProps: GetStaticProps<
   ITemplatePageParams
 > = async (context) => {
   const { locale } = context;
+
   if (!IS_DEVELOPMENT) {
     return {
       notFound: true,
     };
   }
 
+  const localization = await serverSideTranslations(locale!, [
+    "layout",
+    "components",
+  ]);
+
   return {
     props: {
-      ...(await serverSideTranslations(locale!, ["layout"])),
+      ...localization,
     },
   };
 };

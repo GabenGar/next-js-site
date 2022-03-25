@@ -43,9 +43,15 @@ function Home({}: InferGetStaticPropsType<typeof getStaticProps>) {
 
 export const getStaticProps: GetStaticProps<IHomePageProps, IHomePageParams> =
   async ({ locale }) => {
+    const localization = await serverSideTranslations(locale!, [
+      "layout",
+      "components",
+      "common",
+    ]);
+
     return {
       props: {
-        ...(await serverSideTranslations(locale!, ["layout", "common"])),
+        ...localization,
       },
     };
   };

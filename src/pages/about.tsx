@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { AdminPhoto } from "#assets";
 import { siteTitle } from "#lib/util";
 import { Page } from "#components/pages";
@@ -13,6 +14,14 @@ import { ImageFigure } from "#components/images";
 import { DL, DS, DT, DD } from "#components/lists/d-list";
 import { SVGIcon } from "#components/icons";
 import styles from "./about.module.scss";
+
+import type { ParsedUrlQuery } from "querystring";
+import type { GetStaticProps, InferGetStaticPropsType } from "next";
+import type { BasePageProps } from "#types/pages";
+
+interface IAboutPageProps extends BasePageProps {}
+
+interface IAboutPageParams extends ParsedUrlQuery {}
 
 function AboutPage() {
   const pageTitle = "About me";
@@ -117,5 +126,19 @@ function AboutPage() {
     </Page>
   );
 }
+
+export const getStaticProps: GetStaticProps<IAboutPageProps, IAboutPageParams> =
+  async ({ locale }) => {
+    const localization = await serverSideTranslations(locale!, [
+      "layout",
+      "components"
+    ]);
+
+    return {
+      props: {
+        ...localization,
+      },
+    };
+  };
 
 export default AboutPage;
