@@ -1,3 +1,4 @@
+import { useTranslation } from "next-i18next";
 import { useAppDispatch } from "#store/redux";
 import { removeNoteAsync } from "#store/redux/reducers";
 import { HTMLUl } from "#components/html/ul";
@@ -13,12 +14,14 @@ interface INotesProps {
 }
 
 export function Notes({ notes }: INotesProps) {
+  const { t } = useTranslation("components");
   const dispatch = useAppDispatch();
+
   return (
     <div className={styles.notes}>
       <HTMLUl className={styles.list}>
         {!notes.length ? (
-          <HTMLLi>No notes exist for this day.</HTMLLi>
+          <HTMLLi>{t("calendar_no_notes")}</HTMLLi>
         ) : (
           notes.map((note) => (
             <HTMLLi key={note.id} className={styles.note}>
@@ -34,7 +37,7 @@ export function Notes({ notes }: INotesProps) {
                   dispatch(removeNoteAsync(note.id));
                 }}
               >
-                Remove
+                {t("remove")}
               </Button>
             </HTMLLi>
           ))

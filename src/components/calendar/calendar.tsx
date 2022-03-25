@@ -21,70 +21,69 @@ export interface ICalendarProps extends IDivProps {
   currentDate: IISODateTime;
 }
 
-export const Calendar = blockComponent<ICalendarProps>(
-  styles.block,
-  ({ currentDate, ...blockProps }) => {
-    const { t } = useTranslation("components")
-    const dispatch = useAppDispatch();
-    const { selectedDate } = useAppSelector(selectCalendar);
+export const Calendar = blockComponent<ICalendarProps>(styles.block, Component);
 
-    function previousYear() {
-      const newDate = subtractYears(selectedDate, 1);
-      dispatch(changeSelectedDate(newDate));
-    }
+function Component({ currentDate, ...blockProps }: ICalendarProps) {
+  const { t } = useTranslation("components");
+  const dispatch = useAppDispatch();
+  const { selectedDate } = useAppSelector(selectCalendar);
 
-    function nextYear() {
-      const newDate = addYears(selectedDate, 1);
-      dispatch(changeSelectedDate(newDate));
-    }
-
-    function previousMonth() {
-      const newDate = subtractMonths(selectedDate, 1);
-      dispatch(changeSelectedDate(newDate));
-    }
-    function nextMonth() {
-      const newDate = addMonths(selectedDate, 1);
-      dispatch(changeSelectedDate(newDate));
-    }
-
-    return (
-      <div {...blockProps}>
-        <div className={styles.year}>
-          <Button
-            className={styles.button}
-            iconID="chevron-left"
-            onClick={previousYear}
-          >
-            {t("previous")}
-          </Button>
-          <span>{formatYear(selectedDate)}</span>
-          <Button
-            className={styles.button}
-            iconID="chevron-right"
-            onClick={nextYear}
-          >
-            {t("next")}
-          </Button>
-        </div>
-        <div className={styles.month}>
-          <Button
-            className={styles.button}
-            iconID="chevron-left"
-            onClick={previousMonth}
-          >
-            {t("previous")}
-          </Button>
-          <span>{formatMonth(selectedDate)}</span>
-          <Button
-            className={styles.button}
-            iconID="chevron-right"
-            onClick={nextMonth}
-          >
-            {t("next")}
-          </Button>
-        </div>
-        <MonthOverview />
-      </div>
-    );
+  function previousYear() {
+    const newDate = subtractYears(selectedDate, 1);
+    dispatch(changeSelectedDate(newDate));
   }
-);
+
+  function nextYear() {
+    const newDate = addYears(selectedDate, 1);
+    dispatch(changeSelectedDate(newDate));
+  }
+
+  function previousMonth() {
+    const newDate = subtractMonths(selectedDate, 1);
+    dispatch(changeSelectedDate(newDate));
+  }
+  function nextMonth() {
+    const newDate = addMonths(selectedDate, 1);
+    dispatch(changeSelectedDate(newDate));
+  }
+
+  return (
+    <div {...blockProps}>
+      <div className={styles.year}>
+        <Button
+          className={styles.button}
+          iconID="chevron-left"
+          onClick={previousYear}
+        >
+          {t("previous")}
+        </Button>
+        <span>{formatYear(selectedDate)}</span>
+        <Button
+          className={styles.button}
+          iconID="chevron-right"
+          onClick={nextYear}
+        >
+          {t("next")}
+        </Button>
+      </div>
+      <div className={styles.month}>
+        <Button
+          className={styles.button}
+          iconID="chevron-left"
+          onClick={previousMonth}
+        >
+          {t("previous")}
+        </Button>
+        <span>{formatMonth(selectedDate)}</span>
+        <Button
+          className={styles.button}
+          iconID="chevron-right"
+          onClick={nextMonth}
+        >
+          {t("next")}
+        </Button>
+      </div>
+      <MonthOverview />
+    </div>
+  );
+}

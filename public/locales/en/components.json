@@ -6,5 +6,11 @@
   "account_joined_at": "Joined at",
   "dd_unknown": "unknown",
   "previous": "Previous",
-  "next": "Next"
+  "next": "Next",
+  "add": "Add",
+  "remove": "Remove",
+  "calendar_day_overview": "Overview for",
+  "calendar_note_time": "Time",
+  "calendar_note_text": "Note",
+  "calendar_no_notes": "No notes exist for this day."
 }
