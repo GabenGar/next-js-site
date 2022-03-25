@@ -1,8 +1,9 @@
 import Head from "next/head";
 import { useTranslation } from "next-i18next";
-import { IS_INVITE_ONLY } from "#environment/derived"
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { IS_INVITE_ONLY } from "#environment/derived";
 import { AuthError } from "#types/errors";
-import { getReqBody } from "#lib/util";
+import { getReqBody, siteTitle } from "#lib/util";
 import {
   validateAccountInitFields,
   registerAccount,
@@ -30,32 +31,36 @@ function RegisterPage({
   errors,
   schemaValidationErrors,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const { t } = useTranslation("auth");
+  const title = t("reg_title");
   return (
-    <Page heading="Registration">
+    <Page heading={title}>
       <Head>
-        <title>Registration</title>
-        <meta name="description" content="Register account" />
+        <title>{siteTitle(title)}</title>
+        <meta name="description" content={t("reg_desc")} />
       </Head>
       <Form method="POST">
         <p>
-          Already registered?{" "}
-          <LinkInternal href="/auth/login">Log in</LinkInternal>
+          {t("already_registered")}?{" "}
+          <LinkInternal href="/auth/login">{t("log_in")}</LinkInternal>
         </p>
-        {IS_INVITE_ONLY && (<FormSectionText
-          id="acc-invite"
-          name="invite"
-          required
-          defaultValue={accCreds?.invite}
-        >
-          Invite code
-        </FormSectionText>)}
+        {IS_INVITE_ONLY && (
+          <FormSectionText
+            id="acc-invite"
+            name="invite"
+            required
+            defaultValue={accCreds?.invite}
+          >
+            {t("invite_code")}
+          </FormSectionText>
+        )}
         <FormSectionText
           id="acc-name"
           name="name"
           required
           defaultValue={accCreds?.name}
         >
-          Name
+          {t("acc_name")}
         </FormSectionText>
         <FormSectionPassword
           id="acc-password"
@@ -63,7 +68,7 @@ function RegisterPage({
           required
           defaultValue={accCreds?.password}
         >
-          Password
+          {t("acc_password")}
         </FormSectionPassword>
         {errors ? (
           <ErrorsView errors={errors} />
@@ -78,7 +83,7 @@ function RegisterPage({
 }
 
 export const getServerSideProps = withSessionSSR<RegisterPageProps>(
-  async ({ req }) => {
+  async ({ req, locale }) => {
     const { account_id } = req.session;
 
     if (account_id) {
@@ -90,18 +95,19 @@ export const getServerSideProps = withSessionSSR<RegisterPageProps>(
       };
     }
 
+    const localization = await serverSideTranslations(locale!, [
+      "layout",
+      "auth",
+    ]);
+
     if (req.method === "POST") {
       const accInit = await getReqBody<IAccountInit>(req);
       const result = await validateAccountInitFields(accInit);
 
       if (!result) {
-        const errors = Array.isArray(validateAccountInitFields.errors)
-          ? [...validateAccountInitFields.errors]
-          : [];
-
         return {
           props: {
-            schemaValidationErrors: errors,
+            schemaValidationErrors: [...validateAccountInitFields.errors!],
             accInit,
           },
         };
@@ -111,10 +117,11 @@ export const getServerSideProps = withSessionSSR<RegisterPageProps>(
         if (!accInit.invite) {
           return {
             props: {
+              ...localization,
               errors: ["No invite key is provided."],
               accInit,
-            }
-          }
+            },
+          };
         }
       }
 
@@ -123,6 +130,7 @@ export const getServerSideProps = withSessionSSR<RegisterPageProps>(
       if (newAcc instanceof AuthError) {
         return {
           props: {
+            ...localization,
             errors: [newAcc.message],
             accInit,
           },
@@ -141,7 +149,9 @@ export const getServerSideProps = withSessionSSR<RegisterPageProps>(
     }
 
     return {
-      props: {},
+      props: {
+        ...localization,
+      },
     };
   }
 );

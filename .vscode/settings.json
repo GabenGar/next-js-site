@@ -35,8 +35,12 @@
       "url": "./schema/config.schema.json"
     },
     {
-      "fileMatch": ["public/locales/**/*.json"],
-      "url": "./schema/localization.schema.json"
+      "fileMatch": ["public/locales/*/auth.json"],
+      "url": "./schema/localization/auth.schema.json"
+    },
+    {
+      "fileMatch": ["public/locales/*/components.json"],
+      "url": "./schema/localization/components.schema.json"
     }
   ],
   "xmlTools.enforcePrettySelfClosingTagOnFormat": true,

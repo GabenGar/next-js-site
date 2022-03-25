@@ -1,3 +1,4 @@
+import { useTranslation } from "next-i18next";
 import { blockComponent } from "#components/meta";
 import { HTMLForm } from "#components/html/form";
 import { ButtonSubmit } from "#components/buttons";
@@ -24,14 +25,17 @@ export interface ISubmitEvent extends FormEvent<HTMLFormElement> {}
 
 export const Form = blockComponent<FormProps>(
   styles.block,
-  ({ submitButton = "Submit", children, ...blockProps }) => {
+  ({ submitButton, children, ...blockProps }) => {
+    const { t } = useTranslation("components");
+    const finalSubmit = submitButton ?? t("submit");
+
     return (
       <HTMLForm {...blockProps}>
         {children}
         {typeof submitButton === "string" ? (
-          <ButtonSubmit>{submitButton}</ButtonSubmit>
+          <ButtonSubmit>{finalSubmit}</ButtonSubmit>
         ) : (
-          submitButton
+          finalSubmit
         )}
       </HTMLForm>
     );

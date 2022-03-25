@@ -8,6 +8,5 @@
   "register": "Register",
   "login": "Login",
   "logout": "Logout",
-  "contacts": "Contacts",
-  "already-registered"
+  "contacts": "Contacts"
 }

@@ -1,9 +1,0 @@
-{
-  "$id": "http://schemas.com/localization.schema.json",
-  "title": "ProjectLocalization",
-  "description": "Localization of the project.",
-  "type": "object",
-  "required": [],
-  "properties": {},
-  "additionalProperties": false
-}

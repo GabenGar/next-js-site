@@ -1,0 +1,9 @@
+{
+  "$id": "http://schemas.com/localization/auth.schema.json",
+  "title": "ComponentLocalization",
+  "description": "Localization for the components.",
+  "type": "object",
+  "required": [
+    "submit"
+  ]
+}
