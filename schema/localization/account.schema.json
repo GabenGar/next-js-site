@@ -1,5 +1,5 @@
 {
-  "$id": "http://schemas.com/localization/auth.schema.json",
+  "$id": "http://schemas.com/localization/account.schema.json",
   "title": "AccountLocalization",
   "description": "Localization for the account pages.",
   "type": "object",

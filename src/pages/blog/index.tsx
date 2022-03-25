@@ -1,4 +1,6 @@
 import Head from "next/head";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { siteTitle } from "#lib/util";
 import { getBlogPosts } from "#lib/blog";
 import { Page } from "#components/pages";
@@ -17,11 +19,14 @@ interface IBlogPageProps extends BasePageProps {
 interface IBlogPageParams extends ParsedUrlQuery {}
 
 function BlogPage({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
+  const { t } = useTranslation("blog");
+  const title = t("blog_title");
+
   return (
-    <Page heading="Blog">
+    <Page heading={title}>
       <Head>
-        <title>{siteTitle("Blog")}</title>
-        <meta name="description" content="My blog" />
+        <title>{siteTitle(title)}</title>
+        <meta name="description" content={"blog_desc"} />
       </Head>
       <CardList>
         {posts.map((post) => (
@@ -33,11 +38,17 @@ function BlogPage({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
 }
 
 export const getStaticProps: GetStaticProps<IBlogPageProps, IBlogPageParams> =
-  async (context) => {
+  async ({ locale }) => {
     const posts = await getBlogPosts();
+    const localization = await serverSideTranslations(locale!, [
+      "layout",
+      "components",
+      "blog",
+    ]);
 
     return {
       props: {
+        ...localization,
         posts,
       },
     };
