@@ -14,6 +14,9 @@
     "email_desc",
     "current_email",
     "new_email",
-    "confirmation_sent"
+    "confirmation_sent",
+    "calendar_title",
+    "calendar_desc",
+    "current_date"
   ]
 }

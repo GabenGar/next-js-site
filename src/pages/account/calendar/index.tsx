@@ -1,5 +1,7 @@
 import { useState } from "react";
 import Head from "next/head";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { siteTitle } from "#lib/util";
 import { getAccountDetails, withSessionSSR } from "#lib/account";
 import { nowISO } from "#lib/dates";
@@ -13,7 +15,6 @@ import type { InferGetServerSidePropsType } from "next";
 import type { IAccountClient } from "#types/entities";
 import type { BasePageProps } from "#types/pages";
 
-
 interface ICalendarPageProps extends BasePageProps {
   account: IAccountClient;
 }
@@ -21,19 +22,21 @@ interface ICalendarPageProps extends BasePageProps {
 function CalendarPage({
   account,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const [currentDate, changeCurrentDate] = useState(nowISO());
+  const { t } = useTranslation("account");
+  const title = t("calendar_title");
+  const currentDate = nowISO();
 
   return (
-    <Page heading="Calendar">
+    <Page heading={title}>
       <Head>
-        <title>{siteTitle("Calendar")}</title>
-        <meta name="description" content="Calendar info" />
+        <title>{siteTitle(title)}</title>
+        <meta name="description" content={t("calendar_desc")} />
       </Head>
       <Article>
         <ArticleHeader>
           <DL>
             <DS
-              dKey="Current Date"
+              dKey={t("current_date")}
               dValue={<DateTimeView dateTime={currentDate} />}
             />
           </DL>
@@ -47,8 +50,7 @@ function CalendarPage({
 }
 
 export const getServerSideProps = withSessionSSR<ICalendarPageProps>(
-  async ({ req }) => {
-
+  async ({ req, locale }) => {
     const { account_id } = req.session;
 
     if (!account_id) {
@@ -69,8 +71,15 @@ export const getServerSideProps = withSessionSSR<ICalendarPageProps>(
       };
     }
     const { id, password, ...accountClient } = account;
+    const localization = await serverSideTranslations(locale!, [
+      "layout",
+      "components",
+      "account",
+    ]);
+
     return {
       props: {
+        ...localization,
         account: accountClient,
       },
     };
