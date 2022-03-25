@@ -9,6 +9,11 @@
     "change_email",
     "add_email",
     "calendar",
-    "admin"
+    "admin",
+    "email_title",
+    "email_desc",
+    "current_email",
+    "new_email",
+    "confirmation_sent"
   ]
 }

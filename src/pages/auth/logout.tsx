@@ -52,7 +52,7 @@ export const getServerSideProps = withSessionSSR<LogoutPageProps>(
       return {
         redirect: {
           destination: "/",
-          permanent: false,
+          statusCode: 303
         },
       };
     }
