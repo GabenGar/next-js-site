@@ -12,5 +12,8 @@
   "calendar_day_overview": "Обзор за",
   "calendar_note_time": "Время",
   "calendar_note_text": "Запись",
-  "calendar_no_notes": "Без записей в этом дне."
+  "calendar_no_notes": "Без записей в этом дне.",
+  "blog_by": "Автор",
+  "blog_published": "Опубликован",
+  "blog_read_more": "Далее"
 }

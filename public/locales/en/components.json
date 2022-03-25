@@ -12,5 +12,8 @@
   "calendar_day_overview": "Overview for",
   "calendar_note_time": "Time",
   "calendar_note_text": "Note",
-  "calendar_no_notes": "No notes exist for this day."
+  "calendar_no_notes": "No notes exist for this day.",
+  "blog_by": "By",
+  "blog_published": "Published",
+  "blog_read_more": "Read more"
 }

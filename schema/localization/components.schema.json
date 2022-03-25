@@ -17,6 +17,9 @@
     "calendar_day_overview",
     "calendar_note_time",
     "calendar_note_text",
-    "calendar_no_notes"
+    "calendar_no_notes",
+    "blog_by",
+    "blog_published",
+    "blog_read_more"
   ]
 }
