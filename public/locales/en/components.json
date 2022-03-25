@@ -1,3 +1,8 @@
 {
-  "submit": "Submit"
+  "submit": "Submit",
+  "account_last_activity": "Last activity",
+  "account_role": "Role",
+  "account_email": "Email",
+  "account_joined_at": "Joined at",
+  "dd_unknown": "unknown"
 }

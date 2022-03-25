@@ -4,6 +4,11 @@
   "description": "Localization for the components.",
   "type": "object",
   "required": [
-    "submit"
+    "submit",
+    "account_last_activity",
+    "account_email",
+    "account_joined_at",
+    "account_role",
+    "dd_unknown"
   ]
 }
