@@ -163,16 +163,16 @@ function AccountNav() {
           </>
         ) : (
           <>
+          <NavItem>
+              <LinkInternal href="/auth/login" className={styles.navLink}>
+                <span>{t("login")}</span>
+                <SVGIcon iconID="sign-in-alt" />
+              </LinkInternal>
+            </NavItem>
             <NavItem>
               <LinkInternal href="/auth/register" className={styles.navLink}>
                 <span>{t("register")}</span>
                 <SVGIcon iconID="user-plus" />
-              </LinkInternal>
-            </NavItem>
-            <NavItem>
-              <LinkInternal href="/auth/login" className={styles.navLink}>
-                <span>{t("login")}</span>
-                <SVGIcon iconID="sign-in-alt" />
               </LinkInternal>
             </NavItem>
           </>

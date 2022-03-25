@@ -27,12 +27,12 @@ export const Form = blockComponent<FormProps>(
   styles.block,
   ({ submitButton, children, ...blockProps }) => {
     const { t } = useTranslation("components");
-    const finalSubmit = submitButton ?? t("submit");
+    const finalSubmit = submitButton || t("submit");
 
     return (
       <HTMLForm {...blockProps}>
         {children}
-        {typeof submitButton === "string" ? (
+        {typeof finalSubmit === "string" ? (
           <ButtonSubmit>{finalSubmit}</ButtonSubmit>
         ) : (
           finalSubmit
