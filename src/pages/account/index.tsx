@@ -1,6 +1,8 @@
 import Head from "next/head";
-import { IS_DEVELOPMENT } from "#environment/derived";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { getAccountDetails, withSessionSSR } from "#lib/account";
+import { siteTitle } from "#lib/util";
 import { LinkInternal } from "#components/links";
 import { Page } from "#components/pages";
 import { AccountCard } from "#components/cards";
@@ -19,24 +21,27 @@ interface AccountPageProps extends BasePageProps {
 function AccountPage({
   account,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const { t } = useTranslation("account");
+  const title = t("acc_title");
+
   return (
-    <Page heading="Account page">
+    <Page heading={title}>
       <Head>
-        <title>Account page</title>
-        <meta name="description" content="Account page" />
+        <title>{siteTitle(title)}</title>
+        <meta name="description" content={t("acc_desc")} />
       </Head>
 
       <Nav>
         <NavList>
           <NavItem>
             <LinkInternal href="/account/email">
-              {account.email ? "Change Email" : "Add email"}
+              {account.email ? t("change_email") : t("add_email")}
             </LinkInternal>
           </NavItem>
           <NavItem>
             <LinkInternal href="/account/calendar">
               <SVGIcon iconID="calendar" />
-              <span>Calendar</span>
+              <span>{t("calendar")}</span>
             </LinkInternal>
           </NavItem>
 
@@ -44,7 +49,7 @@ function AccountPage({
             <NavItem>
               <LinkInternal href="/account/admin">
                 <SVGIcon iconID="screwdriver-wrench" />
-                <span>Admin</span>
+                <span>{t("admin")}</span>
               </LinkInternal>
             </NavItem>
           )}
@@ -57,7 +62,7 @@ function AccountPage({
 }
 
 export const getServerSideProps = withSessionSSR<AccountPageProps>(
-  async ({ req }) => {
+  async ({ req, locale }) => {
     const { account_id } = req.session;
 
     if (!account_id) {
@@ -77,9 +82,17 @@ export const getServerSideProps = withSessionSSR<AccountPageProps>(
         notFound: true,
       };
     }
+
     const { id, password, ...accountClient } = account;
+    const localization = await serverSideTranslations(locale!, [
+      "layout",
+      "components",
+      "account",
+    ]);
+
     return {
       props: {
+        ...localization,
         account: accountClient,
       },
     };

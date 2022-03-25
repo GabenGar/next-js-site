@@ -41,6 +41,10 @@
     {
       "fileMatch": ["public/locales/*/components.json"],
       "url": "./schema/localization/components.schema.json"
+    },
+    {
+      "fileMatch": ["public/locales/*/account.json"],
+      "url": "./schema/localization/account.schema.json"
     }
   ],
   "xmlTools.enforcePrettySelfClosingTagOnFormat": true,
