@@ -15,6 +15,7 @@
 .list {
   position: absolute;
   right: 0;
+  z-index: 1;
   visibility: hidden;
   opacity: 0;
   // @TODO: auto-width
