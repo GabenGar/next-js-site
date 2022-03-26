@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { AdminPhoto } from "#assets";
 import { siteTitle } from "#lib/util";
@@ -24,39 +25,41 @@ interface IAboutPageProps extends BasePageProps {}
 interface IAboutPageParams extends ParsedUrlQuery {}
 
 function AboutPage() {
-  const pageTitle = "About me";
+  const { t } = useTranslation("common");
+  const pageTitle = t("about_title");
 
   return (
     <Page heading={pageTitle} pageClassName={styles.block}>
       <Head>
         <title>{siteTitle(pageTitle)}</title>
-        <meta name="description" content="The profile of mine." />
+        <meta name="description" content={t("about_desc")} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Article>
         <ArticleHeader>
           <Heading level={2} className={styles.heading}>
-            Gaben Bengar
+            {t("about_name")}
           </Heading>
         </ArticleHeader>
         <ArticleBody>
           <ImageFigure
             src={AdminPhoto}
-            alt="Totally the photo of mine"
+            alt={t("about_photo_alt")}
             href={AdminPhoto.src}
-            figCaption="Totally me"
+            figCaption={t("about_photo_caption")}
             imageHeight="20em"
           />
-          <Heading level={3}>Bio</Heading>
+          <Heading level={3}>{t("about_bio")}</Heading>
+          {/* @TODO: long bio */}
           <p>
             I am an aspiring <del>rapper</del> <ins>frontend developer</ins>{" "}
             from Musohranovo, Russia.
           </p>
-          <Heading level={3}>Skills</Heading>
+          <Heading level={3}>{t("about_skills")}</Heading>
           <DL className={styles.skills}>
             <DS className={styles.annotation}>
-              <DT>Tech</DT>
-              <DD>...subtechs</DD>
+              <DT>{t("about_tech")}</DT>
+              <DD>...{t("about_subtechs")}</DD>
             </DS>
             <DS>
               <DT>
@@ -65,7 +68,7 @@ function AboutPage() {
               </DT>
               <DD>JSX</DD>
               <DD>
-                <SVGIcon iconID="pugjs" />
+                {/* <SVGIcon iconID="pugjs" /> */}
                 <span>PUG (formerly Jade)</span>
               </DD>
               <DD>
@@ -95,7 +98,7 @@ function AboutPage() {
                 <span>React</span>
               </DD>
               <DD>
-              <SVGIcon iconID="nextjs" />
+                {/* <SVGIcon iconID="nextjs" /> */}
                 <span>NextJS</span>
               </DD>
               <DD>
@@ -115,7 +118,7 @@ function AboutPage() {
                 <span>Database</span>
               </DT>
               <DD>
-                <SVGIcon iconID="postgresql-logo" />
+                {/* <SVGIcon iconID="postgresql-logo" /> */}
                 <span>PostgreSQL</span>
               </DD>
             </DS>
@@ -131,7 +134,8 @@ export const getStaticProps: GetStaticProps<IAboutPageProps, IAboutPageParams> =
   async ({ locale }) => {
     const localization = await serverSideTranslations(locale!, [
       "layout",
-      "components"
+      "components",
+      "common"
     ]);
 
     return {

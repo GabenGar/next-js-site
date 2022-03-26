@@ -35,6 +35,10 @@
       "url": "./schema/config.schema.json"
     },
     {
+      "fileMatch": ["public/locales/*/common.json"],
+      "url": "./schema/localization/common.schema.json"
+    },
+    {
       "fileMatch": ["public/locales/*/auth.json"],
       "url": "./schema/localization/auth.schema.json"
     },

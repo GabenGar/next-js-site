@@ -1,4 +1,14 @@
 {
   "title": "Добро пожаловать!",
-  "description": "Мой сайт сделанный на nextjs."
+  "description": "Мой сайт сделанный на nextjs.",
+  "about_title": "Обо мне",
+  "about_desc": "Мой профиль.",
+  "about_name": "Gaben Bengar",
+  "about_photo_alt": "Точно моя фотография",
+  "about_photo_caption": "Точно я",
+  "about_bio": "Био",
+  "about_bio_long": "",
+  "about_skills": "Навыки",
+  "about_tech": "Технология",
+  "about_subtechs": "подтехнологии"
 }
