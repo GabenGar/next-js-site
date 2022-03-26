@@ -1,13 +1,10 @@
+import { useTranslation } from "next-i18next";
 import { useAppDispatch, useAppSelector } from "#store/redux";
-import {
-  addNoteAsync,
-  selectNotesForDay,
-} from "#store/redux/reducers";
+import { addNoteAsync, selectNotesForDay } from "#store/redux/reducers";
 import {
   fromISOString,
   toISODateTime,
   startOfDay,
-  nowISO,
   getDayOfMonth,
   getYear,
   getMonth,
@@ -29,11 +26,10 @@ interface IDayoveriewProps {
 }
 
 export function DayOverview({ selectedDay }: IDayoveriewProps) {
+  const { t } = useTranslation("components");
   const dispatch = useAppDispatch();
   const dayNotes = useAppSelector(selectNotesForDay(selectedDay));
-  const dayStart = selectedDay
-    ? startOfDay(selectedDay)
-    : startOfDay(nowISO());
+  const dayStart = startOfDay(selectedDay);
 
   async function addNote(event: ISubmitEvent) {
     event.preventDefault();
@@ -43,7 +39,7 @@ export function DayOverview({ selectedDay }: IDayoveriewProps) {
     const date = elements["time"].valueAsDate;
     const note = elements["note"].value;
 
-    if (!date || !note.trim() || !selectedDay) {
+    if (!date || !note.trim()) {
       console.log("Something is wrong!");
       return;
     }
@@ -66,42 +62,33 @@ export function DayOverview({ selectedDay }: IDayoveriewProps) {
 
   return (
     <div className={styles.block}>
-      {!selectedDay ? (
-        <>
-          <Heading level={2}>Day overview</Heading>
-          <p>Select a day for overview</p>
-        </>
-      ) : (
-        <>
-          <Heading level={2}>
-            Overview for <DateTimeView dateTime={selectedDay} />
-          </Heading>
-          <Form
-            className={styles.new}
-            onSubmit={addNote}
-            submitButton={
-              <ButtonSubmit className={styles.add} iconID="calendar-plus">
-                Add
-              </ButtonSubmit>
-            }
+      <Heading level={2}>
+        {t("calendar_day_overview")} <DateTimeView dateTime={selectedDay} />
+      </Heading>
+      <Form
+        className={styles.new}
+        onSubmit={addNote}
+        submitButton={
+          <ButtonSubmit className={styles.add} iconID="calendar-plus">
+            {t("add")}
+          </ButtonSubmit>
+        }
+      >
+        <div className={styles.inputs}>
+          <FormSectionTime
+            id="new-time"
+            name="time"
+            required
+            defaultValue={fromISOString(dayStart)}
           >
-            <div className={styles.inputs}>
-              <FormSectionTime
-                id="new-time"
-                name="time"
-                required
-                defaultValue={fromISOString(dayStart)}
-              >
-                Time
-              </FormSectionTime>
-              <TextArea id="new-note" name="note" required>
-                Note
-              </TextArea>
-            </div>
-          </Form>
-          <Notes notes={dayNotes} />
-        </>
-      )}
+            {t("calendar_note_time")}
+          </FormSectionTime>
+          <TextArea id="new-note" name="note" required>
+          {t("calendar_note_text")}
+          </TextArea>
+        </div>
+      </Form>
+      <Notes notes={dayNotes} />
     </div>
   );
 }

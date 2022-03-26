@@ -1,0 +1,26 @@
+{
+  "$id": "http://schemas.com/localization/components.schema.json",
+  "title": "ComponentLocalization",
+  "description": "Localization for the components.",
+  "type": "object",
+  "required": [
+    "submit",
+    "account_last_activity",
+    "account_email",
+    "account_joined_at",
+    "account_role",
+    "dd_unknown",
+    "previous",
+    "next",
+    "add",
+    "remove",
+    "calendar_day_overview",
+    "calendar_note_time",
+    "calendar_note_text",
+    "calendar_no_notes",
+    "blog_by",
+    "blog_published",
+    "blog_read_more",
+    "blog_edited"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "$id": "http://schemas.com/localization/account.schema.json",
+  "title": "AccountLocalization",
+  "description": "Localization for the account pages.",
+  "type": "object",
+  "required": [
+    "acc_title",
+    "acc_desc",
+    "change_email",
+    "add_email",
+    "calendar",
+    "admin",
+    "email_title",
+    "email_desc",
+    "current_email",
+    "new_email",
+    "confirmation_sent",
+    "calendar_title",
+    "calendar_desc",
+    "current_date"
+  ]
+}

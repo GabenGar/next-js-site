@@ -6,4 +6,8 @@ export {
 export { registerAccount, loginAccount } from "./auth";
 export { withSessionRoute, withSessionSSR } from "./session";
 export { getAccountDetails } from "./lib";
-export { confirmNewEmail } from "./email";
+export {
+  confirmNewEmail,
+  sendEmailConfirmation,
+  validateEmailString,
+} from "./email";

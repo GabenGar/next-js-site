@@ -1,0 +1,10 @@
+{
+  "$id": "http://schemas.com/localization/blog.schema.json",
+  "title": "BlogLocalization",
+  "description": "Localization for the blog pages.",
+  "type": "object",
+  "required": [
+    "blog_title",
+    "blog_desc"
+  ]
+}

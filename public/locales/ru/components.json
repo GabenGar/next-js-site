@@ -1,0 +1,20 @@
+{
+  "submit": "Отправить",
+  "account_last_activity": "Последняя активность",
+  "account_role": "Роль",
+  "account_email": "Электронный ящик",
+  "account_joined_at": "Присоединился",
+  "dd_unknown": "неизвестно",
+  "previous": "Предыдущий",
+  "next": "Следующий",
+  "add": "Добавить",
+  "remove": "Удалить",
+  "calendar_day_overview": "Обзор за",
+  "calendar_note_time": "Время",
+  "calendar_note_text": "Запись",
+  "calendar_no_notes": "Без записей в этом дне.",
+  "blog_by": "Автор",
+  "blog_published": "Опубликован",
+  "blog_read_more": "Далее",
+  "blog_edited": "Отредактирован"
+}

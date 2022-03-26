@@ -3,6 +3,12 @@ import { fromISOString } from "./lib";
 
 import type { IISODateTime } from "#codegen/schema/interfaces";
 
+export function formatWeekDay(date: IISODateTime, isShort: boolean = false) {
+  const formatString = isShort ? "EEE" : "EEEE";
+  const formattedWeekDay = format(fromISOString(date), formatString);
+  return formattedWeekDay;
+}
+
 export function formatDate(date: IISODateTime) {
   const formatedDate = format(fromISOString(date), "do MMMM yyyy GG");
   return formatedDate;

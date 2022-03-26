@@ -1,18 +1,22 @@
 import Head from "next/head";
-import { getReqBody } from "#lib/util";
-import { getAccountDetails, withSessionSSR } from "#lib/account";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { IS_DEVELOPMENT } from "#environment/derived";
+import { getReqBody, siteTitle } from "#lib/util";
+import {
+  getAccountDetails,
+  withSessionSSR,
+  sendEmailConfirmation,
+  validateEmailString,
+} from "#lib/account";
 import { Page } from "#components/pages";
 import { Form } from "#components/forms";
 import { FormSectionEmail } from "#components/forms/sections";
+import { ErrorsView } from "#components/errors";
 
 import type { InferGetServerSidePropsType } from "next";
 import type { IAccountClient } from "#types/entities";
 import type { BasePageProps } from "#types/pages";
-import {
-  sendEmailConfirmation,
-  validateEmailString,
-} from "src/lib/account/email";
-import { ErrorsView } from "#components/errors";
 
 interface AccountEmailProps extends BasePageProps {
   account: IAccountClient;
@@ -26,11 +30,14 @@ function AccountEmailPage({
   newEmail,
   isSent,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const { t } = useTranslation("account");
+  const title = t("email_title");
+
   return (
-    <Page heading="Account Email">
+    <Page heading={title}>
       <Head>
-        <title>Account Email</title>
-        <meta name="description" content="Account Email" />
+        <title>{siteTitle(title)}</title>
+        <meta name="description" content={t("email_desc")} />
       </Head>
       <Form method="POST">
         {account.email && (
@@ -40,13 +47,12 @@ function AccountEmailPage({
             isReadOnly
             defaultValue={account.email}
           >
-            Current Email
+            {t("current_email")}
           </FormSectionEmail>
         )}
 
-        {errors && <ErrorsView errors={errors} />}
         {isSent ? (
-          <p>The confirmation link is sent to your email.</p>
+          <p>{t("confirmation_sent")}</p>
         ) : (
           <FormSectionEmail
             id="email-new"
@@ -54,16 +60,24 @@ function AccountEmailPage({
             required
             defaultValue={newEmail}
           >
-            New Email
+            {t("new_email")}
           </FormSectionEmail>
         )}
+
+        {errors && <ErrorsView errors={errors} />}
       </Form>
     </Page>
   );
 }
 
 export const getServerSideProps = withSessionSSR<AccountEmailProps>(
-  async ({ req }) => {
+  async ({ req, locale }) => {
+    if (!IS_DEVELOPMENT) {
+      return {
+        notFound: true,
+      };
+    }
+
     const { account_id } = req.session;
 
     if (!account_id) {
@@ -85,6 +99,11 @@ export const getServerSideProps = withSessionSSR<AccountEmailProps>(
     }
 
     const { id, password, ...accountClient } = account;
+    const localization = await serverSideTranslations(locale!, [
+      "layout",
+      "components",
+      "account",
+    ]);
 
     if (req.method === "POST") {
       const { new_email } = await getReqBody<{ new_email: string }>(req);
@@ -94,6 +113,7 @@ export const getServerSideProps = withSessionSSR<AccountEmailProps>(
       if (!result.isValid) {
         return {
           props: {
+            ...localization,
             account: accountClient,
             schemaValidationErrors: result.schemaValidationErrors,
           },
@@ -104,6 +124,7 @@ export const getServerSideProps = withSessionSSR<AccountEmailProps>(
 
       return {
         props: {
+          ...localization,
           account: accountClient,
           isSent: true,
         },
@@ -112,6 +133,7 @@ export const getServerSideProps = withSessionSSR<AccountEmailProps>(
 
     return {
       props: {
+        ...localization,
         account: accountClient,
       },
     };

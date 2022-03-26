@@ -33,6 +33,26 @@
     {
       "fileMatch": ["config.json"],
       "url": "./schema/config.schema.json"
+    },
+    {
+      "fileMatch": ["public/locales/*/common.json"],
+      "url": "./schema/localization/common.schema.json"
+    },
+    {
+      "fileMatch": ["public/locales/*/auth.json"],
+      "url": "./schema/localization/auth.schema.json"
+    },
+    {
+      "fileMatch": ["public/locales/*/components.json"],
+      "url": "./schema/localization/components.schema.json"
+    },
+    {
+      "fileMatch": ["public/locales/*/account.json"],
+      "url": "./schema/localization/account.schema.json"
+    },
+    {
+      "fileMatch": ["public/locales/*/blog.json"],
+      "url": "./schema/localization/blog.schema.json"
     }
   ],
   "xmlTools.enforcePrettySelfClosingTagOnFormat": true,

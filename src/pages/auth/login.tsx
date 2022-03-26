@@ -1,4 +1,6 @@
 import Head from "next/head";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { AuthError } from "#types/errors";
 import { getReqBody } from "#lib/util";
 import {
@@ -26,18 +28,21 @@ interface LoginPageProps extends BasePageProps {
 export function LoginPage({
   errors,
   accCreds,
-  schemaValidationErrors
+  schemaValidationErrors,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const { t } = useTranslation("auth");
+  const title = t("login_title");
+
   return (
-    <Page heading="Login">
+    <Page heading={title}>
       <Head>
-        <title>Login</title>
-        <meta name="description" content="Log in to your account." />
+        <title>{title}</title>
+        <meta name="description" content={t("login_desc")} />
       </Head>
-      <Form method="POST">
+      <Form method="POST" submitButton={t("log_in")}>
         <p>
-          Not registered?{" "}
-          <LinkInternal href="/auth/register">Register</LinkInternal>
+          {t("not_registered")}?{" "}
+          <LinkInternal href="/auth/register">{t("register")}</LinkInternal>
         </p>
         <FormSectionText
           id="acc-name"
@@ -45,7 +50,7 @@ export function LoginPage({
           required
           defaultValue={accCreds?.name}
         >
-          Name
+          {t("acc_name")}
         </FormSectionText>
         <FormSectionPassword
           id="acc-password"
@@ -54,7 +59,7 @@ export function LoginPage({
           isNew={false}
           defaultValue={accCreds?.password}
         >
-          Password
+          {t("acc_password")}
         </FormSectionPassword>
         {errors ? (
           <ErrorsView errors={errors} />
@@ -69,7 +74,7 @@ export function LoginPage({
 }
 
 export const getServerSideProps = withSessionSSR<LoginPageProps>(
-  async ({ req }) => {
+  async ({ req, locale }) => {
     const { account_id } = req.session;
 
     if (account_id) {
@@ -81,18 +86,21 @@ export const getServerSideProps = withSessionSSR<LoginPageProps>(
       };
     }
 
+    const localization = await serverSideTranslations(locale!, [
+      "layout",
+      "components",
+      "auth",
+    ]);
+
     if (req.method === "POST") {
       const accCreds = await getReqBody<IAccountInit>(req);
       const isValid = validateAccountInitFields(accCreds);
 
       if (!isValid) {
-        const errors = validateAccountInitFields.errors
-          ? [...validateAccountInitFields.errors]
-          : [];
-          
         return {
           props: {
-            schemaValidationErrors: errors,
+            ...localization,
+            schemaValidationErrors: [...validateAccountInitFields.errors!],
             accCreds,
           },
         };
@@ -103,6 +111,7 @@ export const getServerSideProps = withSessionSSR<LoginPageProps>(
       if (result instanceof AuthError) {
         return {
           props: {
+            ...localization,
             errors: [result.message],
             accCreds,
           },
@@ -121,7 +130,9 @@ export const getServerSideProps = withSessionSSR<LoginPageProps>(
     }
 
     return {
-      props: {},
+      props: {
+        ...localization,
+      },
     };
   }
 );

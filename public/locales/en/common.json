@@ -1,0 +1,14 @@
+{
+  "title": "Welcome!",
+  "description": "This is the site of mine made with nextjs.",
+  "about_title": "About me",
+  "about_desc": "The profile of mine.",
+  "about_name": "Gaben Bengar",
+  "about_photo_alt": "Totally the photo of mine",
+  "about_photo_caption": "Totally me",
+  "about_bio": "Bio",
+  "about_bio_long": "",
+  "about_skills": "Skills",
+  "about_tech": "Tech",
+  "about_subtechs": "subtechs"
+}

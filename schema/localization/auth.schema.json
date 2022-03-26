@@ -1,0 +1,22 @@
+{
+  "$id": "http://schemas.com/localization/auth.schema.json",
+  "title": "AuthLocalization",
+  "description": "Localization for the auth pages.",
+  "type": "object",
+  "required": [
+    "reg_title",
+    "reg_desc",
+    "already_registered",
+    "log_in",
+    "invite_code",
+    "acc_name",
+    "acc_password",
+    "login_title",
+    "login_desc",
+    "not_registered",
+    "register",
+    "logout_title",
+    "logout_desc",
+    "log_out"
+  ]
+}
