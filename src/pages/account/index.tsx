@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { IS_DEVELOPMENT } from "#environment/derived";
 import { getAccountDetails, withSessionSSR } from "#lib/account";
 import { siteTitle } from "#lib/util";
 import { LinkInternal } from "#components/links";
@@ -33,11 +34,14 @@ function AccountPage({
 
       <Nav>
         <NavList>
-          <NavItem>
-            <LinkInternal href="/account/email">
-              {account.email ? t("change_email") : t("add_email")}
-            </LinkInternal>
-          </NavItem>
+          {IS_DEVELOPMENT && (
+            <NavItem>
+              <LinkInternal href="/account/email">
+                {account.email ? t("change_email") : t("add_email")}
+              </LinkInternal>
+            </NavItem>
+          )}
+
           <NavItem>
             <LinkInternal href="/account/calendar">
               <SVGIcon iconID="calendar" />

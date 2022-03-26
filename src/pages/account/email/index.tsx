@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { IS_DEVELOPMENT } from "#environment/derived";
 import { getReqBody, siteTitle } from "#lib/util";
 import {
   getAccountDetails,
@@ -71,6 +72,12 @@ function AccountEmailPage({
 
 export const getServerSideProps = withSessionSSR<AccountEmailProps>(
   async ({ req, locale }) => {
+    if (!IS_DEVELOPMENT) {
+      return {
+        notFound: true,
+      };
+    }
+
     const { account_id } = req.session;
 
     if (!account_id) {
