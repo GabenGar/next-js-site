@@ -37,13 +37,24 @@ function BlogPostPage({
   );
 }
 
+/**
+ * @TODO proper separation by locales
+ */
 export const getStaticPaths: GetStaticPaths<BlogPostPageParams> = async ({
   locales,
 }) => {
   const allSlugs = await getAllSlugs();
-  const paths = allSlugs.map<{ params: BlogPostPageParams }>((slug) => {
-    return { params: { slug } };
-  });
+  const paths = allSlugs.reduce<{ params: BlogPostPageParams }[]>(
+    (paths, slug) => {
+      const localePaths = locales!.map((locale) => {
+        return { params: { slug }, locale }
+      })
+      paths.push(...localePaths);
+
+      return paths;
+    },
+    []
+  );
 
   return {
     paths,
