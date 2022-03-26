@@ -1,13 +1,19 @@
+const path = require("path")
+
 // @ts-check
 const IS_DEVELOPMENT = process.env.NODE_ENV === "development"
 
 /**
  * @type {import('next-i18next').UserConfig}
  */
-module.exports = {
+const config = {
   i18n: {
+    defaultLocale: "en",
     locales: ["en", "ru"],
-    defaultLocale: "en"
   },
+  localePath: path.resolve('./public/locales'),
   reloadOnPrerender: IS_DEVELOPMENT,
 };
+
+
+module.exports = config
