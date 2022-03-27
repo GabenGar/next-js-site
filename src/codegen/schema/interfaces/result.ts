@@ -220,6 +220,41 @@ export interface EmailConfirmation {
 }
 
 /**
+ * Localization for the account pages.
+ */
+export interface AccountLocalization {
+  [k: string]: unknown;
+}
+
+/**
+ * Localization for the auth pages.
+ */
+export interface AuthLocalization {
+  [k: string]: unknown;
+}
+
+/**
+ * Localization for the blog pages.
+ */
+export interface BlogLocalization {
+  [k: string]: unknown;
+}
+
+/**
+ * Localization for the common pages.
+ */
+export interface CommonLocalization {
+  [k: string]: unknown;
+}
+
+/**
+ * Localization for the components.
+ */
+export interface ComponentLocalization {
+  [k: string]: unknown;
+}
+
+/**
  * `nanoid` default output basically.
  */
 export type CodeString = string;
