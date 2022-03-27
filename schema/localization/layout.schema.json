@@ -1,0 +1,18 @@
+{
+  "$id": "http://schemas.com/localization/layout.schema.json",
+  "title": "LayoutLocalization",
+  "description": "Localization for the layout.",
+  "type": "object",
+  "required": [
+    "home",
+    "blog",
+    "about",
+    "source-code",
+    "account",
+    "information",
+    "register",
+    "login",
+    "logout",
+    "contacts"
+  ]
+}

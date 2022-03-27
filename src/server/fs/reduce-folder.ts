@@ -6,7 +6,12 @@ export interface ReduceOptions {
    * Traverse only the folder in the path without going into subfolders.
    * @default true
    */
-  isShallow: boolean;
+  isShallow?: boolean;
+  /**
+   * Only run the callback on files.
+   * @default false
+   */
+  isFilesOnly?: boolean;
 }
 
 export type ReducerCallback<Type> = (
@@ -16,6 +21,7 @@ export type ReducerCallback<Type> = (
 
 const defaultReduceOptions: ReduceOptions = {
   isShallow: true,
+  isFilesOnly: false,
 } as const;
 
 /**
@@ -52,10 +58,16 @@ async function reduceFolder<Type>(
   let result = initialValue;
 
   for await (const folderItem of folderItems) {
+    const { entry } = folderItem;
+
+    if (options.isFilesOnly && !entry.isFile()) {
+      continue;
+    }
+    
     result = await Promise.resolve(callback(result, folderItem));
 
     // if is shallow or item is not a directory
-    if (options.isShallow || !folderItem.entry.isDirectory()) {
+    if (options.isShallow || !entry.isDirectory()) {
       continue;
     }
 
