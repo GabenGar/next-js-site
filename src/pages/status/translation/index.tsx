@@ -2,7 +2,6 @@ import Head from "next/head";
 import clsx from "clsx";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { IS_DEVELOPMENT } from "#environment/derived";
 import { getLanguagesOverview, getMaxLineCount } from "#lib/translation";
 import { siteTitle } from "#lib/util";
 import { Page } from "#components/pages";
@@ -71,15 +70,7 @@ function TranslationPage({
 export const getStaticProps: GetStaticProps<
   ITemplatePageProps,
   ITranslationPageParams
-> = async (context) => {
-  const { locale } = context;
-
-  if (!IS_DEVELOPMENT) {
-    return {
-      notFound: true,
-    };
-  }
-
+> = async ({ locale }) => {
   const localization = await serverSideTranslations(locale!, [
     "layout",
     "components",
