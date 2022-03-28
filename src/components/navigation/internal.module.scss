@@ -4,4 +4,7 @@
 
 .item {}
 
-.link {}
+.link {
+  --local-width: 2em;
+  --local-height: 2em;
+}
