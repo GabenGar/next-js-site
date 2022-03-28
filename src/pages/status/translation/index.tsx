@@ -1,11 +1,14 @@
 import Head from "next/head";
+import clsx from "clsx";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { IS_DEVELOPMENT } from "#environment/derived";
 import { getLanguagesOverview, getMaxLineCount } from "#lib/translation";
 import { siteTitle } from "#lib/util";
 import { Page } from "#components/pages";
-import { JSONView } from "#components/json";
+import { DL, DS, DT, DD } from "#components/lists/d-list";
+import { LanguageView } from "#components/language";
+import styles from "./index.module.scss";
 
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import type { ParsedUrlQuery } from "querystring";
@@ -19,19 +22,48 @@ interface ITemplatePageProps extends BasePageProps {
 
 interface ITranslationPageParams extends ParsedUrlQuery {}
 
+/**
+ * @TODO Per language details
+ */
 function TranslationPage({
   totalCount,
   languagesOverview,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const title = "Translation status";
+  const { t } = useTranslation("common");
+  const title = t("translation_title");
 
   return (
     <Page heading={title}>
       <Head>
         <title>{siteTitle(title)}</title>
-        <meta name="description" content="Translation status overview." />
+        <meta name="description" content={t("translation_desc")} />
       </Head>
-      {IS_DEVELOPMENT && <JSONView json={languagesOverview} />}
+      <DL className={styles.list}>
+        {Object.entries(languagesOverview).map(([lang, count]) => (
+          <DS key={lang} className={styles.item}>
+            <DT className={styles.lang}>
+              <LanguageView className={styles.tag} langString={lang} />
+            </DT>
+            <DD className={styles.stat}>
+              <>
+                <meter
+                  min={0}
+                  max={totalCount}
+                  low={totalCount - 1}
+                  optimum={totalCount}
+                  high={totalCount}
+                  value={count}
+                >
+                  {count} / {totalCount}
+                </meter>{" "}
+                <span className={clsx(count === totalCount && styles.complete)}>
+                  {((count / totalCount) * 100).toFixed(0)}%
+                </span>
+              </>
+            </DD>
+          </DS>
+        ))}
+      </DL>
     </Page>
   );
 }

@@ -28,7 +28,7 @@ function StatusPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
           {
             navItems: [
               {
-                title: "Translation",
+                title: t("status_translation"),
                 link: "/status/translation",
                 iconID: "language",
               },

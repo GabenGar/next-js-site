@@ -17,6 +17,9 @@
     "about_tech",
     "about_subtechs",
     "status_title",
-    "status_desc"
+    "status_desc",
+    "status_translation",
+    "translation_title",
+    "translation_desc"
   ]
 }

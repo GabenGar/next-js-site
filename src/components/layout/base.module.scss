@@ -37,7 +37,11 @@
   padding-bottom: $size-normal;
 
   & > * {
-    padding: 0 $size-normal;
+    padding: 0 $size-small;
+
+    @media (min-width: $width-phone) {
+      padding: 0 $size-normal;
+    }
 
     @media (min-width: $width-tablet) {
       padding: 0 $size-big;
