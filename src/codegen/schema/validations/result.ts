@@ -14,6 +14,11 @@ import {
   projectConfigSchema,
   projectDatabaseSchema,
   emailConfirmationSchema,
+  accountLocalizationSchema,
+  authLocalizationSchema,
+  blogLocalizationSchema,
+  commonLocalizationSchema,
+  componentLocalizationSchema,
   codeStringSchema,
   iSODateSchema,
   iSODateTimeSchema,
@@ -36,6 +41,11 @@ import type {
   IProjectConfig,
   IProjectDatabase,
   IEmailConfirmation,
+  IAccountLocalization,
+  IAuthLocalization,
+  IBlogLocalization,
+  ICommonLocalization,
+  IComponentLocalization,
   ICodeString,
   IISODate,
   IISODateTime,
@@ -69,6 +79,16 @@ export const validateProjectDatabaseFields = createValidator<IProjectDatabase>(
 );
 export const validateEmailConfirmationFields =
   createValidator<IEmailConfirmation>(emailConfirmationSchema);
+export const validateAccountLocalizationFields =
+  createValidator<IAccountLocalization>(accountLocalizationSchema);
+export const validateAuthLocalizationFields =
+  createValidator<IAuthLocalization>(authLocalizationSchema);
+export const validateBlogLocalizationFields =
+  createValidator<IBlogLocalization>(blogLocalizationSchema);
+export const validateCommonLocalizationFields =
+  createValidator<ICommonLocalization>(commonLocalizationSchema);
+export const validateComponentLocalizationFields =
+  createValidator<IComponentLocalization>(componentLocalizationSchema);
 export const validateCodeStringFields =
   createValidator<ICodeString>(codeStringSchema);
 export const validateISODateFields = createValidator<IISODate>(iSODateSchema);

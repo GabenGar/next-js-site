@@ -1,0 +1,30 @@
+@use "../../../styles/variables/sass.scss" as *;
+
+.list {
+  display: block;
+  max-width: $width-mobile;
+  background-color: var(--colour1-primary);
+  padding: $size-small;
+  margin: 0 auto;
+}
+
+.item {
+  flex-flow: row nowrap;
+}
+
+.lang {
+  flex: 0 1 11em;
+}
+
+.tag {
+  width: 100%
+}
+
+.stat {
+  flex-basis: 9em;
+  justify-content: space-between;
+}
+
+.complete {
+  font-weight: bold;
+}

@@ -1,47 +1,37 @@
 import { blockComponent } from "#components/meta";
 import { HTMLNav } from "#components/html/nav";
-import { HTMLUl } from "#components/html/ul";
-import { HTMLOl } from "#components/html/ol";
-import { HTMLLi } from "#components/html/li";
+import { List, ListItem } from "#components/lists";
 import styles from "./_index.module.scss";
 
 import type { HTMLNavProps } from "#components/html/nav";
-import type { HTMLUlProps } from "#components/html/ul";
-import type { HTMLOlProps } from "#components/html/ol";
-import type { HTMLLiProps } from "#components/html/li";
+import type { IListProps, IListItemProps } from "#components/lists";
 
-export interface NavProps extends HTMLNavProps {}
+export interface INavProps extends HTMLNavProps {}
 
-export type NavListProps = HTMLUlProps &
-  HTMLOlProps & {
-    isOrdered?: boolean;
-  };
+export interface INavListProps extends IListProps {}
 
-export interface NavItemProps extends HTMLLiProps {}
+export interface INavItemProps extends IListItemProps {}
 
-export interface NavLinkProps extends HTMLNavProps {}
+export const Nav = blockComponent<INavProps>(styles.block, NavComponent);
 
-export const Nav = blockComponent<NavProps>(
-  styles.block,
-  ({ children, ...blockProps }) => {
-    return <HTMLNav {...blockProps}>{children}</HTMLNav>;
-  }
-);
-
-export const NavList = blockComponent<NavListProps>(
+export const NavList = blockComponent<INavListProps>(
   styles.list,
-  ({ isOrdered = false, children, ...blockProps }) => {
-    return isOrdered ? (
-      <HTMLOl {...blockProps}>{children}</HTMLOl>
-    ) : (
-      <HTMLUl {...blockProps}>{children}</HTMLUl>
-    );
-  }
+  NavListComponent
 );
 
-export const NavItem = blockComponent<NavItemProps>(
+export const NavItem = blockComponent<INavItemProps>(
   styles.item,
-  ({ children, ...blockProps }) => {
-    return <HTMLLi {...blockProps}>{children}</HTMLLi>;
-  }
+  NavItemComponent
 );
+
+function NavComponent({ children, ...blockProps }: HTMLNavProps) {
+  return <HTMLNav {...blockProps}>{children}</HTMLNav>;
+}
+
+function NavListComponent({ children, ...blockProps }: INavListProps) {
+  return <List {...blockProps}>{children}</List>;
+}
+
+function NavItemComponent({ children, ...blockProps }: INavItemProps) {
+  return <ListItem {...blockProps}>{children}</ListItem>;
+}

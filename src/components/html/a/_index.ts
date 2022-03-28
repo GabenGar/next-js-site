@@ -1,2 +1,2 @@
 export { HTMLA } from "./base";
-export type { HTMLAProps } from "./base";
+export type { IHTMLAProps } from "./base";

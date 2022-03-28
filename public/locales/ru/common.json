@@ -10,5 +10,10 @@
   "about_bio_long": "",
   "about_skills": "Навыки",
   "about_tech": "Технология",
-  "about_subtechs": "подтехнологии"
+  "about_subtechs": "подтехнологии",
+  "status_title": "Статус",
+  "status_desc": "Изложение статуса.",
+  "status_translation": "Переводы",
+  "translation_title": "Поддержка языков",
+  "translation_desc": "Обзор поддержки языков."
 }

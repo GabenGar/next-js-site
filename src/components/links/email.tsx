@@ -3,7 +3,7 @@ import { HTMLA } from "#components/html/a";
 import { SVGIcon } from "#components/icons";
 import styles from "./_index.module.scss";
 
-import type { HTMLAProps } from "#components/html/a";
+import type { IHTMLAProps } from "#components/html/a";
 
 export interface IEmailFields {
   cc?: string;
@@ -12,7 +12,7 @@ export interface IEmailFields {
   body?: string;
 }
 
-export interface ILinkEmailProps extends Omit<HTMLAProps, "href"> {
+export interface ILinkEmailProps extends Omit<IHTMLAProps, "href"> {
   email: string;
   emailFields?: IEmailFields;
 }

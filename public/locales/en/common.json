@@ -10,5 +10,10 @@
   "about_bio_long": "",
   "about_skills": "Skills",
   "about_tech": "Tech",
-  "about_subtechs": "subtechs"
+  "about_subtechs": "subtechs",
+  "status_title": "Status",
+  "status_desc": "Status rundown.",
+  "status_translation": "Translation",
+  "translation_title": "Translation support",
+  "translation_desc": "Translation progress overview."
 }

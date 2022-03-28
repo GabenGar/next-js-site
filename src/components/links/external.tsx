@@ -3,9 +3,9 @@ import { HTMLA } from "#components/html/a";
 
 import styles from "./_index.module.scss";
 
-import type { HTMLAProps } from "#components/html/a";
+import type { IHTMLAProps } from "#components/html/a";
 
-export interface LinkExternalProps extends HTMLAProps {
+export interface LinkExternalProps extends IHTMLAProps {
   isAffiliated?: boolean;
 }
 

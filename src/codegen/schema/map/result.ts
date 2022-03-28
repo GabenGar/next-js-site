@@ -14,6 +14,11 @@ import {
   projectConfigSchema,
   projectDatabaseSchema,
   emailConfirmationSchema,
+  accountLocalizationSchema,
+  authLocalizationSchema,
+  blogLocalizationSchema,
+  commonLocalizationSchema,
+  componentLocalizationSchema,
   codeStringSchema,
   iSODateSchema,
   iSODateTimeSchema,
@@ -37,6 +42,14 @@ export const schemaMap: Record<string, SchemaObject> = {
   "http://schemas.com/config.schema.json": projectConfigSchema,
   "http://schemas.com/database.schema.json": projectDatabaseSchema,
   "http://schemas.com/email-confirmation.schema.json": emailConfirmationSchema,
+  "http://schemas.com/localization/account.schema.json":
+    accountLocalizationSchema,
+  "http://schemas.com/localization/auth.schema.json": authLocalizationSchema,
+  "http://schemas.com/localization/blog.schema.json": blogLocalizationSchema,
+  "http://schemas.com/localization/common.schema.json":
+    commonLocalizationSchema,
+  "http://schemas.com/localization/components.schema.json":
+    componentLocalizationSchema,
   "http://schemas.com/types/code.schema.json": codeStringSchema,
   "http://schemas.com/types/dates/iso-date.schema.json": iSODateSchema,
   "http://schemas.com/types/dates/iso-datetime.schema.json": iSODateTimeSchema,

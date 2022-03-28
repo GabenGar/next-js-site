@@ -21,10 +21,12 @@ interface ITemplatePageProps extends BasePageProps {}
 interface ITemplatePageParams extends ParsedUrlQuery {}
 
 function TemplatePage({}: InferGetStaticPropsType<typeof getStaticProps>) {
+  const title = "tempalte title";
+
   return (
-    <Page heading="template heading">
+    <Page heading={title}>
       <Head>
-        <title>{siteTitle("template title")}</title>
+        <title>{siteTitle(title)}</title>
         <meta name="description" content="template description" />
         {/* <link rel="icon" href="/favicon.ico" /> */}
       </Head>

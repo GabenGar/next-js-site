@@ -15,6 +15,11 @@
     "about_bio_long",
     "about_skills",
     "about_tech",
-    "about_subtechs"
+    "about_subtechs",
+    "status_title",
+    "status_desc",
+    "status_translation",
+    "translation_title",
+    "translation_desc"
   ]
 }
