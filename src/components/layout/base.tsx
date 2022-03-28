@@ -69,6 +69,12 @@ export function BaseLayout({ children }: Props) {
                 <span>{t("about")}</span>
               </LinkInternal>
             </NavItem>
+            <NavItem>
+              <LinkInternal href="/status" className={styles.navLink}>
+                <SVGIcon iconID="temperature-three-quarters" />
+                <span>{t("status")}</span>
+              </LinkInternal>
+            </NavItem>
             <NavItem className={styles.lang}>
               <LanguageSwitcher />
             </NavItem>
@@ -163,7 +169,7 @@ function AccountNav() {
           </>
         ) : (
           <>
-          <NavItem>
+            <NavItem>
               <LinkInternal href="/auth/login" className={styles.navLink}>
                 <span>{t("login")}</span>
                 <SVGIcon iconID="sign-in-alt" />

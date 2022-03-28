@@ -7,20 +7,21 @@ import styles from "./_index.module.scss";
 import type { LinkProps } from "next/link";
 import type { HTMLAttributeAnchorTarget, ReactNode } from "react";
 
-export interface InternalProps extends Omit<LinkProps, "passHref"> {
+export interface ILinkInternalProps extends Omit<LinkProps, "passHref"> {
   target?: HTMLAttributeAnchorTarget;
+  iconID?: string;
   className?: string;
   children?: ReactNode;
 }
 
-export const LinkInternal = blockComponent<InternalProps>(
+export const LinkInternal = blockComponent<ILinkInternalProps>(
   styles.block,
-  ({ children, target = "_self", className, ...blockProps }) => {
+  ({ iconID, children, target = "_self", className, ...blockProps }) => {
     const linkClass = clsx(styles.internal, className);
 
     return (
       <Link {...blockProps} passHref>
-        <HTMLA className={linkClass} target={target}>
+        <HTMLA className={linkClass} target={target} iconID={iconID}>
           {children}
         </HTMLA>
       </Link>

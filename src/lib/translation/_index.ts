@@ -2,6 +2,8 @@ import path from "path";
 import { SCHEMA_FOLDER, PROJECT_ROOT } from "#environment/constants";
 import { reduceFolder, readJSON, readFolder } from "#server/fs";
 
+export interface LanguagesOverview extends Record<string, number> {}
+
 const schemasFolder = path.join(SCHEMA_FOLDER, "localization");
 const localesPath = path.join(PROJECT_ROOT, "public", "locales");
 
@@ -30,11 +32,11 @@ export async function getMaxLineCount(folderPath: string = schemasFolder) {
   return totalCount;
 }
 
-export async function getLineCountPerLanguage(
+export async function getLanguagesOverview(
   folderPath: string = localesPath
 ) {
   const langFolders = await readFolder(folderPath);
-  const langCounts: Record<string, number> = {};
+  const langCounts: LanguagesOverview = {};
 
   for await (const folderItem of langFolders) {
     const { entry, entity } = folderItem;

@@ -4,15 +4,9 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { IS_DEVELOPMENT } from "#environment/derived";
 import { siteTitle } from "#lib/util";
 import { Page } from "#components/pages";
-import { BaseLayout as Layout } from "#components/layout";
 import { JSONView } from "#components/json";
 
-import type {
-  GetStaticPaths,
-  GetStaticProps,
-  InferGetStaticPropsType,
-  NextPage,
-} from "next";
+import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import type { ParsedUrlQuery } from "querystring";
 import type { BasePageProps } from "#types/pages";
 
@@ -20,54 +14,29 @@ interface ITemplatePageProps extends BasePageProps {}
 
 interface ITemplatePageParams extends ParsedUrlQuery {}
 
-function TemplatePage({}: InferGetStaticPropsType<typeof getStaticProps>) {
-  const title = "tempalte title";
+function StatusPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
+  const { t } = useTranslation("common");
+  const title = "Status";
 
   return (
     <Page heading={title}>
       <Head>
         <title>{siteTitle(title)}</title>
         <meta name="description" content="template description" />
-        {/* <link rel="icon" href="/favicon.ico" /> */}
       </Head>
       {IS_DEVELOPMENT && <JSONView json={"props preview"} />}
     </Page>
   );
 }
 
-TemplatePage.getLayout = function getLayout(page: NextPage) {
-  return <Layout>{page}</Layout>;
-};
-
-export const getStaticPaths: GetStaticPaths<ITemplatePageParams> = async (
-  context
-) => {
-  const { locales } = context;
-  const paths = locales!.map((locale) => {
-    return { params: {}, locale };
-  });
-
-  return {
-    paths,
-    fallback: false,
-  };
-};
-
 export const getStaticProps: GetStaticProps<
   ITemplatePageProps,
   ITemplatePageParams
-> = async (context) => {
-  const { locale } = context;
-
-  if (!IS_DEVELOPMENT) {
-    return {
-      notFound: true,
-    };
-  }
-
+> = async ({ locale }) => {
   const localization = await serverSideTranslations(locale!, [
     "layout",
     "components",
+    "common",
   ]);
 
   return {
@@ -77,4 +46,4 @@ export const getStaticProps: GetStaticProps<
   };
 };
 
-// export default TemplatePage;
+export default StatusPage;

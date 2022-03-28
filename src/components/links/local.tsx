@@ -2,9 +2,9 @@ import { blockComponent } from "#components/meta";
 import { HTMLA } from "#components/html/a";
 import styles from "./_index.module.scss";
 
-import type { HTMLAProps } from "#components/html/a";
+import type { IHTMLAProps } from "#components/html/a";
 
-export interface LinkLocalProps extends Omit<HTMLAProps, "href"> {
+export interface LinkLocalProps extends Omit<IHTMLAProps, "href"> {
   targetID: string;
 }
 

@@ -3,9 +3,9 @@ import { LocalPicture } from "#components/fancy";
 import { LinkInternal } from "#components/links";
 import styles from "./_index.module.scss";
 
-import type { InternalProps } from "#components/links";
+import type { ILinkInternalProps } from "#components/links";
 
-interface Props extends InternalProps {
+interface Props extends ILinkInternalProps {
   src: string;
 }
 
