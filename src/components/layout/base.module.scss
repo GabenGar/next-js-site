@@ -1,4 +1,4 @@
-@use "../../styles/variables/sass" as *;
+@use "../../styles/variables/sass.scss" as *;
 
 .header,
 .main,
@@ -65,23 +65,65 @@
 }
 
 .nav {
+  position: relative;
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: row wrap;
   justify-content: space-between;
   align-items: center;
   gap: $size-normal;
   width: 100%;
   background-color: transparent;
   padding: 0;
+
+  @media (min-width: $width-tablet) {
+    & > .button {
+      display: none;
+    }
+  }
 }
 
 .list {
+  flex: 1 1 auto;
+  position: absolute;
+  top: 100%;
+  left: 0;
   display: flex;
-  flex-flow: row wrap;
-  align-items: center;
+  flex-flow: column nowrap;
+  align-items: flex-start;
   justify-content: flex-start;
   gap: $size-normal;
-  width: 100%;
+  visibility: hidden;
+  opacity: 0;
+  width: 9em;
+  background-color: var(--colour1-primary);
+  border-radius: 0 $radius-small $radius-small $radius-small;
+  padding: $size-small;
+  box-shadow: 0 0 3px 3px var(--colour0-tertiary-transparent);
+  transition-duration: var(--duration-global);
+  transition-property: visibility, opacity;
+
+  &_visible {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  @media (min-width: $width-tablet) {
+    position: static;
+    flex-flow: row wrap;
+    visibility: visible;
+    opacity: 1;
+    background-color: transparent;
+    box-shadow: none;
+  }
+}
+
+.misc {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: $size-normal;
+  margin-left: auto;
 }
 
 .navLink {
@@ -112,11 +154,11 @@
 .account {
   position: relative;
 
-
   & .list {
     position: absolute;
     top: 100%;
-    right: 0;
+    // @TODO: use proper value
+    left: -34%;
     visibility: hidden;
     opacity: 0;
     flex-flow: column nowrap;

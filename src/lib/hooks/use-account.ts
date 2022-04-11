@@ -9,6 +9,7 @@ export function useAccount() {
   return {
     account,
     isLoading: !error && !account,
-    isError: error,
+    isError: Boolean(error),
+    error: error
   };
 }

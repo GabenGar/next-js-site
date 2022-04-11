@@ -4,6 +4,7 @@
   "description": "Localization for the layout.",
   "type": "object",
   "required": [
+    "navigation",
     "home",
     "blog",
     "about",
