@@ -1,0 +1,60 @@
+{
+  "title": "FMComment",
+  "$id": "http://schemas.com/frontend-mentor/fm-comment.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "content", "createdAt", "score", "user"],
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "content": {
+      "type": "string"
+    },
+    "createdAt": {
+      "type": "string"
+    },
+    "score": { "type": "integer" },
+    "user": {
+      "$ref": "#/definitions/user"
+    },
+    "replyingTo": {
+      "type": "string"
+    },
+    "replies": {
+      "type": "array",
+      "items": {
+        "$ref": "#"
+      }
+    }
+  },
+  "definitions": {
+    "user": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["username", "image"],
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "image": {
+          "$ref": "#/definitions/image"
+        }
+      }
+    },
+    "image": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "png": {
+          "type": "string",
+          "format": "uri-reference"
+        },
+        "webp": {
+          "type": "string",
+          "format": "uri-reference"
+        }
+      }
+    }
+  }
+}
