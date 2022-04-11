@@ -18,7 +18,7 @@ export const HTMLButton = blockComponent<HTMLButtonProps>(
         ) : (
           <>
             <SVGIcon className={styles.icon} iconID={iconID} />
-            <span>{children}</span>
+            <span className={styles.content}>{children}</span>
           </>
         )}
       </button>

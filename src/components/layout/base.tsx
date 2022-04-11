@@ -12,11 +12,11 @@ import {
 import { LanguageSwitcher } from "#components/language";
 import { useAccount } from "#lib/hooks";
 import { SVGIcon } from "#components/icons";
-import { Button } from "#components/fancy";
 import { LinkExternal, LinkInternal, LinkEmail } from "#components/links";
 import { FancyNav, NavList, NavItem } from "#components/fancy/nav";
 import { Form } from "#components/forms";
-import { ButtonSubmit } from "#components/buttons";
+import { ButtonSubmit, Button } from "#components/buttons";
+import { onParentBlur } from "#lib/browser/dom"
 import styles from "./base.module.scss";
 
 import type { FocusEvent } from "react";
@@ -25,10 +25,12 @@ import type { ButtonClickEvent } from "#components/fancy";
 
 interface Props extends RootlessProps {}
 
+/**
+ * @TODO: rewrite into a single nested lest.
+ */
 export function BaseLayout({ children }: Props) {
-  const router = useRouter();
   const { t } = useTranslation("layout");
-  const { locale, defaultLocale } = router;
+  const [isVisible, changeVisibility] = useState(false);
 
   // const [currentTheme, switchCurrentTheme] = useState("");
 
@@ -49,8 +51,19 @@ export function BaseLayout({ children }: Props) {
   return (
     <>
       <header className={styles.header}>
-        <FancyNav className={styles.nav}>
-          <NavList className={styles.list}>
+        <FancyNav className={styles.nav} onBlur={onParentBlur(changeVisibility, false)}>
+          <Button
+            className={styles.button}
+            iconID={"signs-post"}
+            onClick={() => {
+              changeVisibility(!isVisible);
+            }}
+          >
+            {t("navigation")}
+          </Button>
+          <NavList
+            className={clsx(styles.list, isVisible && styles.list_visible)}
+          >
             <NavItem>
               <LinkInternal href="/" className={styles.navLink}>
                 <SVGIcon iconID="react" />
@@ -75,6 +88,9 @@ export function BaseLayout({ children }: Props) {
                 <span>{t("status")}</span>
               </LinkInternal>
             </NavItem>
+          </NavList>
+
+          <NavList className={styles.misc}>
             <NavItem className={styles.lang}>
               <LanguageSwitcher />
             </NavItem>
@@ -122,13 +138,7 @@ function AccountNav() {
 
   return (
     <NavItem
-      onBlur={(event) => {
-        if (event.currentTarget.contains(event.relatedTarget as Node)) {
-          event.preventDefault();
-          return;
-        }
-        changeOpen(false);
-      }}
+      onBlur={onParentBlur(changeOpen, false)}
       className={clsx(
         styles.account,
         isLoading && styles.account_loading,
@@ -140,9 +150,9 @@ function AccountNav() {
         onClick={() => {
           changeOpen(!isOpen);
         }}
+        iconID={"user-circle"}
       >
-        <SVGIcon iconID="user-circle" />
-        <span>{t("account")}</span>
+        {t("account")}
       </Button>
       <NavList className={clsx(styles.list)}>
         {isLoggedIn ? (
