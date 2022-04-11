@@ -1,2 +1,2 @@
-export { RelListA } from "./rel-list";
+// export { RelListA } from "./rel-list";
 export { onParentBlur } from "./on-parent-blur";
