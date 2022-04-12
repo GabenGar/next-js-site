@@ -5,18 +5,19 @@ import { schemaMap } from "#codegen/schema/map";
 
 import type { SchemaObject, ErrorObject } from "ajv";
 
-export type ValidationResult<Schema extends SchemaObject> = ValidationSuccess<Schema> | ValidationFailure
+export type ValidationResult<Schema> =
+  | ValidationSuccess<Schema>
+  | ValidationFailure;
 
-export interface ValidationSuccess<Schema extends SchemaObject> {
-  is_successfull: true,
-  data: Schema
+export interface ValidationSuccess<Schema> {
+  is_successfull: true;
+  data: Schema;
 }
 
-export interface ValidationFailure<> {
-  is_successfull: false,
-  errors: ErrorObject[]
+export interface ValidationFailure {
+  is_successfull: false;
+  errors: ErrorObject[];
 }
-
 
 const ajv = new Ajv({
   meta: metaSchema,
@@ -25,9 +26,7 @@ const ajv = new Ajv({
 });
 addFormats(ajv);
 
-export function createValidator<Schema extends SchemaObject>(
-  schema: SchemaObject
-) {
+export function createValidator<Schema>(schema: SchemaObject) {
   const validate = ajv.getSchema<Schema>(schema.$id!)!;
 
   return async (inputData: unknown): Promise<ValidationResult<Schema>> => {
@@ -36,10 +35,14 @@ export function createValidator<Schema extends SchemaObject>(
     if (!result) {
       return {
         is_successfull: false,
-        errors: [...validate.errors!]
-      }
+        // doing a copy as peer ajv instructions
+        errors: [...validate.errors!],
+      };
     }
 
-    return result;
+    return {
+      is_successfull: true,
+      data: result as Schema,
+    };
   };
 }

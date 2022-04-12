@@ -51,19 +51,19 @@ export default withSessionRoute<APIResponse<ICommentClient>>(
         });
       }
 
-      const commentInit = await validateCommentInitFields((req.body as RequestBody).data);
+      const result = await validateCommentInitFields(
+        (req.body as RequestBody).data
+      );
 
-      if (!commentInit) {
-        const validationErrors = validateCommentInitFields.errors!.map(
-          (errorObj) => JSON.stringify(errorObj)
-        );
-
+      if (!result.is_successfull) {
+        const errors = result.errors.map((error) => JSON.stringify(error));
         return res.status(UNPROCESSABLE_ENTITY).json({
           success: false,
-          errors: validationErrors,
+          errors: errors,
         });
       }
 
+      const { data: commentInit } = result;
       const { account_id: accID, ...newComment } = await createComment(
         account_id,
         commentInit
