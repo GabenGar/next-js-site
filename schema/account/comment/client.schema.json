@@ -1,9 +1,9 @@
 {
-  "$id": "http://schemas.com/account/comment/base.schema.json",
-  "title": "Comment",
-  "description": "Comment by the account",
+  "$id": "http://schemas.com/account/comment/client.schema.json",
+  "title": "CommentClient",
+  "description": "Comment by the an account for client",
   "type": "object",
-  "required": ["id", "created_at", "account_id", "content"],
+  "required": ["id", "created_at", "content", "is_public"],
   "additionalProperties": false,
   "properties": {
     "id": {
@@ -11,9 +11,6 @@
     },
     "created_at": {
       "$ref": "/types/dates/iso-datetime.schema.json"
-    },
-    "account_id": {
-      "$ref": "/types/serial.schema.json"
     },
     "parent_id": {
       "$ref": "/types/serial.schema.json"
@@ -28,7 +25,7 @@
     },
     "is_public": {
       "type": "boolean",
-      "default": false
+      "description": "Client can only see its own non-public comments."
     }
   }
 }

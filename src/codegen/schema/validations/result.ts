@@ -3,6 +3,9 @@ import { createValidator } from "#lib/json/schema";
 import {
   accountSchema,
   accountClientSchema,
+  commentSchema,
+  commentClientSchema,
+  commentInitSchema,
   accountInitSchema,
   inviteSchema,
   inviteClientSchema,
@@ -19,6 +22,7 @@ import {
   blogLocalizationSchema,
   commonLocalizationSchema,
   componentLocalizationSchema,
+  layoutLocalizationSchema,
   codeStringSchema,
   iSODateSchema,
   iSODateTimeSchema,
@@ -30,6 +34,9 @@ import {
 import type {
   IAccount,
   IAccountClient,
+  IComment,
+  ICommentClient,
+  ICommentInit,
   IAccountInit,
   IInvite,
   IInviteClient,
@@ -46,6 +53,7 @@ import type {
   IBlogLocalization,
   ICommonLocalization,
   IComponentLocalization,
+  ILayoutLocalization,
   ICodeString,
   IISODate,
   IISODateTime,
@@ -57,6 +65,11 @@ import type {
 export const validateAccountFields = createValidator<IAccount>(accountSchema);
 export const validateAccountClientFields =
   createValidator<IAccountClient>(accountClientSchema);
+export const validateCommentFields = createValidator<IComment>(commentSchema);
+export const validateCommentClientFields =
+  createValidator<ICommentClient>(commentClientSchema);
+export const validateCommentInitFields =
+  createValidator<ICommentInit>(commentInitSchema);
 export const validateAccountInitFields =
   createValidator<IAccountInit>(accountInitSchema);
 export const validateInviteFields = createValidator<IInvite>(inviteSchema);
@@ -89,6 +102,8 @@ export const validateCommonLocalizationFields =
   createValidator<ICommonLocalization>(commonLocalizationSchema);
 export const validateComponentLocalizationFields =
   createValidator<IComponentLocalization>(componentLocalizationSchema);
+export const validateLayoutLocalizationFields =
+  createValidator<ILayoutLocalization>(layoutLocalizationSchema);
 export const validateCodeStringFields =
   createValidator<ICodeString>(codeStringSchema);
 export const validateISODateFields = createValidator<IISODate>(iSODateSchema);

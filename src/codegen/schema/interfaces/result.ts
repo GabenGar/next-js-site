@@ -35,6 +35,52 @@ export interface AccountClient {
 }
 
 /**
+ * Comment by the account
+ */
+export interface Comment {
+  id: SerialInteger;
+  created_at: ISODateTime;
+  account_id: SerialInteger;
+  parent_id?: SerialInteger;
+  blog_slug?: string;
+  /**
+   * Markdown
+   */
+  content: string;
+  is_public?: boolean;
+}
+
+/**
+ * Comment by the an account for client
+ */
+export interface CommentClient {
+  id: SerialInteger;
+  created_at: ISODateTime;
+  parent_id?: SerialInteger;
+  blog_slug?: string;
+  /**
+   * Markdown
+   */
+  content: string;
+  /**
+   * Client can only see its own non-public comments.
+   */
+  is_public: boolean;
+}
+
+/**
+ * Comment initializer
+ */
+export interface CommentInit {
+  blog_slug: string;
+  /**
+   * Markdown
+   */
+  content: string;
+  parent_id?: SerialInteger;
+}
+
+/**
  * Initializer for account.
  */
 export interface AccountInit {
@@ -251,6 +297,13 @@ export interface CommonLocalization {
  * Localization for the components.
  */
 export interface ComponentLocalization {
+  [k: string]: unknown;
+}
+
+/**
+ * Localization for the layout.
+ */
+export interface LayoutLocalization {
   [k: string]: unknown;
 }
 

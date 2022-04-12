@@ -1,5 +1,8 @@
 export { default as accountSchema } from "#schema/account/base.schema.json";
 export { default as accountClientSchema } from "#schema/account/client.schema.json";
+export { default as commentSchema } from "#schema/account/comment/base.schema.json";
+export { default as commentClientSchema } from "#schema/account/comment/client.schema.json";
+export { default as commentInitSchema } from "#schema/account/comment/init.schema.json";
 export { default as accountInitSchema } from "#schema/account/init.schema.json";
 export { default as inviteSchema } from "#schema/account/invite/base.schema.json";
 export { default as inviteClientSchema } from "#schema/account/invite/client.schema.json";
@@ -16,6 +19,7 @@ export { default as authLocalizationSchema } from "#schema/localization/auth.sch
 export { default as blogLocalizationSchema } from "#schema/localization/blog.schema.json";
 export { default as commonLocalizationSchema } from "#schema/localization/common.schema.json";
 export { default as componentLocalizationSchema } from "#schema/localization/components.schema.json";
+export { default as layoutLocalizationSchema } from "#schema/localization/layout.schema.json";
 export { default as codeStringSchema } from "#schema/types/code.schema.json";
 export { default as iSODateSchema } from "#schema/types/dates/iso-date.schema.json";
 export { default as iSODateTimeSchema } from "#schema/types/dates/iso-datetime.schema.json";

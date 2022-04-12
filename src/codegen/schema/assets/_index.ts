@@ -1,6 +1,9 @@
 export {
   accountSchema,
   accountClientSchema,
+  commentSchema,
+  commentClientSchema,
+  commentInitSchema,
   accountInitSchema,
   inviteSchema,
   inviteClientSchema,
@@ -17,6 +20,7 @@ export {
   blogLocalizationSchema,
   commonLocalizationSchema,
   componentLocalizationSchema,
+  layoutLocalizationSchema,
   codeStringSchema,
   iSODateSchema,
   iSODateTimeSchema,

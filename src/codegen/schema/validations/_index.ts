@@ -1,6 +1,9 @@
 export {
   validateAccountFields,
   validateAccountClientFields,
+  validateCommentFields,
+  validateCommentClientFields,
+  validateCommentInitFields,
   validateAccountInitFields,
   validateInviteFields,
   validateInviteClientFields,
@@ -17,6 +20,7 @@ export {
   validateBlogLocalizationFields,
   validateCommonLocalizationFields,
   validateComponentLocalizationFields,
+  validateLayoutLocalizationFields,
   validateCodeStringFields,
   validateISODateFields,
   validateISODateTimeFields,

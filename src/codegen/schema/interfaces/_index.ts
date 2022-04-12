@@ -1,6 +1,9 @@
 export type {
   Account as IAccount,
   AccountClient as IAccountClient,
+  Comment as IComment,
+  CommentClient as ICommentClient,
+  CommentInit as ICommentInit,
   AccountInit as IAccountInit,
   Invite as IInvite,
   InviteClient as IInviteClient,
@@ -17,6 +20,7 @@ export type {
   BlogLocalization as IBlogLocalization,
   CommonLocalization as ICommonLocalization,
   ComponentLocalization as IComponentLocalization,
+  LayoutLocalization as ILayoutLocalization,
   CodeString as ICodeString,
   ISODate as IISODate,
   ISODateTime as IISODateTime,
