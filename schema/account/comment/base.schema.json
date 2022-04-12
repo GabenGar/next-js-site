@@ -3,7 +3,7 @@
   "title": "Comment",
   "description": "Comment by the account",
   "type": "object",
-  "required": ["id", "created_at", "account_id", "content"],
+  "required": ["id", "created_at", "account_id", "content", "is_public"],
   "additionalProperties": false,
   "properties": {
     "id": {

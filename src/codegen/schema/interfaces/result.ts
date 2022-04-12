@@ -47,7 +47,7 @@ export interface Comment {
    * Markdown
    */
   content: string;
-  is_public?: boolean;
+  is_public: boolean;
 }
 
 /**

@@ -43,8 +43,8 @@ function FMCommentsPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
 
           <p>
             You can use any tools you like to help you complete the challenge.
-            So if you&apos;ve got something you&apos;d like to practice, feel free to give
-            it a go.
+            So if you&apos;ve got something you&apos;d like to practice, feel
+            free to give it a go.
           </p>
 
           <p>
@@ -56,15 +56,23 @@ function FMCommentsPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
           <p>Your users should be able to:</p>
 
           <ul>
-            - View the optimal layout for the app depending on their device&apos;s
-            screen size - See hover states for all interactive elements on the
-            page - Create, Read, Update, and Delete comments and replies -
-            Upvote and downvote comments - **Bonus**: If you&apos;re building a
-            purely front-end project, use `localStorage` to save the current
-            state in the browser that persists when the browser is refreshed. -
-            **Bonus**: Instead of using the `createdAt` strings from the
-            `data.json` file, try using timestamps and dynamically track the
-            time since the comment or reply was posted.
+            <li>
+              View the optimal layout for the app depending on their
+              device&apos;s screen size
+            </li>
+            <li>See hover states for all interactive elements on the page</li>
+            <li>Create, Read, Update, and Delete comments and replies</li>
+            <li>Upvote and downvote comments</li>
+            <li>
+              **Bonus**: If you&apos;re building a purely front-end project, use
+              `localStorage` to save the current state in the browser that
+              persists when the browser is refreshed.
+            </li>
+            <li>
+              **Bonus**: Instead of using the `createdAt` strings from the
+              `data.json` file, try using timestamps and dynamically track the
+              time since the comment or reply was posted.
+            </li>
           </ul>
         </ArticleBody>
         <ArticleFooter>
@@ -79,13 +87,23 @@ function FMCommentsPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
         </ArticleHeader>
         <ArticleBody>
           <ul>
-            - First-level comments should be ordered by their score, whereas
-            nested replies are ordered by time added. - Replying to a comment
-            adds the new reply to the bottom of the nested replies within that
-            comment. - A confirmation modal should pop up before a comment or
-            reply is deleted. - Adding a new comment or reply uses the
-            `currentUser` object from within the `data.json` file. - You can
-            only edit or delete your own comments and replies.
+            <li>
+              First-level comments should be ordered by their score, whereas
+              nested replies are ordered by time added.
+            </li>
+            <li>
+              Replying to a comment adds the new reply to the bottom of the
+              nested replies within that comment.
+            </li>
+            <li>
+              A confirmation modal should pop up before a comment or reply is
+              deleted.
+            </li>
+            <li>
+              Adding a new comment or reply uses the `currentUser` object from
+              within the `data.json` file.
+            </li>
+            <li>You can only edit or delete your own comments and replies.</li>
           </ul>
         </ArticleBody>
       </Article>

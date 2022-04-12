@@ -11,3 +11,4 @@ export {
   sendEmailConfirmation,
   validateEmailString,
 } from "./email";
+export { createComment, deleteComment, approveComment } from "./comment";
