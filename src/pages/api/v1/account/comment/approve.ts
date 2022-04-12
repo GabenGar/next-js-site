@@ -7,13 +7,13 @@ import {
 import {
   getAccountDetails,
   withSessionRoute,
-  createComment,
+  approveComment,
 } from "#lib/account";
 import type { APIRequest, APIResponse } from "#types/api";
-import type { ICommentClient, ICommentInit } from "#types/entities";
-import { validateCommentInitFields } from "#codegen/schema/validations";
+import type { ICommentClient, ISerialInteger } from "#types/entities";
+import { validateSerialIntegerFields } from "#codegen/schema/validations";
 
-interface RequestBody extends APIRequest<ICommentInit> {}
+interface RequestBody extends APIRequest<ISerialInteger> {}
 
 export default withSessionRoute<APIResponse<ICommentClient>>(
   async (req, res) => {
@@ -42,6 +42,12 @@ export default withSessionRoute<APIResponse<ICommentClient>>(
         });
       }
 
+      if (account.role !== "administrator") {
+        return res
+          .status(NOT_AUTHORIZED)
+          .json({ success: false, errors: ["Not Authorized."] });
+      }
+
       const isBodyPresent = "data" in req.body;
 
       if (!isBodyPresent) {
@@ -51,10 +57,10 @@ export default withSessionRoute<APIResponse<ICommentClient>>(
         });
       }
 
-      const commentInit = await validateCommentInitFields((req.body as RequestBody).data);
+      const comID = await validateSerialIntegerFields(req.body.data);
 
-      if (!commentInit) {
-        const validationErrors = validateCommentInitFields.errors!.map(
+      if (!comID) {
+        const validationErrors = validateSerialIntegerFields.errors!.map(
           (errorObj) => JSON.stringify(errorObj)
         );
 
@@ -64,9 +70,11 @@ export default withSessionRoute<APIResponse<ICommentClient>>(
         });
       }
 
-      const { account_id: accID, ...newComment } = await createComment(
+      const commentID = (req.body as RequestBody).data;
+
+      const { account_id: accID, ...newComment } = await approveComment(
         account_id,
-        commentInit
+        commentID
       );
 
       return res.status(OK).json({ success: true, data: newComment });

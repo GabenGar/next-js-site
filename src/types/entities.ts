@@ -8,5 +8,6 @@ export type {
   IEmailConfirmation,
   IComment,
   ICommentClient,
-  ICommentInit
+  ICommentInit,
+  ISerialInteger
 } from "#codegen/schema/interfaces";
