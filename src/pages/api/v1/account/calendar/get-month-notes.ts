@@ -2,7 +2,7 @@ import {
   UNPROCESSABLE_ENTITY,
   OK,
   INTERNAL_SERVER_ERROR,
-  NOT_AUTHORIZED,
+  UNAUTHORIZED,
 } from "#environment/constants/http";
 import { getAccountDetails, withSessionRoute } from "#lib/account";
 import { getCalendarNotesForMonth } from "#database/queries/account/calendar";
@@ -21,7 +21,7 @@ export default withSessionRoute<APIResponse<ICalendarNote[]>>(
 
       if (!account_id) {
         return res
-          .status(NOT_AUTHORIZED)
+          .status(UNAUTHORIZED)
           .json({ success: false, errors: ["Not Authorized."] });
       }
 

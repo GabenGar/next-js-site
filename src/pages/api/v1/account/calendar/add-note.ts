@@ -2,7 +2,7 @@ import {
   UNPROCESSABLE_ENTITY,
   OK,
   INTERNAL_SERVER_ERROR,
-  NOT_AUTHORIZED,
+  UNAUTHORIZED,
 } from "#environment/constants/http";
 import { getAccountDetails, withSessionRoute } from "#lib/account";
 import { addCalendarNote } from "#database/queries/account/calendar";
@@ -19,7 +19,7 @@ export default withSessionRoute<APIResponse<ICalendarNote>>(
 
       if (!account_id) {
         return res
-          .status(NOT_AUTHORIZED)
+          .status(UNAUTHORIZED)
           .json({ success: false, errors: ["Not Authorized."] });
       }
 
@@ -48,11 +48,13 @@ export default withSessionRoute<APIResponse<ICalendarNote>>(
         });
       }
 
-      const noteInit = await validateCalendarNoteInitFields(req.body.data);
+      const result = await validateCalendarNoteInitFields(
+        (req.body as RequestBody).data
+      );
 
-      if (!noteInit) {
-        const validationErrors = validateCalendarNoteInitFields.errors!.map(
-          (errorObj) => JSON.stringify(errorObj)
+      if (!result.is_successfull) {
+        const validationErrors = result.errors.map((errorObj) =>
+          JSON.stringify(errorObj)
         );
 
         return res.status(UNPROCESSABLE_ENTITY).json({
@@ -61,7 +63,9 @@ export default withSessionRoute<APIResponse<ICalendarNote>>(
         });
       }
 
-      const { date, note }: ICalendarNoteInit = req.body.data;
+      const {
+        data: { date, note },
+      } = result;
 
       const { account_id: accID, ...newNote } = await addCalendarNote(
         account_id,

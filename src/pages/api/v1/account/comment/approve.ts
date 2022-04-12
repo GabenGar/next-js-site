@@ -2,7 +2,8 @@ import {
   UNPROCESSABLE_ENTITY,
   OK,
   INTERNAL_SERVER_ERROR,
-  NOT_AUTHORIZED,
+  UNAUTHORIZED,
+  NOT_FOUND,
 } from "#environment/constants/http";
 import {
   getAccountDetails,
@@ -22,7 +23,7 @@ export default withSessionRoute<APIResponse<ICommentClient>>(
 
       if (!account_id) {
         return res
-          .status(NOT_AUTHORIZED)
+          .status(UNAUTHORIZED)
           .json({ success: false, errors: ["Not Authorized."] });
       }
 
@@ -44,8 +45,8 @@ export default withSessionRoute<APIResponse<ICommentClient>>(
 
       if (account.role !== "administrator") {
         return res
-          .status(NOT_AUTHORIZED)
-          .json({ success: false, errors: ["Not Authorized."] });
+          .status(NOT_FOUND)
+          .json({ success: false, errors: ["Not Found."] });
       }
 
       const isBodyPresent = "data" in req.body;
@@ -57,20 +58,22 @@ export default withSessionRoute<APIResponse<ICommentClient>>(
         });
       }
 
-      const comID = await validateSerialIntegerFields(req.body.data);
+      const result = await validateSerialIntegerFields(
+        (req.body as RequestBody).data
+      );
 
-      if (!comID) {
-        const validationErrors = validateSerialIntegerFields.errors!.map(
-          (errorObj) => JSON.stringify(errorObj)
+      if (!result.is_successfull) {
+        const errors = result.errors.map((errorObj) =>
+          JSON.stringify(errorObj)
         );
 
         return res.status(UNPROCESSABLE_ENTITY).json({
           success: false,
-          errors: validationErrors,
+          errors: errors,
         });
       }
 
-      const commentID = (req.body as RequestBody).data;
+      const { data: commentID } = result;
 
       const { account_id: accID, ...newComment } = await approveComment(
         account_id,

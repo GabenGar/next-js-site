@@ -2,7 +2,7 @@ import {
   UNPROCESSABLE_ENTITY,
   OK,
   INTERNAL_SERVER_ERROR,
-  NOT_AUTHORIZED,
+  UNAUTHORIZED,
 } from "#environment/constants/http";
 import {
   getAccountDetails,
@@ -22,7 +22,7 @@ export default withSessionRoute<APIResponse<ICommentClient>>(
 
       if (!account_id) {
         return res
-          .status(NOT_AUTHORIZED)
+          .status(UNAUTHORIZED)
           .json({ success: false, errors: ["Not Authorized."] });
       }
 
