@@ -19,6 +19,10 @@
     "calendar_notes": {
       "type": "object",
       "description": "Account notes for calendar."
+    },
+    "comments": {
+      "type": "object",
+      "description": "Comments made by accounts."
     }
   },
   "additionalProperties": false
