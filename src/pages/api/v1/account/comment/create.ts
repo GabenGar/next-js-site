@@ -52,7 +52,7 @@ export default withSessionRoute<ICommentClient>(async (req, res) => {
       (req.body as RequestBody).data
     );
 
-    if (!result.is_successfull) {
+    if (!result.is_successful) {
       const errors = result.errors.map((error) => JSON.stringify(error));
       return res.status(UNPROCESSABLE_ENTITY).json({
         is_successful: false,
