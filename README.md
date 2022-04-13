@@ -54,6 +54,8 @@ The result will be inside `.next` folder.
 
 ## Database
 
+Dont's: https://wiki.postgresql.org/wiki/Don't_Do_This
+
 ### Create migration file:
 
 ```sh
