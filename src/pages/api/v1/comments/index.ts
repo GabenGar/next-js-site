@@ -1,5 +1,5 @@
 import { OK } from "#environment/constants/http";
-import { getAccountDetails, getComments } from "#lib/account";
+import { getComments } from "#lib/account";
 import { withSessionRoute } from "#server/requests";
 
 import type { ICommentClient } from "#types/entities";
