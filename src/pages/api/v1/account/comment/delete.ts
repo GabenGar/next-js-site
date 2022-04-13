@@ -3,13 +3,12 @@ import {
   OK,
   INTERNAL_SERVER_ERROR,
   UNAUTHORIZED,
-  NOT_FOUND,
 } from "#environment/constants/http";
-import { getAccountDetails, approveComment } from "#lib/account";
+import { getAccountDetails, deleteComment } from "#lib/account";
 import { withSessionRoute } from "#server/requests";
 import { validateSerialIntegerFields } from "#codegen/schema/validations";
 
-import type { APIRequest, APIResponse } from "#types/api";
+import type { APIRequest } from "#types/api";
 import type { ICommentClient, ISerialInteger } from "#types/entities";
 
 interface RequestBody extends APIRequest<ISerialInteger> {}
@@ -40,13 +39,6 @@ export default withSessionRoute<ICommentClient>(async (req, res) => {
       });
     }
 
-    // @TODO: approval by non-admin
-    if (account.role !== "administrator") {
-      return res
-        .status(NOT_FOUND)
-        .json({ is_succesfull: false, errors: ["Not Found."] });
-    }
-
     const isBodyPresent = "data" in req.body;
 
     if (!isBodyPresent) {
@@ -61,8 +53,7 @@ export default withSessionRoute<ICommentClient>(async (req, res) => {
     );
 
     if (!result.is_successfull) {
-      const errors = result.errors.map((errorObj) => JSON.stringify(errorObj));
-
+      const errors = result.errors.map((error) => JSON.stringify(error));
       return res.status(UNPROCESSABLE_ENTITY).json({
         is_succesfull: false,
         errors: errors,
@@ -70,12 +61,11 @@ export default withSessionRoute<ICommentClient>(async (req, res) => {
     }
 
     const { data: commentID } = result;
-
-    const { account_id: accID, ...approvedComment } = await approveComment(
+    const { account_id: accID, ...deletedComment } = await deleteComment(
       account_id,
       commentID
     );
 
-    return res.status(OK).json({ is_succesfull: true, data: approvedComment });
+    return res.status(OK).json({ is_succesfull: true, data: deletedComment });
   }
 });

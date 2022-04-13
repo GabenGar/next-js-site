@@ -44,6 +44,6 @@ export function protectedRoute<Res>(handler: NextApiHandler<APIResponse<Res>>) {
 
     req.account = account;
 
-    return ;
+    return withSessionRoute(handler);
   };
 }
