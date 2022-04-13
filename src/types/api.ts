@@ -1,9 +1,17 @@
-export interface APIRequest<D = {}> {
+export interface APIRequest<D = undefined> {
   data: D;
 }
 
-export interface APIResponse<D = {}> {
-  success: boolean;
-  data?: D;
-  errors?: Record<string, string[]> | string[];
+export type APIResponse<D = undefined> =
+  | APIResponseSuccess<D>
+  | APIResponseFailure;
+
+export interface APIResponseSuccess<D = undefined> {
+  is_succesfull: true;
+  data: D;
+}
+
+export interface APIResponseFailure {
+  is_succesfull: false;
+  errors: string[];
 }

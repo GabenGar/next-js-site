@@ -4,7 +4,8 @@ import {
   INTERNAL_SERVER_ERROR,
   UNAUTHORIZED,
 } from "#environment/constants/http";
-import { getAccountDetails, withSessionRoute } from "#lib/account";
+import { getAccountDetails } from "#lib/account";
+import { withSessionRoute } from "#server/requests";
 import { getCalendarNotesForMonth } from "#database/queries/account/calendar";
 import { fromISOString } from "#lib/dates";
 

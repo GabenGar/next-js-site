@@ -35,7 +35,7 @@ export function createValidator<Schema>(schema: SchemaObject) {
     if (!result) {
       return {
         is_successfull: false,
-        // doing a copy as peer ajv instructions
+        // doing a copy as per ajv instructions
         errors: [...validate.errors!],
       };
     }

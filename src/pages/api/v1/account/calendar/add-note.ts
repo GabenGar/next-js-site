@@ -4,7 +4,8 @@ import {
   INTERNAL_SERVER_ERROR,
   UNAUTHORIZED,
 } from "#environment/constants/http";
-import { getAccountDetails, withSessionRoute } from "#lib/account";
+import { getAccountDetails } from "#lib/account";
+import { withSessionRoute } from "#server/requests";
 import { addCalendarNote } from "#database/queries/account/calendar";
 import type { APIRequest, APIResponse } from "#types/api";
 import type { ICalendarNote, ICalendarNoteInit } from "#types/entities";

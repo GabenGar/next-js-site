@@ -1,4 +1,6 @@
-import { getAccountDetails, withSessionRoute } from "#lib/account";
+import { getAccountDetails } from "#lib/account";
+import { withSessionRoute } from "#server/requests";
+
 import type { APIResponse } from "#types/api";
 import type { IAccountClient } from "#types/entities";
 

@@ -5,14 +5,12 @@ import {
   UNAUTHORIZED,
   NOT_FOUND,
 } from "#environment/constants/http";
-import {
-  getAccountDetails,
-  withSessionRoute,
-  approveComment,
-} from "#lib/account";
+import { getAccountDetails, approveComment } from "#lib/account";
+import { withSessionRoute } from "#server/requests";
+import { validateSerialIntegerFields } from "#codegen/schema/validations";
+
 import type { APIRequest, APIResponse } from "#types/api";
 import type { ICommentClient, ISerialInteger } from "#types/entities";
-import { validateSerialIntegerFields } from "#codegen/schema/validations";
 
 interface RequestBody extends APIRequest<ISerialInteger> {}
 
@@ -43,6 +41,7 @@ export default withSessionRoute<APIResponse<ICommentClient>>(
         });
       }
 
+      // @TODO: approval by non-admin
       if (account.role !== "administrator") {
         return res
           .status(NOT_FOUND)
