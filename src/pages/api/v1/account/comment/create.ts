@@ -20,7 +20,7 @@ export default withSessionRoute<ICommentClient>(async (req, res) => {
     if (!account_id) {
       return res
         .status(UNAUTHORIZED)
-        .json({ is_succesfull: false, errors: ["Not Authorized."] });
+        .json({ is_successful: false, errors: ["Not Authorized."] });
     }
 
     const account = await getAccountDetails(account_id);
@@ -34,7 +34,7 @@ export default withSessionRoute<ICommentClient>(async (req, res) => {
       req.session.destroy();
 
       return res.status(INTERNAL_SERVER_ERROR).json({
-        is_succesfull: false,
+        is_successful: false,
         errors: ["Unknown Error."],
       });
     }
@@ -43,7 +43,7 @@ export default withSessionRoute<ICommentClient>(async (req, res) => {
 
     if (!isBodyPresent) {
       return res.status(UNPROCESSABLE_ENTITY).json({
-        is_succesfull: false,
+        is_successful: false,
         errors: ["Invalid body."],
       });
     }
@@ -55,7 +55,7 @@ export default withSessionRoute<ICommentClient>(async (req, res) => {
     if (!result.is_successfull) {
       const errors = result.errors.map((error) => JSON.stringify(error));
       return res.status(UNPROCESSABLE_ENTITY).json({
-        is_succesfull: false,
+        is_successful: false,
         errors: errors,
       });
     }
@@ -66,6 +66,6 @@ export default withSessionRoute<ICommentClient>(async (req, res) => {
       commentInit
     );
 
-    return res.status(OK).json({ is_succesfull: true, data: newComment });
+    return res.status(OK).json({ is_successful: true, data: newComment });
   }
 });

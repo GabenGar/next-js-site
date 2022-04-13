@@ -1,11 +1,11 @@
 import { ICommentInit, IComment } from "#types/entities";
 
-export async function getComments(accountID?: number) {
+export async function getComments() {
   const comments: IComment[] = [];
   return comments;
 }
 
-export async function getBlogComments(blog_slug: string, accountID?: number) {
+export async function getBlogComments(blog_slug: string) {
   const comments: IComment[] = [];
   return comments;
 }
