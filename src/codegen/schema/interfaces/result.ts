@@ -42,7 +42,7 @@ export interface Comment {
   created_at: ISODateTime;
   account_id: SerialInteger;
   parent_id?: SerialInteger;
-  blog_slug?: string;
+  blog_slug: string;
   /**
    * Markdown
    */
@@ -51,13 +51,13 @@ export interface Comment {
 }
 
 /**
- * Comment by the an account for client
+ * Comment by an account for client
  */
 export interface CommentClient {
   id: SerialInteger;
   created_at: ISODateTime;
   parent_id?: SerialInteger;
-  blog_slug?: string;
+  blog_slug: string;
   /**
    * Markdown
    */

@@ -21,6 +21,7 @@
     "content": {
       "type": "string",
       "description": "Markdown",
+      "minLength": 5,
       "maxLength": 1024
     },
     "is_public": {

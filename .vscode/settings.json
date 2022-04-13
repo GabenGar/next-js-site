@@ -61,4 +61,7 @@
   ],
   "xmlTools.enforcePrettySelfClosingTagOnFormat": true,
   "xmlTools.splitAttributesOnFormat": true,
+  "pgFormatter.commaBreak": true,
+  "pgFormatter.noGrouping": true,
+  "pgFormatter.formatType": true
 }

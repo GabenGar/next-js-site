@@ -12,6 +12,7 @@
     "content": {
       "type": "string",
       "description": "Markdown",
+      "minLength": 5,
       "maxLength": 1024
     },
     "parent_id": {
