@@ -1,7 +1,7 @@
 import type { OperationResult } from "./util";
 
 export interface APIRequest<D = undefined> {
-  data: D;
+  data?: D;
 }
 
 export type APIResponse<D = undefined> =

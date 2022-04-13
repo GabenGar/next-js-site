@@ -4,7 +4,7 @@ import {
 } from "#environment/constants/http";
 import { getAccountDetails } from "#lib/account";
 
-import type { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest } from "next";
 import type { APIResponseFailure } from "#types/api";
 import type { IAccount } from "#types/entities";
 import { OperationResult } from "#types/util";
@@ -15,22 +15,22 @@ export interface AuthSuccess extends OperationResult<true> {
 }
 
 export interface AuthFailure extends OperationResult<false> {
-  response: NextApiResponse<APIResponseFailure>;
+  response: {
+    status: number;
+    json: APIResponseFailure;
+  };
 }
 
-export async function checkAuth(
-  req: NextApiRequest,
-  res: NextApiResponse<APIResponseFailure>
-): Promise<AuthResult> {
+export async function checkAuth(req: NextApiRequest): Promise<AuthResult> {
   const { account_id } = req.session;
 
   if (!account_id) {
-    res.status(UNAUTHORIZED);
-    res.json({ is_successful: false, errors: ["Not Authorized."] });
-
     return {
       is_successful: false,
-      response: res,
+      response: {
+        status: UNAUTHORIZED,
+        json: { is_successful: false, errors: ["Not Authorized."] },
+      },
     };
   }
 
@@ -43,15 +43,16 @@ export async function checkAuth(
       `Request details: "${reqDetails}".`
     );
     req.session.destroy();
-    res.status(INTERNAL_SERVER_ERROR);
-    res.json({
-      is_successful: false,
-      errors: ["Unknown Error."],
-    });
 
     return {
       is_successful: false,
-      response: res,
+      response: {
+        status: INTERNAL_SERVER_ERROR,
+        json: {
+          is_successful: false,
+          errors: ["Unknown Error."],
+        },
+      },
     };
   }
 

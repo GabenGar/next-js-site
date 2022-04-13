@@ -1,44 +1,20 @@
-import {
-  UNPROCESSABLE_ENTITY,
-  OK,
-  INTERNAL_SERVER_ERROR,
-  UNAUTHORIZED,
-  NOT_FOUND,
-} from "#environment/constants/http";
-import { getAccountDetails, approveComment } from "#lib/account";
-import { withSessionRoute } from "#server/requests";
+import { OK, NOT_FOUND } from "#environment/constants/http";
+import { approveComment } from "#lib/account";
+import { withSessionRoute, checkAuth, validateBody } from "#server/requests";
 import { validateSerialIntegerFields } from "#codegen/schema/validations";
 
-import type { APIRequest, APIResponse } from "#types/api";
 import type { ICommentClient, ISerialInteger } from "#types/entities";
-
-interface RequestBody extends APIRequest<ISerialInteger> {}
 
 export default withSessionRoute<ICommentClient>(async (req, res) => {
   if (req.method === "POST") {
-    const { account_id } = req.session;
+    const authResult = await checkAuth(req);
 
-    if (!account_id) {
-      return res
-        .status(UNAUTHORIZED)
-        .json({ is_successful: false, errors: ["Not Authorized."] });
+    if (!authResult.is_successful) {
+      const { status, json } = authResult.response;
+      return res.status(status).json(json);
     }
 
-    const account = await getAccountDetails(account_id);
-
-    if (!account) {
-      const reqDetails = JSON.stringify(req, undefined, 2);
-      console.error(
-        `Account with ID "${account_id}" doesn't exist.\n`,
-        `Request details: "${reqDetails}".`
-      );
-      req.session.destroy();
-
-      return res.status(INTERNAL_SERVER_ERROR).json({
-        is_successful: false,
-        errors: ["Unknown Error."],
-      });
-    }
+    const { account } = authResult;
 
     // @TODO: approval by non-admin
     if (account.role !== "administrator") {
@@ -47,32 +23,21 @@ export default withSessionRoute<ICommentClient>(async (req, res) => {
         .json({ is_successful: false, errors: ["Not Found."] });
     }
 
-    const isBodyPresent = "data" in req.body;
-
-    if (!isBodyPresent) {
-      return res.status(UNPROCESSABLE_ENTITY).json({
-        is_successful: false,
-        errors: ["Invalid body."],
-      });
-    }
-
-    const result = await validateSerialIntegerFields(
-      (req.body as RequestBody).data
+    const validationResult = await validateBody<ISerialInteger>(
+      req.body,
+      validateSerialIntegerFields
     );
 
-    if (!result.is_successfull) {
-      const errors = result.errors.map((errorObj) => JSON.stringify(errorObj));
+    if (!validationResult.is_successful) {
+      const { status, errors } = validationResult.response;
 
-      return res.status(UNPROCESSABLE_ENTITY).json({
-        is_successful: false,
-        errors: errors,
-      });
+      return res.status(status).json({ is_successful: false, errors: errors });
     }
 
-    const { data: commentID } = result;
+    const commentID = validationResult.data;
 
     const { account_id: accID, ...approvedComment } = await approveComment(
-      account_id,
+      account.id,
       commentID
     );
 

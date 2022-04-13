@@ -23,12 +23,6 @@ export function toJSON(value: any, options = { ...defaultJSONOptions }) {
 }
 export function fromJSON<Type extends unknown>(
   json: string,
-  options = defaultJSONOptions
 ): Type {
-  const finalOptions = options
-    ? { ...defaultJSONOptions, ...options }
-    : defaultJSONOptions;
   return JSON.parse(json);
 }
-
-
