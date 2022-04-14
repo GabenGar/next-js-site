@@ -16,10 +16,27 @@ export async function addComment(accountID: number, commentInit: ICommentInit) {
     RETURNING *
   `;
 
-  const newConmment = await db.one<IComment>(query, {
+  const newComment = await db.one<IComment>(query, {
     account_id: accountID,
     ...commentInit,
   });
 
-  return newConmment;
+  return newComment;
+}
+
+export async function removeComment(accountID: number, commentID: number) {
+  const query = `
+    DELETE FROM comments
+    WHERE
+      id = $(comment_id)
+      AND account_id = $(account_id)
+    RETURNING *
+  `;
+
+  const removedComment = await db.one<IComment>(query, {
+    comment_id: commentID,
+    acount_id: accountID,
+  });
+
+  return removedComment;
 }
