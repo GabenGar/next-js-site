@@ -3,6 +3,7 @@ import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { siteTitle } from "#lib/util";
 import { Page } from "#components/pages";
+import { CommentList } from "#components/entities/comments";
 
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import type { ParsedUrlQuery } from "querystring";
@@ -140,6 +141,15 @@ function FMCommentsPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
             you&apos;ll need, such as color palette and fonts.
           </p>
         </ArticleBody>
+      </Article>
+      <Article>
+        <ArticleHeader>
+          <Heading>Comments</Heading>
+        </ArticleHeader>
+        <ArticleBody>
+          <CommentList comments={[]} />
+        </ArticleBody>
+        <ArticleFooter></ArticleFooter>
       </Article>
     </Page>
   );
