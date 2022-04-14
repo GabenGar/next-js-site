@@ -1,13 +1,10 @@
 import Head from "next/head";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { AuthError } from "#types/errors";
+import { AuthError } from "#lib/errors";
 import { getReqBody } from "#lib/util";
-import {
-  loginAccount,
-  validateAccountInitFields,
-  withSessionSSR,
-} from "#lib/account";
+import { loginAccount, validateAccountInitFields } from "#lib/account";
+import { withSessionSSR } from "#server/requests";
 import { Page } from "#components/pages";
 import { Form } from "#components/forms";
 import { ErrorsView } from "#components/errors";
@@ -94,31 +91,31 @@ export const getServerSideProps = withSessionSSR<LoginPageProps>(
 
     if (req.method === "POST") {
       const accCreds = await getReqBody<IAccountInit>(req);
-      const isValid = validateAccountInitFields(accCreds);
+      const validationResult = await validateAccountInitFields(accCreds);
 
-      if (!isValid) {
+      if (!validationResult.is_successful) {
         return {
           props: {
             ...localization,
-            schemaValidationErrors: [...validateAccountInitFields.errors!],
+            schemaValidationErrors: [...validationResult.errors],
             accCreds,
           },
         };
       }
 
-      const result = await loginAccount(accCreds);
+      const loginResult = await loginAccount(accCreds);
 
-      if (result instanceof AuthError) {
+      if (loginResult instanceof AuthError) {
         return {
           props: {
             ...localization,
-            errors: [result.message],
+            errors: [loginResult.message],
             accCreds,
           },
         };
       }
 
-      req.session.account_id = result.id;
+      req.session.account_id = loginResult.id;
       await req.session.save();
 
       return {

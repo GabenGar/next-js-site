@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { createComment, deleteComment } from "#lib/api/public";
-import { compareAscending, isSameDay } from "#lib/dates";
 
 import type { ICommentClient, ICommentInit } from "#types/entities";
 import type { AppState, AppThunk, Status } from "#store/redux";

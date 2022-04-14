@@ -5,3 +5,5 @@
  * after they've handled all other errors,
  */
 export class ProjectError extends Error {}
+
+export class AuthError extends ProjectError {}

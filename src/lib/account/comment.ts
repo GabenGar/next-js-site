@@ -1,7 +1,16 @@
-import { ICommentInit, IComment } from "#types/entities";
+import {
+  addComment,
+  removeComment,
+  getAllPublicComments,
+  approveComment as approveCommentQuery,
+} from "#database/queries/comments";
+import { AuthError, ProjectError } from "#lib/errors";
+
+import type { ICommentInit, IComment, IAccount } from "#types/entities";
 
 export async function getComments() {
-  const comments: IComment[] = [];
+  const comments = await getAllPublicComments();
+
   return comments;
 }
 
@@ -19,25 +28,29 @@ export async function createComment(
   accountID: number,
   commentInit: ICommentInit
 ): Promise<IComment> {
-  const newComment: IComment = {};
+  const newComment = await addComment(accountID, commentInit);
 
   return newComment;
 }
 
 export async function approveComment(
-  account_id: number,
-  comment_id: number
+  account: IAccount,
+  commentID: number
 ): Promise<IComment> {
-  const approvedComment: IComment = {};
+  if (account.role !== "administrator") {
+    throw new AuthError(`Account "${account.id}" is not administrator.`);
+  }
+
+  const approvedComment = await approveCommentQuery(commentID);
 
   return approvedComment;
 }
 
 export async function deleteComment(
-  account_id: number,
-  comment_id: number
+  accountID: number,
+  commentID: number
 ): Promise<IComment> {
-  const deletedComment: IComment = {};
+  const deletedComment = removeComment(accountID, commentID);
 
   return deletedComment;
 }

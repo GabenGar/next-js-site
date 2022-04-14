@@ -1,9 +1,12 @@
+import { useEffect } from "react";
 import Head from "next/head";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { siteTitle } from "#lib/util";
 import { Page } from "#components/pages";
 import { CommentList } from "#components/entities/comments";
+import { useAppDispatch, useAppSelector } from "#store/redux";
+import { selectComments } from "#store/redux/reducers";
 
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import type { ParsedUrlQuery } from "querystring";
@@ -21,7 +24,12 @@ interface FMCommentsPageProps extends BasePageProps {}
 interface FMCommentsPageParams extends ParsedUrlQuery {}
 
 function FMCommentsPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
+  const dispatch = useAppDispatch();
+
+  const comments = useAppSelector(selectComments());
   const title = "Interactive comments section";
+
+  useEffect(() => {}, []);
 
   return (
     <Page heading={title}>
@@ -147,7 +155,7 @@ function FMCommentsPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
           <Heading>Comments</Heading>
         </ArticleHeader>
         <ArticleBody>
-          <CommentList comments={[]} />
+          <CommentList comments={comments} />
         </ArticleBody>
         <ArticleFooter></ArticleFooter>
       </Article>

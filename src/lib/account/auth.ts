@@ -12,7 +12,7 @@ import {
   deactivateInvite,
   findInvite,
 } from "#database/queries/account/invites";
-import { AuthError } from "#types/errors";
+import { AuthError } from "#lib/errors";
 import { sha3Encryption } from "#lib/encryption";
 import { isAfter, nowISO } from "#lib/dates";
 
