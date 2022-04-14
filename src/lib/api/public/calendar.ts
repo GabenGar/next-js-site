@@ -1,3 +1,4 @@
+import { ProjectError } from "#lib/errors";
 import { apiV1Fetch } from "./fetch";
 import { createRequestBody } from "./fetch";
 
@@ -12,6 +13,10 @@ export async function getMonthNotes(monthDate: IISODateTime) {
   });
   const result: APIResponse<ICalendarNoteClient[]> = await response.json();
 
+  if (!result.is_successful) {
+    throw new ProjectError(String(result));
+  }
+
   return result;
 }
 
@@ -22,6 +27,10 @@ export async function createNewNote(noteInit: ICalendarNoteInit) {
   });
   const result: APIResponse<ICalendarNoteClient> = await response.json();
 
+  if (!result.is_successful) {
+    throw new ProjectError(String(result));
+  }
+
   return result;
 }
 
@@ -31,6 +40,10 @@ export async function removeNote(noteID: number) {
     body: createRequestBody<{ note_id: number }>({ note_id: noteID }),
   });
   const result: APIResponse<ICalendarNoteClient> = await response.json();
+
+  if (!result.is_successful) {
+    throw new ProjectError(String(result));
+  }
 
   return result;
 }

@@ -1,3 +1,4 @@
+import { ProjectError } from "#lib/errors";
 import { apiV1Fetch } from "./fetch";
 import { createRequestBody } from "./fetch";
 
@@ -15,6 +16,10 @@ export async function createComment(commentInit: ICommentInit) {
   });
   const result: APIResponse<ICommentClient> = await response.json();
 
+  if (!result.is_successful) {
+    throw new ProjectError(String(result));
+  }
+
   return result;
 }
 
@@ -25,6 +30,10 @@ export async function deleteComment(commentID: number) {
   });
   const result: APIResponse<ICommentClient> = await response.json();
 
+  if (!result.is_successful) {
+    throw new ProjectError(String(result));
+  }
+
   return result;
 }
 
@@ -34,6 +43,10 @@ export async function approveComment(commentID: number) {
     body: createRequestBody<ISerialInteger>(commentID),
   });
   const result: APIResponse<ICommentClient> = await response.json();
+
+  if (!result.is_successful) {
+    throw new ProjectError(String(result));
+  }
 
   return result;
 }
