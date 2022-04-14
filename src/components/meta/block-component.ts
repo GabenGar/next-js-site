@@ -10,7 +10,7 @@ type FuncComponent<T> = (props: T, ref?: any) => JSX.Element;
  * @returns Wrapped function.
  */
 export function blockComponent<Props>(
-  blockClassName: string | string[],
+  blockClassName: string | string[] | undefined,
   functionComponent: FuncComponent<Props>
 ): FuncComponent<Props> {
   // @ts-expect-error
