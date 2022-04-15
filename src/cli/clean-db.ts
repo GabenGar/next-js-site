@@ -1,6 +1,7 @@
 import fse from "fs-extra";
 import path from "path";
 import pgLib from "pg-promise";
+import { IS_DEVELOPMENT } from "#environment/derived";
 
 /**
  * @typedef ProjectDatabase
@@ -20,7 +21,7 @@ const IS_PRODUCTION = NODE_ENV === "production";
 })();
 
 async function cleanDatabase() {
-  if (IS_PRODUCTION) {
+  if (!IS_DEVELOPMENT) {
     console.log("Cleanup isn't started in dev mode, aborting.");
     return;
   }

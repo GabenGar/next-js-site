@@ -1,7 +1,16 @@
 import fse from "fs-extra";
 import path from "path";
-import pgLib from "pg-promise";
+import { CONFIGS_FOLDER } from "#environment/constants";
+import { IS_DEVELOPMENT } from "#environment/derived";
+import { getDB } from "#database";
 
+import type { IProjectDatabase, ISchema } from "#codegen/schema/interfaces";
+
+interface DatabaseTable {
+  schema: string;
+  table: string;
+  description: string;
+}
 
 (async () => {
   try {
@@ -11,34 +20,56 @@ import pgLib from "pg-promise";
   }
 })();
 
+/**
+ * Resets the database and the state of the tables without dropping them.
+ */
 async function cleanDatabase() {
-  if (IS_PRODUCTION) {
+  if (!IS_DEVELOPMENT) {
     console.log("Reset is started in production mode, aborting.");
     return;
   }
 
+  const { db } = getDB();
+
   console.log("Starting database reset.");
 
   const migrationsTable = "pgmigrations";
-  const pgp = pgLib({});
-  const db = pgp(DATABASE_URL);
 
-  const schemaPath = path.join(process.cwd(), "schema", "database.schema.json");
-  /**
-   * @type {ProjectDatabase}
-   */
-  const dbSchema = fse.readJSONSync(schemaPath);
-  const dbTables = Object.keys(dbSchema.properties).filter(
-    (name) => name !== migrationsTable
-  );
+  const dbConfigPath = path.join(CONFIGS_FOLDER);
+  const dbSchema: IProjectDatabase = fse.readJSONSync(dbConfigPath);
+
+  // @ts-expect-error the keys are known beforehand.
+  const dbTables = Object.entries<ISchema>(dbSchema.schemas).reduce<
+    DatabaseTable[]
+  >((dbTables, [schemaName, schema]) => {
+    // @ts-expect-error the keys are known beforehand.
+    Object.entries<string>(schema).forEach(([tableName, desciption]) => {
+      if (schemaName === "public" && tableName === migrationsTable) {
+        return;
+      }
+
+      dbTables.push({
+        schema: schemaName,
+        table: tableName,
+        description: desciption,
+      });
+    });
+
+    return dbTables;
+  }, []);
+
+  const dbList = dbTables.map<string>(({ schema, table, description }) => {
+    return `"${schema}.${table}" - ${description}`;
+  });
+
   console.log(
-    `These database tables are going to be reset:\n${dbTables.join("\n")}`
+    `These database tables are going to be reset:\n\n${dbList.join("\n")}\n`
   );
   const query = `
     TRUNCATE TABLE ${dbTables.join(", ")} RESTART IDENTITY CASCADE
   `;
 
   await db.none(query);
-  console.log(`These database tables got reset:\n${dbTables.join("\n")}`);
+  console.log(`These database tables got reset:\n\n${dbList.join("\n")}\n`);
   console.log("Finished database reset.");
 }

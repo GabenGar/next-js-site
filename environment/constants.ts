@@ -4,6 +4,7 @@ export const ERROR_MESSAGE = "FLYING POLAR BUFFALO ERROR";
 
 export const PROJECT_ROOT = process.cwd();
 export const SCHEMA_FOLDER = path.join(PROJECT_ROOT, "schema");
+export const CONFIGS_FOLDER = path.join(PROJECT_ROOT, "configs");
 export const SOURCE_FOLDER = path.join(PROJECT_ROOT, "src");
 export const CODEGEN_FOLDER = path.join(SOURCE_FOLDER, "codegen");
 export const BLOGS_FOLDER = path.join(SOURCE_FOLDER, "assets", "blog");
