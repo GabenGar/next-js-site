@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { siteTitle } from "#lib/util";
-import { getAccountDetails, withSessionSSR } from "#lib/account";
+import { getAccountDetails } from "#lib/account";
+import { withSessionSSR } from "#server/requests"
 import { getInvites } from "#database/queries/account/admin";
 import { Page } from "#components/pages";
 import { Nav, NavList } from "#components/navigation";

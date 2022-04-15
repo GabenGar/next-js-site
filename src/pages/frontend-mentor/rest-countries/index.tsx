@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { RESTCountries as Layout } from "#components/layout/frontend-mentor";
-import { Section } from "#components/pages";
+import { Page } from "#components/pages";
 import { LinkInternal } from "#components/links";
 import styles from "./index.module.scss";
 
@@ -8,7 +8,7 @@ import type { NextPage } from "next";
 
 export default function RESTCountriesPage() {
   return (
-    <Section heading="REST Countries">
+    <Page heading="REST Countries">
       <Head>
         <title>REST Countries</title>
         <meta
@@ -47,7 +47,7 @@ export default function RESTCountriesPage() {
           </li>
         </ul>
       </nav>
-    </Section>
+    </Page>
   );
 }
 

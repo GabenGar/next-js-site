@@ -37,7 +37,7 @@ export default withSessionRoute<ICommentClient>(async (req, res) => {
     const commentID = validationResult.data;
 
     const { account_id: accID, ...approvedComment } = await approveComment(
-      account.id,
+      account,
       commentID
     );
 

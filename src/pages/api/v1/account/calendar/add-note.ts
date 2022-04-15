@@ -13,7 +13,7 @@ import { validateCalendarNoteInitFields } from "#codegen/schema/validations";
 
 interface RequestBody extends APIRequest<ICalendarNoteInit> {}
 
-export default withSessionRoute<APIResponse<ICalendarNote>>(
+export default withSessionRoute<ICalendarNote>(
   async (req, res) => {
     if (req.method === "POST") {
       const { account_id } = req.session;
@@ -21,7 +21,7 @@ export default withSessionRoute<APIResponse<ICalendarNote>>(
       if (!account_id) {
         return res
           .status(UNAUTHORIZED)
-          .json({ success: false, errors: ["Not Authorized."] });
+          .json({ is_successful: false, errors: ["Not Authorized."] });
       }
 
       const account = await getAccountDetails(account_id);
@@ -35,7 +35,7 @@ export default withSessionRoute<APIResponse<ICalendarNote>>(
         req.session.destroy();
 
         return res.status(INTERNAL_SERVER_ERROR).json({
-          success: false,
+          is_successful: false,
           errors: ["Unknown Error."],
         });
       }
@@ -44,7 +44,7 @@ export default withSessionRoute<APIResponse<ICalendarNote>>(
 
       if (!isBodyPresent) {
         return res.status(UNPROCESSABLE_ENTITY).json({
-          success: false,
+          is_successful: false,
           errors: ["Invalid body."],
         });
       }
@@ -53,13 +53,13 @@ export default withSessionRoute<APIResponse<ICalendarNote>>(
         (req.body as RequestBody).data
       );
 
-      if (!result.is_successfull) {
+      if (!result.is_successful) {
         const validationErrors = result.errors.map((errorObj) =>
           JSON.stringify(errorObj)
         );
 
         return res.status(UNPROCESSABLE_ENTITY).json({
-          success: false,
+          is_successful: false,
           errors: validationErrors,
         });
       }
@@ -74,7 +74,7 @@ export default withSessionRoute<APIResponse<ICalendarNote>>(
         note
       );
 
-      return res.status(OK).json({ success: true, data: newNote });
+      return res.status(OK).json({ is_successful: true, data: newNote });
     }
   }
 );

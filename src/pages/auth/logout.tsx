@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { withSessionSSR } from "#lib/account";
+import { withSessionSSR } from "#server/requests";
 import { siteTitle } from "#lib/util";
 import { Page } from "#components/pages";
 import { Form } from "#components/forms";
@@ -52,7 +52,7 @@ export const getServerSideProps = withSessionSSR<LogoutPageProps>(
       return {
         redirect: {
           destination: "/",
-          statusCode: 303
+          statusCode: 303,
         },
       };
     }

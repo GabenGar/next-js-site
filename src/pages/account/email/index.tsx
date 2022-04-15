@@ -5,11 +5,10 @@ import { IS_DEVELOPMENT } from "#environment/derived";
 import { siteTitle } from "#lib/util";
 import {
   getAccountDetails,
-  withSessionSSR,
   sendEmailConfirmation,
   validateEmailString,
 } from "#lib/account";
-import { getReqBody } from "#server/requests";
+import { getReqBody, withSessionSSR } from "#server/requests";
 import { Page } from "#components/pages";
 import { Form } from "#components/forms";
 import { FormSectionEmail } from "#components/forms/sections";

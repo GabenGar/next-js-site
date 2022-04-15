@@ -1,6 +1,7 @@
 import Head from "next/head";
-import { getAccountDetails, withSessionSSR } from "#lib/account";
+import { getAccountDetails,  } from "#lib/account";
 import { getAccountList } from "#lib/account/admin";
+import { withSessionSSR } from "#server/requests"
 import { LinkInternal } from "#components/links";
 import { Page } from "#components/pages";
 import { Nav, NavList } from "#components/navigation";

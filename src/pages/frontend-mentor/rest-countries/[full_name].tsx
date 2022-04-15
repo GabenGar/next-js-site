@@ -4,7 +4,7 @@ import { CardList } from "#components/lists";
 import { ImageCarousel } from "#components/image-carousel";
 import { FancyNumber, FancyArea } from "#components/number-view";
 import { RESTCountries as Layout } from "#components/layout/frontend-mentor";
-import { Section } from "#components/pages";
+import { Page } from "#components/pages";
 import { LinkExternal, LinkInternal } from "#components/links";
 import { DL, DS, DD, DT } from "#components/lists/d-list";
 import { CountryCard } from "#components/frontend-mentor";
@@ -47,7 +47,7 @@ export default function RESTCountriesCountryDetail({
   }
 
   return (
-    <Section heading={`${countryName}`}>
+    <Page heading={`${countryName}`}>
       <Head>
         <title>Detailed Info for {countryName}</title>
         <meta name="description" content={`Detailed info for ${countryName}`} />
@@ -259,7 +259,7 @@ export default function RESTCountriesCountryDetail({
           )}
         </footer>
       </article>
-    </Section>
+    </Page>
   );
 }
 
