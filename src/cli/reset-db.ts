@@ -1,20 +1,7 @@
-// @ts-check
 import fse from "fs-extra";
 import path from "path";
-import dotenv from "dotenv";
 import pgLib from "pg-promise";
 
-const envPath = path.join(process.cwd(), ".env.local");
-dotenv.config({ path: envPath });
-
-/**
- * @typedef ProjectDatabase
- * @property {Record<string, string>} properties
- */
-
-const NODE_ENV = process.env.NODE_ENV || "development";
-const DATABASE_URL = process.env.DATABASE_URL;
-const IS_PRODUCTION = NODE_ENV === "production";
 
 (async () => {
   try {

@@ -224,32 +224,40 @@ export interface ProjectConfig {
 }
 
 /**
+ * Table of the schema.
+ */
+export type Table = string;
+
+/**
  * Various database details.
  */
 export interface ProjectDatabase {
   /**
-   * Migrations.
+   * Default schema used for schema-less table calls.
    */
-  pgmigrations?: {
-    [k: string]: unknown;
-  };
+  default_schema: string;
+  schemas: Schemas;
+}
+/**
+ * Database schemas.
+ */
+export interface Schemas {
+  public: Schema;
+  comments: Schema;
+}
+/**
+ * Database schema.
+ */
+export interface Schema {
   /**
-   * Accounts.
+   * Description of the schema.
    */
-  accounts?: {
-    [k: string]: unknown;
-  };
+  description: string;
   /**
-   * Pending email confirmations for accounts.
+   * Keys are table names and values are their descriptions.
    */
-  email_confirmations?: {
-    [k: string]: unknown;
-  };
-  /**
-   * Account notes for calendar.
-   */
-  calendar_notes?: {
-    [k: string]: unknown;
+  tables: {
+    [k: string]: Table;
   };
 }
 

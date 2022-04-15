@@ -1,0 +1,22 @@
+{
+  "default_schema": "public",
+  "schemas": {
+    "public": {
+      "description": "Base schema.",
+      "tables": {
+        "pgmigrations": "Migrations.",
+        "accounts": "Accounts.",
+        "email_confirmations": "Pending email confirmations for accounts.",
+        "invites": "Account invites.",
+        "calendar_notes": "Account notes for calendar."
+      }
+    },
+    "comments": {
+      "description": "Comments schema.",
+      "tables": {
+        "entries": "Comments made by accounts.",
+        "blog": "Relations between blog entries and comments."
+      }
+    }
+  }
+}

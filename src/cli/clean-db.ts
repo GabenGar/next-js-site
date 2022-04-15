@@ -1,11 +1,6 @@
-// @ts-check
 import fse from "fs-extra";
 import path from "path";
-import dotenv from "dotenv";
 import pgLib from "pg-promise";
-
-const envPath = path.join(process.cwd(), ".env.local");
-dotenv.config({ path: envPath });
 
 /**
  * @typedef ProjectDatabase

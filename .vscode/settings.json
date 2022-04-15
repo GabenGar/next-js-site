@@ -35,6 +35,10 @@
       "url": "./schema/config.schema.json"
     },
     {
+      "fileMatch": ["configs/database.json"],
+      "url": "./schema/database.schema.json"
+    },
+    {
       "fileMatch": ["public/locales/*/layout.json"],
       "url": "./schema/localization/layout.schema.json"
     },

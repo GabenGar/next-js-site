@@ -8,8 +8,23 @@ async function generateInterfacesFromSchemas() {
   const interfaces: string[] = [];
 
   for await (const schema of Object.values(schemaMap)) {
-    //
     const schemaCopy = transformSchema(schema);
+
+    // quick hack until I figure config schema out
+    if (schema.$id === "http://schemas.com/database.schema.json") {
+      const interfaceString = await fromSchemaToInterface(
+        schemaCopy,
+        schema.title,
+        {
+          bannerComment: "",
+          cwd: SCHEMA_FOLDER,
+          declareExternallyReferenced: true,
+        }
+      );
+
+      interfaces.push(interfaceString);
+      continue;
+    }
     const interfaceString = await fromSchemaToInterface(
       schemaCopy,
       schema.title,
@@ -23,6 +38,7 @@ async function generateInterfacesFromSchemas() {
   }
 
   const content = interfaces.join("\n\n");
+
   return content;
 }
 

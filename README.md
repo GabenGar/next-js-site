@@ -98,3 +98,4 @@ git config core.sshCommand "ssh -i ~/.ssh/id_rsa_file -F /dev/null"
 - integrate nextJS middlewares
 - locale-specific date formatting
 - pre-deploy validation
+- update dependencies
