@@ -2,12 +2,13 @@ import Head from "next/head";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { AuthError } from "#types/errors";
-import { getReqBody } from "#lib/util";
+import { siteTitle } from "#lib/util";
 import {
   loginAccount,
   validateAccountInitFields,
   withSessionSSR,
 } from "#lib/account";
+import { getReqBody } from "#server/requests";
 import { Page } from "#components/pages";
 import { Form } from "#components/forms";
 import { ErrorsView } from "#components/errors";
@@ -36,7 +37,7 @@ export function LoginPage({
   return (
     <Page heading={title}>
       <Head>
-        <title>{title}</title>
+        <title>{siteTitle(title)}</title>
         <meta name="description" content={t("login_desc")} />
       </Head>
       <Form method="POST" submitButton={t("log_in")}>

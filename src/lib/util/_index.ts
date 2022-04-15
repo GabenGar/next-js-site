@@ -3,7 +3,6 @@ import { SITE_NAME } from "#environment/vars";
 export { createFetch } from "./fancy-fetch";
 export { buttonClicked } from "./dom";
 export { transformChildrenProps, getValidChildren } from "./react";
-export { getReqBody } from "./get-req-body";
 export { createSingleton } from "./create-singleton";
 export { guessLinkType } from "./guess-link-type";
 export type { ILinkTypes } from "./guess-link-type";
