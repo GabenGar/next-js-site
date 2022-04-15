@@ -1,5 +1,5 @@
 import { SITE_ORIGIN } from "#environment/vars";
-import { createFetch } from "#lib/util";
+import { createFetch } from "#browser";
 
 import type { APIRequest } from "#types/api";
 

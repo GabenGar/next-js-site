@@ -3,7 +3,12 @@
   "title": "ProjectConfig",
   "description": "Config for the project.",
   "type": "object",
+  "additionalProperties": false,
   "properties": {
+    "NODE_ENV": {
+      "type": "string",
+      "description": "Add it explicitly for `ts-node`"
+    },
     "NEXT_PUBLIC_SITE_ORIGIN": {
       "type": "string",
       "format": "uri",
@@ -88,6 +93,6 @@
       "type": "string",
       "description": "Admin-exclusive invite."
     }
-  },
-  "additionalProperties": false
+  }
+
 }

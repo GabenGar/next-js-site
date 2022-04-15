@@ -4,7 +4,7 @@ import { CONFIGS_FOLDER } from "#environment/constants";
 import { IS_DEVELOPMENT } from "#environment/derived";
 import { getDB } from "#database";
 
-import type { IProjectDatabase } from "#codegen/schema/interfaces";
+import type { IProjectDatabase, ISchema } from "#codegen/schema/interfaces";
 import type { DatabaseTable } from "./types";
 
 (async () => {
@@ -29,7 +29,8 @@ async function cleanDatabase() {
   const dbTables = Object.entries<ISchema>(dbConfig.schemas).reduce<
     DatabaseTable[]
   >((dbTables, [schemaName, schema]) => {
-    Object.entries<string>(schema).forEach(([tableName, desciption]) => {
+    Object.entries<string>(schema.tables).forEach(([tableName, desciption]) => {
+
       dbTables.push({
         schema: schemaName,
         table: tableName,
@@ -48,14 +49,13 @@ async function cleanDatabase() {
   });
 
   const query = `
-    DROP TABLE IF EXISTS ${tableList.join(", ")} CASCADE
+    DROP TABLE ${tableList.join(", ")} CASCADE
   `;
   console.log(
     `These database tables are going to be dropped:\n\n${dbList.join("\n")}\n`
   );
 
   await db.none(query);
-  
   console.log(`Dropped these tables:\n\n${dbList.join("\n")}\n`);
   console.log("Finished database cleanup.");
 }

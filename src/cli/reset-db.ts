@@ -7,8 +7,6 @@ import { getDB } from "#database";
 import type { IProjectDatabase, ISchema } from "#codegen/schema/interfaces";
 import type { DatabaseTable } from "./types";
 
-
-
 (async () => {
   try {
     await cleanDatabase();
@@ -39,8 +37,7 @@ async function cleanDatabase() {
   const dbTables = Object.entries<ISchema>(dbConfig.schemas).reduce<
     DatabaseTable[]
   >((dbTables, [schemaName, schema]) => {
-    // @ts-expect-error the keys are known beforehand.
-    Object.entries<string>(schema).forEach(([tableName, desciption]) => {
+    Object.entries<string>(schema.tables).forEach(([tableName, desciption]) => {
       if (schemaName === "public" && tableName === migrationsTable) {
         return;
       }
@@ -58,12 +55,15 @@ async function cleanDatabase() {
   const dbList = dbTables.map<string>(({ schema, table, description }) => {
     return `"${schema}.${table}" - ${description}`;
   });
+  const tableNames = dbTables.map<string>(({ schema, table }) => {
+    return `${schema}.${table}`;
+  });
 
   console.log(
     `These database tables are going to be reset:\n\n${dbList.join("\n")}\n`
   );
   const query = `
-    TRUNCATE TABLE ${dbTables.join(", ")} RESTART IDENTITY CASCADE
+    TRUNCATE TABLE ${tableNames.join(", ")} RESTART IDENTITY CASCADE
   `;
 
   await db.none(query);
