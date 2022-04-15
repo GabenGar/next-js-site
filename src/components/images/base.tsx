@@ -5,6 +5,7 @@ import { ImageLocal } from "./local";
 import styles from "./_index.module.scss";
 
 import type { CSSProperties } from "react";
+import type { StaticImageData } from "next/image";
 import type { ISpanProps } from "#types/props";
 
 /**
