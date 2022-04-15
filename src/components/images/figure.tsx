@@ -5,9 +5,10 @@ import styles from "./figure.module.scss";
 
 import type { CSSProperties, ReactNode } from "react";
 import type { IFigureProps } from "#components/fancy/figure";
+import type { ImageArg } from "./types";
 
 export interface IImageFigureProps extends IFigureProps {
-  src: string | StaticImageData;
+  src: string | ImageArg;
   alt?: string;
   href?: string | URL;
   figCaption?: ReactNode;

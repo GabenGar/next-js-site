@@ -16,6 +16,10 @@
       "type": "object",
       "description": "Pending email confirmations for accounts."
     },
+    "invites": {
+      "type": "object",
+      "description": "Account invites."
+    },
     "calendar_notes": {
       "type": "object",
       "description": "Account notes for calendar."

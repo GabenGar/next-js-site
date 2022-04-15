@@ -7,6 +7,7 @@ import styles from "./_index.module.scss";
 import type { CSSProperties } from "react";
 import type { StaticImageData } from "next/image";
 import type { ISpanProps } from "#types/props";
+import type { ImageArg } from "./types";
 
 /**
  * The separation is solely due to `next/image` component.
@@ -15,7 +16,7 @@ const imageLinkTypes = ["external", "internal"] as const;
 export type IImageLinkTypes = typeof imageLinkTypes[number];
 
 export interface IImageProps extends ISpanProps {
-  src: string | StaticImageData;
+  src: ImageArg;
   alt?: string;
   imageHeight?: string;
   type?: IImageLinkTypes;
@@ -51,7 +52,12 @@ export const Image = blockComponent<IImageProps>(
         {!isImage ? (
           <p>No Image Available</p>
         ) : (
-          <InnerImage src={src} alt={alt} type={imgType} imageHeight={imageHeight} />
+          <InnerImage
+            src={src}
+            alt={alt}
+            type={imgType}
+            imageHeight={imageHeight}
+          />
         )}
       </span>
     );
