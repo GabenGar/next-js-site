@@ -2,13 +2,14 @@ import Head from "next/head";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { IS_DEVELOPMENT } from "#environment/derived";
-import { getReqBody, siteTitle } from "#lib/util";
+import { siteTitle } from "#lib/util";
 import {
   getAccountDetails,
   withSessionSSR,
   sendEmailConfirmation,
   validateEmailString,
 } from "#lib/account";
+import { getReqBody } from "#server/requests";
 import { Page } from "#components/pages";
 import { Form } from "#components/forms";
 import { FormSectionEmail } from "#components/forms/sections";

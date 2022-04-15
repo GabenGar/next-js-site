@@ -1,6 +1,7 @@
 import Head from "next/head";
-import { getReqBody, siteTitle } from "#lib/util";
+import { siteTitle } from "#lib/util";
 import { getAccountDetails, withSessionSSR } from "#lib/account";
+import { getReqBody } from "#server/requests";
 import { createInvite } from "#lib/account/admin";
 import { validateInviteInitFields } from "#codegen/schema/validations";
 import { Page } from "#components/pages";

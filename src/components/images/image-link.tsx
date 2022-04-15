@@ -4,9 +4,10 @@ import { Image } from "#components/images";
 import styles from "./image-link.module.scss";
 
 import type { ILinkProps } from "#components/links";
+import type { ImageArg } from "./types";
 
 export interface IImageLinkProps extends Omit<ILinkProps, "url"> {
-  imageSrc: string | StaticImageData;
+  imageSrc: ImageArg;
   imageAlt?: string;
   linkHref?: string | URL;
   imageHeight?: string;
