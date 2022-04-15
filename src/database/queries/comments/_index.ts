@@ -6,7 +6,7 @@ const { db } = getDB();
 export async function getAllPublicComments() {
   const query = `
     SELECT *
-    FROM comments
+    FROM comments.entries
     WHERE is_public = true
   `;
 
@@ -17,12 +17,11 @@ export async function getAllPublicComments() {
 
 export async function addComment(accountID: number, commentInit: ICommentInit) {
   const query = `
-    INSERT INTO comments
-      (account_id, parent_id, blog_slug, content)
+    INSERT INTO comments.entries
+      (account_id, parent_id, content)
     VALUES (
       $(account_id),
       $(parent_id),
-      $(blog_slug),
       $(content)
     )
     RETURNING *
@@ -34,12 +33,31 @@ export async function addComment(accountID: number, commentInit: ICommentInit) {
 
   const newComment = await db.one<IComment>(query, queryArgs);
 
+  if (commentInit.blog_slug) {
+    const blogQuery = `
+      INSERT INTO comments.blog
+        (comment_id, blog_slug)
+      VALUES (
+        $(comment_id),
+        $(blog_slug)
+      )
+      RETURNING blog_slug
+    `;
+    const blogQueryArgs = {
+      comment_id: newComment.id,
+      blog_slug: commentInit.blog_slug,
+    };
+    const blog_slug = await db.one<string>(blogQuery, blogQueryArgs);
+
+    newComment.blog_slug = blog_slug;
+  }
+
   return newComment;
 }
 
 export async function approveComment(commentID: number) {
   const query = `
-    UPDATE comments
+    UPDATE comments.entries
     SET is_public = true
     WHERE id = &(comment_id)
     RETURNING *
@@ -55,7 +73,7 @@ export async function approveComment(commentID: number) {
 
 export async function removeComment(accountID: number, commentID: number) {
   const query = `
-    DELETE FROM comments
+    DELETE FROM comments.entries
     WHERE
       id = $(comment_id)
       AND account_id = $(account_id)

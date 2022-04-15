@@ -14,7 +14,7 @@
     "start": "next start",
     "lint": "next lint",
     "migrate": "node scripts/migrate-up.js",
-    "clean": "ts-node -r tsconfig-paths/register src/cli/clean-db.ts",
+    "wipe": "ts-node -r tsconfig-paths/register src/cli/wipe-db.ts",
     "reset": "ts-node -r tsconfig-paths/register src/cli/reset-db.ts",
     "codegen": "ts-node -r tsconfig-paths/register src/lib/codegen/_index.ts"
   },
