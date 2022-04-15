@@ -99,3 +99,4 @@ git config core.sshCommand "ssh -i ~/.ssh/id_rsa_file -F /dev/null"
 - locale-specific date formatting
 - pre-deploy validation
 - update dependencies
+- CLI tool
