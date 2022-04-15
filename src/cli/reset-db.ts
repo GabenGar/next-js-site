@@ -5,12 +5,9 @@ import { IS_DEVELOPMENT } from "#environment/derived";
 import { getDB } from "#database";
 
 import type { IProjectDatabase, ISchema } from "#codegen/schema/interfaces";
+import type { DatabaseTable } from "./types";
 
-interface DatabaseTable {
-  schema: string;
-  table: string;
-  description: string;
-}
+
 
 (async () => {
   try {
@@ -35,11 +32,11 @@ async function cleanDatabase() {
 
   const migrationsTable = "pgmigrations";
 
-  const dbConfigPath = path.join(CONFIGS_FOLDER);
-  const dbSchema: IProjectDatabase = fse.readJSONSync(dbConfigPath);
+  const dbConfigPath = path.join(CONFIGS_FOLDER, "database.json");
+  const dbConfig: IProjectDatabase = fse.readJSONSync(dbConfigPath);
 
   // @ts-expect-error the keys are known beforehand.
-  const dbTables = Object.entries<ISchema>(dbSchema.schemas).reduce<
+  const dbTables = Object.entries<ISchema>(dbConfig.schemas).reduce<
     DatabaseTable[]
   >((dbTables, [schemaName, schema]) => {
     // @ts-expect-error the keys are known beforehand.

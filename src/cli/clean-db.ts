@@ -1,16 +1,11 @@
 import fse from "fs-extra";
 import path from "path";
-import pgLib from "pg-promise";
+import { CONFIGS_FOLDER } from "#environment/constants";
 import { IS_DEVELOPMENT } from "#environment/derived";
+import { getDB } from "#database";
 
-/**
- * @typedef ProjectDatabase
- * @property {Record<string, string>} properties
- */
-
-const NODE_ENV = process.env.NODE_ENV || "development";
-const DATABASE_URL = process.env.DATABASE_URL;
-const IS_PRODUCTION = NODE_ENV === "production";
+import type { IProjectDatabase } from "#codegen/schema/interfaces";
+import type { DatabaseTable } from "./types";
 
 (async () => {
   try {
@@ -25,25 +20,42 @@ async function cleanDatabase() {
     console.log("Cleanup isn't started in dev mode, aborting.");
     return;
   }
+  const { db } = getDB();
   console.log("Starting database cleanup.");
 
-  const pgp = pgLib({});
-  const db = pgp(DATABASE_URL);
+  const dbConfigPath = path.join(CONFIGS_FOLDER, "database.json");
+  const dbConfig: IProjectDatabase = fse.readJSONSync(dbConfigPath);
+  // @ts-expect-error the keys are known beforehand.
+  const dbTables = Object.entries<ISchema>(dbConfig.schemas).reduce<
+    DatabaseTable[]
+  >((dbTables, [schemaName, schema]) => {
+    Object.entries<string>(schema).forEach(([tableName, desciption]) => {
+      dbTables.push({
+        schema: schemaName,
+        table: tableName,
+        description: desciption,
+      });
+    });
 
-  const schemaPath = path.join(process.cwd(), "schema", "database.schema.json");
-  /**
-   * @type {ProjectDatabase}
-   */
-  const dbSchema = fse.readJSONSync(schemaPath);
-  const dbTables = Object.keys(dbSchema.properties);
-  console.log(
-    `These database tables are going to be purged:\n${dbTables.join("\n")}`
-  );
+    return dbTables;
+  }, []);
+
+  const dbList = dbTables.map<string>(({ schema, table, description }) => {
+    return `"${schema}.${table}" - ${description}`;
+  });
+  const tableList = dbTables.map(({ schema, table }) => {
+    return `${schema}.${table}`;
+  });
+
   const query = `
-    DROP TABLE IF EXISTS ${dbTables.join(", ")} CASCADE
+    DROP TABLE IF EXISTS ${tableList.join(", ")} CASCADE
   `;
+  console.log(
+    `These database tables are going to be dropped:\n\n${dbList.join("\n")}\n`
+  );
 
   await db.none(query);
-  console.log(`Removed these tables:\n${dbTables.join("\n")}`);
+  
+  console.log(`Dropped these tables:\n\n${dbList.join("\n")}\n`);
   console.log("Finished database cleanup.");
 }
