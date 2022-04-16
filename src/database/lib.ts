@@ -8,7 +8,7 @@ import { createSingleton } from "#lib/util";
 import type { IInitOptions, IDatabase, IMain } from "pg-promise";
 
 interface IDatabaseScope {
-  db: IDatabase<any>;
+  db: IDatabase<IMain>;
   pgp: IMain;
 }
 

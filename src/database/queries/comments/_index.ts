@@ -11,11 +11,13 @@ export async function getAllPublicComments() {
   `;
 
   const comments = await db.manyOrNone<IComment>(query);
-
   return comments;
 }
 
-export async function addComment(accountID: number, commentInit: ICommentInit) {
+export async function addComment(
+  accountID: number,
+  commentInit: ICommentInit
+): Promise<IComment> {
   const query = `
     INSERT INTO comments.entries
       (account_id, parent_id, content)
@@ -31,27 +33,37 @@ export async function addComment(accountID: number, commentInit: ICommentInit) {
     ...commentInit,
   };
 
-  const newComment = await db.one<IComment>(query, queryArgs);
+  const newComment = await db.txIf<IComment>(
+    { cnd: Boolean(commentInit.blog_slug) },
+    async (t) => {
+      const newComment = await t.one<IComment>(query, queryArgs);
 
-  if (commentInit.blog_slug) {
-    const blogQuery = `
-      INSERT INTO comments.blog
-        (comment_id, blog_slug)
-      VALUES (
-        $(comment_id),
-        $(blog_slug)
-      )
-      RETURNING blog_slug
-    `;
-    const blogQueryArgs = {
-      comment_id: newComment.id,
-      blog_slug: commentInit.blog_slug,
-    };
-    const blog_slug = await db.one<string>(blogQuery, blogQueryArgs);
+      // executed as a task
+      if (!commentInit.blog_slug) {
+        return newComment;
+      }
 
-    newComment.blog_slug = blog_slug;
-  }
+      // executed as a transaction
+      const blogQuery = `
+        INSERT INTO comments.blog
+          (comment_id, blog_slug)
+        VALUES (
+          $(comment_id),
+          $(blog_slug)
+        )
+        RETURNING blog_slug
+      `;
+      const blogQueryArgs = {
+        comment_id: newComment.id,
+        blog_slug: commentInit.blog_slug,
+      };
+      const blog_slug = await db.one<string>(blogQuery, blogQueryArgs);
 
+      newComment.blog_slug = blog_slug;
+
+      return newComment;
+    }
+  );
   return newComment;
 }
 
