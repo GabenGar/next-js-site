@@ -42,7 +42,7 @@ export interface Comment {
   created_at: ISODateTime;
   account_id: SerialInteger;
   parent_id?: SerialInteger;
-  blog_slug: string;
+  blog_slug?: string;
   /**
    * Markdown
    */
@@ -57,7 +57,7 @@ export interface CommentClient {
   id: SerialInteger;
   created_at: ISODateTime;
   parent_id?: SerialInteger;
-  blog_slug: string;
+  blog_slug?: string;
   /**
    * Markdown
    */
@@ -72,7 +72,7 @@ export interface CommentClient {
  * Comment initializer
  */
 export interface CommentInit {
-  blog_slug: string;
+  blog_slug?: string;
   /**
    * Markdown
    */
@@ -184,6 +184,10 @@ export interface CalendarNoteInit {
  * Config for the project.
  */
 export interface ProjectConfig {
+  /**
+   * Add it explicitly for `ts-node`
+   */
+  NODE_ENV?: string;
   /**
    * The origin of the site.
    */

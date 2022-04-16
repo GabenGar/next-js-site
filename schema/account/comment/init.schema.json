@@ -3,7 +3,7 @@
   "title": "CommentInit",
   "description": "Comment initializer",
   "type": "object",
-  "required": ["blog_slug", "content"],
+  "required": ["content"],
   "additionalProperties": false,
   "properties": {
     "blog_slug": {

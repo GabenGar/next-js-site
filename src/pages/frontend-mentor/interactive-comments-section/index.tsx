@@ -4,13 +4,10 @@ import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { siteTitle } from "#lib/util";
 import { Page } from "#components/pages";
-import { CommentList } from "#components/entities/comments";
+import { CommentList, NewCommentForm } from "#components/entities/comments";
 import { useAppDispatch, useAppSelector } from "#store/redux";
 import { selectComments } from "#store/redux/reducers";
-
-import type { GetStaticProps, InferGetStaticPropsType } from "next";
-import type { ParsedUrlQuery } from "querystring";
-import type { BasePageProps } from "#types/pages";
+import { useAccount } from "#lib/hooks";
 import {
   Article,
   ArticleHeader,
@@ -19,13 +16,17 @@ import {
 } from "#components/articles";
 import { Heading } from "#components/headings";
 
+import type { GetStaticProps, InferGetStaticPropsType } from "next";
+import type { ParsedUrlQuery } from "querystring";
+import type { BasePageProps } from "#types/pages";
+
 interface FMCommentsPageProps extends BasePageProps {}
 
 interface FMCommentsPageParams extends ParsedUrlQuery {}
 
 function FMCommentsPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
   const dispatch = useAppDispatch();
-
+  const { account } = useAccount();
   const comments = useAppSelector(selectComments());
   const title = "Interactive comments section";
 
@@ -157,7 +158,7 @@ function FMCommentsPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
         <ArticleBody>
           <CommentList comments={comments} />
         </ArticleBody>
-        <ArticleFooter></ArticleFooter>
+        <ArticleFooter>{account && <NewCommentForm />}</ArticleFooter>
       </Article>
     </Page>
   );

@@ -3,7 +3,7 @@
   "title": "CommentClient",
   "description": "Comment by an account for client",
   "type": "object",
-  "required": ["id", "created_at", "content", "blog_slug", "is_public"],
+  "required": ["id", "created_at", "content", "is_public"],
   "additionalProperties": false,
   "properties": {
     "id": {

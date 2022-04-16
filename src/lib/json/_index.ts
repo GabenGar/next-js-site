@@ -1,5 +1,3 @@
-
-
 export interface IJSONOptions {
   /**
    * @default true
@@ -11,7 +9,10 @@ const defaultJSONOptions: IJSONOptions = {
   isPretty: true,
 };
 
-export function toJSON(value: any, options = { ...defaultJSONOptions }) {
+export function toJSON<InputType = unknown>(
+  value: InputType,
+  options = defaultJSONOptions
+) {
   const finalOptions = options
     ? { ...defaultJSONOptions, ...options }
     : defaultJSONOptions;
@@ -21,8 +22,6 @@ export function toJSON(value: any, options = { ...defaultJSONOptions }) {
     finalOptions.isPretty ? 2 : undefined
   );
 }
-export function fromJSON<Type extends unknown>(
-  json: string,
-): Type {
+export function fromJSON<OutputType extends unknown>(json: string): OutputType {
   return JSON.parse(json);
 }

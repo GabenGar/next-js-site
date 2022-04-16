@@ -100,3 +100,4 @@ git config core.sshCommand "ssh -i ~/.ssh/id_rsa_file -F /dev/null"
 - pre-deploy validation
 - update dependencies
 - CLI tool
+- JSON Schema validated forms

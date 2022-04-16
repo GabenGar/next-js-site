@@ -16,35 +16,34 @@ export interface ITextAreaProps extends FormSectionProps {
   maxLength?: number;
 }
 
-export const TextArea = blockComponent<ITextAreaProps>(
-  styles.text,
-  ({
-    id,
-    name,
-    defaultValue,
-    required,
-    readOnly,
-    rows,
-    children,
-    minLength,
-    maxLength,
-    ...blockProps
-  }) => {
-    return (
-      <FormSection {...blockProps}>
-        <HTMLLabel htmlFor={id}>{children}</HTMLLabel>
-        <HTMLTextArea
-          id={id}
-          className={styles.textArea}
-          name={name}
-          required={required}
-          defaultValue={defaultValue}
-          rows={rows}
-          readOnly={readOnly}
-          minLength={minLength}
-          maxLength={maxLength}
-        />
-      </FormSection>
-    );
-  }
-);
+export const TextArea = blockComponent<ITextAreaProps>(styles.text, Component);
+
+function Component({
+  id,
+  name,
+  defaultValue,
+  required,
+  readOnly,
+  rows,
+  children,
+  minLength,
+  maxLength,
+  ...blockProps
+}: ITextAreaProps) {
+  return (
+    <FormSection {...blockProps}>
+      <HTMLLabel htmlFor={id}>{children}</HTMLLabel>
+      <HTMLTextArea
+        id={id}
+        className={styles.textArea}
+        name={name}
+        required={required}
+        defaultValue={defaultValue}
+        rows={rows}
+        readOnly={readOnly}
+        minLength={minLength}
+        maxLength={maxLength}
+      />
+    </FormSection>
+  );
+}
