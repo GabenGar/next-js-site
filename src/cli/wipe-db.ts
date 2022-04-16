@@ -25,31 +25,30 @@ async function cleanDatabase() {
 
   const dbConfigPath = path.join(CONFIGS_FOLDER, "database.json");
   const dbConfig: IProjectDatabase = fse.readJSONSync(dbConfigPath);
-  // @ts-expect-error the keys are known beforehand.
-  const dbTables = Object.entries<ISchema>(dbConfig.schemas).reduce<
-    DatabaseTable[]
-  >((dbTables, [schemaName, schema]) => {
-    Object.entries<string>(schema.tables).forEach(([tableName, desciption]) => {
+  const defaultSchema = dbConfig.default_schema;
 
-      dbTables.push({
-        schema: schemaName,
-        table: tableName,
-        description: desciption,
-      });
-    });
+  const publicTables = Object.entries(
+    // @ts-expect-error the keys are known beforehand.
+    (dbConfig.schemas[defaultSchema] as ISchema).tables
+  ).map<DatabaseTable>(([tableName, description]) => {
+    return {
+      schema: defaultSchema,
+      table: tableName,
+      description: description,
+    };
+  });
 
-    return dbTables;
-  }, []);
-
-  const dbList = dbTables.map<string>(({ schema, table, description }) => {
+  const dbList = publicTables.map<string>(({ schema, table, description }) => {
     return `"${schema}.${table}" - ${description}`;
   });
-  const tableList = dbTables.map(({ schema, table }) => {
+  const publicList = publicTables.map(({ schema, table }) => {
     return `${schema}.${table}`;
   });
 
+  // @TODO: more configurable way
   const query = `
-    DROP TABLE ${tableList.join(", ")} CASCADE
+    DROP TABLE ${publicList.join(", ")} CASCADE;
+    DROP SCHEMA comments CASCADE;
   `;
   console.log(
     `These database tables are going to be dropped:\n\n${dbList.join("\n")}\n`
