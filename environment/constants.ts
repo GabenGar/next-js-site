@@ -2,6 +2,7 @@ import path from "path";
 
 export const ERROR_MESSAGE = "FLYING POLAR BUFFALO ERROR";
 
+export const IS_BROWSER = typeof window !== "undefined";
 export const PROJECT_ROOT = process.cwd();
 export const SCHEMA_FOLDER = path.join(PROJECT_ROOT, "schema");
 export const CONFIGS_FOLDER = path.join(PROJECT_ROOT, "configs");
