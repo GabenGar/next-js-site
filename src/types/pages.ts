@@ -8,7 +8,7 @@ export type IValidationResult<T> =
 
 /**
  * Props shared across all pages.
- * @todo Implement cookie-based theme.
+ * @TODO Implement cookie-based theme.
  */
 export interface BasePageProps extends Record<string, unknown> {
   theme?: string;

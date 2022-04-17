@@ -9,6 +9,19 @@ import type {
 } from "#types/entities";
 import type { APIResponse } from "#types/api";
 
+export async function fetchComments() {
+  const response = await apiV1Fetch("/comments", {
+    method: "GET",
+  });
+  const result: APIResponse<ICommentClient[]> = await response.json();
+
+  if (!result.is_successful) {
+    throw new ProjectError(String(result));
+  }
+
+  return result;
+}
+
 export async function createComment(commentInit: ICommentInit) {
   const response = await apiV1Fetch("/account/comment/create", {
     method: "POST",

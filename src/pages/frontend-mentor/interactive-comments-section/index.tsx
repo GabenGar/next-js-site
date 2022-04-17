@@ -6,7 +6,7 @@ import { siteTitle } from "#lib/util";
 import { Page } from "#components/pages";
 import { CommentList, NewCommentForm } from "#components/entities/comments";
 import { useAppDispatch, useAppSelector } from "#store/redux";
-import { selectComments } from "#store/redux/reducers";
+import { getCommentsAsync, selectComments } from "#store/redux/reducers";
 import { useAccount } from "#lib/hooks";
 import {
   Article,
@@ -30,7 +30,9 @@ function FMCommentsPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
   const comments = useAppSelector(selectComments());
   const title = "Interactive comments section";
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    dispatch(getCommentsAsync());
+  }, []);
 
   return (
     <Page heading={title}>

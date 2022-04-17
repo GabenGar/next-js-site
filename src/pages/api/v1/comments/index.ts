@@ -7,7 +7,14 @@ import type { ICommentClient } from "#types/entities";
 export default withSessionRoute<ICommentClient[]>(async (req, res) => {
   if (req.method === "GET") {
     const comments = await getComments();
+    const commentsClient = comments.map<ICommentClient>(
+      ({ account_id, ...commentFields }) => {
+        return {
+          ...commentFields,
+        };
+      }
+    );
 
-    return res.status(OK).json({ is_successful: true, data: comments });
+    return res.status(OK).json({ is_successful: true, data: commentsClient });
   }
 });
