@@ -1,4 +1,5 @@
 import { getDB } from "#database";
+import { DatabaseError } from "#lib/errors";
 import { IComment, ICommentInit } from "#types/entities";
 
 const { db } = getDB();
@@ -30,7 +31,9 @@ export async function addComment(
   `;
   const queryArgs = {
     account_id: accountID,
-    ...commentInit,
+    blog_slug: commentInit.blog_slug,
+    content: commentInit.content,
+    parent_id: commentInit.parent_id,
   };
 
   const newComment = await db.txIf<IComment>(

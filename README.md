@@ -101,3 +101,4 @@ git config core.sshCommand "ssh -i ~/.ssh/id_rsa_file -F /dev/null"
 - update dependencies
 - CLI tool
 - JSON Schema validated forms
+- extendable layout

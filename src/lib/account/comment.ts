@@ -4,7 +4,7 @@ import {
   getAllPublicComments,
   approveComment as approveCommentQuery,
 } from "#database/queries/comments";
-import { AuthError, ProjectError } from "#lib/errors";
+import { AuthError, NotImplementedError } from "#lib/errors";
 
 import type { ICommentInit, IComment, IAccount } from "#types/entities";
 
@@ -15,11 +15,13 @@ export async function getComments() {
 }
 
 export async function getBlogComments(blog_slug: string) {
+  throw new NotImplementedError("Not implemented")
   const comments: IComment[] = [];
   return comments;
 }
 
 export async function getAccountComments(accountID: number) {
+  throw new NotImplementedError("Not implemented")
   const comments: IComment[] = [];
   return comments;
 }

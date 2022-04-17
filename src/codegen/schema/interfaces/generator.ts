@@ -1,6 +1,8 @@
 import { SCHEMA_FOLDER } from "#environment/constants";
-import { fromSchemaToInterface } from "#lib/json/schema";
 import { schemaMap } from "#codegen/schema/map";
+import { compile } from "json-schema-to-typescript";
+
+import type { JSONSchema, Options } from "json-schema-to-typescript";
 
 import type { SchemaObject } from "ajv";
 
@@ -69,6 +71,15 @@ function changeRefs(obj: Record<string, unknown>) {
       }
     }
   }
+}
+
+export async function fromSchemaToInterface(
+  schema: JSONSchema,
+  name: string,
+  options?: Partial<Options>
+) {
+  const interfaceString = await compile(schema, name, options);
+  return interfaceString;
 }
 
 export default generateInterfacesFromSchemas;

@@ -32,7 +32,7 @@ export async function validateBody<SchemaInterface>(
       is_successful: false,
       response: {
         status: UNPROCESSABLE_ENTITY,
-        errors: ["Invalid body."],
+        errors: ["Invalid request body."],
       },
     };
   }

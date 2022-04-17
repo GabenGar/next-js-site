@@ -1,5 +1,6 @@
 import { blockComponent } from "#components/meta";
 import { CardList } from "#components/lists";
+import { Article } from "#components/articles";
 import { CommentCard } from "./card";
 // import styles from "./card.module.scss";
 
@@ -18,9 +19,13 @@ export const CommentList = blockComponent<ICommentListProps>(
 function Component({ comments, ...blockProps }: ICommentListProps) {
   return (
     <CardList {...blockProps}>
-      {comments.map((comment) => (
-        <CommentCard key={comment.id} comment={comment} />
-      ))}
+      {comments.length ? (
+        comments.map((comment) => (
+          <CommentCard key={comment.id} comment={comment} />
+        ))
+      ) : (
+        <Article>No comments available.</Article>
+      )}
     </CardList>
   );
 }

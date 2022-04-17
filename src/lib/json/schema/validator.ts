@@ -4,7 +4,7 @@ import metaSchema from "#schema/meta.schema.json";
 import { schemaMap } from "#codegen/schema/map";
 import { ConfigurationError } from "#lib/errors";
 
-import type { SchemaObject, ErrorObject } from "ajv";
+import type { SchemaObject, ErrorObject, ValidateFunction } from "ajv";
 import type { OperationResult } from "#types/util";
 
 export type ValidationResult<Schema> =
@@ -26,14 +26,19 @@ const ajv = new Ajv({
 });
 addFormats(ajv);
 
-export function createValidator<Schema>(schema: SchemaObject) {
+export function createValidator<Schema extends SchemaObject>(
+  schema: SchemaObject
+) {
   if (!schema.$id) {
     throw new ConfigurationError(
       `Schema "${schema}" doesn't have an "$id" property.`
     );
   }
 
-  const validate = ajv.getSchema<Schema>(schema.$id);
+  // forcing the type because schemas do not use `$async` keyword
+  const validate = ajv.getSchema<Schema>(schema.$id) as
+    | ValidateFunction<Schema>
+    | undefined;
 
   if (!validate) {
     throw new ConfigurationError(
@@ -44,9 +49,9 @@ export function createValidator<Schema>(schema: SchemaObject) {
   return async <InputType = unknown>(
     inputData: InputType
   ): Promise<ValidationResult<Schema>> => {
-    const result = await validate(inputData);
+    let result = validate(inputData);
 
-    // TODO: throwing logic
+    // @TODO: throwing logic
     if (!result) {
       return {
         is_successful: false,
@@ -57,7 +62,7 @@ export function createValidator<Schema>(schema: SchemaObject) {
 
     return {
       is_successful: true,
-      data: result as Schema,
+      data: inputData as unknown as Schema,
     };
   };
 }

@@ -5,7 +5,7 @@ import { addCommentAsync } from "#store/redux/reducers";
 import { blockComponent } from "#components/meta";
 import { Form } from "#components/forms";
 import { TextArea } from "#components/forms/sections";
-import styles from "./new-comment.form.module.scss";
+import styles from "./new-comment-form.module.scss";
 
 import type { ICommentInit } from "#types/entities";
 import type {
@@ -30,7 +30,7 @@ function Component({}) {
     const content = elements["content"].value;
 
     const validationResult = await validateCommentInitFields<ICommentInit>({
-      content,
+      content
     });
 
     if (!validationResult.is_successful) {
