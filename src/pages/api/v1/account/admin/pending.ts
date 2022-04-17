@@ -1,6 +1,6 @@
 import { NOT_FOUND } from "#environment/constants/http";
 import { withSessionRoute, checkAuth } from "#server/requests";
-import { getPendingComments } from "#database/queries/account/admin";
+import { queryPendingComments } from "#database/queries/account/admin";
 
 import type { IComment } from "#types/entities";
 
@@ -22,7 +22,7 @@ export default withSessionRoute<IComment[]>(async (req, res) => {
       });
     }
 
-    const comments = await getPendingComments();
+    const comments = await queryPendingComments();
 
     return res.status(200).json({ is_successful: true, data: comments });
   }

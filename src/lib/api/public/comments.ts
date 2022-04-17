@@ -5,6 +5,7 @@ import { createRequestBody } from "./fetch";
 import type {
   ICommentInit,
   ICommentClient,
+  IComment,
   ISerialInteger,
 } from "#types/entities";
 import type { APIResponse } from "#types/api";
@@ -14,6 +15,19 @@ export async function fetchComments() {
     method: "GET",
   });
   const result: APIResponse<ICommentClient[]> = await response.json();
+
+  if (!result.is_successful) {
+    throw new ProjectError(String(result));
+  }
+
+  return result;
+}
+
+export async function fetchPendingComments() {
+  const response = await apiV1Fetch("/account/admin/pending", {
+    method: "GET",
+  });
+  const result: APIResponse<IComment[]> = await response.json();
 
   if (!result.is_successful) {
     throw new ProjectError(String(result));

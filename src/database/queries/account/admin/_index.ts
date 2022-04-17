@@ -48,7 +48,7 @@ export async function getInvites() {
   return invites;
 }
 
-export async function getPendingComments() {
+export async function queryPendingComments() {
   const query = `
     SELECT *
     FROM comments.entries
