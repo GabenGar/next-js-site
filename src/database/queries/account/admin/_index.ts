@@ -1,6 +1,6 @@
 import { getDB } from "#database";
 
-import type { IAccount } from "#types/entities";
+import type { IAccount, IComment } from "#types/entities";
 import type { PaginationDB } from "#lib/pagination";
 import type { IInvite } from "#codegen/schema/interfaces";
 
@@ -46,4 +46,34 @@ export async function getInvites() {
   const invites = await db.manyOrNone<IInvite>(query);
 
   return invites;
+}
+
+export async function getPendingComments() {
+  const query = `
+    SELECT *
+    FROM comments.entries
+    WHERE
+      is_public = false
+    ORDER BY
+      id ASC
+  `;
+
+  const comments = await db.manyOrNone<IComment>(query);
+  return comments;
+}
+
+export async function approveComment(commentID: number) {
+  const query = `
+    UPDATE comments.entries
+    SET is_public = true
+    WHERE id = &(comment_id)
+    RETURNING *
+  `;
+  const queryArgs = {
+    comment_id: commentID,
+  };
+
+  const approvedComment = await db.one<IComment>(query, queryArgs);
+
+  return approvedComment;
 }

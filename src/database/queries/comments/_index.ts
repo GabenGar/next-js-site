@@ -70,22 +70,6 @@ export async function addComment(
   return newComment;
 }
 
-export async function approveComment(commentID: number) {
-  const query = `
-    UPDATE comments.entries
-    SET is_public = true
-    WHERE id = &(comment_id)
-    RETURNING *
-  `;
-  const queryArgs = {
-    comment_id: commentID,
-  };
-
-  const approvedComment = await db.one<IComment>(query, queryArgs);
-
-  return approvedComment;
-}
-
 export async function removeComment(accountID: number, commentID: number) {
   const query = `
     DELETE FROM comments.entries
