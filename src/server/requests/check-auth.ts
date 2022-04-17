@@ -4,10 +4,10 @@ import {
 } from "#environment/constants/http";
 import { getAccountDetails } from "#lib/account";
 
-import type { NextApiRequest } from "next";
+import type { GetServerSidePropsContext, NextApiRequest } from "next";
 import type { APIResponseFailure } from "#types/api";
 import type { IAccount } from "#types/entities";
-import { OperationResult } from "#types/util";
+import type { OperationResult } from "#types/util";
 
 export type AuthResult = AuthSuccess | AuthFailure;
 export interface AuthSuccess extends OperationResult<true> {
@@ -60,4 +60,19 @@ export async function checkAuth(req: NextApiRequest): Promise<AuthResult> {
     is_successful: true,
     account: account,
   };
+}
+
+export async function checkAuthSSR<
+  PageContext extends GetServerSidePropsContext
+>({ req }: PageContext) {
+  const { account_id } = req.session;
+
+  if (!account_id) {
+    return {
+      redirect: {
+        destination: "/auth/login",
+        permanent: false,
+      },
+    };
+  }
 }

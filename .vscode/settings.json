@@ -61,6 +61,10 @@
     {
       "fileMatch": ["public/locales/*/blog.json"],
       "url": "./schema/localization/blog.schema.json"
+    },
+    {
+      "fileMatch": ["public/locales/*/admin.json"],
+      "url": "./schema/localization/admin.schema.json"
     }
   ],
   "xmlTools.enforcePrettySelfClosingTagOnFormat": true,
