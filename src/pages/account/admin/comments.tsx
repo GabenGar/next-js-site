@@ -4,42 +4,36 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { siteTitle } from "#lib/util";
 import { getAccountDetails } from "#lib/account";
 import { withSessionSSR } from "#server/requests";
-import { LinkInternal } from "#components/links";
+import { useAppDispatch, useAppSelector } from "#store/redux";
+import { selectComments } from "#store/redux/reducers";
 import { Page } from "#components/pages";
-import { Nav, NavList } from "#components/navigation";
+import { Heading } from "#components/headings";
+import { CardList } from "#components/lists";
+import { CommentCard } from "#components/entities/comments";
 
 import type { InferGetServerSidePropsType } from "next";
 import type { BasePageProps } from "#types/pages";
 
-interface AdminPageProps extends BasePageProps {
-}
+interface AdminPageProps extends BasePageProps {}
 
 function AdminPage({}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { t } = useTranslation("admin");
-  const title = t("admin_title");
+  const dispatch = useAppDispatch();
+  const title = t("comments_title");
+  const comments = useAppSelector(selectComments());
 
   return (
     <Page heading={title}>
       <Head>
         <title>{siteTitle(title)}</title>
-        <meta name="description" content={t("admin_desc")} />
+        <meta name="description" content={t("comments_desc")} />
       </Head>
-      <Nav>
-        <NavList>
-          <LinkInternal href="/account/admin/accounts">
-            {t("nav_accounts")}
-          </LinkInternal>
-          <LinkInternal href="/account/admin/tables">
-            {t("nav_comments")}
-          </LinkInternal>
-          <LinkInternal href="/account/admin/tables">
-            {t("nav_tables")}
-          </LinkInternal>
-          <LinkInternal href="/account/admin/invites">
-            {t("nav_invites")}
-          </LinkInternal>
-        </NavList>
-      </Nav>
+      <Heading level={2}>Pending for approval</Heading>
+      <CardList>
+        {comments.map((comment) => (
+          <CommentCard key={comment.id} comment={comment} />
+        ))}
+      </CardList>
     </Page>
   );
 }
@@ -81,7 +75,7 @@ export const getServerSideProps = withSessionSSR<AdminPageProps>(
 
     return {
       props: {
-        ...localization
+        ...localization,
       },
     };
   }
