@@ -34,7 +34,10 @@ function initAJV() {
     return ajv;
   } catch (error) {
     if (error instanceof Error) {
-      throw new ConfigurationError(`AJV - ${error.message}`, {
+      const message = `${error.message}${
+        error.stack ? `\n${error.stack}` : ""
+      }`;
+      throw new ConfigurationError(`AJV - ${message}`, {
         cause: error,
       });
     }
