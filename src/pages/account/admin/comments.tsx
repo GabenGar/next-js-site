@@ -5,7 +5,11 @@ import { siteTitle } from "#lib/util";
 import { getAccountDetails } from "#lib/account";
 import { withSessionSSR } from "#server/requests";
 import { useAppDispatch, useAppSelector } from "#store/redux";
-import { selectComments } from "#store/redux/reducers";
+import {
+  selectComments,
+  getPendingCommentsAsync,
+  selectPendingComments,
+} from "#store/redux/reducers";
 import { Page } from "#components/pages";
 import { Heading } from "#components/headings";
 import { CardList } from "#components/lists";
@@ -13,6 +17,7 @@ import { CommentCard } from "#components/entities/comments";
 
 import type { InferGetServerSidePropsType } from "next";
 import type { BasePageProps } from "#types/pages";
+import { useEffect } from "react";
 
 interface AdminPageProps extends BasePageProps {}
 
@@ -20,7 +25,11 @@ function AdminPage({}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { t } = useTranslation("admin");
   const dispatch = useAppDispatch();
   const title = t("comments_title");
-  const comments = useAppSelector(selectComments());
+  const comments = useAppSelector(selectPendingComments());
+
+  useEffect(() => {
+    dispatch(getPendingCommentsAsync());
+  }, []);
 
   return (
     <Page heading={title}>
@@ -31,7 +40,11 @@ function AdminPage({}: InferGetServerSidePropsType<typeof getServerSideProps>) {
       <Heading level={2}>Pending for approval</Heading>
       <CardList>
         {comments.map((comment) => (
-          <CommentCard key={comment.id} comment={comment} />
+          <CommentCard
+            key={comment.id}
+            comment={comment}
+            isReplyShown={false}
+          />
         ))}
       </CardList>
     </Page>

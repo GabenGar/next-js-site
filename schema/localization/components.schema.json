@@ -21,6 +21,13 @@
     "blog_by",
     "blog_published",
     "blog_read_more",
-    "blog_edited"
+    "blog_edited",
+    "commen_default_author",
+    "comment_blog",
+    "comment_parent",
+    "comment_created_at",
+    "comment_reject",
+    "comment_approve",
+    "comment_reply"
   ]
 }

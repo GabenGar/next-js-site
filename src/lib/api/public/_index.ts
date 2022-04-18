@@ -8,5 +8,6 @@ export {
   deleteComment,
   approveComment,
   fetchComments,
+  fetchPendingComments
 } from "./comments";
 export { createRequestBody } from "./fetch";

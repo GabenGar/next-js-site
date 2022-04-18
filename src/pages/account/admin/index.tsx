@@ -29,7 +29,7 @@ function AdminPage({}: InferGetServerSidePropsType<typeof getServerSideProps>) {
           <LinkInternal href="/account/admin/accounts">
             {t("nav_accounts")}
           </LinkInternal>
-          <LinkInternal href="/account/admin/tables">
+          <LinkInternal href="/account/admin/comments">
             {t("nav_comments")}
           </LinkInternal>
           <LinkInternal href="/account/admin/tables">

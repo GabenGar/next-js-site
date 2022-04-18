@@ -15,4 +15,6 @@ export {
   selectComments,
   getCommentsAsync,
   approveCommentAsync,
+  getPendingCommentsAsync,
+  selectPendingComments
 } from "./comments";

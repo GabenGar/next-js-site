@@ -1,1 +1,8 @@
-{}
+{
+  "admin_title": "Admin",
+  "admin_desc": "Admin page",
+  "nav_accounts": "Accounts",
+  "nav_comments": "Comments",
+  "nav_tables": "Tables",
+  "nav_invites": "Invites"
+}

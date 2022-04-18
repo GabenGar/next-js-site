@@ -66,7 +66,7 @@ export async function approveComment(commentID: number) {
   const query = `
     UPDATE comments.entries
     SET is_public = true
-    WHERE id = &(comment_id)
+    WHERE id = $(comment_id)
     RETURNING *
   `;
   const queryArgs = {

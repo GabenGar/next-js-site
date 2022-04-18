@@ -4,9 +4,10 @@ import {
   deleteComment,
   fetchComments,
   approveComment,
+  fetchPendingComments,
 } from "#lib/api/public";
 
-import type { ICommentClient, ICommentInit } from "#types/entities";
+import type { ICommentClient, ICommentInit, IComment } from "#types/entities";
 import type { AppState, AppThunk, Status } from "#store/redux";
 
 interface CommentsState {
@@ -14,6 +15,7 @@ interface CommentsState {
   status: Status;
   blogComments: ICommentClient[];
   comments: ICommentClient[];
+  pending: IComment[];
 }
 
 const reducerName = "comments";
@@ -23,6 +25,7 @@ const initialState: CommentsState = {
   status: "idle",
   blogComments: [],
   comments: [],
+  pending: [],
 };
 
 export const getCommentsAsync = createAsyncThunk(
@@ -37,6 +40,14 @@ export const addCommentAsync = createAsyncThunk(
   `${reducerName}/addComment`,
   async (commentInit: ICommentInit) => {
     const response = await createComment(commentInit);
+    return response;
+  }
+);
+
+export const getPendingCommentsAsync = createAsyncThunk(
+  `${reducerName}/pendingComments`,
+  async () => {
+    const response = await fetchPendingComments();
     return response;
   }
 );
@@ -87,6 +98,18 @@ export const commentsSlice = createSlice({
 
         state.status = "idle";
       })
+      .addCase(getPendingCommentsAsync.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(getPendingCommentsAsync.rejected, (state, action) => {
+        state.status = "failed";
+      })
+      .addCase(getPendingCommentsAsync.fulfilled, (state, action) => {
+        const comments = action.payload.data;
+        state.pending = comments;
+
+        state.status = "idle";
+      })
       .addCase(approveCommentAsync.pending, (state, action) => {
         state.status = "loading";
       })
@@ -95,7 +118,7 @@ export const commentsSlice = createSlice({
       })
       .addCase(approveCommentAsync.fulfilled, (state, action) => {
         const approvedComment = action.payload.data;
-        state.comments = state.comments.filter(
+        state.pending = state.pending.filter(
           ({ id }) => id !== approvedComment.id
         );
 
@@ -124,5 +147,11 @@ export const commentsReducer = commentsSlice.reducer;
 export function selectComments() {
   return (state: AppState) => {
     return state.comments.blogComments;
+  };
+}
+
+export function selectPendingComments() {
+  return (state: AppState) => {
+    return state.comments.pending;
   };
 }

@@ -3,9 +3,9 @@ import { approveComment } from "#lib/account";
 import { withSessionRoute, checkAuth, validateBody } from "#server/requests";
 import { validateSerialIntegerFields } from "#codegen/schema/validations";
 
-import type { ICommentClient, ISerialInteger } from "#types/entities";
+import type { IComment, ISerialInteger } from "#types/entities";
 
-export default withSessionRoute<ICommentClient>(async (req, res) => {
+export default withSessionRoute<IComment>(async (req, res) => {
   if (req.method === "POST") {
     const authResult = await checkAuth(req);
 
@@ -36,7 +36,7 @@ export default withSessionRoute<ICommentClient>(async (req, res) => {
 
     const commentID = validationResult.data;
 
-    const { account_id: accID, ...approvedComment } = await approveComment(
+    const approvedComment = await approveComment(
       account,
       commentID
     );

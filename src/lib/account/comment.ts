@@ -2,8 +2,10 @@ import {
   addComment,
   removeComment,
   getAllPublicComments,
-  approveComment as approveCommentQuery,
 } from "#database/queries/comments";
+import {
+  approveComment as approveCommentQuery,
+} from "#database/queries/account/admin";
 import { AuthError, NotImplementedError } from "#lib/errors";
 
 import type { ICommentInit, IComment, IAccount } from "#types/entities";

@@ -16,5 +16,12 @@
   "blog_by": "By",
   "blog_published": "Published",
   "blog_read_more": "Read more",
-  "blog_edited": "Edited"
+  "blog_edited": "Edited",
+  "comment_default_author": "Anonymous",
+  "comment_blog": "Commented on",
+  "comment_parent": "Replied to",
+  "comment_created_at": "Posted at",
+  "comment_reject": "Reject",
+  "comment_approve": "Approve",
+  "comment_reply": "Reply"
 }
