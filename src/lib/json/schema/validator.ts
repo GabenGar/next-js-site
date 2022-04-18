@@ -34,7 +34,7 @@ function initAJV() {
     return ajv;
   } catch (error) {
     if (error instanceof Error) {
-      throw new ConfigurationError(`AJV - ${error.message}}`, {
+      throw new ConfigurationError(`AJV - ${error.message}`, {
         cause: error,
       });
     }

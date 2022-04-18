@@ -1,6 +1,10 @@
 import { toJSON } from "#lib/json";
 import type { ErrorObject } from "ajv";
 
+interface ErrorOptions {
+  cause?: Error;
+}
+
 /**
  * Project-specific error.
  * All procedures within this codebase throw this error
@@ -9,6 +13,7 @@ import type { ErrorObject } from "ajv";
  * @link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error#custom_error_types
  */
 export class ProjectError extends Error {
+  // not using `ErrorOptions` because it crashes on build
   constructor(message?: string, options?: ErrorOptions, ...params: any[]) {
     // @ts-expect-error
     super(message, options, ...params);
