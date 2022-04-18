@@ -1,10 +1,15 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { createComment, deleteComment, fetchComments } from "#lib/api/public";
+import {
+  createComment,
+  deleteComment,
+  fetchComments,
+  approveComment,
+} from "#lib/api/public";
 
 import type { ICommentClient, ICommentInit } from "#types/entities";
 import type { AppState, AppThunk, Status } from "#store/redux";
 
-export interface CommentsState {
+interface CommentsState {
   currentBlog?: string;
   status: Status;
   blogComments: ICommentClient[];
@@ -27,6 +32,7 @@ export const getCommentsAsync = createAsyncThunk(
     return response;
   }
 );
+
 export const addCommentAsync = createAsyncThunk(
   `${reducerName}/addComment`,
   async (commentInit: ICommentInit) => {
@@ -35,10 +41,18 @@ export const addCommentAsync = createAsyncThunk(
   }
 );
 
+export const approveCommentAsync = createAsyncThunk(
+  `${reducerName}/approveComment`,
+  async (commentID: number) => {
+    const response = await approveComment(commentID);
+    return response;
+  }
+);
+
 export const deleteCommentAsync = createAsyncThunk(
   `${reducerName}/removeComment`,
-  async (noteID: number) => {
-    const response = await deleteComment(noteID);
+  async (commentID: number) => {
+    const response = await deleteComment(commentID);
     return response;
   }
 );
@@ -70,6 +84,20 @@ export const commentsSlice = createSlice({
       .addCase(addCommentAsync.fulfilled, (state, action) => {
         const newComment = action.payload.data;
         state.blogComments.push(newComment);
+
+        state.status = "idle";
+      })
+      .addCase(approveCommentAsync.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(approveCommentAsync.rejected, (state, action) => {
+        state.status = "failed";
+      })
+      .addCase(approveCommentAsync.fulfilled, (state, action) => {
+        const approvedComment = action.payload.data;
+        state.comments = state.comments.filter(
+          ({ id }) => id !== approvedComment.id
+        );
 
         state.status = "idle";
       })

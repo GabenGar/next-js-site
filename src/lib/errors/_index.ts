@@ -15,7 +15,7 @@ export class ProjectError extends Error {
 
     // Maintains proper stack trace for where our error was thrown (only available on V8)
     if (Error.captureStackTrace) {
-      Error.captureStackTrace(this, ProjectError);
+      Error.captureStackTrace(this, this.constructor);
     }
   }
 }
@@ -40,3 +40,5 @@ export class FieldsValidationError extends ProjectError {
 }
 
 export class DatabaseError extends ProjectError {}
+
+export class FetchError extends ProjectError {}

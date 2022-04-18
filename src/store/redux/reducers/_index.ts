@@ -14,4 +14,5 @@ export {
   deleteCommentAsync,
   selectComments,
   getCommentsAsync,
+  approveCommentAsync,
 } from "./comments";

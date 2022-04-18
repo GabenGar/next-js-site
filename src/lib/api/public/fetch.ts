@@ -7,17 +7,13 @@ const baseFetch = createFetch(SITE_ORIGIN);
 
 export async function apiV1Fetch(path: string, reqInit?: RequestInit) {
   const apiPath = `/api/v1${path}`;
-  try {
-    const response = await baseFetch(apiPath, reqInit);
+  const response = await baseFetch(apiPath, reqInit);
 
-    if (response.status === 401) {
-      throw Error("Not authorized.");
-    }
-
-    return response;
-  } catch (error) {
-    throw error;
+  if (response.status === 401) {
+    throw Error("Not authorized.");
   }
+
+  return response;
 }
 
 export function createRequestBody<Type>(reqBody: Type) {

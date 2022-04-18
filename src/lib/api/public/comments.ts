@@ -1,6 +1,5 @@
-import { ProjectError } from "#lib/errors";
-import { apiV1Fetch } from "./fetch";
-import { createRequestBody } from "./fetch";
+import { FetchError } from "#lib/errors";
+import { apiV1Fetch, createRequestBody } from "./fetch";
 
 import type {
   ICommentInit,
@@ -17,7 +16,7 @@ export async function fetchComments() {
   const result: APIResponse<ICommentClient[]> = await response.json();
 
   if (!result.is_successful) {
-    throw new ProjectError(String(result));
+    throw new FetchError(String(result));
   }
 
   return result;
@@ -30,7 +29,7 @@ export async function fetchPendingComments() {
   const result: APIResponse<IComment[]> = await response.json();
 
   if (!result.is_successful) {
-    throw new ProjectError(String(result));
+    throw new FetchError(String(result));
   }
 
   return result;
@@ -44,7 +43,7 @@ export async function createComment(commentInit: ICommentInit) {
   const result: APIResponse<ICommentClient> = await response.json();
 
   if (!result.is_successful) {
-    throw new ProjectError(String(result));
+    throw new FetchError(String(result));
   }
 
   return result;
@@ -58,7 +57,7 @@ export async function deleteComment(commentID: number) {
   const result: APIResponse<ICommentClient> = await response.json();
 
   if (!result.is_successful) {
-    throw new ProjectError(String(result));
+    throw new FetchError(String(result));
   }
 
   return result;
@@ -72,7 +71,7 @@ export async function approveComment(commentID: number) {
   const result: APIResponse<ICommentClient> = await response.json();
 
   if (!result.is_successful) {
-    throw new ProjectError(String(result));
+    throw new FetchError(String(result));
   }
 
   return result;

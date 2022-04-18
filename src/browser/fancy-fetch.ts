@@ -2,12 +2,12 @@ const defaultSettings = {
   // Assume JSON fetches as baseline
   headers: new Headers({
     "Content-Type": "application/json",
-    Accept: "application/json",
+    "Accept": "application/json",
   }),
 } as const;
 
 /**
- * @param origin The `origin` of upcoming the fetches.
+ * @param origin The `origin` of the upcoming fetches.
  * @returns Fetch function.
  */
 export function createFetch(origin: string, defaults = defaultSettings) {
