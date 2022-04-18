@@ -1,4 +1,3 @@
-import { inspect } from "util";
 import Ajv from "ajv";
 import addFormats from "ajv-formats";
 import metaSchema from "#schema/meta.schema.json";
@@ -20,25 +19,29 @@ export interface ValidationFailure extends OperationResult<false> {
   errors: ErrorObject[];
 }
 
-let ajv: Ajv;
-try {
-  ajv = new Ajv({
-    meta: metaSchema,
-    schemas: schemaMap,
-    coerceTypes: true,
-  });
-} catch (error) {
-  if (error instanceof Error) {
-    
-    throw new ConfigurationError(`AJV configuration error: ${String(error)}`, {
-      cause: error,
+const ajv = initAJV();
+
+function initAJV() {
+  try {
+    const ajv = new Ajv({
+      meta: metaSchema,
+      schemas: schemaMap,
+      coerceTypes: true,
     });
+
+    addFormats(ajv);
+
+    return ajv;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new ConfigurationError(`AJV - ${error.message}}`, {
+        cause: error,
+      });
+    }
+
+    throw error;
   }
-
-  throw error;
 }
-
-addFormats(ajv);
 
 export function createValidator<Schema = unknown>(schema: SchemaObject) {
   if (!schema.$id) {

@@ -12,7 +12,7 @@ export class ProjectError extends Error {
   constructor(message?: string, options?: ErrorOptions, ...params: any[]) {
     // @ts-expect-error
     super(message, options, ...params);
-
+    this.name = "ProjectError";
     // Maintains proper stack trace for where our error was thrown (only available on V8)
     if (Error.captureStackTrace) {
       Error.captureStackTrace(this, this.constructor);
@@ -20,7 +20,12 @@ export class ProjectError extends Error {
   }
 }
 
-export class ConfigurationError extends ProjectError {}
+export class ConfigurationError extends ProjectError {
+  constructor(message?: string, options?: ErrorOptions, ...params: any[]) {
+    super(message, options, ...params);
+    this.name = "ConfigurationError";
+  }
+}
 
 export class NotImplementedError extends ProjectError {}
 
