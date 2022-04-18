@@ -50,7 +50,8 @@ async function generateInterfacesFromSchemas() {
  * @param schema
  */
 function transformSchema(schema: SchemaObject) {
-  const newSchema: typeof schema = { ...schema };
+  // fixing some weird reference issue
+  const newSchema: typeof schema = JSON.parse(JSON.stringify(schema));
   changeRefs(newSchema);
   return newSchema;
 }
