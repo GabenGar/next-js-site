@@ -25,6 +25,13 @@ export class ConfigurationError extends ProjectError {}
 export class NotImplementedError extends ProjectError {}
 
 /**
+ * @TODO: crash when created in client environment
+ */
+export class ServerError extends ProjectError {}
+
+export class CodegenError extends ServerError {}
+
+/**
  * Account authentification errors.
  */
 export class AuthError extends ProjectError {}

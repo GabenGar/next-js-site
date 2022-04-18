@@ -278,9 +278,32 @@ export interface EmailConfirmation {
 }
 
 /**
+ * Comment specific to the frontend mentor challenge.
+ */
+export interface FMComment {
+  id: SerialInteger;
+  created_at: ISODateTime;
+  parent_id?: SerialInteger;
+  /**
+   * Markdown
+   */
+  content: string;
+  likes?: number;
+  dislikes?: number;
+  avatar_url?: string;
+}
+
+/**
  * Localization for the account pages.
  */
 export interface AccountLocalization {
+  [k: string]: unknown;
+}
+
+/**
+ * Localization for the admin pages.
+ */
+export interface AdminLocalization {
   [k: string]: unknown;
 }
 

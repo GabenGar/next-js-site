@@ -14,7 +14,9 @@ export { default as calendarNoteInitSchema } from "#schema/calendar-note/init.sc
 export { default as projectConfigSchema } from "#schema/config.schema.json";
 export { default as projectDatabaseSchema } from "#schema/database.schema.json";
 export { default as emailConfirmationSchema } from "#schema/email-confirmation.schema.json";
+export { default as fMCommentSchema } from "#schema/frontend-mentor/comment.schema.json";
 export { default as accountLocalizationSchema } from "#schema/localization/account.schema.json";
+export { default as adminLocalizationSchema } from "#schema/localization/admin.schema.json";
 export { default as authLocalizationSchema } from "#schema/localization/auth.schema.json";
 export { default as blogLocalizationSchema } from "#schema/localization/blog.schema.json";
 export { default as commonLocalizationSchema } from "#schema/localization/common.schema.json";

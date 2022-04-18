@@ -4,7 +4,11 @@ import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { siteTitle } from "#lib/util";
 import { Page } from "#components/pages";
-import { CommentList, NewCommentForm } from "#components/entities/comments";
+import {
+  CommentCard,
+  CommentList,
+  NewCommentForm,
+} from "#components/entities/comments";
 import { useAppDispatch, useAppSelector } from "#store/redux";
 import { getCommentsAsync, selectComments } from "#store/redux/reducers";
 import { useAccount } from "#lib/hooks";
@@ -19,6 +23,7 @@ import { Heading } from "#components/headings";
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import type { ParsedUrlQuery } from "querystring";
 import type { BasePageProps } from "#types/pages";
+import { CardList } from "#components/lists";
 
 interface FMCommentsPageProps extends BasePageProps {}
 
@@ -153,15 +158,17 @@ function FMCommentsPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
           </p>
         </ArticleBody>
       </Article>
-      <Article>
-        <ArticleHeader>
-          <Heading>Comments</Heading>
-        </ArticleHeader>
-        <ArticleBody>
-          <CommentList comments={comments} />
-        </ArticleBody>
-        <ArticleFooter>{account && <NewCommentForm />}</ArticleFooter>
-      </Article>
+      <Heading level={2}>Comments</Heading>
+      <CardList>
+        {comments.length ? (
+          comments.map((comment) => (
+            <CommentCard key={comment.id} comment={comment} />
+          ))
+        ) : (
+          <Article>No comments available.</Article>
+        )}
+      </CardList>
+      {account && <NewCommentForm />}
     </Page>
   );
 }

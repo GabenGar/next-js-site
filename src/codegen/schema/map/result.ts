@@ -17,7 +17,9 @@ import {
   projectConfigSchema,
   projectDatabaseSchema,
   emailConfirmationSchema,
+  fMCommentSchema,
   accountLocalizationSchema,
+  adminLocalizationSchema,
   authLocalizationSchema,
   blogLocalizationSchema,
   commonLocalizationSchema,
@@ -49,8 +51,10 @@ export const schemaMap: Record<string, SchemaObject> = {
   "http://schemas.com/config.schema.json": projectConfigSchema,
   "http://schemas.com/database.schema.json": projectDatabaseSchema,
   "http://schemas.com/email-confirmation.schema.json": emailConfirmationSchema,
+  "http://schemas.com/frontend-mentor/comment.schema.json": fMCommentSchema,
   "http://schemas.com/localization/account.schema.json":
     accountLocalizationSchema,
+  "http://schemas.com/localization/admin.schema.json": adminLocalizationSchema,
   "http://schemas.com/localization/auth.schema.json": authLocalizationSchema,
   "http://schemas.com/localization/blog.schema.json": blogLocalizationSchema,
   "http://schemas.com/localization/common.schema.json":

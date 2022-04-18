@@ -1,0 +1,42 @@
+{
+  "$id": "http://schemas.com/frontend-mentor/comment.schema.json",
+  "title": "FMComment",
+  "description": "Comment specific to the frontend mentor challenge.",
+  "type": "object",
+  "required": [
+    "id",
+    "created_at",
+    "content",
+    "is_public"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "$ref": "/types/serial.schema.json"
+    },
+    "created_at": {
+      "$ref": "/types/dates/iso-datetime.schema.json"
+    },
+    "parent_id": {
+      "$ref": "/types/serial.schema.json"
+    },
+    "content": {
+      "type": "string",
+      "description": "Markdown",
+      "minLength": 5,
+      "maxLength": 1024
+    },
+    "likes": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "dislikes": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "avatar_url": {
+      "type": "string",
+      "format": "uri"
+    }
+  }
+}

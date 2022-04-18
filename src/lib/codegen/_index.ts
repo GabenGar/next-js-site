@@ -9,7 +9,6 @@ import { excludedFolders, generatorFilename } from "./types";
     await runCodegen(CODEGEN_FOLDER);
   } catch (error) {
     console.error(error);
-    throw error;
   }
 })();
 

@@ -1,3 +1,4 @@
+import { inspect } from "util";
 import Ajv from "ajv";
 import addFormats from "ajv-formats";
 import metaSchema from "#schema/meta.schema.json";
@@ -19,16 +20,27 @@ export interface ValidationFailure extends OperationResult<false> {
   errors: ErrorObject[];
 }
 
-const ajv = new Ajv({
-  meta: metaSchema,
-  schemas: schemaMap,
-  coerceTypes: true,
-});
+let ajv: Ajv;
+try {
+  ajv = new Ajv({
+    meta: metaSchema,
+    schemas: schemaMap,
+    coerceTypes: true,
+  });
+} catch (error) {
+  if (error instanceof Error) {
+    
+    throw new ConfigurationError(`AJV configuration error: ${String(error)}`, {
+      cause: error,
+    });
+  }
+
+  throw error;
+}
+
 addFormats(ajv);
 
-export function createValidator<Schema extends SchemaObject>(
-  schema: SchemaObject
-) {
+export function createValidator<Schema = unknown>(schema: SchemaObject) {
   if (!schema.$id) {
     throw new ConfigurationError(
       `Schema "${schema}" doesn't have an "$id" property.`

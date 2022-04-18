@@ -17,7 +17,9 @@ import {
   projectConfigSchema,
   projectDatabaseSchema,
   emailConfirmationSchema,
+  fMCommentSchema,
   accountLocalizationSchema,
+  adminLocalizationSchema,
   authLocalizationSchema,
   blogLocalizationSchema,
   commonLocalizationSchema,
@@ -48,7 +50,9 @@ import type {
   IProjectConfig,
   IProjectDatabase,
   IEmailConfirmation,
+  IFMComment,
   IAccountLocalization,
+  IAdminLocalization,
   IAuthLocalization,
   IBlogLocalization,
   ICommonLocalization,
@@ -92,8 +96,12 @@ export const validateProjectDatabaseFields = createValidator<IProjectDatabase>(
 );
 export const validateEmailConfirmationFields =
   createValidator<IEmailConfirmation>(emailConfirmationSchema);
+export const validateFMCommentFields =
+  createValidator<IFMComment>(fMCommentSchema);
 export const validateAccountLocalizationFields =
   createValidator<IAccountLocalization>(accountLocalizationSchema);
+export const validateAdminLocalizationFields =
+  createValidator<IAdminLocalization>(adminLocalizationSchema);
 export const validateAuthLocalizationFields =
   createValidator<IAuthLocalization>(authLocalizationSchema);
 export const validateBlogLocalizationFields =

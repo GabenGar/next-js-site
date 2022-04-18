@@ -146,7 +146,7 @@ export const commentsReducer = commentsSlice.reducer;
 
 export function selectComments() {
   return (state: AppState) => {
-    return state.comments.blogComments;
+    return state.comments.comments;
   };
 }
 
