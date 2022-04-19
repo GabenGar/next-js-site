@@ -1,7 +1,6 @@
 import clsx from "clsx";
 import { useState } from "react";
 import { useTranslation } from "next-i18next";
-import { useAccount } from "#lib/hooks";
 import { useAppDispatch } from "#store/redux";
 import { approveCommentAsync } from "#store/redux/reducers";
 import { blockComponent } from "#components/meta";
@@ -11,12 +10,13 @@ import { DateTimeView } from "#components/dates";
 import { LinkInternal, LinkLocal } from "#components/links";
 import { DL, DS } from "#components/lists/d-list";
 import { Button, ButtonList } from "#components/buttons";
+import { SVGIcon } from "#components/icons";
+import { Image } from "#components/images";
+import { NewCommentForm } from "./new-comment";
 import styles from "./comment-card.module.scss";
 
 import type { IFMComment } from "#types/frontend-mentor";
 import type { ICardProps } from "#components/cards";
-import { SVGIcon } from "#components/icons";
-import { Image } from "#components/images";
 
 export interface IFMCommentProps extends Omit<ICardProps, "id"> {
   comment: IFMComment;
@@ -37,6 +37,7 @@ function Component({
 }: IFMCommentProps) {
   const { t } = useTranslation("components");
   const dispatch = useAppDispatch();
+  const [isHidden, switchVisibility] = useState(false);
   const [isReplying, switchReplyState] = useState(false);
   const [isEditing, switchEditionMode] = useState(false);
   const isOwnPost = false;
@@ -85,26 +86,30 @@ function Component({
         </Button>
       </ButtonList>
 
-      <ButtonList className={styles.actions}>
-        {isOwnPost ? (
-          <>
-            <Button iconID="fm-delete">Delete</Button>
-            <Button iconID="fm-edit">Edit</Button>
-          </>
-        ) : (
-          <>
-            <Button iconID="fm-reply">Hide</Button>
-            <Button
-              onClick={() => {
-                switchReplyState(!isReplying);
-              }}
-              iconID="fm-reply"
-            >
-              Reply
-            </Button>
-          </>
-        )}
-      </ButtonList>
+      {!isReplying ? (
+        <ButtonList className={styles.actions}>
+          {isOwnPost ? (
+            <>
+              <Button iconID="fm-delete">Delete</Button>
+              <Button iconID="fm-edit">Edit</Button>
+            </>
+          ) : (
+            <>
+              <Button iconID="fm-reply">Hide</Button>
+              <Button
+                onClick={() => {
+                  switchReplyState(!isReplying);
+                }}
+                iconID="fm-reply"
+              >
+                Reply
+              </Button>
+            </>
+          )}
+        </ButtonList>
+      ) : (
+        <NewCommentForm parentID={parent_id} />
+      )}
     </Card>
   );
 }

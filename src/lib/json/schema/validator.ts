@@ -63,7 +63,9 @@ export function createValidator<Schema = unknown>(schema: SchemaObject) {
       `Schema with id "${schema.$id}" doesn't exist.`
     );
   }
-
+  /**
+   * Mutates incoming data if needed.
+   */
   return async <InputType = unknown>(
     inputData: InputType
   ): Promise<ValidationResult<Schema>> => {
