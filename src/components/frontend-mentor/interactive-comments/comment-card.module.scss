@@ -2,11 +2,13 @@
 
 .block {
   grid-template-areas:
-    "header header"
-    "content content"
-    "rating actions";
+    "header"
+    "body"
+    "rating"
+    "actions";
+  row-gap: $size-small;
+  background-color: var(--colour1-primary-transparent);
   padding: $size-small;
-
   & > * {
     padding: $size-small;
   }
@@ -18,15 +20,16 @@
   grid-template:
     "avatar name" auto
     "date date" auto
-    / auto
-  ;
+    / 4em auto;
+  justify-items: start;
+  align-items: center;
   padding: 0;
 }
 
 .avatar {
   grid-area: avatar;
   border-radius: 50%;
-  background-color: var(--colour1-secondary);
+  border: $size-pixel solid var(--colour1-tertiary-transparent);
   overflow: hidden;
 }
 
@@ -38,14 +41,19 @@
   grid-area: date;
 }
 
+.body {
+  grid-area: body;
+  background-color: var(--colour1-primary);
+  border-radius: $radius-small;
+}
+
 .content {
-  grid-area: content;
+  margin: 0;
 }
 
 .rating {
   grid-area: rating;
-  justify-self: start;
-  background-color: var(--colour1-secondary);
+  background-color: var(--colour1-tertiary-transparent);
   border-radius: $radius-normal;
 }
 

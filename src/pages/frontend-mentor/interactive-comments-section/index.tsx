@@ -129,7 +129,7 @@ function FMCommentsPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
         </ArticleHeader>
         <ArticleBody>
           {error && <JSONView json={error} />}
-          <CardList>
+          <CardList isLayoutShown={false}>
             {comments.length ? (
               comments.map((comment) => (
                 <FMCommentCard key={comment.id} comment={comment} />

@@ -291,7 +291,7 @@ export interface FMComment {
   content: string;
   likes: number;
   dislikes: number;
-  avatar_url?: string;
+  avatar_url: string;
 }
 
 /**

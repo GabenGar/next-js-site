@@ -38,6 +38,7 @@ function Component({
   const { t } = useTranslation("components");
   const dispatch = useAppDispatch();
   const [isReplying, switchReplyState] = useState(false);
+  const [isEditing, switchEditionMode] = useState(false);
   const isOwnPost = false;
   const {
     id,
@@ -60,7 +61,7 @@ function Component({
           type="external"
         />
         <Heading className={styles.name} level={headingLevel}>
-          {name}
+          {name} {isOwnPost && "(you)"}
         </Heading>
         <DL className={styles.date}>
           <DS
@@ -69,28 +70,40 @@ function Component({
           />
         </DL>
       </CardHeader>
+
+      <CardBody className={styles.body}>
+        <p className={styles.content}>{content}</p>
+      </CardBody>
+
       <ButtonList className={styles.rating}>
-        <Button>
-          <SVGIcon iconID="fm-plus" />
-        </Button>
-        <span>{likes - dislikes}</span>
         <Button>
           <SVGIcon iconID="fm-minus" />
         </Button>
+        <span>{likes - dislikes}</span>
+        <Button>
+          <SVGIcon iconID="fm-plus" />
+        </Button>
       </ButtonList>
-      <CardBody className={styles.content}>
-        <p>{content}</p>
-      </CardBody>
 
       <ButtonList className={styles.actions}>
-        <Button
-          onClick={() => {
-            switchReplyState(!isReplying);
-          }}
-          iconID="fm-reply"
-        >
-          Reply
-        </Button>
+        {isOwnPost ? (
+          <>
+            <Button iconID="fm-delete">Delete</Button>
+            <Button iconID="fm-edit">Edit</Button>
+          </>
+        ) : (
+          <>
+            <Button iconID="fm-reply">Hide</Button>
+            <Button
+              onClick={() => {
+                switchReplyState(!isReplying);
+              }}
+              iconID="fm-reply"
+            >
+              Reply
+            </Button>
+          </>
+        )}
       </ButtonList>
     </Card>
   );

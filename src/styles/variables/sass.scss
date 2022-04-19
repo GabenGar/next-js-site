@@ -6,7 +6,11 @@ $width-tablet: 768px;
 $width-laptop: 1280px;
 $width-desktop: 1920px;
 
-// sizes for borders/padding/margins/gaps
+/* 
+  Sizes for borders/padding/margins/gaps
+*/
+// just when only 1px is needed
+$size-pixel: 1px; 
 $size-nano: 0.0625em;
 $size-thin: 0.125em;
 $size-little: 0.25em;
