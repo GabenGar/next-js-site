@@ -18,3 +18,5 @@ export {
   getPendingCommentsAsync,
   selectPendingComments
 } from "./comments";
+
+export { getFMCommentsAsync, frontendMentorReducer, selectFMComments } from "./frontend-mentor"

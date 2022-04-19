@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
-import { calendarReducer, commentsReducer } from "#store/redux/reducers";
+import { calendarReducer, commentsReducer, frontendMentorReducer } from "#store/redux/reducers";
 
 import type { ThunkAction, Action } from "@reduxjs/toolkit";
 import type { TypedUseSelectorHook } from "react-redux";
@@ -15,6 +15,7 @@ export function makeStore() {
     reducer: {
       calendar: calendarReducer,
       comments: commentsReducer,
+      frontendMentor: frontendMentorReducer
     },
   });
 }

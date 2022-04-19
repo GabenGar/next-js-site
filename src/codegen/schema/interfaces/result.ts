@@ -284,12 +284,13 @@ export interface FMComment {
   id: SerialInteger;
   created_at: ISODateTime;
   parent_id?: SerialInteger;
+  name: string;
   /**
    * Markdown
    */
   content: string;
-  likes?: number;
-  dislikes?: number;
+  likes: number;
+  dislikes: number;
   avatar_url?: string;
 }
 
