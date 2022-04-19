@@ -15,8 +15,8 @@ interface ErrorOptions {
 export class ProjectError extends Error {
   // not using `ErrorOptions` because it crashes on build
   constructor(message?: string, options?: ErrorOptions, ...params: any[]) {
-    // @ts-expect-error
-    super(message, options, ...params);
+    // @ts-expect-error some params thing
+    super(message, options, ...params as any);
     this.name = "ProjectError";
     // Maintains proper stack trace for where our error was thrown (only available on V8)
     if (Error.captureStackTrace) {
@@ -51,8 +51,9 @@ export class AuthError extends ProjectError {}
  */
 export class FieldsValidationError extends ProjectError {
   constructor(validationErrors: ErrorObject[], ...params: any[]) {
-    super(...params);
-    this.message = toJSON<ErrorObject[]>(validationErrors);
+    const message = toJSON<ErrorObject[]>(validationErrors)
+    super(message, ...params);
+    this.name = "FieldsValidationError";
   }
 }
 

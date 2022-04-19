@@ -4,9 +4,11 @@ import { fetchComments } from "#lib/api/public";
 import type { ICommentClient, ICommentInit } from "#types/entities";
 import type { IFMComment } from "#types/frontend-mentor";
 import type { AppState, AppThunk, Status } from "#store/redux";
+import { validateFMCommentFields } from "#codegen/schema/validations";
 
 interface FrontendMentorState {
   status: Status;
+  error?: Error;
   comments: IFMComment[];
 }
 
@@ -14,6 +16,7 @@ const reducerName = "frontend-mentor";
 
 const initialState: FrontendMentorState = {
   status: "idle",
+  error: undefined,
   comments: [],
 };
 
@@ -21,7 +24,17 @@ export const getFMCommentsAsync = createAsyncThunk(
   `${reducerName}/getFMComments`,
   async () => {
     const response = await fetchComments();
-    return response;
+
+    const fmComments: IFMComment[] = [];
+
+    for await (const comment of response.data) {
+      const fmComment = await transformComment(comment);
+      console.log(fmComment);
+
+      fmComments.push(fmComment);
+    }
+
+    return fmComments;
   }
 );
 
@@ -35,10 +48,12 @@ const commentsSlice = createSlice({
         state.status = "loading";
       })
       .addCase(getFMCommentsAsync.rejected, (state, action) => {
+        // @ts-expect-error
+        state.error = action.error;
         state.status = "failed";
       })
       .addCase(getFMCommentsAsync.fulfilled, (state, action) => {
-        const comments = action.payload.data;
+        const comments = action.payload;
         state.comments = comments;
 
         state.status = "idle";
@@ -49,21 +64,26 @@ const commentsSlice = createSlice({
 // export const {} = commentsSlice.actions;
 export const frontendMentorReducer = commentsSlice.reducer;
 
-export function selectFMComments() {
+export function selectFMSlice() {
   return (state: AppState) => {
-    return state.frontendMentor.comments;
+    return state.frontendMentor;
   };
 }
 
-function transformComment(comment: ICommentClient): IFMComment {
-  const { id, content, created_at, parent_id } = comment;
+async function transformComment(comment: ICommentClient): Promise<IFMComment> {
+  const { id, content, created_at, parent_id, is_public } = comment;
   const fmComment: IFMComment = {
+    name: faker.name.findName(),
     id,
     content,
     created_at,
     parent_id,
-    likes: 1,
-    dislikes: 0,
+    likes: faker.datatype.number({ min: 1 }),
+    dislikes: faker.datatype.number({ min: 0 }),
+    avatar_url: faker.image.avatar(),
   };
+
+  await validateFMCommentFields(fmComment);
+
   return fmComment;
 }

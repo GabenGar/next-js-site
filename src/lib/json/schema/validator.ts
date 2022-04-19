@@ -2,7 +2,7 @@ import Ajv from "ajv";
 import addFormats from "ajv-formats";
 import metaSchema from "#schema/meta.schema.json";
 import { schemaMap } from "#codegen/schema/map";
-import { ConfigurationError } from "#lib/errors";
+import { ConfigurationError, FieldsValidationError } from "#lib/errors";
 
 import type { SchemaObject, ErrorObject, ValidateFunction } from "ajv";
 import type { OperationResult } from "#types/util";
@@ -69,13 +69,9 @@ export function createValidator<Schema = unknown>(schema: SchemaObject) {
   ): Promise<ValidationResult<Schema>> => {
     let result = validate(inputData);
 
-    // @TODO: throwing logic
     if (!result) {
-      return {
-        is_successful: false,
-        // doing a copy as per ajv instructions
-        errors: [...validate.errors!],
-      };
+      // doing a copy as per ajv instructions
+      throw new FieldsValidationError([...validate.errors!]);
     }
 
     return {

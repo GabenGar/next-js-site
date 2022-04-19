@@ -283,7 +283,7 @@ export interface EmailConfirmation {
 export interface FMComment {
   id: SerialInteger;
   created_at: ISODateTime;
-  parent_id?: SerialInteger;
+  parent_id?: SerialInteger | null;
   name: string;
   /**
    * Markdown

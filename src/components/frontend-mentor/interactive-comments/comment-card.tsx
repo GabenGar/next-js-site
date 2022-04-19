@@ -11,19 +11,19 @@ import { DateTimeView } from "#components/dates";
 import { LinkInternal, LinkLocal } from "#components/links";
 import { DL, DS } from "#components/lists/d-list";
 import { Button, ButtonList } from "#components/buttons";
-import styles from "./card.module.scss";
+import styles from "./comment-card.module.scss";
 
-import type { ICommentClient } from "#types/entities";
+import type { IFMComment } from "#types/frontend-mentor";
 import type { ICardProps } from "#components/cards";
 
-export interface ICommentProps extends Omit<ICardProps, "id"> {
-  comment: ICommentClient;
+export interface IFMCommentProps extends Omit<ICardProps, "id"> {
+  comment: IFMComment;
 }
 
 /**
  * Frontend mentor specific comment card.
  */
-export const FMCommentCard = blockComponent<ICommentProps>(
+export const FMCommentCard = blockComponent<IFMCommentProps>(
   styles.block,
   Component
 );
@@ -32,18 +32,49 @@ function Component({
   comment,
   headingLevel = 2,
   ...blockProps
-}: ICommentProps) {
+}: IFMCommentProps) {
   const { t } = useTranslation("components");
   const dispatch = useAppDispatch();
-  const { account, isAdmin } = useAccount();
+  const { account } = useAccount();
   const [isReplying, switchReplyState] = useState(false);
-  const { id, parent_id, content, created_at, is_public, blog_slug } = comment;
+  const {
+    id,
+    parent_id,
+    content,
+    created_at,
+    name,
+    likes,
+    dislikes,
+    avatar_url,
+  } = comment;
 
   return (
     <Card {...blockProps} id={`comment-${id}`}>
-      <CardHeader></CardHeader>
-      <CardBody>{content}</CardBody>
-      <CardFooter>        
+      <CardHeader>
+        <ButtonList></ButtonList>
+      </CardHeader>
+      <CardBody>
+        <Heading>{name}</Heading>
+        <p>{content}</p>
+      </CardBody>
+      <CardFooter>
+        <DL>
+          <DS
+            dKey={"Posted at"}
+            dValue={<DateTimeView dateTime={created_at} />}
+          />
+        </DL>
+        {!parent_id && (
+          <ButtonList>
+            <Button
+              onClick={() => {
+                switchReplyState(!isReplying);
+              }}
+            >
+              Reply
+            </Button>
+          </ButtonList>
+        )}
       </CardFooter>
     </Card>
   );

@@ -3,15 +3,7 @@
   "title": "FMComment",
   "description": "Comment specific to the frontend mentor challenge.",
   "type": "object",
-  "required": [
-    "id",
-    "created_at",
-    "name",
-    "content",
-    "likes",
-    "dislikes",
-    "is_public"
-  ],
+  "required": ["id", "created_at", "name", "content", "likes", "dislikes"],
   "additionalProperties": false,
   "properties": {
     "id": {
@@ -21,7 +13,7 @@
       "$ref": "/types/dates/iso-datetime.schema.json"
     },
     "parent_id": {
-      "$ref": "/types/serial.schema.json"
+      "oneOf": [{ "$ref": "/types/serial.schema.json" }, { "type": "null" }]
     },
     "name": {
       "type": "string",

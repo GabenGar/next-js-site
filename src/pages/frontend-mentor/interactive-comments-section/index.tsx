@@ -3,15 +3,11 @@ import Head from "next/head";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { siteTitle } from "#lib/util";
-import { Page } from "#components/pages";
-import {
-  CommentCard,
-  CommentList,
-  NewCommentForm,
-} from "#components/entities/comments";
-import { useAppDispatch, useAppSelector } from "#store/redux";
-import { getCommentsAsync, selectComments } from "#store/redux/reducers";
 import { useAccount } from "#lib/hooks";
+import { useAppDispatch, useAppSelector } from "#store/redux";
+import { getFMCommentsAsync, selectFMSlice } from "#store/redux/reducers";
+import { Page } from "#components/pages";
+import { CommentCard, NewCommentForm } from "#components/entities/comments";
 import {
   Article,
   ArticleHeader,
@@ -19,11 +15,13 @@ import {
   ArticleBody,
 } from "#components/articles";
 import { Heading } from "#components/headings";
+import { CardList } from "#components/lists";
+import { FMCommentCard } from "#components/frontend-mentor";
 
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import type { ParsedUrlQuery } from "querystring";
 import type { BasePageProps } from "#types/pages";
-import { CardList } from "#components/lists";
+import { JSONView } from "#components/json";
 
 interface FMCommentsPageProps extends BasePageProps {}
 
@@ -32,11 +30,11 @@ interface FMCommentsPageParams extends ParsedUrlQuery {}
 function FMCommentsPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
   const dispatch = useAppDispatch();
   const { account } = useAccount();
-  const comments = useAppSelector(selectComments());
+  const { comments, status, error } = useAppSelector(selectFMSlice());
   const title = "Interactive comments section";
 
   useEffect(() => {
-    dispatch(getCommentsAsync());
+    dispatch(getFMCommentsAsync());
   }, []);
 
   return (
@@ -158,17 +156,22 @@ function FMCommentsPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
           </p>
         </ArticleBody>
       </Article>
-      <Heading level={2}>Comments</Heading>
-      <CardList>
-        {comments.length ? (
-          comments.map((comment) => (
-            <CommentCard key={comment.id} comment={comment} />
-          ))
-        ) : (
-          <Article>No comments available.</Article>
-        )}
-      </CardList>
-      {account && <NewCommentForm />}
+      <Article style={{ backgroundColor: "transparent" }}>
+        <ArticleHeader>
+          <Heading level={2}>Comments</Heading>
+        </ArticleHeader>
+        <ArticleBody>
+          {error && <JSONView json={error} />}
+          {comments.length ? (
+            comments.map((comment) => (
+              <FMCommentCard key={comment.id} comment={comment} />
+            ))
+          ) : (
+            <Article>No comments available.</Article>
+          )}
+        </ArticleBody>
+        <ArticleFooter>{account && <NewCommentForm />}</ArticleFooter>
+      </Article>
     </Page>
   );
 }

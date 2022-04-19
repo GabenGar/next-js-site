@@ -16,7 +16,11 @@ export {
   getCommentsAsync,
   approveCommentAsync,
   getPendingCommentsAsync,
-  selectPendingComments
+  selectPendingComments,
 } from "./comments";
 
-export { getFMCommentsAsync, frontendMentorReducer, selectFMComments } from "./frontend-mentor"
+export {
+  getFMCommentsAsync,
+  frontendMentorReducer,
+  selectFMSlice,
+} from "./frontend-mentor";
