@@ -9,9 +9,22 @@
   row-gap: $size-small;
   background-color: var(--colour1-primary-transparent);
   padding: $size-small;
+
   & > * {
     padding: $size-small;
   }
+
+  &_hidden {
+    grid-template-areas: "header";
+    gap: 0
+  }
+}
+
+.stub {
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  height: 100%;
 }
 
 .header {

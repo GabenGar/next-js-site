@@ -1,7 +1,11 @@
 import { faker } from "@faker-js/faker";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { fetchComments } from "#lib/api/public";
-import type { ICommentClient, ICommentInit } from "#types/entities";
+import type {
+  ICommentClient,
+  ICommentInit,
+  ISerialInteger,
+} from "#types/entities";
 import type { IFMComment } from "#types/frontend-mentor";
 import type { AppState, AppThunk, Status } from "#store/redux";
 import { validateFMCommentFields } from "#codegen/schema/validations";
@@ -10,6 +14,9 @@ interface FrontendMentorState {
   status: Status;
   error?: Error;
   comments: IFMComment[];
+  hiddenComments: ISerialInteger[];
+  likedComments: ISerialInteger[];
+  dislikedComments: ISerialInteger[];
 }
 
 const reducerName = "frontend-mentor";
@@ -18,6 +25,9 @@ const initialState: FrontendMentorState = {
   status: "idle",
   error: undefined,
   comments: [],
+  hiddenComments: [],
+  likedComments: [],
+  dislikedComments: [],
 };
 
 export const getFMCommentsAsync = createAsyncThunk(
@@ -40,7 +50,20 @@ export const getFMCommentsAsync = createAsyncThunk(
 const commentsSlice = createSlice({
   name: reducerName,
   initialState,
-  reducers: {},
+  reducers: {
+    hideFMComment: (state, action: PayloadAction<ISerialInteger>) => {
+      if (!state.hiddenComments.includes(action.payload)) {
+        state.hiddenComments.push(action.payload);
+      }
+    },
+    unhideFMComment: (state, action: PayloadAction<ISerialInteger>) => {
+      if (state.hiddenComments.includes(action.payload)) {
+        state.hiddenComments = state.hiddenComments.filter(
+          (fmComment) => fmComment !== action.payload
+        );
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getFMCommentsAsync.pending, (state, action) => {
@@ -60,7 +83,7 @@ const commentsSlice = createSlice({
   },
 });
 
-// export const {} = commentsSlice.actions;
+export const { hideFMComment, unhideFMComment } = commentsSlice.actions;
 export const frontendMentorReducer = commentsSlice.reducer;
 
 export function selectFMSlice() {
