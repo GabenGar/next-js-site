@@ -17,6 +17,7 @@ import {
 import { Heading } from "#components/headings";
 import { CardList } from "#components/lists";
 import { FMCommentCard } from "#components/frontend-mentor";
+import styles from "./index.module.scss";
 
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import type { ParsedUrlQuery } from "querystring";
@@ -122,41 +123,7 @@ function FMCommentsPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
           </ul>
         </ArticleBody>
       </Article>
-      <Article>
-        <ArticleHeader>
-          <Heading>Where to find everything</Heading>
-        </ArticleHeader>
-        <ArticleBody>
-          <p>
-            Your task is to build out the project to the designs inside the
-            `/design` folder. You will find both a mobile and a desktop version
-            of the design.
-          </p>
-
-          <p>
-            The designs are in JPG static format. Using JPGs will mean that
-            you&apos;ll need to use your best judgment for styles such as
-            `font-size`, `padding` and `margin`.
-          </p>
-
-          <p>
-            If you would like the design files (we provide Sketch & Figma
-            versions) to inspect the design in more detail, you can [subscribe
-            as a PRO member](https://www.frontendmentor.io/pro).
-          </p>
-
-          <p>
-            You will find all the required assets in the `/images` folder. The
-            assets are already optimized.
-          </p>
-
-          <p>
-            There is also a `style-guide.md` file containing the information
-            you&apos;ll need, such as color palette and fonts.
-          </p>
-        </ArticleBody>
-      </Article>
-      <Article style={{ backgroundColor: "transparent" }}>
+      <Article style={{  }}>
         <ArticleHeader>
           <Heading level={2}>Comments</Heading>
         </ArticleHeader>

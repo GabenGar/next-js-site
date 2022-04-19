@@ -51,7 +51,10 @@ function Component({
   return (
     <Card {...blockProps} id={`comment-${id}`}>
       <CardHeader>
-        <ButtonList></ButtonList>
+        <ButtonList>
+          <Button>+</Button>
+          <Button>-</Button>
+        </ButtonList>
       </CardHeader>
       <CardBody>
         <Heading>{name}</Heading>
