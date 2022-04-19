@@ -4,7 +4,7 @@
   grid-template-areas:
     "header header"
     "content content"
-    "rating reply";
+    "rating actions";
   padding: $size-small;
 
   & > * {
@@ -14,7 +14,28 @@
 
 .header {
   grid-area: header;
+  display: grid;
+  grid-template:
+    "avatar name" auto
+    "date date" auto
+    / auto
+  ;
   padding: 0;
+}
+
+.avatar {
+  grid-area: avatar;
+  border-radius: 50%;
+  background-color: var(--colour1-secondary);
+  overflow: hidden;
+}
+
+.name {
+  grid-area: name;
+}
+
+.date {
+  grid-area: date;
 }
 
 .content {
@@ -28,11 +49,6 @@
   border-radius: $radius-normal;
 }
 
-.reply {
-  grid-area: reply;
-}
-
-.avatar {
-  border-radius: 50%;
-  overflow: hidden;
+.actions {
+  grid-area: actions;
 }

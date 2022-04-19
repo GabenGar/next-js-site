@@ -38,6 +38,7 @@ function Component({
   const { t } = useTranslation("components");
   const dispatch = useAppDispatch();
   const [isReplying, switchReplyState] = useState(false);
+  const isOwnPost = false;
   const {
     id,
     parent_id,
@@ -52,9 +53,16 @@ function Component({
   return (
     <Card {...blockProps} id={`comment-${id}`}>
       <CardHeader className={styles.header}>
-        <Image className={styles.avatar} src={avatar_url} imageHeight="3em"/>
-        <Heading level={headingLevel}>{name}</Heading>
-        <DL>
+        <Image
+          className={styles.avatar}
+          src={avatar_url}
+          imageSize="3em"
+          type="external"
+        />
+        <Heading className={styles.name} level={headingLevel}>
+          {name}
+        </Heading>
+        <DL className={styles.date}>
           <DS
             dKey={"Posted at"}
             dValue={<DateTimeView dateTime={created_at} />}
@@ -74,18 +82,16 @@ function Component({
         <p>{content}</p>
       </CardBody>
 
-      {!parent_id && (
-        <ButtonList>
-          <Button
-            onClick={() => {
-              switchReplyState(!isReplying);
-            }}
-            iconID="fm-reply"
-          >
-            Reply
-          </Button>
-        </ButtonList>
-      )}
+      <ButtonList className={styles.actions}>
+        <Button
+          onClick={() => {
+            switchReplyState(!isReplying);
+          }}
+          iconID="fm-reply"
+        >
+          Reply
+        </Button>
+      </ButtonList>
     </Card>
   );
 }

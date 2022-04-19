@@ -18,17 +18,18 @@ export type IImageLinkTypes = typeof imageLinkTypes[number];
 export interface IImageProps extends ISpanProps {
   src: ImageArg;
   alt?: string;
+  /**
+   * Used to limit the size of local image due its API.
+   */
   imageHeight?: string;
+  imageWidth?: string;
+  imageSize?: string;
   type?: IImageLinkTypes;
 }
 interface IInnerImageProps {
   type: IImageLinkTypes;
   src: string | StaticImageData;
   alt?: string;
-  /**
-   * Used to limit the size of local image due its API.
-   */
-  imageHeight?: string;
 }
 
 /**
@@ -36,35 +37,54 @@ interface IInnerImageProps {
  */
 export const Image = blockComponent<IImageProps>(
   styles.block,
-  ({ src, alt = "", imageHeight = "30em", type, className, ...blockProps }) => {
+  ({
+    src,
+    alt = "",
+    imageSize,
+    imageHeight,
+    imageWidth,
+    type,
+    className,
+    ...blockProps
+  }) => {
     const isImage = Boolean(
       typeof src === "object" || (typeof src === "string" && src.trim())
     );
     const imgType = type || guessImageLinkType(src);
+
+    const styleProps: CSSProperties = {};
+    if (!imageSize) {
+      if (imageHeight) {
+        // @ts-expect-error figure out later
+        styleProps["--local-height"] = imageHeight;
+      }
+      if (imageWidth) {
+        // @ts-expect-error figure out later
+        styleProps["--local-width"] = imageWidth;
+      }
+    } else {
+      // @ts-expect-error figure out later
+      styleProps["--local-size"] = imageSize;
+    }
 
     return (
       <span
         className={clsx(className, !isImage && styles.block_noImage)}
         {...blockProps}
         // react-typescript-friendly way of passing css variables
-        style={{ "--local-height": imageHeight } as CSSProperties}
+        style={styleProps}
       >
         {!isImage ? (
           <p>No Image Available</p>
         ) : (
-          <InnerImage
-            src={src}
-            alt={alt}
-            type={imgType}
-            imageHeight={imageHeight}
-          />
+          <InnerImage src={src} alt={alt} type={imgType} />
         )}
       </span>
     );
   }
 );
 
-function InnerImage({ type, src, alt, imageHeight }: IInnerImageProps) {
+function InnerImage({ type, src, alt }: IInnerImageProps) {
   switch (type) {
     case "internal": {
       return (
