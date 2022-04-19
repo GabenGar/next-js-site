@@ -71,23 +71,29 @@
 
   &_liked {
     .like {
+      color: var(--positive-colour1-primary);
     }
   }
+
   &_disliked {
     .dislike {
+      color: var(--negative-colour1-primary);
     }
   }
 }
 
 .count {
   font-size: 1.2em;
+
   &_positive {
     color: var(--positive-colour1-primary);
   }
+  
   &_negative {
     color: var(--negative-colour1-primary);
   }
 }
+
 .like {
 }
 .dislike {

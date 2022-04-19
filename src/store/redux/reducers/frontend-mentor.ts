@@ -62,19 +62,21 @@ const commentsSlice = createSlice({
   initialState,
   reducers: {
     hideFMComment: (state, action: PayloadAction<ISerialInteger>) => {
-      if (!state.hiddenComments.includes(action.payload)) {
+      const commentID = action.payload;
+      if (!state.hiddenComments.includes(commentID)) {
         return;
       }
 
-      state.hiddenComments.push(action.payload);
+      state.hiddenComments.push(commentID);
     },
     unhideFMComment: (state, action: PayloadAction<ISerialInteger>) => {
-      if (!state.hiddenComments.includes(action.payload)) {
+      const commentID = action.payload;
+      if (!state.hiddenComments.includes(commentID)) {
         return;
       }
 
       state.hiddenComments = state.hiddenComments.filter(
-        (hiddenID) => hiddenID !== action.payload
+        (hiddenID) => hiddenID !== commentID
       );
     },
     likeFMComment: (state, action: PayloadAction<ISerialInteger>) => {
@@ -86,6 +88,12 @@ const commentsSlice = createSlice({
           (dislikedID) => dislikedID !== commentID
         );
       }
+
+      if (state.likedComments.includes(commentID)) {
+        return;
+      }
+
+      state.likedComments.push(commentID);
     },
     dislikeFMComment: (state, action: PayloadAction<ISerialInteger>) => {
       const commentID = action.payload;
@@ -96,6 +104,12 @@ const commentsSlice = createSlice({
           (dislikedID) => dislikedID !== commentID
         );
       }
+
+      if (state.dislikedComments.includes(commentID)) {
+        return;
+      }
+
+      state.dislikedComments.push(commentID);
     },
   },
   extraReducers: (builder) => {
