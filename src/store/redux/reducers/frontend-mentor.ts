@@ -1,6 +1,9 @@
 import { faker } from "@faker-js/faker";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { fetchComments } from "#lib/api/public";
+import { StoreError } from "#lib/errors";
+import { validateFMCommentFields } from "#codegen/schema/validations";
+
 import type {
   ICommentClient,
   ICommentInit,
@@ -8,7 +11,14 @@ import type {
 } from "#types/entities";
 import type { IFMComment } from "#types/frontend-mentor";
 import type { AppState, AppThunk, Status } from "#store/redux";
-import { validateFMCommentFields } from "#codegen/schema/validations";
+
+interface IFMCommentInfo {
+  isVisible: boolean;
+  isLiked: boolean;
+  isDisliked: boolean;
+
+  rating?: "positive" | "negative";
+}
 
 interface FrontendMentorState {
   status: Status;
@@ -53,13 +63,37 @@ const commentsSlice = createSlice({
   reducers: {
     hideFMComment: (state, action: PayloadAction<ISerialInteger>) => {
       if (!state.hiddenComments.includes(action.payload)) {
-        state.hiddenComments.push(action.payload);
+        return;
       }
+
+      state.hiddenComments.push(action.payload);
     },
     unhideFMComment: (state, action: PayloadAction<ISerialInteger>) => {
-      if (state.hiddenComments.includes(action.payload)) {
-        state.hiddenComments = state.hiddenComments.filter(
-          (fmComment) => fmComment !== action.payload
+      if (!state.hiddenComments.includes(action.payload)) {
+        return;
+      }
+
+      state.hiddenComments = state.hiddenComments.filter(
+        (hiddenID) => hiddenID !== action.payload
+      );
+    },
+    likeFMComment: (state, action: PayloadAction<ISerialInteger>) => {
+      const commentID = action.payload;
+
+      // remove a dislike first
+      if (state.dislikedComments.includes(commentID)) {
+        state.dislikedComments = state.dislikedComments.filter(
+          (dislikedID) => dislikedID !== commentID
+        );
+      }
+    },
+    dislikeFMComment: (state, action: PayloadAction<ISerialInteger>) => {
+      const commentID = action.payload;
+
+      // remove a like first
+      if (state.likedComments.includes(commentID)) {
+        state.likedComments = state.dislikedComments.filter(
+          (dislikedID) => dislikedID !== commentID
         );
       }
     },
@@ -83,12 +117,54 @@ const commentsSlice = createSlice({
   },
 });
 
-export const { hideFMComment, unhideFMComment } = commentsSlice.actions;
+export const {
+  hideFMComment,
+  unhideFMComment,
+  likeFMComment,
+  dislikeFMComment,
+} = commentsSlice.actions;
 export const frontendMentorReducer = commentsSlice.reducer;
 
-export function selectFMSlice() {
-  return (state: AppState) => {
-    return state.frontendMentor;
+export function selectFMSlice(state: AppState) {
+  return state.frontendMentor;
+}
+
+export function selectFMCommentInfo(commentID: ISerialInteger) {
+  return (state: AppState): IFMCommentInfo => {
+    const { comments, dislikedComments, hiddenComments, likedComments } =
+      selectFMSlice(state);
+
+    const selectedComment = comments.find(({ id }) => id === commentID);
+
+    if (!selectedComment) {
+      throw new StoreError(
+        `No FM comment in the store with the id of ${commentID}`
+      );
+    }
+    const { likes, dislikes } = selectedComment;
+
+    const isVisible = !hiddenComments.includes(commentID);
+    const isLiked = likedComments.includes(commentID);
+    const isDisliked = dislikedComments.includes(commentID);
+    const ratingValue = likes - dislikes;
+    let rating: IFMCommentInfo["rating"];
+
+    if (ratingValue > 0) {
+      rating = "positive";
+    }
+
+    if (ratingValue < 0) {
+      rating = "negative";
+    }
+
+    const commentInfo = {
+      isVisible,
+      isLiked,
+      isDisliked,
+      rating,
+    };
+
+    return commentInfo;
   };
 }
 

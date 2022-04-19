@@ -16,7 +16,7 @@ export class ProjectError extends Error {
   // not using `ErrorOptions` because it crashes on build
   constructor(message?: string, options?: ErrorOptions, ...params: any[]) {
     // @ts-expect-error some params thing
-    super(message, options, ...params as any);
+    super(message, options, ...(params as any));
     this.name = "ProjectError";
     // Maintains proper stack trace for where our error was thrown (only available on V8)
     if (Error.captureStackTrace) {
@@ -35,13 +35,6 @@ export class ConfigurationError extends ProjectError {
 export class NotImplementedError extends ProjectError {}
 
 /**
- * @TODO: crash when created in client environment
- */
-export class ServerError extends ProjectError {}
-
-export class CodegenError extends ServerError {}
-
-/**
  * Account authentification errors.
  */
 export class AuthError extends ProjectError {}
@@ -51,7 +44,7 @@ export class AuthError extends ProjectError {}
  */
 export class FieldsValidationError extends ProjectError {
   constructor(validationErrors: ErrorObject[], ...params: any[]) {
-    const message = toJSON<ErrorObject[]>(validationErrors)
+    const message = toJSON<ErrorObject[]>(validationErrors);
     super(message, ...params);
     this.name = "FieldsValidationError";
   }
@@ -60,3 +53,17 @@ export class FieldsValidationError extends ProjectError {
 export class DatabaseError extends ProjectError {}
 
 export class FetchError extends ProjectError {}
+
+/**
+ * @TODO: crash when created in client environment
+ */
+export class ServerError extends ProjectError {}
+
+export class CodegenError extends ServerError {}
+
+/**
+ * @TODO: crash when created in server environment
+ */
+export class ClientError extends ProjectError {}
+
+export class StoreError extends ClientError {}

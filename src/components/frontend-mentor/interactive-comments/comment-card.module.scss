@@ -16,7 +16,7 @@
 
   &_hidden {
     grid-template-areas: "header";
-    gap: 0
+    gap: 0;
   }
 }
 
@@ -68,6 +68,29 @@
   grid-area: rating;
   background-color: var(--colour1-tertiary-transparent);
   border-radius: $radius-normal;
+
+  &_liked {
+    .like {
+    }
+  }
+  &_disliked {
+    .dislike {
+    }
+  }
+}
+
+.count {
+  font-size: 1.2em;
+  &_positive {
+    color: var(--positive-colour1-primary);
+  }
+  &_negative {
+    color: var(--negative-colour1-primary);
+  }
+}
+.like {
+}
+.dislike {
 }
 
 .actions {

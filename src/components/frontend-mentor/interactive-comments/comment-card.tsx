@@ -4,8 +4,10 @@ import { useTranslation } from "next-i18next";
 import { useAppDispatch, useAppSelector } from "#store/redux";
 import {
   hideFMComment,
-  selectFMSlice,
+  selectFMCommentInfo,
   unhideFMComment,
+  likeFMComment,
+  dislikeFMComment,
 } from "#store/redux/reducers";
 import { blockComponent } from "#components/meta";
 import { Card, CardBody, CardHeader, CardFooter } from "#components/cards";
@@ -42,10 +44,6 @@ function Component({
 }: IFMCommentProps) {
   const { t } = useTranslation("components");
   const dispatch = useAppDispatch();
-  const { hiddenComments } = useAppSelector(selectFMSlice());
-  const [isVisible, switchVisibility] = useState(
-    !hiddenComments.includes(comment.id)
-  );
   const [isReplying, switchReplyState] = useState(false);
   const [isEditing, switchEditionMode] = useState(false);
   const isOwnPost = false;
@@ -59,6 +57,18 @@ function Component({
     dislikes,
     avatar_url,
   } = comment;
+  const { isVisible, isLiked, isDisliked, rating } = useAppSelector(
+    selectFMCommentInfo(id)
+  );
+  const ratingClass = clsx(
+    styles.rating,
+    isLiked && styles.rating_liked,
+    isDisliked && styles.rating_disliked
+  );
+  const ratingCountClass = clsx(
+    styles.count,
+    rating && styles[`count_${rating}`]
+  );
 
   return (
     <Card
@@ -73,7 +83,6 @@ function Component({
             <Button
               onClick={() => {
                 dispatch(unhideFMComment(id));
-                switchVisibility(true);
               }}
             >
               Unhide
@@ -104,13 +113,23 @@ function Component({
             <p className={styles.content}>{content}</p>
           </CardBody>
 
-          <ButtonList className={styles.rating}>
+          <ButtonList className={ratingClass}>
             <Button>
-              <SVGIcon iconID="fm-minus" />
+              <SVGIcon
+                iconID="fm-minus"
+                onClick={() => {
+                  dispatch(dislikeFMComment(id));
+                }}
+              />
             </Button>
-            <span>{likes - dislikes}</span>
+            <span className={ratingCountClass}>{likes - dislikes}</span>
             <Button>
-              <SVGIcon iconID="fm-plus" />
+              <SVGIcon
+                iconID="fm-plus"
+                onClick={() => {
+                  dispatch(likeFMComment(id));
+                }}
+              />
             </Button>
           </ButtonList>
 
@@ -127,7 +146,6 @@ function Component({
                     iconID="mask"
                     onClick={() => {
                       dispatch(hideFMComment(id));
-                      switchVisibility(false);
                     }}
                   >
                     Hide

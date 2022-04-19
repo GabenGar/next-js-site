@@ -23,6 +23,9 @@ export {
   getFMCommentsAsync,
   frontendMentorReducer,
   selectFMSlice,
+  selectFMCommentInfo,
   hideFMComment,
   unhideFMComment,
+  likeFMComment,
+  dislikeFMComment,
 } from "./frontend-mentor";

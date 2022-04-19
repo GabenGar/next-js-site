@@ -31,7 +31,7 @@ interface FMCommentsPageParams extends ParsedUrlQuery {}
 function FMCommentsPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
   const dispatch = useAppDispatch();
   const { account } = useAccount();
-  const { comments, status, error } = useAppSelector(selectFMSlice());
+  const { comments, status, error } = useAppSelector(selectFMSlice);
   const title = "Interactive comments section";
 
   useEffect(() => {
