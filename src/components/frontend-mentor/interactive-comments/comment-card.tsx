@@ -15,6 +15,8 @@ import styles from "./comment-card.module.scss";
 
 import type { IFMComment } from "#types/frontend-mentor";
 import type { ICardProps } from "#components/cards";
+import { SVGIcon } from "#components/icons";
+import { Image } from "#components/images";
 
 export interface IFMCommentProps extends Omit<ICardProps, "id"> {
   comment: IFMComment;
@@ -30,12 +32,11 @@ export const FMCommentCard = blockComponent<IFMCommentProps>(
 
 function Component({
   comment,
-  headingLevel = 2,
+  headingLevel = 3,
   ...blockProps
 }: IFMCommentProps) {
   const { t } = useTranslation("components");
   const dispatch = useAppDispatch();
-  const { account } = useAccount();
   const [isReplying, switchReplyState] = useState(false);
   const {
     id,
@@ -50,35 +51,41 @@ function Component({
 
   return (
     <Card {...blockProps} id={`comment-${id}`}>
-      <CardHeader>
-        <ButtonList>
-          <Button>+</Button>
-          <Button>-</Button>
-        </ButtonList>
-      </CardHeader>
-      <CardBody>
-        <Heading>{name}</Heading>
-        <p>{content}</p>
-      </CardBody>
-      <CardFooter>
+      <CardHeader className={styles.header}>
+        <Image className={styles.avatar} src={avatar_url} imageHeight="3em"/>
+        <Heading level={headingLevel}>{name}</Heading>
         <DL>
           <DS
             dKey={"Posted at"}
             dValue={<DateTimeView dateTime={created_at} />}
           />
         </DL>
-        {!parent_id && (
-          <ButtonList>
-            <Button
-              onClick={() => {
-                switchReplyState(!isReplying);
-              }}
-            >
-              Reply
-            </Button>
-          </ButtonList>
-        )}
-      </CardFooter>
+      </CardHeader>
+      <ButtonList className={styles.rating}>
+        <Button>
+          <SVGIcon iconID="fm-plus" />
+        </Button>
+        <span>{likes - dislikes}</span>
+        <Button>
+          <SVGIcon iconID="fm-minus" />
+        </Button>
+      </ButtonList>
+      <CardBody className={styles.content}>
+        <p>{content}</p>
+      </CardBody>
+
+      {!parent_id && (
+        <ButtonList>
+          <Button
+            onClick={() => {
+              switchReplyState(!isReplying);
+            }}
+            iconID="fm-reply"
+          >
+            Reply
+          </Button>
+        </ButtonList>
+      )}
     </Card>
   );
 }

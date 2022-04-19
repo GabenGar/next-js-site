@@ -3,7 +3,15 @@
   "title": "FMComment",
   "description": "Comment specific to the frontend mentor challenge.",
   "type": "object",
-  "required": ["id", "created_at", "name", "content", "likes", "dislikes"],
+  "required": [
+    "id",
+    "created_at",
+    "name",
+    "content",
+    "likes",
+    "dislikes",
+    "avatar_url"
+  ],
   "additionalProperties": false,
   "properties": {
     "id": {

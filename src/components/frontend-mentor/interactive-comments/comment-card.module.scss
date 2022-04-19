@@ -1,3 +1,38 @@
+@use "../../../styles/variables/sass.scss" as *;
+
 .block {
-  
+  grid-template-areas:
+    "header header"
+    "content content"
+    "rating reply";
+  padding: $size-small;
+
+  & > * {
+    padding: $size-small;
+  }
+}
+
+.header {
+  grid-area: header;
+  padding: 0;
+}
+
+.content {
+  grid-area: content;
+}
+
+.rating {
+  grid-area: rating;
+  justify-self: start;
+  background-color: var(--colour1-secondary);
+  border-radius: $radius-normal;
+}
+
+.reply {
+  grid-area: reply;
+}
+
+.avatar {
+  border-radius: 50%;
+  overflow: hidden;
 }

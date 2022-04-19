@@ -29,7 +29,6 @@ export const getFMCommentsAsync = createAsyncThunk(
 
     for await (const comment of response.data) {
       const fmComment = await transformComment(comment);
-      console.log(fmComment);
 
       fmComments.push(fmComment);
     }

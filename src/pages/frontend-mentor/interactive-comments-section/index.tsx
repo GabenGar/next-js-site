@@ -123,19 +123,21 @@ function FMCommentsPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
           </ul>
         </ArticleBody>
       </Article>
-      <Article style={{  }}>
+      <Article className={styles.comments}>
         <ArticleHeader>
           <Heading level={2}>Comments</Heading>
         </ArticleHeader>
         <ArticleBody>
           {error && <JSONView json={error} />}
-          {comments.length ? (
-            comments.map((comment) => (
-              <FMCommentCard key={comment.id} comment={comment} />
-            ))
-          ) : (
-            <Article>No comments available.</Article>
-          )}
+          <CardList>
+            {comments.length ? (
+              comments.map((comment) => (
+                <FMCommentCard key={comment.id} comment={comment} />
+              ))
+            ) : (
+              <Article>No comments available.</Article>
+            )}
+          </CardList>
         </ArticleBody>
         <ArticleFooter>{account && <NewCommentForm />}</ArticleFooter>
       </Article>
