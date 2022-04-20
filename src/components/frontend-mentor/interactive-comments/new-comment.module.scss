@@ -6,18 +6,31 @@
     padding: 0;
     margin: 0;
   }
+}
 
+.buttons {
+  * > {
+    transition-duration: va(0--duration-global);
+    transition-property: visibility, opacity;
+  }
+  
   &_preview {
-    visibility: visible;
-    opacity: 1;
+    .confirm {
+      visibility: hidden;
+      opacity: 0;
+    }
+
+    .preview {
+      visibility: visible;
+      opacity: 1;
+    }
   }
 }
 
+.confirm {
+}
+
 .preview {
-  grid-area: preview;
   visibility: hidden;
   opacity: 0;
-
-  transition-duration: var(--duration-global);
-  transition-property: visibility, opacity;
 }

@@ -6,7 +6,7 @@ import { useAppDispatch } from "#store/redux";
 import { addFMComment } from "#store/redux/reducers";
 import { blockComponent } from "#components/meta";
 import { JSONView } from "#components/json";
-import { ButtonSubmit } from "#components/buttons";
+import { Button, ButtonList, ButtonSubmit } from "#components/buttons";
 import { Form } from "#components/forms";
 import { TextArea, Hidden } from "#components/forms/sections";
 import { Heading, HeadingLevel } from "#components/headings";
@@ -41,15 +41,9 @@ function Component({
 }: INewCommentFormProps) {
   const dispatch = useAppDispatch();
   const [errors, updateErrors] = useState([]);
-  const [{ isPreview, comment }, changePreviewMode] = useState<{
-    isPreview: boolean;
-    comment?: IFMComment;
-  }>({ isPreview: false, comment: undefined });
-  const formClass = clsx(
-    className,
-    parentID && styles.block_reply,
-    isPreview && styles.block_preview
-  );
+  // @TODO: actual preview
+  const [isPreview, switchPreview] = useState(false);
+  const formClass = clsx(className, parentID && styles.block_reply);
 
   async function handleCommentCreation(event: ISubmitEvent) {
     event.preventDefault();
@@ -71,14 +65,7 @@ function Component({
       return;
     }
 
-    if (!isPreview) {
-      const commentPreview = createCommentPreview(commentInit);
-      changePreviewMode({ isPreview: true, comment: commentPreview });
-
-      return;
-    }
-
-    dispatch(addFMComment(comment!));
+    dispatch(addFMComment(commentInit));
     contentEleem.value = "";
   }
 
@@ -86,12 +73,36 @@ function Component({
     <Form
       className={formClass}
       submitButton={
-        <ButtonSubmit>{!isPreview ? "Preview" : "Confirm"}</ButtonSubmit>
+        <ButtonList
+          className={clsx(styles.buttons, isPreview && styles.buttons_preview)}
+        >
+          <Button
+            className={styles.confirm}
+            onClick={() => {
+              switchPreview(true);
+            }}
+          >
+            Post
+          </Button>
+          <span className={styles.preview}>Are you sure?</span>
+          <Button
+            className={styles.preview}
+            onClick={() => {
+              switchPreview(false);
+            }}
+          >
+            No
+          </Button>
+          <ButtonSubmit className={styles.preview}>Yes</ButtonSubmit>
+        </ButtonList>
       }
       onSubmit={handleCommentCreation}
     >
       {parentID ? (
-        <Hidden name="parent_id" defaultValue={parentID} />
+        <>
+          <Heading level={headingLevel}>Reply</Heading>
+          <Hidden name="parent_id" defaultValue={parentID} />
+        </>
       ) : (
         <Heading level={headingLevel}>Leave a comment</Heading>
       )}
@@ -103,34 +114,9 @@ function Component({
         maxLength={1024}
         rows={5}
       >
-        Content
+        Comment body:
       </TextArea>
-      {errors.length ? (
-        <JSONView json={errors} />
-      ) : (
-        isPreview && (
-          <output className={styles.preview}>
-            {comment && <FMCommentCard comment={comment} />}
-          </output>
-        )
-      )}
+      {errors.length ? <JSONView json={errors} /> : undefined}
     </Form>
   );
-}
-
-function createCommentPreview({
-  content,
-  parent_id,
-}: ICommentInit): IFMComment {
-  const fmComment: IFMComment = {
-    id: faker.datatype.number(),
-    created_at: nowISO(),
-    avatar_url: faker.image.avatar(),
-    likes: 1,
-    dislikes: 0,
-    name: faker.name.findName(),
-    content,
-    parent_id,
-  };
-  return fmComment;
 }

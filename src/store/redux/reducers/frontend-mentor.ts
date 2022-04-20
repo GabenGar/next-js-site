@@ -61,9 +61,8 @@ const commentsSlice = createSlice({
   name: reducerName,
   initialState,
   reducers: {
-    addFMComment: (state, action: PayloadAction<IFMComment>) => {
-      state.comments.push(action.payload);
-      state.comments.sort();
+    addFMComment: (state, action: PayloadAction<ICommentInit>) => {
+      
     },
     hideFMComment: (state, action: PayloadAction<ISerialInteger>) => {
       const commentID = action.payload;
