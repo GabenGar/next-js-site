@@ -71,13 +71,19 @@
 
   &_liked {
     .like {
-      color: var(--positive-colour1-primary);
+      --local-icon-colour-primary: var(--positive-colour1-primary);
+    }
+    .dislike {
+      opacity: 0.5;
     }
   }
 
   &_disliked {
     .dislike {
-      color: var(--negative-colour1-primary);
+      --local-icon-colour-primary: var(--negative-colour1-primary);
+    }
+    .like {
+      opacity: 0.5;
     }
   }
 }
@@ -88,7 +94,7 @@
   &_positive {
     color: var(--positive-colour1-primary);
   }
-  
+
   &_negative {
     color: var(--negative-colour1-primary);
   }

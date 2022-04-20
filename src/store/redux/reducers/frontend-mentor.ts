@@ -81,11 +81,19 @@ const commentsSlice = createSlice({
     },
     likeFMComment: (state, action: PayloadAction<ISerialInteger>) => {
       const commentID = action.payload;
+      const comment = state.comments.find(({ id }) => id === commentID);
+
+      if (!comment) {
+        throw new StoreError("No comment found while liking.");
+      }
+
       // remove a dislike first
       if (state.dislikedComments.includes(commentID)) {
         state.dislikedComments = state.dislikedComments.filter(
           (dislikedID) => dislikedID !== commentID
         );
+
+        comment.dislikes = comment.dislikes - 1;
       }
 
       if (state.likedComments.includes(commentID)) {
@@ -93,22 +101,24 @@ const commentsSlice = createSlice({
       }
 
       state.likedComments.push(commentID);
-      const comment = state.comments.find(({ id }) => id === commentID)
 
-      if (!comment) {
-        throw new StoreError("No comment found while liking.")
-      }
-
-      comment.likes = comment.likes + 1
+      comment.likes = comment.likes + 1;
     },
     dislikeFMComment: (state, action: PayloadAction<ISerialInteger>) => {
       const commentID = action.payload;
+      const comment = state.comments.find(({ id }) => id === commentID);
+
+      if (!comment) {
+        throw new StoreError("No comment found while disliking.");
+      }
 
       // remove a like first
       if (state.likedComments.includes(commentID)) {
         state.likedComments = state.dislikedComments.filter(
           (dislikedID) => dislikedID !== commentID
         );
+
+        comment.likes = comment.likes - 1;
       }
 
       if (state.dislikedComments.includes(commentID)) {
@@ -117,13 +127,7 @@ const commentsSlice = createSlice({
 
       state.dislikedComments.push(commentID);
 
-      const comment = state.comments.find(({ id }) => id === commentID)
-
-      if (!comment) {
-        throw new StoreError("No comment found while disliking.")
-      }
-
-      comment.dislikes = comment.dislikes + 1
+      comment.dislikes = comment.dislikes + 1;
     },
   },
   extraReducers: (builder) => {

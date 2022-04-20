@@ -114,22 +114,22 @@ function Component({
           </CardBody>
 
           <ButtonList className={ratingClass}>
-            <Button>
-              <SVGIcon
-                iconID="fm-minus"
-                onClick={() => {
-                  dispatch(dislikeFMComment(id));
-                }}
-              />
+            <Button
+              className={styles.dislike}
+              onClick={() => {
+                dispatch(dislikeFMComment(id));
+              }}
+            >
+              <SVGIcon iconID="fm-minus" />
             </Button>
             <span className={ratingCountClass}>{likes - dislikes}</span>
-            <Button>
-              <SVGIcon
-                iconID="fm-plus"
-                onClick={() => {
-                  dispatch(likeFMComment(id));
-                }}
-              />
+            <Button
+              className={styles.like}
+              onClick={() => {
+                dispatch(likeFMComment(id));
+              }}
+            >
+              <SVGIcon iconID="fm-plus" />
             </Button>
           </ButtonList>
 
