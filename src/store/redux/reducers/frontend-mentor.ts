@@ -63,7 +63,7 @@ const commentsSlice = createSlice({
   reducers: {
     hideFMComment: (state, action: PayloadAction<ISerialInteger>) => {
       const commentID = action.payload;
-      if (!state.hiddenComments.includes(commentID)) {
+      if (state.hiddenComments.includes(commentID)) {
         return;
       }
 
@@ -81,7 +81,6 @@ const commentsSlice = createSlice({
     },
     likeFMComment: (state, action: PayloadAction<ISerialInteger>) => {
       const commentID = action.payload;
-
       // remove a dislike first
       if (state.dislikedComments.includes(commentID)) {
         state.dislikedComments = state.dislikedComments.filter(
@@ -94,6 +93,13 @@ const commentsSlice = createSlice({
       }
 
       state.likedComments.push(commentID);
+      const comment = state.comments.find(({ id }) => id === commentID)
+
+      if (!comment) {
+        throw new StoreError("No comment found while liking.")
+      }
+
+      comment.likes = comment.likes + 1
     },
     dislikeFMComment: (state, action: PayloadAction<ISerialInteger>) => {
       const commentID = action.payload;
@@ -110,6 +116,14 @@ const commentsSlice = createSlice({
       }
 
       state.dislikedComments.push(commentID);
+
+      const comment = state.comments.find(({ id }) => id === commentID)
+
+      if (!comment) {
+        throw new StoreError("No comment found while disliking.")
+      }
+
+      comment.dislikes = comment.dislikes + 1
     },
   },
   extraReducers: (builder) => {
