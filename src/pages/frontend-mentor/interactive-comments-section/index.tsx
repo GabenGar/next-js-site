@@ -7,7 +7,6 @@ import { useAccount } from "#lib/hooks";
 import { useAppDispatch, useAppSelector } from "#store/redux";
 import { getFMCommentsAsync, selectFMSlice } from "#store/redux/reducers";
 import { Page } from "#components/pages";
-import { CommentCard, NewCommentForm } from "#components/entities/comments";
 import {
   Article,
   ArticleHeader,
@@ -16,13 +15,16 @@ import {
 } from "#components/articles";
 import { Heading } from "#components/headings";
 import { CardList } from "#components/lists";
-import { FMCommentCard } from "#components/frontend-mentor";
+import {
+  FMCommentCard,
+  NewCommentForm,
+} from "#components/frontend-mentor/interactive-comments";
+import { JSONView } from "#components/json";
 import styles from "./index.module.scss";
 
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import type { ParsedUrlQuery } from "querystring";
 import type { BasePageProps } from "#types/pages";
-import { JSONView } from "#components/json";
 
 interface FMCommentsPageProps extends BasePageProps {}
 
@@ -30,7 +32,6 @@ interface FMCommentsPageParams extends ParsedUrlQuery {}
 
 function FMCommentsPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
   const dispatch = useAppDispatch();
-  const { account } = useAccount();
   const { comments, status, error } = useAppSelector(selectFMSlice);
   const title = "Interactive comments section";
 
@@ -130,7 +131,9 @@ function FMCommentsPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
         <ArticleBody>
           {error && <JSONView json={error} />}
           <CardList className={styles.list} isLayoutShown={false}>
-            {comments.length ? (
+            {status === "loading" ? (
+              <div>Loading...</div>
+            ) : comments ? (
               comments.map((comment) => (
                 <FMCommentCard key={comment.id} comment={comment} />
               ))
@@ -139,7 +142,9 @@ function FMCommentsPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
             )}
           </CardList>
         </ArticleBody>
-        <ArticleFooter>{account && <NewCommentForm />}</ArticleFooter>
+        <ArticleFooter>
+          <NewCommentForm />
+        </ArticleFooter>
       </Article>
     </Page>
   );

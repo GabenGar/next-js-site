@@ -3,7 +3,7 @@ import { useState } from "react";
 import { validateCommentInitFields } from "#codegen/schema/validations";
 import { FieldsValidationError } from "#lib/errors";
 import { useAppDispatch } from "#store/redux";
-import { addFMComment } from "#store/redux/reducers";
+import { createFMComment } from "#store/redux/reducers";
 import { blockComponent } from "#components/meta";
 import { JSONView } from "#components/json";
 import { Button, ButtonList, ButtonSubmit } from "#components/buttons";
@@ -29,7 +29,7 @@ export interface INewCommentFormProps extends IFormProps {
   /**
    * Calls this callbak on closing.
    */
-  onClosing: () => void;
+  onClosing?: () => void;
 }
 
 export const NewCommentForm = blockComponent(styles.block, Component);
@@ -38,6 +38,7 @@ function Component({
   className,
   parentID,
   headingLevel,
+  onClosing,
 }: INewCommentFormProps) {
   const dispatch = useAppDispatch();
   const [errors, updateErrors] = useState([]);
@@ -65,8 +66,9 @@ function Component({
       return;
     }
 
-    dispatch(addFMComment(commentInit));
+    dispatch(createFMComment(commentInit));
     contentEleem.value = "";
+    onClosing && onClosing();
   }
 
   return (
@@ -114,7 +116,7 @@ function Component({
         maxLength={1024}
         rows={5}
       >
-        Comment body:
+        Message:
       </TextArea>
       {errors.length ? <JSONView json={errors} /> : undefined}
     </Form>

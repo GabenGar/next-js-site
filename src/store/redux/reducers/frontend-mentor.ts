@@ -1,5 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { nowISO } from "#lib/dates";
 import { fetchComments } from "#lib/api/public";
 import { StoreError } from "#lib/errors";
 import { validateFMCommentFields } from "#codegen/schema/validations";
@@ -27,6 +28,7 @@ interface FrontendMentorState {
   hiddenComments: ISerialInteger[];
   likedComments: ISerialInteger[];
   dislikedComments: ISerialInteger[];
+  ownComments: ISerialInteger[];
 }
 
 const reducerName = "frontend-mentor";
@@ -38,6 +40,7 @@ const initialState: FrontendMentorState = {
   hiddenComments: [],
   likedComments: [],
   dislikedComments: [],
+  ownComments: [],
 };
 
 export const getFMCommentsAsync = createAsyncThunk(
@@ -61,8 +64,22 @@ const commentsSlice = createSlice({
   name: reducerName,
   initialState,
   reducers: {
-    addFMComment: (state, action: PayloadAction<ICommentInit>) => {
-      
+    createFMComment: (state, action: PayloadAction<ICommentInit>) => {
+      const { content, parent_id } = action.payload;
+      const currentMaxID = Math.max(...state.comments.map(({ id }) => id));
+      const fmComment: IFMComment = {
+        content,
+        parent_id,
+        created_at: nowISO(),
+        avatar_url: faker.image.avatar(),
+        likes: 1,
+        dislikes: 0,
+        name: faker.name.findName(),
+        id: currentMaxID + 1,
+      };
+
+      state.ownComments.push(fmComment.id);
+      state.comments.push(fmComment);
     },
     hideFMComment: (state, action: PayloadAction<ISerialInteger>) => {
       const commentID = action.payload;
@@ -153,7 +170,7 @@ const commentsSlice = createSlice({
 });
 
 export const {
-  addFMComment,
+  createFMComment,
   hideFMComment,
   unhideFMComment,
   likeFMComment,
