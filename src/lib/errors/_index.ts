@@ -13,11 +13,13 @@ interface ErrorOptions {
  * @link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error#custom_error_types
  */
 export class ProjectError extends Error {
+  name = "ProjectError";
+
   // not using `ErrorOptions` because it crashes on build
   constructor(message?: string, options?: ErrorOptions, ...params: any[]) {
     // @ts-expect-error some params thing
-    super(message, options, ...(params as any));
-    this.name = "ProjectError";
+    super(message, options, ...params);
+
     // Maintains proper stack trace for where our error was thrown (only available on V8)
     if (Error.captureStackTrace) {
       Error.captureStackTrace(this, this.constructor);
@@ -26,9 +28,10 @@ export class ProjectError extends Error {
 }
 
 export class ConfigurationError extends ProjectError {
+  name = "ConfigurationError";
+
   constructor(message?: string, options?: ErrorOptions, ...params: any[]) {
     super(message, options, ...params);
-    this.name = "ConfigurationError";
   }
 }
 
@@ -43,10 +46,14 @@ export class AuthError extends ProjectError {}
  * JSON schema validation errors.
  */
 export class FieldsValidationError extends ProjectError {
+  validationErrors: ErrorObject[];
+
+  name = "FieldsValidationError";
+
   constructor(validationErrors: ErrorObject[], ...params: any[]) {
     const message = toJSON<ErrorObject[]>(validationErrors);
     super(message, ...params);
-    this.name = "FieldsValidationError";
+    this.validationErrors = validationErrors;
   }
 }
 

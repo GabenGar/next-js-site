@@ -61,6 +61,10 @@ const commentsSlice = createSlice({
   name: reducerName,
   initialState,
   reducers: {
+    addFMComment: (state, action: PayloadAction<IFMComment>) => {
+      state.comments.push(action.payload);
+      state.comments.sort();
+    },
     hideFMComment: (state, action: PayloadAction<ISerialInteger>) => {
       const commentID = action.payload;
       if (state.hiddenComments.includes(commentID)) {
@@ -150,6 +154,7 @@ const commentsSlice = createSlice({
 });
 
 export const {
+  addFMComment,
   hideFMComment,
   unhideFMComment,
   likeFMComment,
@@ -200,7 +205,12 @@ export function selectFMCommentInfo(commentID: ISerialInteger) {
   };
 }
 
-async function transformComment(comment: ICommentClient): Promise<IFMComment> {
+/**
+ * Transforms {@link ICommentClient client comment} into a comment usable for Frontend Mentor Challenge.
+ */
+export async function transformComment(
+  comment: ICommentClient
+): Promise<IFMComment> {
   const { id, content, created_at, parent_id, is_public } = comment;
   const fmComment: IFMComment = {
     name: faker.name.findName(),

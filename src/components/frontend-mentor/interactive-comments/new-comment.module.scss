@@ -1,1 +1,23 @@
-.block {}
+@use "../../../styles/variables/sass.scss" as *;
+
+.block {
+  &_reply {
+    max-width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+
+  &_preview {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+.preview {
+  grid-area: preview;
+  visibility: hidden;
+  opacity: 0;
+
+  transition-duration: var(--duration-global);
+  transition-property: visibility, opacity;
+}

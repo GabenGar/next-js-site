@@ -28,4 +28,6 @@ export {
   unhideFMComment,
   likeFMComment,
   dislikeFMComment,
+  transformComment,
+  addFMComment
 } from "./frontend-mentor";

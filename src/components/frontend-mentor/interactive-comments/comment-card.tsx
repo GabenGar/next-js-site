@@ -162,7 +162,12 @@ function Component({
               )}
             </ButtonList>
           ) : (
-            <NewCommentForm parentID={parent_id} />
+            <NewCommentForm
+              parentID={id}
+              onClosing={() => {
+                switchReplyState(false);
+              }}
+            />
           )}
         </>
       )}

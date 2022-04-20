@@ -8,6 +8,12 @@ import type { FormEvent, ReactNode } from "react";
 import type { HTMLFormProps } from "#components/html/form";
 
 export interface IFormProps extends HTMLFormProps {
+  /**
+   * Submit button component.
+   * If a react component is passed,
+   * then replaces the button with said component,
+   * otherwise it becomes the content of {@link ButtonSubmit submit button}.
+   */
   submitButton?: ReactNode;
 }
 
@@ -32,7 +38,7 @@ function Component({ submitButton, children, ...blockProps }: IFormProps) {
   return (
     <HTMLForm {...blockProps}>
       {children}
-      {typeof finalSubmit === "string" ? (
+      {typeof finalSubmit === "string" || typeof finalSubmit === "number" ? (
         <ButtonSubmit>{finalSubmit}</ButtonSubmit>
       ) : (
         finalSubmit
