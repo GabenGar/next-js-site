@@ -17,7 +17,7 @@ interface IFMCommentInfo {
   isVisible: boolean;
   isLiked: boolean;
   isDisliked: boolean;
-
+  isOwn: boolean;
   rating?: "positive" | "negative";
 }
 
@@ -79,7 +79,45 @@ const commentsSlice = createSlice({
       };
 
       state.ownComments.push(fmComment.id);
+      state.likedComments.push(fmComment.id);
       state.comments.push(fmComment);
+    },
+    editFMComment: (
+      state,
+      action: PayloadAction<Pick<IFMComment, "id" | "content">>
+    ) => {
+      const { id: commentID, content } = action.payload;
+
+      if (!state.ownComments.includes(commentID)) {
+        throw new StoreError(
+          `Can only edit your own comments and the comment with id "${commentID}" is not yours.`
+        );
+      }
+
+      const oldComment = state.comments.find(({ id }) => id === commentID);
+
+      if (!oldComment) {
+        throw new StoreError(`Comment with id "${commentID}" doesn't exist.`);
+      }
+
+      const commentIndex = state.comments.indexOf(oldComment);
+      const finalComment = {
+        ...oldComment,
+        content,
+      };
+
+      state.comments.splice(commentIndex, 1, finalComment);
+    },
+    deleteFMComment: (state, action: PayloadAction<ISerialInteger>) => {
+      const commentID = action.payload;
+
+      if (!state.ownComments.includes(commentID)) {
+        throw new StoreError(
+          `Can only delete your own comments and the comment with id "${commentID}" is not yours.`
+        );
+      }
+
+      state.ownComments = state.ownComments.filter((id) => id !== commentID);
     },
     hideFMComment: (state, action: PayloadAction<ISerialInteger>) => {
       const commentID = action.payload;
@@ -101,6 +139,11 @@ const commentsSlice = createSlice({
     },
     likeFMComment: (state, action: PayloadAction<ISerialInteger>) => {
       const commentID = action.payload;
+
+      if (state.ownComments.includes(commentID)) {
+        throw new StoreError("Can't like your own comments.");
+      }
+
       const comment = state.comments.find(({ id }) => id === commentID);
 
       if (!comment) {
@@ -126,6 +169,11 @@ const commentsSlice = createSlice({
     },
     dislikeFMComment: (state, action: PayloadAction<ISerialInteger>) => {
       const commentID = action.payload;
+
+      if (state.ownComments.includes(commentID)) {
+        throw new StoreError("Can't dislike your own comments.");
+      }
+
       const comment = state.comments.find(({ id }) => id === commentID);
 
       if (!comment) {
@@ -184,8 +232,13 @@ export function selectFMSlice(state: AppState) {
 
 export function selectFMCommentInfo(commentID: ISerialInteger) {
   return (state: AppState): IFMCommentInfo => {
-    const { comments, dislikedComments, hiddenComments, likedComments } =
-      selectFMSlice(state);
+    const {
+      comments,
+      dislikedComments,
+      hiddenComments,
+      likedComments,
+      ownComments,
+    } = selectFMSlice(state);
 
     const selectedComment = comments.find(({ id }) => id === commentID);
 
@@ -199,6 +252,7 @@ export function selectFMCommentInfo(commentID: ISerialInteger) {
     const isVisible = !hiddenComments.includes(commentID);
     const isLiked = likedComments.includes(commentID);
     const isDisliked = dislikedComments.includes(commentID);
+    const isOwn = ownComments.includes(commentID);
     const ratingValue = likes - dislikes;
     let rating: IFMCommentInfo["rating"];
 
@@ -214,6 +268,7 @@ export function selectFMCommentInfo(commentID: ISerialInteger) {
       isVisible,
       isLiked,
       isDisliked,
+      isOwn,
       rating,
     };
 
