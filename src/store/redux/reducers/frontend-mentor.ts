@@ -121,6 +121,13 @@ const commentsSlice = createSlice({
     },
     hideFMComment: (state, action: PayloadAction<ISerialInteger>) => {
       const commentID = action.payload;
+
+      if (state.ownComments.includes(commentID)) {
+        throw new StoreError(
+          `Can't hide the comment with id "${commentID}" because it's yours.`
+        );
+      }
+
       if (state.hiddenComments.includes(commentID)) {
         return;
       }
@@ -223,6 +230,8 @@ export const {
   unhideFMComment,
   likeFMComment,
   dislikeFMComment,
+  deleteFMComment,
+  editFMComment,
 } = commentsSlice.actions;
 export const frontendMentorReducer = commentsSlice.reducer;
 

@@ -8,6 +8,7 @@ import {
   unhideFMComment,
   likeFMComment,
   dislikeFMComment,
+  deleteFMComment,
 } from "#store/redux/reducers";
 import { blockComponent } from "#components/meta";
 import { Card, CardBody, CardHeader, CardFooter } from "#components/cards";
@@ -23,6 +24,10 @@ import styles from "./comment-card.module.scss";
 
 import type { IFMComment } from "#types/frontend-mentor";
 import type { ICardProps } from "#components/cards";
+import { Form } from "#components/forms";
+
+const cardStates = ["view", "reply", "edit", "delete"] as const;
+type ICardState = typeof cardStates[number];
 
 export interface IFMCommentProps extends Omit<ICardProps, "id"> {
   comment: IFMComment;
@@ -44,9 +49,10 @@ function Component({
 }: IFMCommentProps) {
   const { t } = useTranslation("components");
   const dispatch = useAppDispatch();
-  const [isReplying, switchReplyState] = useState(false);
-  const [isEditing, switchEditionMode] = useState(false);
-  const isOwnPost = false;
+  const [mode, switchMode] = useState<ICardState>("view");
+  const isReplying = mode === "reply";
+  const isEditing = mode === "edit";
+  const isDeleting = mode === "delete";
   const {
     id,
     parent_id,
@@ -57,12 +63,12 @@ function Component({
     dislikes,
     avatar_url,
   } = comment;
-  const { isVisible, isLiked, isDisliked, rating } = useAppSelector(
+  const { isVisible, isLiked, isDisliked, rating, isOwn } = useAppSelector(
     selectFMCommentInfo(id)
   );
   const ratingClass = clsx(
     styles.rating,
-    isLiked && styles.rating_liked,
+    (isLiked || isOwn) && styles.rating_liked,
     isDisliked && styles.rating_disliked
   );
   const ratingCountClass = clsx(
@@ -99,7 +105,7 @@ function Component({
               type="external"
             />
             <Heading className={styles.name} level={headingLevel}>
-              {name} {isOwnPost && "(you)"}
+              {name} {isOwn && "(you)"}
             </Heading>
             <DL className={styles.date}>
               <DS
@@ -133,12 +139,52 @@ function Component({
             </Button>
           </ButtonList>
 
-          {!isReplying ? (
+          {isReplying ? (
+            <NewCommentForm
+              parentID={id}
+              onClosing={() => {
+                switchMode("view");
+              }}
+            />
+          ) : (
             <ButtonList className={styles.actions}>
-              {isOwnPost ? (
+              {isOwn ? (
                 <>
-                  <Button iconID="fm-delete">Delete</Button>
-                  <Button iconID="fm-edit">Edit</Button>
+                  <Button
+                    iconID="fm-delete"
+                    onClick={() => {
+                      switchMode("delete");
+                    }}
+                  >
+                    Delete
+                  </Button>
+                  {isDeleting ? (
+                    <>
+                      <span>Are you sure?</span>
+                      <Button
+                        onClick={() => {
+                          switchMode("view");
+                        }}
+                      >
+                        No
+                      </Button>
+                      <Form
+                        submitButton="Yes"
+                        onSubmit={() => {
+                          dispatch(deleteFMComment(id));
+                        }}
+                      />
+                    </>
+                  ) : (
+                    <Button
+                      iconID="fm-edit"
+                      onClick={() => {
+                        switchMode("edit");
+                      }}
+                    >
+                      Edit
+                    </Button>
+                  )}
                 </>
               ) : (
                 <>
@@ -150,24 +196,17 @@ function Component({
                   >
                     Hide
                   </Button>
-                  <Button
-                    iconID="fm-reply"
-                    onClick={() => {
-                      switchReplyState(!isReplying);
-                    }}
-                  >
-                    Reply
-                  </Button>
                 </>
               )}
+              <Button
+                iconID="fm-reply"
+                onClick={() => {
+                  switchMode("reply");
+                }}
+              >
+                Reply
+              </Button>
             </ButtonList>
-          ) : (
-            <NewCommentForm
-              parentID={id}
-              onClosing={() => {
-                switchReplyState(false);
-              }}
-            />
           )}
         </>
       )}

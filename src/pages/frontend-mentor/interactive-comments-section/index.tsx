@@ -133,7 +133,7 @@ function FMCommentsPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
           <CardList className={styles.list} isLayoutShown={false}>
             {status === "loading" ? (
               <div>Loading...</div>
-            ) : comments ? (
+            ) : comments.length ? (
               comments.map((comment) => (
                 <FMCommentCard key={comment.id} comment={comment} />
               ))

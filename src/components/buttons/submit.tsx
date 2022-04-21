@@ -4,9 +4,9 @@ import styles from "./_index.module.scss";
 
 import type { HTMLButtonProps } from "#components/html/button";
 
-export interface ButtonSubmitProps extends Omit<HTMLButtonProps, "type"> {}
+export interface IButtonSubmitProps extends Omit<HTMLButtonProps, "type"> {}
 
-export const ButtonSubmit = blockComponent<ButtonSubmitProps>(
+export const ButtonSubmit = blockComponent<IButtonSubmitProps>(
   styles.submit,
   ({ children, ...blockProps }) => {
     return (

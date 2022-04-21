@@ -4,6 +4,9 @@ import styles from "./_index.module.scss";
 
 import type { HTMLButtonProps } from "#components/html/button";
 
+/**
+ * @TODO: rename this interface
+ */
 export interface ButtonProps extends Omit<HTMLButtonProps, "type"> {}
 
 export const Button = blockComponent<ButtonProps>(styles.button, Component);

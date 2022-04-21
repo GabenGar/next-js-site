@@ -1,7 +1,13 @@
 export { Button } from "./button";
 export type { ButtonProps } from "./button";
 export { ButtonSubmit } from "./submit";
-export type { ButtonSubmitProps } from "./submit";
+export type { IButtonSubmitProps } from "./submit";
 export { ButtonList } from "./list";
-export type { IButtonList } from "./list";
+export type { IButtonListProps } from "./list";
+export { ButtonAccept } from "./accept";
+export type { IButtonAcceptProps } from "./accept";
+export { ButtonDecline } from "./decline";
+export type { IButtonDeclineProps } from "./decline";
+export { ConfirmationDialogue } from "./confirmation-dialogue";
+export type { IConfirmationDialogueProps } from "./confirmation-dialogue";
 export type { OnClickEvent } from "./types";
