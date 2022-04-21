@@ -16,7 +16,12 @@ import { Heading } from "#components/headings";
 import { DateTimeView } from "#components/dates";
 import { LinkInternal, LinkLocal } from "#components/links";
 import { DL, DS } from "#components/lists/d-list";
-import { Button, ButtonList } from "#components/buttons";
+import {
+  Button,
+  ButtonAccept,
+  ButtonDecline,
+  ButtonList,
+} from "#components/buttons";
 import { SVGIcon } from "#components/icons";
 import { Image } from "#components/images";
 import { NewCommentForm } from "./new-comment";
@@ -50,6 +55,7 @@ function Component({
   const { t } = useTranslation("components");
   const dispatch = useAppDispatch();
   const [mode, switchMode] = useState<ICardState>("view");
+  const isViewing = mode === "view";
   const isReplying = mode === "reply";
   const isEditing = mode === "edit";
   const isDeleting = mode === "delete";
@@ -161,16 +167,17 @@ function Component({
                   {isDeleting ? (
                     <>
                       <span>Are you sure?</span>
-                      <Button
+                      <ButtonDecline
                         onClick={() => {
                           switchMode("view");
                         }}
                       >
                         No
-                      </Button>
+                      </ButtonDecline>
                       <Form
-                        submitButton="Yes"
-                        onSubmit={() => {
+                        submitButton={<ButtonAccept>Yes</ButtonAccept>}
+                        onSubmit={(event) => {
+                          event.preventDefault();
                           dispatch(deleteFMComment(id));
                         }}
                       />
@@ -198,14 +205,16 @@ function Component({
                   </Button>
                 </>
               )}
-              <Button
-                iconID="fm-reply"
-                onClick={() => {
-                  switchMode("reply");
-                }}
-              >
-                Reply
-              </Button>
+              {isViewing && (
+                <Button
+                  iconID="fm-reply"
+                  onClick={() => {
+                    switchMode("reply");
+                  }}
+                >
+                  Reply
+                </Button>
+              )}
             </ButtonList>
           )}
         </>

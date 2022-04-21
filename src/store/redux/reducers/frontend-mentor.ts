@@ -118,6 +118,7 @@ const commentsSlice = createSlice({
       }
 
       state.ownComments = state.ownComments.filter((id) => id !== commentID);
+      state.comments = state.comments.filter(({id}) => id !== commentID);
     },
     hideFMComment: (state, action: PayloadAction<ISerialInteger>) => {
       const commentID = action.payload;

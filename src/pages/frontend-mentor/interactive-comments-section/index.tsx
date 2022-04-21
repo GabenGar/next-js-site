@@ -53,23 +53,6 @@ function FMCommentsPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
           <Heading>The challenge</Heading>
         </ArticleHeader>
         <ArticleBody>
-          <p>
-            Your challenge is to build out this interactive comments section and
-            get it looking as close to the design as possible.
-          </p>
-
-          <p>
-            You can use any tools you like to help you complete the challenge.
-            So if you&apos;ve got something you&apos;d like to practice, feel
-            free to give it a go.
-          </p>
-
-          <p>
-            We provide the data in a local `data.json` file, so use that to
-            populate the content on the first load. If you want to take it up a
-            notch, feel free to build this as a full-stack CRUD application!
-          </p>
-
           <p>Your users should be able to:</p>
 
           <ul>
@@ -79,24 +62,13 @@ function FMCommentsPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
             </li>
             <li>See hover states for all interactive elements on the page</li>
             <li>Create, Read, Update, and Delete comments and replies</li>
-            <li>Upvote and downvote comments</li>
             <li>
               **Bonus**: If you&apos;re building a purely front-end project, use
               `localStorage` to save the current state in the browser that
               persists when the browser is refreshed.
             </li>
-            <li>
-              **Bonus**: Instead of using the `createdAt` strings from the
-              `data.json` file, try using timestamps and dynamically track the
-              time since the comment or reply was posted.
-            </li>
           </ul>
         </ArticleBody>
-        <ArticleFooter>
-          Want some support on the challenge? [Join our Slack
-          community](https://www.frontendmentor.io/slack) and ask questions in
-          the **#help** channel.
-        </ArticleFooter>
       </Article>
       <Article>
         <ArticleHeader>
