@@ -14,7 +14,7 @@ import {
   ArticleBody,
 } from "#components/articles";
 import { Heading } from "#components/headings";
-import { CardList } from "#components/lists";
+import { CardList, listLayouts } from "#components/lists";
 import {
   FMCommentCard,
   NewCommentForm,
@@ -102,7 +102,11 @@ function FMCommentsPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
         </ArticleHeader>
         <ArticleBody>
           {error && <JSONView json={error} />}
-          <CardList className={styles.list} isLayoutShown={false}>
+          <CardList
+            className={styles.list}
+            isLayoutShown={false}
+            defaultLayout="phone"
+          >
             {status === "loading" ? (
               <div>Loading...</div>
             ) : comments.length ? (

@@ -120,6 +120,7 @@
   grid-template:
     "buttons" 4em
     / auto;
+  padding: 0;
 
   &_delete {
     .view {
@@ -164,16 +165,14 @@
 
 .view,
 .delete,
-.edit,
-.reply {
+.edit {
   grid-area: buttons;
   transition-duration: var(--duration-global);
   transition-property: visibility, opacity;
 }
 
 .delete,
-.edit,
-.reply {
+.edit {
   visibility: hidden;
   opacity: 0;
 }
