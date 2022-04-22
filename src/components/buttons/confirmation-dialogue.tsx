@@ -27,12 +27,6 @@ export interface IConfirmationDialogueProps extends IButtonListProps {
    * The confirmation message to show.
    */
   message?: ReactNode;
-  /**
-   * Controles the starting state of the dialogue.
-   * Pass `true` for confirmation stage only.
-   * @default false
-   */
-  isDecidingInit?: boolean;
 }
 
 /**
@@ -44,7 +38,6 @@ export const ConfirmationDialogue = blockComponent(styles.block, Component);
 
 function Component({
   onDecline,
-  isDecidingInit = false,
   iconID,
   message,
   formID,
@@ -52,7 +45,7 @@ function Component({
   className,
   ...blockProps
 }: IConfirmationDialogueProps) {
-  const [isDeciding, switchDecision] = useState(isDecidingInit);
+  const [isDeciding, switchDecision] = useState(false);
   const blockClass = clsx(className, isDeciding && styles.block_isDeciding);
 
   return (
@@ -70,7 +63,7 @@ function Component({
       <ButtonDecline
         className={styles.decline}
         onClick={() => {
-          !isDecidingInit && switchDecision(false);
+          switchDecision(false);
           onDecline();
         }}
       >

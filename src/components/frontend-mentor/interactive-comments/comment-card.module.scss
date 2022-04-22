@@ -133,6 +133,18 @@
     }
   }
 
+  &_edit {
+    .view {
+      visibility: hidden;
+      opacity: 0;
+    }
+
+    .edit {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+
   &_reply {
     grid-template:
       "buttons" auto

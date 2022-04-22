@@ -131,7 +131,7 @@ function Component({
               <Form
                 id={formEditID}
                 className={styles.contentForm}
-                submitButton="update"
+                submitButton={<></>}
                 onSubmit={(event) => {
                   event.preventDefault();
                   const form = event.currentTarget as HTMLFormElement;
@@ -218,8 +218,8 @@ function Component({
               className={styles.delete}
               submitButton={
                 <ConfirmationDialogue
+                  iconID="fm-delete"
                   message={"Are you sure to delete?"}
-                  isDecidingInit={true}
                   onDecline={() => {
                     switchMode("view");
                   }}
@@ -232,15 +232,15 @@ function Component({
                 dispatch(deleteFMComment(id));
               }}
             ></Form>
-            <div className={styles.edit}>
-              <Button>Update</Button>
-              <ConfirmationDialogue
-                formID={formEditID}
-                onDecline={() => {
-                  switchMode("view");
-                }}
-              />
-            </div>
+            <ConfirmationDialogue
+              className={styles.edit}
+              formID={formEditID}
+              onDecline={() => {
+                switchMode("view");
+              }}
+            >
+              Update
+            </ConfirmationDialogue>
             <ButtonList className={styles.reply}>
               <NewCommentForm
                 parentID={id}
