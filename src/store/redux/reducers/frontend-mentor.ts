@@ -67,9 +67,7 @@ const commentsSlice = createSlice({
     createFMComment: (state, action: PayloadAction<ICommentInit>) => {
       const { content, parent_id } = action.payload;
       const idList = state.comments.map(({ id }) => id);
-      const currentMaxID = idList.length
-        ? Math.max(...idList)
-        : 1;
+      const currentMaxID = idList.length ? Math.max(...idList) : 1;
       const fmComment: IFMComment = {
         content,
         parent_id,
@@ -93,6 +91,7 @@ const commentsSlice = createSlice({
 
       if (!state.ownComments.includes(commentID)) {
         throw new StoreError(
+          "redux",
           `Can only edit your own comments and the comment with id "${commentID}" is not yours.`
         );
       }
@@ -100,7 +99,10 @@ const commentsSlice = createSlice({
       const oldComment = state.comments.find(({ id }) => id === commentID);
 
       if (!oldComment) {
-        throw new StoreError(`Comment with id "${commentID}" doesn't exist.`);
+        throw new StoreError(
+          "redux",
+          `Comment with id "${commentID}" doesn't exist.`
+        );
       }
 
       const commentIndex = state.comments.indexOf(oldComment);
@@ -116,6 +118,7 @@ const commentsSlice = createSlice({
 
       if (!state.ownComments.includes(commentID)) {
         throw new StoreError(
+          "redux",
           `Can only delete your own comments and the comment with id "${commentID}" is not yours.`
         );
       }
@@ -128,6 +131,7 @@ const commentsSlice = createSlice({
 
       if (state.ownComments.includes(commentID)) {
         throw new StoreError(
+          "redux",
           `Can't hide the comment with id "${commentID}" because it's yours.`
         );
       }
@@ -152,13 +156,13 @@ const commentsSlice = createSlice({
       const commentID = action.payload;
 
       if (state.ownComments.includes(commentID)) {
-        throw new StoreError("Can't like your own comments.");
+        throw new StoreError("redux", "Can't like your own comments.");
       }
 
       const comment = state.comments.find(({ id }) => id === commentID);
 
       if (!comment) {
-        throw new StoreError("No comment found while liking.");
+        throw new StoreError("redux", "No comment found while liking.");
       }
 
       // remove a dislike first
@@ -182,13 +186,13 @@ const commentsSlice = createSlice({
       const commentID = action.payload;
 
       if (state.ownComments.includes(commentID)) {
-        throw new StoreError("Can't dislike your own comments.");
+        throw new StoreError("redux", "Can't dislike your own comments.");
       }
 
       const comment = state.comments.find(({ id }) => id === commentID);
 
       if (!comment) {
-        throw new StoreError("No comment found while disliking.");
+        throw new StoreError("redux", "No comment found while disliking.");
       }
 
       // remove a like first
@@ -257,6 +261,7 @@ export function selectFMCommentInfo(commentID: ISerialInteger) {
 
     if (!selectedComment) {
       throw new StoreError(
+        "redux",
         `No FM comment in the store with the id of ${commentID}`
       );
     }

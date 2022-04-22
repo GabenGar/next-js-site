@@ -73,4 +73,22 @@ export class CodegenError extends ServerError {}
  */
 export class ClientError extends ProjectError {}
 
-export class StoreError extends ClientError {}
+const storeTypes = ["localStorage", "redux"] as const;
+type IStoreType = typeof storeTypes[number];
+
+export class StoreError extends ClientError {
+  type: IStoreType;
+
+  name = "StoreError";
+
+  constructor(
+    type: IStoreType,
+    message?: string,
+    options?: ErrorOptions,
+    ...params: any[]
+  ) {
+    const formattedMessage = [`${type}:`, message].join("\n");
+    super(formattedMessage, options, ...params);
+    this.type = type;
+  }
+}

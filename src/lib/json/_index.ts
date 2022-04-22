@@ -22,6 +22,24 @@ export function toJSON<InputType = unknown>(
     finalOptions.isPretty ? 2 : undefined
   );
 }
-export function fromJSON<OutputType extends unknown>(json: string): OutputType {
-  return JSON.parse(json);
+
+export function fromJSON<OutputType extends unknown>(
+  json: string
+): OutputType | undefined {
+  try {
+    const result = JSON.parse(json);
+
+    return result;
+  } catch (error) {
+    // @TODO more refined error handling
+    if (!(error instanceof SyntaxError)) {
+      throw error;
+    }
+
+    console.error(
+      ["Failed to parse JSON", "JSON:", json, "Error Details:", error].join(
+        "\n"
+      )
+    );
+  }
 }
