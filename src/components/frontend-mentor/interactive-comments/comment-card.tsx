@@ -9,9 +9,11 @@ import {
   likeFMComment,
   dislikeFMComment,
   deleteFMComment,
+  updateFMComment,
 } from "#store/redux/reducers";
 import { blockComponent } from "#components/meta";
 import { Form } from "#components/forms";
+import { TextArea } from "#components/forms/sections";
 import { Card, CardBody, CardHeader, CardFooter } from "#components/cards";
 import { Heading } from "#components/headings";
 import { DateTimeView } from "#components/dates";
@@ -53,6 +55,9 @@ export const FMCommentCard = blockComponent<IFMCommentProps>(
   Component
 );
 
+/**
+ * @TODO: rewrite into a dumb component
+ */
 function Component({
   comment,
   headingLevel = 3,
@@ -61,7 +66,9 @@ function Component({
 }: IFMCommentProps) {
   const { t } = useTranslation("components");
   const dispatch = useAppDispatch();
-
+  const [mode, switchMode] = useState<ICardState>("view");
+  const isReplying = mode === "reply";
+  const isEditing = mode == "edit";
   const {
     id,
     parent_id,
@@ -84,6 +91,7 @@ function Component({
     styles.count,
     rating && styles[`count_${rating}`]
   );
+  const actionsClass = clsx(styles.actions, styles[`actions_${mode}`]);
 
   return (
     <Card
@@ -124,8 +132,33 @@ function Component({
             </DL>
           </CardHeader>
 
-          <CardBody className={styles.body}>
-            <p className={styles.content}>{content}</p>
+          <CardBody
+            className={clsx(styles.body, isEditing && styles.body_editing)}
+          >
+            {!isEditing ? (
+              <p className={styles.content}>{content}</p>
+            ) : (
+              <Form
+                className={styles.contentForm}
+                submitButton="update"
+                onSubmit={(event) => {
+                  event.preventDefault();
+                  const form = event.currentTarget as HTMLFormElement;
+                  const content = ( // @ts-expect-error
+                    form.elements["content"] as HTMLTextAreaElement
+                  ).value;
+
+                  dispatch(updateFMComment({ id, content }));
+                  switchMode("view");
+                }}
+              >
+                <TextArea
+                  id={`comment-edit-${id}`}
+                  name="content"
+                  defaultValue={content}
+                />
+              </Form>
+            )}
           </CardBody>
 
           <ButtonList className={ratingClass}>
@@ -148,95 +181,75 @@ function Component({
             </Button>
           </ButtonList>
 
-          <Actions commentID={id} isOwn={isOwn} />
+          <div className={actionsClass}>
+            <ButtonList className={styles.view}>
+              {isOwn ? (
+                <>
+                  <Button
+                    iconID="fm-delete"
+                    onClick={() => {
+                      switchMode("delete");
+                    }}
+                  >
+                    Delete
+                  </Button>
+                  <Button
+                    iconID="fm-edit"
+                    onClick={() => {
+                      switchMode(isEditing ? "view" : "edit");
+                    }}
+                  >
+                    Edit
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button
+                    iconID="mask"
+                    onClick={() => {
+                      dispatch(hideFMComment(id));
+                    }}
+                  >
+                    Hide
+                  </Button>
+                </>
+              )}
+              <Button
+                iconID="fm-reply"
+                onClick={() => {
+                  switchMode(isReplying ? "view" : "reply");
+                }}
+              >
+                Reply
+              </Button>
+            </ButtonList>
+            <Form
+              className={styles.delete}
+              submitButton={
+                <ConfirmationDialogue
+                  onDecline={() => {
+                    switchMode("view");
+                  }}
+                >
+                  Are you sure to delete?
+                </ConfirmationDialogue>
+              }
+              onSubmit={(event) => {
+                event.preventDefault();
+                dispatch(deleteFMComment(id));
+              }}
+            ></Form>
+            <ButtonList className={styles.reply}>
+              <NewCommentForm
+                parentID={id}
+                onClosing={() => {
+                  switchMode("view");
+                }}
+              />
+            </ButtonList>
+          </div>
         </>
       )}
     </Card>
-  );
-}
-
-function Actions({ commentID, isOwn }: IActionsProps) {
-  const dispatch = useAppDispatch();
-  const [mode, switchMode] = useState<ICardState>("view");
-  const isReplying = mode === "reply";
-  const isEditing = mode == "edit";
-  const blockClass = clsx(styles.actions, styles[`actions_${mode}`]);
-
-  return (
-    <div className={blockClass}>
-      <ButtonList className={styles.view}>
-        {isOwn ? (
-          <>
-            <Button
-              iconID="fm-delete"
-              onClick={() => {
-                switchMode("delete");
-              }}
-            >
-              Delete
-            </Button>
-            <Button
-              iconID="fm-edit"
-              onClick={() => {
-                switchMode(isEditing ? "view" : "edit");
-              }}
-            >
-              Edit
-            </Button>
-            <Button
-              iconID="fm-reply"
-              onClick={() => {
-                switchMode("reply");
-              }}
-            >
-              Reply
-            </Button>
-          </>
-        ) : (
-          <>
-            <Button
-              iconID="mask"
-              onClick={() => {
-                dispatch(hideFMComment(commentID));
-              }}
-            >
-              Hide
-            </Button>
-            <Button
-              iconID="fm-reply"
-              onClick={() => {
-                switchMode(isReplying ? "view" : "reply");
-              }}
-            >
-              Reply
-            </Button>
-          </>
-        )}
-      </ButtonList>
-      <Form
-        className={styles.delete}
-        submitButton={
-          <ConfirmationDialogue
-            onDecline={() => {
-              switchMode("view");
-            }}
-          >
-            Are you sure to delete?
-          </ConfirmationDialogue>
-        }
-        onSubmit={(event) => {
-          event.preventDefault();
-          dispatch(deleteFMComment(commentID));
-        }}
-      ></Form>
-      <ButtonList className={styles.reply}>
-        <NewCommentForm
-          parentID={commentID}
-          onClosing={() => {
-            switchMode("view");
-          }}
-        />
-      </ButtonList>
-    </div>
   );
 }

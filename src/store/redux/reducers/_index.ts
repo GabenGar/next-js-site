@@ -31,5 +31,5 @@ export {
   transformComment,
   createFMComment,
   deleteFMComment,
-  editFMComment,
+  updateFMComment,
 } from "./frontend-mentor";

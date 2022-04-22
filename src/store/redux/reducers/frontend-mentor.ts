@@ -82,7 +82,7 @@ const commentsSlice = createSlice({
       state.likedComments.push(fmComment.id);
       state.comments.push(fmComment);
     },
-    editFMComment: (
+    updateFMComment: (
       state,
       action: PayloadAction<Pick<IFMComment, "id" | "content">>
     ) => {
@@ -232,7 +232,7 @@ export const {
   likeFMComment,
   dislikeFMComment,
   deleteFMComment,
-  editFMComment,
+  updateFMComment,
 } = commentsSlice.actions;
 export const frontendMentorReducer = commentsSlice.reducer;
 
