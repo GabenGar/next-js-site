@@ -66,7 +66,10 @@ const commentsSlice = createSlice({
   reducers: {
     createFMComment: (state, action: PayloadAction<ICommentInit>) => {
       const { content, parent_id } = action.payload;
-      const currentMaxID = Math.max(...state.comments.map(({ id }) => id));
+      const idList = state.comments.map(({ id }) => id);
+      const currentMaxID = idList.length
+        ? Math.max(...idList)
+        : 1;
       const fmComment: IFMComment = {
         content,
         parent_id,
@@ -118,7 +121,7 @@ const commentsSlice = createSlice({
       }
 
       state.ownComments = state.ownComments.filter((id) => id !== commentID);
-      state.comments = state.comments.filter(({id}) => id !== commentID);
+      state.comments = state.comments.filter(({ id }) => id !== commentID);
     },
     hideFMComment: (state, action: PayloadAction<ISerialInteger>) => {
       const commentID = action.payload;
