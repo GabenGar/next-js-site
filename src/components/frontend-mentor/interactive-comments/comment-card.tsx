@@ -19,11 +19,7 @@ import { Heading } from "#components/headings";
 import { DateTimeView } from "#components/dates";
 import { LinkInternal, LinkLocal } from "#components/links";
 import { DL, DS } from "#components/lists/d-list";
-import {
-  Button,
-  ButtonList,
-  ConfirmationDialogue,
-} from "#components/buttons";
+import { Button, ButtonList, ConfirmationDialogue } from "#components/buttons";
 import { SVGIcon } from "#components/icons";
 import { Image } from "#components/images";
 import { NewCommentForm } from "./new-comment";
@@ -85,6 +81,7 @@ function Component({
     rating && styles[`count_${rating}`]
   );
   const actionsClass = clsx(styles.actions, styles[`actions_${mode}`]);
+  const formEditID = `content-${id}`;
 
   return (
     <Card
@@ -132,6 +129,7 @@ function Component({
               <p className={styles.content}>{content}</p>
             ) : (
               <Form
+                id={formEditID}
                 className={styles.contentForm}
                 submitButton="update"
                 onSubmit={(event) => {
@@ -220,11 +218,13 @@ function Component({
               className={styles.delete}
               submitButton={
                 <ConfirmationDialogue
+                  message={"Are you sure to delete?"}
+                  isDecidingInit={true}
                   onDecline={() => {
                     switchMode("view");
                   }}
                 >
-                  Are you sure to delete?
+                  Delete
                 </ConfirmationDialogue>
               }
               onSubmit={(event) => {
@@ -232,6 +232,15 @@ function Component({
                 dispatch(deleteFMComment(id));
               }}
             ></Form>
+            <div className={styles.edit}>
+              <Button>Update</Button>
+              <ConfirmationDialogue
+                formID={formEditID}
+                onDecline={() => {
+                  switchMode("view");
+                }}
+              />
+            </div>
             <ButtonList className={styles.reply}>
               <NewCommentForm
                 parentID={id}

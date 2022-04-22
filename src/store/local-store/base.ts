@@ -1,8 +1,7 @@
-export const storeItems = {
-  __storage_test__: "__storage_test__",
-  theme: "theme"
-}
+export const LOCAL_STORAGE = {
+  TEST: "__storage_test__",
+  THEME: "theme",
+  FM_OWN_COMMENTS: "fm_own_comments",
+};
 
-export const legacyStoreItems = {}
-
-export const createdItems: Set<string> = new Set()
+export const LEGACY_LOCAL_STORAGE = {};
