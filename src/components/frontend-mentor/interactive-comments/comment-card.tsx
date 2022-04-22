@@ -21,8 +21,6 @@ import { LinkInternal, LinkLocal } from "#components/links";
 import { DL, DS } from "#components/lists/d-list";
 import {
   Button,
-  ButtonAccept,
-  ButtonDecline,
   ButtonList,
   ConfirmationDialogue,
 } from "#components/buttons";
@@ -40,11 +38,6 @@ type ICardState = typeof cardStates[number];
 
 export interface IFMCommentProps extends Omit<ICardProps, "id"> {
   comment: IFMComment;
-}
-
-interface IActionsProps {
-  commentID: ISerialInteger;
-  isOwn: boolean;
 }
 
 /**

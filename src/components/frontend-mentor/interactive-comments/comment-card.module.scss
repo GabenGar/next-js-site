@@ -60,15 +60,16 @@
   border-radius: $radius-small;
 
   &_editing {
-    
-    & > * {
-      padding: 0;
-      margin: 0;
-    }
   }
 }
 
 .content {
+  margin: 0;
+}
+
+.contentForm {
+  background-color: transparent;
+  padding: 0;
   margin: 0;
 }
 
