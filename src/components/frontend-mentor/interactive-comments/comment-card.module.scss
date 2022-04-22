@@ -106,5 +106,43 @@
 }
 
 .actions {
+  position: relative;
   grid-area: actions;
+  display: grid;
+  grid-template:
+    "buttons" 4em
+    / auto;
+
+  &_delete {
+    .view {
+      visibility: hidden;
+      opacity: 0;
+    }
+
+    .delete {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+}
+
+.view,
+.delete,
+.edit,
+.reply {
+  grid-area: buttons;
+  transition-duration: var(--duration-global);
+  transition-property: visibility, opacity;
+}
+
+.delete,
+.edit,
+.reply {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.delete {
+  padding: 0;
+  margin: 0;
 }

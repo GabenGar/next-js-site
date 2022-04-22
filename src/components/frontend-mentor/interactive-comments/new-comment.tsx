@@ -68,6 +68,7 @@ function Component({
 
     dispatch(createFMComment(commentInit));
     contentEleem.value = "";
+    switchPreview(false);
     onClosing && onClosing();
   }
 

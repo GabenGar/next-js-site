@@ -11,6 +11,7 @@ import {
   deleteFMComment,
 } from "#store/redux/reducers";
 import { blockComponent } from "#components/meta";
+import { Form } from "#components/forms";
 import { Card, CardBody, CardHeader, CardFooter } from "#components/cards";
 import { Heading } from "#components/headings";
 import { DateTimeView } from "#components/dates";
@@ -21,6 +22,7 @@ import {
   ButtonAccept,
   ButtonDecline,
   ButtonList,
+  ConfirmationDialogue,
 } from "#components/buttons";
 import { SVGIcon } from "#components/icons";
 import { Image } from "#components/images";
@@ -29,13 +31,18 @@ import styles from "./comment-card.module.scss";
 
 import type { IFMComment } from "#types/frontend-mentor";
 import type { ICardProps } from "#components/cards";
-import { Form } from "#components/forms";
+import type { ISerialInteger } from "#types/entities";
 
 const cardStates = ["view", "reply", "edit", "delete"] as const;
 type ICardState = typeof cardStates[number];
 
 export interface IFMCommentProps extends Omit<ICardProps, "id"> {
   comment: IFMComment;
+}
+
+interface IActionsProps {
+  commentID: ISerialInteger;
+  isOwn: boolean;
 }
 
 /**
@@ -54,11 +61,7 @@ function Component({
 }: IFMCommentProps) {
   const { t } = useTranslation("components");
   const dispatch = useAppDispatch();
-  const [mode, switchMode] = useState<ICardState>("view");
-  const isViewing = mode === "view";
-  const isReplying = mode === "reply";
-  const isEditing = mode === "edit";
-  const isDeleting = mode === "delete";
+
   const {
     id,
     parent_id,
@@ -145,80 +148,95 @@ function Component({
             </Button>
           </ButtonList>
 
-          {isReplying ? (
-            <NewCommentForm
-              parentID={id}
-              onClosing={() => {
-                switchMode("view");
-              }}
-            />
-          ) : (
-            <ButtonList className={styles.actions}>
-              {isOwn ? (
-                <>
-                  <Button
-                    iconID="fm-delete"
-                    onClick={() => {
-                      switchMode("delete");
-                    }}
-                  >
-                    Delete
-                  </Button>
-                  {isDeleting ? (
-                    <>
-                      <span>Are you sure?</span>
-                      <ButtonDecline
-                        onClick={() => {
-                          switchMode("view");
-                        }}
-                      >
-                        No
-                      </ButtonDecline>
-                      <Form
-                        submitButton={<ButtonAccept>Yes</ButtonAccept>}
-                        onSubmit={(event) => {
-                          event.preventDefault();
-                          dispatch(deleteFMComment(id));
-                        }}
-                      />
-                    </>
-                  ) : (
-                    <Button
-                      iconID="fm-edit"
-                      onClick={() => {
-                        switchMode("edit");
-                      }}
-                    >
-                      Edit
-                    </Button>
-                  )}
-                </>
-              ) : (
-                <>
-                  <Button
-                    iconID="mask"
-                    onClick={() => {
-                      dispatch(hideFMComment(id));
-                    }}
-                  >
-                    Hide
-                  </Button>
-                </>
-              )}
-              {isViewing && (
-                <Button
-                  iconID="fm-reply"
-                  onClick={() => {
-                    switchMode("reply");
-                  }}
-                >
-                  Reply
-                </Button>
-              )}
-            </ButtonList>
-          )}
+          <Actions commentID={id} isOwn={isOwn} />
         </>
       )}
     </Card>
+  );
+}
+
+function Actions({ commentID, isOwn }: IActionsProps) {
+  const dispatch = useAppDispatch();
+  const [mode, switchMode] = useState<ICardState>("view");
+  const isReplying = mode === "reply";
+  const isEditing = mode == "edit";
+  const blockClass = clsx(styles.actions, styles[`actions_${mode}`]);
+
+  return (
+    <div className={blockClass}>
+      <ButtonList className={styles.view}>
+        {isOwn ? (
+          <>
+            <Button
+              iconID="fm-delete"
+              onClick={() => {
+                switchMode("delete");
+              }}
+            >
+              Delete
+            </Button>
+            <Button
+              iconID="fm-edit"
+              onClick={() => {
+                switchMode(isEditing ? "view" : "edit");
+              }}
+            >
+              Edit
+            </Button>
+            <Button
+              iconID="fm-reply"
+              onClick={() => {
+                switchMode("reply");
+              }}
+            >
+              Reply
+            </Button>
+          </>
+        ) : (
+          <>
+            <Button
+              iconID="mask"
+              onClick={() => {
+                dispatch(hideFMComment(commentID));
+              }}
+            >
+              Hide
+            </Button>
+            <Button
+              iconID="fm-reply"
+              onClick={() => {
+                switchMode(isReplying ? "view" : "reply");
+              }}
+            >
+              Reply
+            </Button>
+          </>
+        )}
+      </ButtonList>
+      <Form
+        className={styles.delete}
+        submitButton={
+          <ConfirmationDialogue
+            onDecline={() => {
+              switchMode("view");
+            }}
+          >
+            Are you sure to delete?
+          </ConfirmationDialogue>
+        }
+        onSubmit={(event) => {
+          event.preventDefault();
+          dispatch(deleteFMComment(commentID));
+        }}
+      ></Form>
+      <ButtonList className={styles.reply}>
+        <NewCommentForm
+          parentID={commentID}
+          onClosing={() => {
+            switchMode("view");
+          }}
+        />
+      </ButtonList>
+    </div>
   );
 }

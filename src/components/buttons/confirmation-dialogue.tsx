@@ -16,26 +16,20 @@ export interface IConfirmationDialogueProps extends IButtonListProps {
    * Run this callback when confirmation is denied.
    */
   onDecline: () => void;
-  /**
-   * A message to show asking for confirmation.
-   */
-  confirmationMessage?: ReactNode;
 }
 
 export const ConfirmationDialogue = blockComponent(styles.block, Component);
 
 function Component({
   onDecline,
-  confirmationMessage,
   formID,
   children,
   ...blockProps
 }: IConfirmationDialogueProps) {
   return (
     <ButtonList {...blockProps}>
-      {children}
-      {confirmationMessage ? (
-        confirmationMessage
+      {children ? (
+        children
       ) : (
         <span className={styles.message}>Are you sure?</span>
       )}
