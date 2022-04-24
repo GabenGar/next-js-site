@@ -13,18 +13,18 @@ import type { IValidationResult } from "#types/pages";
 export async function validateEmailString(
   emailString: string
 ): Promise<IValidationResult<typeof emailString>> {
-  const result = await validateEmailStringFields(emailString);
+  const validationResult = await validateEmailStringFields(emailString);
 
-  if (!result) {
+  if (!validationResult.is_successful) {
     return {
       isValid: false,
-      schemaValidationErrors: [...validateEmailStringFields.errors!],
+      schemaValidationErrors: [...validationResult.errors],
     };
   }
 
   return {
     isValid: true,
-    formattedResult: result as string,
+    formattedResult: validationResult.data,
   };
 }
 

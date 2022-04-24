@@ -1,3 +1,4 @@
 .block {
-  height: var(--local-height, 30em);
+  height: var(--local-size, var(--local-height, 30em));
+  width: var(--local-size, var(--local-width, 30em));
 }

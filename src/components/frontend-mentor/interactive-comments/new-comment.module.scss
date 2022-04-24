@@ -1,0 +1,36 @@
+@use "../../../styles/variables/sass.scss" as *;
+
+.block {
+  &_reply {
+    max-width: 100%;
+    padding: $size-small;
+    margin: 0;
+  }
+}
+
+.buttons {
+  * > {
+    transition-duration: va(0--duration-global);
+    transition-property: visibility, opacity;
+  }
+
+  &_preview {
+    .confirm {
+      visibility: hidden;
+      opacity: 0;
+    }
+
+    .preview {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+}
+
+.confirm {
+}
+
+.preview {
+  visibility: hidden;
+  opacity: 0;
+}

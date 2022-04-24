@@ -1,0 +1,14 @@
+{
+  "$id": "http://schemas.com/localization/admin.schema.json",
+  "title": "AdminLocalization",
+  "description": "Localization for the admin pages.",
+  "type": "object",
+  "required": [
+    "admin_title",
+    "admin_desc",
+    "nav_accounts",
+    "nav_comments",
+    "nav_tables",
+    "nav_invites"
+  ]
+}

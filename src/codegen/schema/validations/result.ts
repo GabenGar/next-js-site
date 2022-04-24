@@ -3,6 +3,9 @@ import { createValidator } from "#lib/json/schema";
 import {
   accountSchema,
   accountClientSchema,
+  commentSchema,
+  commentClientSchema,
+  commentInitSchema,
   accountInitSchema,
   inviteSchema,
   inviteClientSchema,
@@ -14,11 +17,14 @@ import {
   projectConfigSchema,
   projectDatabaseSchema,
   emailConfirmationSchema,
+  fMCommentSchema,
   accountLocalizationSchema,
+  adminLocalizationSchema,
   authLocalizationSchema,
   blogLocalizationSchema,
   commonLocalizationSchema,
   componentLocalizationSchema,
+  layoutLocalizationSchema,
   codeStringSchema,
   iSODateSchema,
   iSODateTimeSchema,
@@ -30,6 +36,9 @@ import {
 import type {
   IAccount,
   IAccountClient,
+  IComment,
+  ICommentClient,
+  ICommentInit,
   IAccountInit,
   IInvite,
   IInviteClient,
@@ -41,11 +50,14 @@ import type {
   IProjectConfig,
   IProjectDatabase,
   IEmailConfirmation,
+  IFMComment,
   IAccountLocalization,
+  IAdminLocalization,
   IAuthLocalization,
   IBlogLocalization,
   ICommonLocalization,
   IComponentLocalization,
+  ILayoutLocalization,
   ICodeString,
   IISODate,
   IISODateTime,
@@ -57,6 +69,11 @@ import type {
 export const validateAccountFields = createValidator<IAccount>(accountSchema);
 export const validateAccountClientFields =
   createValidator<IAccountClient>(accountClientSchema);
+export const validateCommentFields = createValidator<IComment>(commentSchema);
+export const validateCommentClientFields =
+  createValidator<ICommentClient>(commentClientSchema);
+export const validateCommentInitFields =
+  createValidator<ICommentInit>(commentInitSchema);
 export const validateAccountInitFields =
   createValidator<IAccountInit>(accountInitSchema);
 export const validateInviteFields = createValidator<IInvite>(inviteSchema);
@@ -79,8 +96,12 @@ export const validateProjectDatabaseFields = createValidator<IProjectDatabase>(
 );
 export const validateEmailConfirmationFields =
   createValidator<IEmailConfirmation>(emailConfirmationSchema);
+export const validateFMCommentFields =
+  createValidator<IFMComment>(fMCommentSchema);
 export const validateAccountLocalizationFields =
   createValidator<IAccountLocalization>(accountLocalizationSchema);
+export const validateAdminLocalizationFields =
+  createValidator<IAdminLocalization>(adminLocalizationSchema);
 export const validateAuthLocalizationFields =
   createValidator<IAuthLocalization>(authLocalizationSchema);
 export const validateBlogLocalizationFields =
@@ -89,6 +110,8 @@ export const validateCommonLocalizationFields =
   createValidator<ICommonLocalization>(commonLocalizationSchema);
 export const validateComponentLocalizationFields =
   createValidator<IComponentLocalization>(componentLocalizationSchema);
+export const validateLayoutLocalizationFields =
+  createValidator<ILayoutLocalization>(layoutLocalizationSchema);
 export const validateCodeStringFields =
   createValidator<ICodeString>(codeStringSchema);
 export const validateISODateFields = createValidator<IISODate>(iSODateSchema);

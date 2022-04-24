@@ -54,6 +54,8 @@ The result will be inside `.next` folder.
 
 ## Database
 
+Dont's: https://wiki.postgresql.org/wiki/Don't_Do_This
+
 ### Create migration file:
 
 ```sh
@@ -96,3 +98,7 @@ git config core.sshCommand "ssh -i ~/.ssh/id_rsa_file -F /dev/null"
 - integrate nextJS middlewares
 - locale-specific date formatting
 - pre-deploy validation
+- update dependencies
+- CLI tool
+- JSON Schema validated forms
+- extendable layout

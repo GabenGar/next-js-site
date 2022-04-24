@@ -2,9 +2,10 @@ import {
   UNPROCESSABLE_ENTITY,
   OK,
   INTERNAL_SERVER_ERROR,
-  NOT_AUTHORIZED,
+  UNAUTHORIZED,
 } from "#environment/constants/http";
-import { getAccountDetails, withSessionRoute } from "#lib/account";
+import { getAccountDetails } from "#lib/account";
+import { withSessionRoute } from "#server/requests";
 import { addCalendarNote } from "#database/queries/account/calendar";
 import type { APIRequest, APIResponse } from "#types/api";
 import type { ICalendarNote, ICalendarNoteInit } from "#types/entities";
@@ -12,15 +13,15 @@ import { validateCalendarNoteInitFields } from "#codegen/schema/validations";
 
 interface RequestBody extends APIRequest<ICalendarNoteInit> {}
 
-export default withSessionRoute<APIResponse<ICalendarNote>>(
+export default withSessionRoute<ICalendarNote>(
   async (req, res) => {
     if (req.method === "POST") {
       const { account_id } = req.session;
 
       if (!account_id) {
         return res
-          .status(NOT_AUTHORIZED)
-          .json({ success: false, errors: ["Not Authorized."] });
+          .status(UNAUTHORIZED)
+          .json({ is_successful: false, errors: ["Not Authorized."] });
       }
 
       const account = await getAccountDetails(account_id);
@@ -34,7 +35,7 @@ export default withSessionRoute<APIResponse<ICalendarNote>>(
         req.session.destroy();
 
         return res.status(INTERNAL_SERVER_ERROR).json({
-          success: false,
+          is_successful: false,
           errors: ["Unknown Error."],
         });
       }
@@ -43,25 +44,29 @@ export default withSessionRoute<APIResponse<ICalendarNote>>(
 
       if (!isBodyPresent) {
         return res.status(UNPROCESSABLE_ENTITY).json({
-          success: false,
+          is_successful: false,
           errors: ["Invalid body."],
         });
       }
 
-      const noteInit = await validateCalendarNoteInitFields(req.body.data);
+      const result = await validateCalendarNoteInitFields(
+        (req.body as RequestBody).data
+      );
 
-      if (!noteInit) {
-        const validationErrors = validateCalendarNoteInitFields.errors!.map(
-          (errorObj) => JSON.stringify(errorObj)
+      if (!result.is_successful) {
+        const validationErrors = result.errors.map((errorObj) =>
+          JSON.stringify(errorObj)
         );
 
         return res.status(UNPROCESSABLE_ENTITY).json({
-          success: false,
+          is_successful: false,
           errors: validationErrors,
         });
       }
 
-      const { date, note }: ICalendarNoteInit = req.body.data;
+      const {
+        data: { date, note },
+      } = result;
 
       const { account_id: accID, ...newNote } = await addCalendarNote(
         account_id,
@@ -69,7 +74,7 @@ export default withSessionRoute<APIResponse<ICalendarNote>>(
         note
       );
 
-      return res.status(OK).json({ success: true, data: newNote });
+      return res.status(OK).json({ is_successful: true, data: newNote });
     }
   }
 );

@@ -7,7 +7,13 @@ import styles from "./_index.module.scss";
 import type { FormEvent, ReactNode } from "react";
 import type { HTMLFormProps } from "#components/html/form";
 
-export interface FormProps extends HTMLFormProps {
+export interface IFormProps extends HTMLFormProps {
+  /**
+   * Submit button component.
+   * If a react component is passed,
+   * then replaces the button with said component,
+   * otherwise it becomes the content of {@link ButtonSubmit submit button}.
+   */
   submitButton?: ReactNode;
 }
 
@@ -23,21 +29,20 @@ export type IFormElements<U extends string> = HTMLFormControlsCollection &
  */
 export interface ISubmitEvent extends FormEvent<HTMLFormElement> {}
 
-export const Form = blockComponent<FormProps>(
-  styles.block,
-  ({ submitButton, children, ...blockProps }) => {
-    const { t } = useTranslation("components");
-    const finalSubmit = submitButton || t("submit");
+export const Form = blockComponent<IFormProps>(styles.block, Component);
 
-    return (
-      <HTMLForm {...blockProps}>
-        {children}
-        {typeof finalSubmit === "string" ? (
-          <ButtonSubmit>{finalSubmit}</ButtonSubmit>
-        ) : (
-          finalSubmit
-        )}
-      </HTMLForm>
-    );
-  }
-);
+function Component({ submitButton, children, ...blockProps }: IFormProps) {
+  const { t } = useTranslation("components");
+  const finalSubmit = submitButton || t("submit");
+
+  return (
+    <HTMLForm {...blockProps}>
+      {children}
+      {typeof finalSubmit === "string" || typeof finalSubmit === "number" ? (
+        <ButtonSubmit>{finalSubmit}</ButtonSubmit>
+      ) : (
+        finalSubmit
+      )}
+    </HTMLForm>
+  );
+}

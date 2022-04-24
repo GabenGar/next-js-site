@@ -25,6 +25,11 @@
   transition-duration: var(--duration-global);
   transition-property: opacity, box-shadow, background-color, border-color;
 
+  // 
+  & * {
+
+  }
+
   &:focus,
   &:hover {
     background-color: var(--local-colour2-primary);

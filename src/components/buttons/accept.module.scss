@@ -1,0 +1,5 @@
+@use "../../styles/variables/sass.scss" as *;
+
+.block {
+  --local-colour1-primary: var(--positive-colour1-primary);
+}

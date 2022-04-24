@@ -1,4 +1,4 @@
-import { createFetch } from "#lib/util";
+import { createFetch } from "#browser";
 
 const origin = "https://restcountries.com";
 

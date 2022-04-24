@@ -1,45 +1,51 @@
 import { useState } from "react";
 import { blockComponent } from "#components/meta";
 import { Button } from "#components/fancy";
-import { ItemList, listTypes, listLayouts } from "./list";
+import { ItemList, listTypes, listLayouts, listLayoutKeys } from "./list";
+import type { IListLayout } from "./list";
 import styles from "./_index.module.scss";
 
 import type { BlockProps } from "#types/props";
-import type { ButtonClickEvent } from "#components/fancy";
 
-export interface ICardListProps extends BlockProps<"div"> {}
+export interface ICardListProps extends BlockProps<"div"> {
+  defaultLayout?: IListLayout;
+  isLayoutShown?: boolean;
+}
 
-export const CardList = blockComponent<ICardListProps>(
-  styles.block,
-  ({ children, ...blockProps }) => {
-    const [currentLayout, changeCurrentLayout] = useState(listLayouts.mobile);
+export const CardList = blockComponent(styles.block, Component);
 
-    function switchLayout(layout: string) {
-      return (event: ButtonClickEvent) => {
-        if (layout !== currentLayout) {
-          changeCurrentLayout(layout);
-        }
-      };
-    }
+function Component({
+  isLayoutShown = true,
+  defaultLayout,
+  children,
+  ...blockProps
+}: ICardListProps) {
+  const [currentLayout, changeCurrentLayout] = useState(defaultLayout);
 
-    return (
-      <div {...blockProps}>
-        <ItemList type={listTypes.vertical} layout={currentLayout}>
-          {children}
-        </ItemList>
+  return (
+    <div {...blockProps}>
+      <ItemList type={listTypes.vertical} layout={currentLayout}>
+        {children}
+      </ItemList>
+
+      {isLayoutShown && (
         <div>
-          {Object.entries(listLayouts).map(([name, layout]) => (
+          {listLayoutKeys.map((layout) => (
             <Button
-              key={name}
+              key={layout}
               className={styles.button}
-              onClick={switchLayout(layout)}
+              onClick={() => {
+                if (layout !== currentLayout) {
+                  changeCurrentLayout(layout);
+                }
+              }}
               disabled={layout === currentLayout}
             >
-              {name}
+              {layout}
             </Button>
           ))}
         </div>
-      </div>
-    );
-  }
-);
+      )}
+    </div>
+  );
+}

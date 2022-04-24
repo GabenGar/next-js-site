@@ -1,5 +1,3 @@
-
-
 export interface IJSONOptions {
   /**
    * @default true
@@ -11,7 +9,10 @@ const defaultJSONOptions: IJSONOptions = {
   isPretty: true,
 };
 
-export function toJSON(value: any, options = { ...defaultJSONOptions }) {
+export function toJSON<InputType = unknown>(
+  value: InputType,
+  options = defaultJSONOptions
+) {
   const finalOptions = options
     ? { ...defaultJSONOptions, ...options }
     : defaultJSONOptions;
@@ -21,14 +22,24 @@ export function toJSON(value: any, options = { ...defaultJSONOptions }) {
     finalOptions.isPretty ? 2 : undefined
   );
 }
-export function fromJSON<Type extends unknown>(
-  json: string,
-  options = defaultJSONOptions
-): Type {
-  const finalOptions = options
-    ? { ...defaultJSONOptions, ...options }
-    : defaultJSONOptions;
-  return JSON.parse(json);
+
+export function fromJSON<OutputType extends unknown>(
+  json: string
+): OutputType | undefined {
+  try {
+    const result = JSON.parse(json);
+
+    return result;
+  } catch (error) {
+    // @TODO more refined error handling
+    if (!(error instanceof SyntaxError)) {
+      throw error;
+    }
+
+    console.error(
+      ["Failed to parse JSON", "JSON:", json, "Error Details:", error].join(
+        "\n"
+      )
+    );
+  }
 }
-
-

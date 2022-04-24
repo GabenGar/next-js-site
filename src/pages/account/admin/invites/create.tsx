@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { siteTitle } from "#lib/util";
-import { getAccountDetails, withSessionSSR } from "#lib/account";
-import { getReqBody } from "#server/requests";
+import { getAccountDetails } from "#lib/account";
+import { getReqBody, withSessionSSR } from "#server/requests";
 import { createInvite } from "#lib/account/admin";
 import { validateInviteInitFields } from "#codegen/schema/validations";
 import { Page } from "#components/pages";
@@ -106,12 +106,12 @@ export const getServerSideProps = withSessionSSR<IInviteCreationProps>(
 
     if (req.method === "POST") {
       const inviteInit = await getReqBody<IInviteInit>(req);
-      const result = await validateInviteInitFields(inviteInit);
+      const validationResult = await validateInviteInitFields(inviteInit);
 
-      if (!result) {
+      if (!validationResult.is_successful) {
         return {
           props: {
-            schemaValidationErrors: validateInviteInitFields.errors!,
+            schemaValidationErrors: validationResult.errors,
             inviteInit,
           },
         };

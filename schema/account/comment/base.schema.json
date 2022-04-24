@@ -1,0 +1,41 @@
+{
+  "$id": "http://schemas.com/account/comment/base.schema.json",
+  "title": "Comment",
+  "description": "Comment by the account",
+  "type": "object",
+  "required": [
+    "id",
+    "created_at",
+    "account_id",
+    "content",
+    "is_public"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "$ref": "/types/serial.schema.json"
+    },
+    "created_at": {
+      "$ref": "/types/dates/iso-datetime.schema.json"
+    },
+    "account_id": {
+      "$ref": "/types/serial.schema.json"
+    },
+    "parent_id": {
+      "$ref": "/types/serial.schema.json"
+    },
+    "blog_slug": {
+      "type": "string"
+    },
+    "content": {
+      "type": "string",
+      "description": "Markdown",
+      "minLength": 5,
+      "maxLength": 1024
+    },
+    "is_public": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

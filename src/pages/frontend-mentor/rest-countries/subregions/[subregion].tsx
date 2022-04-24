@@ -4,7 +4,7 @@ import { siteTitle } from "#lib/util";
 import { countriesByRegion as countriesBySubRegion } from "#lib/api/rest-countries";
 import { CardList } from "#components/lists/card-list";
 import { RESTCountries as Layout } from "#components/layout/frontend-mentor";
-import { Section } from "#components/pages";
+import { Page } from "#components/pages";
 import { CountryCard } from "#components/frontend-mentor";
 
 import type {
@@ -31,7 +31,7 @@ function SubRegionDetails({
   const pageTitle = `${countries.length} countries of ${subregion}`;
 
   return (
-    <Section heading={pageTitle}>
+    <Page heading={pageTitle}>
       <Head>
         <title>{siteTitle(pageTitle)}</title>
         <meta name="description" content={pageTitle} />
@@ -41,7 +41,7 @@ function SubRegionDetails({
           <CountryCard key={country.cca2} country={country} />
         ))}
       </CardList>
-    </Section>
+    </Page>
   );
 }
 

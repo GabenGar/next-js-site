@@ -12,7 +12,7 @@ import {
 } from "#components/fancy/form";
 import { Option } from "#components/fancy/input";
 import { RESTCountries as Layout } from "#components/layout/frontend-mentor";
-import { Section } from "#components/pages";
+import { Page } from "#components/pages";
 import { CountryCard } from "#components/frontend-mentor";
 import styles from "./all.module.scss";
 
@@ -74,7 +74,7 @@ export default function RESTCountriesPage({
   }
 
   return (
-    <Section heading={pageTitle}>
+    <Page heading={pageTitle}>
       <Head>
         <title>{siteTitle(pageTitle)}</title>
         <meta name="description" content={pageTitle} />
@@ -111,7 +111,7 @@ export default function RESTCountriesPage({
           <CountryCard key={country.cca3} country={country} />
         ))}
       </CardList>
-    </Section>
+    </Page>
   );
 }
 

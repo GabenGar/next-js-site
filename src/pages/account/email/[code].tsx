@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { IS_DEVELOPMENT } from "#environment/derived";
-import { getAccountDetails, withSessionSSR, confirmNewEmail } from "#lib/account";
+import { getAccountDetails, confirmNewEmail } from "#lib/account";
+import { withSessionSSR } from "#server/requests";
 import { Page } from "#components/pages";
 import { LinkInternal } from "#components/links";
 

@@ -5,7 +5,7 @@ import { allCountries } from "#lib/api/rest-countries";
 import { GalleryList } from "#components/lists";
 import { LocalNav } from "#components/fancy";
 import { RESTCountries as Layout } from "#components/layout/frontend-mentor";
-import { Section } from "#components/pages";
+import { Page } from "#components/pages";
 import { CountryCard } from "#components/frontend-mentor";
 
 import type {
@@ -36,7 +36,7 @@ function RegionCountries({
   const pageTitle = "Countries by Subregions";
 
   return (
-    <Section heading={pageTitle}>
+    <Page heading={pageTitle}>
       <Head>
         <title>{siteTitle(pageTitle)}</title>
         <meta name="description" content={pageTitle} />
@@ -54,7 +54,7 @@ function RegionCountries({
           </GalleryList>
         </Fragment>
       ))}
-    </Section>
+    </Page>
   );
 }
 

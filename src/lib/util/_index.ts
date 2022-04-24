@@ -1,6 +1,5 @@
 import { SITE_NAME } from "#environment/vars";
 
-export { createFetch } from "./fancy-fetch";
 export { buttonClicked } from "./dom";
 export { transformChildrenProps, getValidChildren } from "./react";
 export { createSingleton } from "./create-singleton";

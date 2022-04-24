@@ -1,0 +1,12 @@
+@use "../../../styles/variables/sass.scss" as *;
+
+.comments {
+  background-color: transparent;
+  padding: 0;
+}
+
+.list {
+  @media (min-width: $width-tablet) {
+    --local-card-width: #{$width-phone};
+  }
+}

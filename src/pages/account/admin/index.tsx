@@ -1,30 +1,43 @@
 import Head from "next/head";
-import { getAccountDetails, withSessionSSR } from "#lib/account";
-import { getAccountList } from "#lib/account/admin";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { siteTitle } from "#lib/util";
+import { getAccountDetails } from "#lib/account";
+import { withSessionSSR } from "#server/requests";
 import { LinkInternal } from "#components/links";
 import { Page } from "#components/pages";
 import { Nav, NavList } from "#components/navigation";
 
 import type { InferGetServerSidePropsType } from "next";
-import type { IAccount } from "#types/entities";
 import type { BasePageProps } from "#types/pages";
 
 interface AdminPageProps extends BasePageProps {
-  accounts: IAccount[];
 }
 
 function AdminPage({}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const { t } = useTranslation("admin");
+  const title = t("admin_title");
+
   return (
-    <Page heading={"Admin"}>
+    <Page heading={title}>
       <Head>
-        <title>Admin</title>
-        <meta name="description" content="Admin" />
+        <title>{siteTitle(title)}</title>
+        <meta name="description" content={t("admin_desc")} />
       </Head>
       <Nav>
         <NavList>
-          <LinkInternal href="/account/admin/accounts">Accounts</LinkInternal>
-          <LinkInternal href="/account/admin/tables">Tables</LinkInternal>
-          <LinkInternal href="/account/admin/invites">Invites</LinkInternal>
+          <LinkInternal href="/account/admin/accounts">
+            {t("nav_accounts")}
+          </LinkInternal>
+          <LinkInternal href="/account/admin/comments">
+            {t("nav_comments")}
+          </LinkInternal>
+          <LinkInternal href="/account/admin/tables">
+            {t("nav_tables")}
+          </LinkInternal>
+          <LinkInternal href="/account/admin/invites">
+            {t("nav_invites")}
+          </LinkInternal>
         </NavList>
       </Nav>
     </Page>
@@ -32,7 +45,7 @@ function AdminPage({}: InferGetServerSidePropsType<typeof getServerSideProps>) {
 }
 
 export const getServerSideProps = withSessionSSR<AdminPageProps>(
-  async ({ req }) => {
+  async ({ req, locale }) => {
     const { account_id } = req.session;
 
     if (!account_id) {
@@ -60,11 +73,15 @@ export const getServerSideProps = withSessionSSR<AdminPageProps>(
       };
     }
 
-    const accounts = await getAccountList({ currentPage: 1, limit: 50 });
+    const localization = await serverSideTranslations(locale!, [
+      "layout",
+      "components",
+      "admin",
+    ]);
 
     return {
       props: {
-        accounts,
+        ...localization
       },
     };
   }

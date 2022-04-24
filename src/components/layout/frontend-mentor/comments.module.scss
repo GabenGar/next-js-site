@@ -1,0 +1,10 @@
+@use "../../../styles/variables/sass.scss" as *;
+
+.header,
+.main,
+.footer {
+  color: var(--colour0-primary);
+
+  transition-duration: var(--duration-global);
+  transition-property: color, background-color;
+}

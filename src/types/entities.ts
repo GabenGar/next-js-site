@@ -6,4 +6,8 @@ export type {
   IAccountClient,
   IAccountInit,
   IEmailConfirmation,
+  IComment,
+  ICommentClient,
+  ICommentInit,
+  ISerialInteger
 } from "#codegen/schema/interfaces";

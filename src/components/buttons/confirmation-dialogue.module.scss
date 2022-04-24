@@ -1,0 +1,35 @@
+.block {
+  &_isDeciding {
+
+    .trigger {
+      visibility: hidden;
+      opacity: 0;
+    }
+
+    .message,
+    .decline,
+    .confirm {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+}
+
+.trigger {
+}
+
+.message,
+.decline,
+.confirm {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.message {
+}
+
+.decline {
+}
+
+.confirm {
+}

@@ -1,6 +1,8 @@
 import { SCHEMA_FOLDER } from "#environment/constants";
-import { fromSchemaToInterface } from "#lib/json/schema";
 import { schemaMap } from "#codegen/schema/map";
+import { compile } from "json-schema-to-typescript";
+
+import type { JSONSchema, Options } from "json-schema-to-typescript";
 
 import type { SchemaObject } from "ajv";
 
@@ -8,8 +10,23 @@ async function generateInterfacesFromSchemas() {
   const interfaces: string[] = [];
 
   for await (const schema of Object.values(schemaMap)) {
-    //
     const schemaCopy = transformSchema(schema);
+
+    // quick hack until I figure config schema out
+    if (schema.$id === "http://schemas.com/database.schema.json") {
+      const interfaceString = await fromSchemaToInterface(
+        schemaCopy,
+        schema.title,
+        {
+          bannerComment: "",
+          cwd: SCHEMA_FOLDER,
+          declareExternallyReferenced: true,
+        }
+      );
+
+      interfaces.push(interfaceString);
+      continue;
+    }
     const interfaceString = await fromSchemaToInterface(
       schemaCopy,
       schema.title,
@@ -23,6 +40,7 @@ async function generateInterfacesFromSchemas() {
   }
 
   const content = interfaces.join("\n\n");
+
   return content;
 }
 
@@ -32,7 +50,8 @@ async function generateInterfacesFromSchemas() {
  * @param schema
  */
 function transformSchema(schema: SchemaObject) {
-  const newSchema: typeof schema = { ...schema };
+  // fixing some weird reference issue
+  const newSchema: typeof schema = JSON.parse(JSON.stringify(schema));
   changeRefs(newSchema);
   return newSchema;
 }
@@ -53,6 +72,15 @@ function changeRefs(obj: Record<string, unknown>) {
       }
     }
   }
+}
+
+export async function fromSchemaToInterface(
+  schema: JSONSchema,
+  name: string,
+  options?: Partial<Options>
+) {
+  const interfaceString = await compile(schema, name, options);
+  return interfaceString;
 }
 
 export default generateInterfacesFromSchemas;

@@ -5,10 +5,9 @@
   grid-template-columns: minmax(auto, var(--local-card-width, 1fr));
   grid-auto-rows: auto 1fr auto;
   grid-template-areas:
-  "header"
-  "body"
-  "footer"
-  ;
+    "header"
+    "body"
+    "footer";
   overflow: hidden;
   background-color: var(--colour1-primary);
   border-radius: 10px;

@@ -1,0 +1,22 @@
+{
+  "$id": "http://schemas.com/account/comment/init.schema.json",
+  "title": "CommentInit",
+  "description": "Comment initializer",
+  "type": "object",
+  "required": ["content"],
+  "additionalProperties": false,
+  "properties": {
+    "blog_slug": {
+      "type": "string"
+    },
+    "content": {
+      "type": "string",
+      "description": "Markdown",
+      "minLength": 5,
+      "maxLength": 1024
+    },
+    "parent_id": {
+      "$ref": "/types/serial.schema.json"
+    }
+  }
+}

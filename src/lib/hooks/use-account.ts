@@ -3,13 +3,14 @@ import { getAccount } from "#lib/api/public";
 
 export function useAccount() {
   const { data: account, error } = useSWR("/account", getAccount, {
-    shouldRetryOnError: false
+    shouldRetryOnError: false,
   });
 
   return {
     account,
+    isAdmin: account?.role === "administrator",
     isLoading: !error && !account,
     isError: Boolean(error),
-    error: error
+    error: error,
   };
 }

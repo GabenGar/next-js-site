@@ -6,6 +6,8 @@
       "#environment/*": ["environment/*"],
       "#schema/*": ["schema/*"],
       "#codegen/*": ["src/codegen/*/_index.ts"],
+      "#browser*": ["src/browser/_index.ts"],
+      "#browser/*": ["src/browser/*/_index.ts"],
       "#server/*": ["src/server/*/_index.ts"],
       "#database": ["src/database/_index.ts"],
       "#database/*": ["src/database/*/_index.ts"],
@@ -33,6 +35,8 @@
     "incremental": true
   },
   "ts-node": {
+    // don't need typecheck here
+    "transpileOnly": true,
     "compilerOptions": {
       "module": "CommonJS"
     }

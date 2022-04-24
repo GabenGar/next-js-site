@@ -35,6 +35,52 @@ export interface AccountClient {
 }
 
 /**
+ * Comment by the account
+ */
+export interface Comment {
+  id: SerialInteger;
+  created_at: ISODateTime;
+  account_id: SerialInteger;
+  parent_id?: SerialInteger;
+  blog_slug?: string;
+  /**
+   * Markdown
+   */
+  content: string;
+  is_public: boolean;
+}
+
+/**
+ * Comment by an account for client
+ */
+export interface CommentClient {
+  id: SerialInteger;
+  created_at: ISODateTime;
+  parent_id?: SerialInteger;
+  blog_slug?: string;
+  /**
+   * Markdown
+   */
+  content: string;
+  /**
+   * Client can only see its own non-public comments.
+   */
+  is_public: boolean;
+}
+
+/**
+ * Comment initializer
+ */
+export interface CommentInit {
+  blog_slug?: string;
+  /**
+   * Markdown
+   */
+  content: string;
+  parent_id?: SerialInteger;
+}
+
+/**
  * Initializer for account.
  */
 export interface AccountInit {
@@ -139,6 +185,10 @@ export interface CalendarNoteInit {
  */
 export interface ProjectConfig {
   /**
+   * Add it explicitly for `ts-node`
+   */
+  NODE_ENV?: string;
+  /**
    * The origin of the site.
    */
   NEXT_PUBLIC_SITE_ORIGIN?: string;
@@ -178,32 +228,40 @@ export interface ProjectConfig {
 }
 
 /**
+ * Table of the schema.
+ */
+export type Table = string;
+
+/**
  * Various database details.
  */
 export interface ProjectDatabase {
   /**
-   * Migrations.
+   * Default schema used for schema-less table calls.
    */
-  pgmigrations?: {
-    [k: string]: unknown;
-  };
+  default_schema: string;
+  schemas: Schemas;
+}
+/**
+ * Database schemas.
+ */
+export interface Schemas {
+  public: Schema;
+  comments: Schema;
+}
+/**
+ * Database schema.
+ */
+export interface Schema {
   /**
-   * Accounts.
+   * Description of the schema.
    */
-  accounts?: {
-    [k: string]: unknown;
-  };
+  description: string;
   /**
-   * Pending email confirmations for accounts.
+   * Keys are table names and values are their descriptions.
    */
-  email_confirmations?: {
-    [k: string]: unknown;
-  };
-  /**
-   * Account notes for calendar.
-   */
-  calendar_notes?: {
-    [k: string]: unknown;
+  tables: {
+    [k: string]: Table;
   };
 }
 
@@ -220,9 +278,33 @@ export interface EmailConfirmation {
 }
 
 /**
+ * Comment specific to the frontend mentor challenge.
+ */
+export interface FMComment {
+  id: SerialInteger;
+  created_at: ISODateTime;
+  parent_id?: SerialInteger | null;
+  name: string;
+  /**
+   * Markdown
+   */
+  content: string;
+  likes: number;
+  dislikes: number;
+  avatar_url: string;
+}
+
+/**
  * Localization for the account pages.
  */
 export interface AccountLocalization {
+  [k: string]: unknown;
+}
+
+/**
+ * Localization for the admin pages.
+ */
+export interface AdminLocalization {
   [k: string]: unknown;
 }
 
@@ -251,6 +333,13 @@ export interface CommonLocalization {
  * Localization for the components.
  */
 export interface ComponentLocalization {
+  [k: string]: unknown;
+}
+
+/**
+ * Localization for the layout.
+ */
+export interface LayoutLocalization {
   [k: string]: unknown;
 }
 

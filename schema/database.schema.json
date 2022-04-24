@@ -3,27 +3,54 @@
   "title": "ProjectDatabase",
   "description": "Various database details.",
   "type": "object",
+  "additionalProperties": false,
+  "required": ["default_schema", "schemas"],
   "properties": {
-    "pgmigrations": {
-      "type": "object",
-      "description": "Migrations."
+    "default_schema": {
+      "type": "string",
+      "description": "Default schema used for schema-less table calls."
     },
-    "accounts": {
-      "type": "object",
-      "description": "Accounts."
-    },
-    "email_confirmations": {
-      "type": "object",
-      "description": "Pending email confirmations for accounts."
-    },
-    "invites": {
-      "type": "object",
-      "description": "Account invites."
-    },
-    "calendar_notes": {
-      "type": "object",
-      "description": "Account notes for calendar."
+    "schemas": {
+      "$ref": "#/definitions/schemas"
     }
   },
-  "additionalProperties": false
+  "definitions": {
+    "schemas": {
+      "type": "object",
+      "description": "Database schemas.",
+      "additionalProperties": false,
+      "required": ["public", "comments"],
+      "properties": {
+        "public": {
+          "$ref": "#/definitions/schema"
+        },
+        "comments": {
+          "$ref": "#/definitions/schema"
+        }
+      }
+    },
+    "schema": {
+      "type": "object",
+      "description": "Database schema.",
+      "additionalProperties": false,
+      "required": ["description", "tables"],
+      "properties": {
+        "description": {
+          "type": "string",
+          "description": "Description of the schema."
+        },
+        "tables": {
+          "type": "object",
+          "description": "Keys are table names and values are their descriptions.",
+          "additionalProperties": {
+            "$ref": "#/definitions/table"
+          }
+        }
+      }
+    },
+    "table": {
+      "type": "string",
+      "description": "Table of the schema."
+    }
+  }
 }

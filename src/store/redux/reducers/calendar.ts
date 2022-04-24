@@ -62,7 +62,7 @@ export const calendarSlice = createSlice({
     /**
      * Used for selecting a day in a month.
      * A separate value to preserve the day selection
-     * regardless of curetly viewed date.
+     * regardless of currently viewed date.
      */
     changeSelectedDay: (state, action: PayloadAction<IISODateTime>) => {
       state.selectedDay = action.payload;

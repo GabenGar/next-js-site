@@ -1,0 +1,185 @@
+@use "../../../styles/variables/sass.scss" as *;
+
+.block {
+  grid-template-areas:
+    "header"
+    "body"
+    "rating"
+    "actions";
+  row-gap: $size-small;
+  background-color: var(--colour1-primary-transparent);
+  padding: $size-small;
+
+  & > * {
+    padding: $size-small;
+  }
+
+  &_hidden {
+    grid-template-areas: "header";
+    gap: 0;
+  }
+}
+
+.stub {
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  height: 100%;
+}
+
+.header {
+  grid-area: header;
+  display: grid;
+  grid-template:
+    "avatar name" auto
+    "date date" auto
+    / 4em auto;
+  justify-items: start;
+  align-items: center;
+  padding: 0;
+}
+
+.avatar {
+  grid-area: avatar;
+  border-radius: 50%;
+  border: $size-pixel solid var(--colour1-tertiary-transparent);
+  overflow: hidden;
+}
+
+.name {
+  grid-area: name;
+}
+
+.date {
+  grid-area: date;
+}
+
+.body {
+  grid-area: body;
+  background-color: var(--colour1-primary);
+  border-radius: $radius-small;
+
+  &_editing {
+  }
+}
+
+.content {
+  margin: 0;
+}
+
+.contentForm {
+  max-width: 100%;
+  background-color: transparent;
+  padding: 0;
+  margin: 0;
+}
+
+.rating {
+  grid-area: rating;
+  background-color: var(--colour1-tertiary-transparent);
+  border-radius: $radius-normal;
+
+  &_liked {
+    .like {
+      --local-icon-colour-primary: var(--positive-colour1-primary);
+    }
+    .dislike {
+      opacity: 0.5;
+    }
+  }
+
+  &_disliked {
+    .dislike {
+      --local-icon-colour-primary: var(--negative-colour1-primary);
+    }
+    .like {
+      opacity: 0.5;
+    }
+  }
+}
+
+.count {
+  font-size: 1.2em;
+
+  &_positive {
+    color: var(--positive-colour1-primary);
+  }
+
+  &_negative {
+    color: var(--negative-colour1-primary);
+  }
+}
+
+.like {
+}
+.dislike {
+}
+
+.actions {
+  grid-area: actions;
+  display: grid;
+  grid-template:
+    "buttons" 4em
+    / auto;
+  padding: 0;
+
+  &_delete {
+    .view {
+      visibility: hidden;
+      opacity: 0;
+    }
+
+    .delete {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+
+  &_edit {
+    .view {
+      visibility: hidden;
+      opacity: 0;
+    }
+
+    .edit {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+
+  &_reply {
+    grid-template:
+      "buttons" auto
+      / auto;
+
+    .view {
+      visibility: hidden;
+      opacity: 0;
+    }
+
+    .reply {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+}
+
+.view,
+.delete,
+.edit {
+  grid-area: buttons;
+  transition-duration: var(--duration-global);
+  transition-property: visibility, opacity;
+}
+
+.delete,
+.edit {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.delete {
+  max-width: 100%;
+  padding: 0;
+  margin: 0;
+}

@@ -21,7 +21,7 @@ interface ITemplatePageProps extends BasePageProps {}
 interface ITemplatePageParams extends ParsedUrlQuery {}
 
 function TemplatePage({}: InferGetStaticPropsType<typeof getStaticProps>) {
-  const title = "tempalte title";
+  const title = "template title";
 
   return (
     <Page heading={title}>

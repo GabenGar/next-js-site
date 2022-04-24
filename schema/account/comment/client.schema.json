@@ -1,0 +1,32 @@
+{
+  "$id": "http://schemas.com/account/comment/client.schema.json",
+  "title": "CommentClient",
+  "description": "Comment by an account for client",
+  "type": "object",
+  "required": ["id", "created_at", "content", "is_public"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "$ref": "/types/serial.schema.json"
+    },
+    "created_at": {
+      "$ref": "/types/dates/iso-datetime.schema.json"
+    },
+    "parent_id": {
+      "$ref": "/types/serial.schema.json"
+    },
+    "blog_slug": {
+      "type": "string"
+    },
+    "content": {
+      "type": "string",
+      "description": "Markdown",
+      "minLength": 5,
+      "maxLength": 1024
+    },
+    "is_public": {
+      "type": "boolean",
+      "description": "Client can only see its own non-public comments."
+    }
+  }
+}

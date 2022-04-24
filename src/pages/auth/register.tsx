@@ -2,14 +2,10 @@ import Head from "next/head";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { IS_INVITE_ONLY } from "#environment/derived";
-import { AuthError } from "#types/errors";
+import { AuthError } from "#lib/errors";
 import { siteTitle } from "#lib/util";
-import {
-  validateAccountInitFields,
-  registerAccount,
-  withSessionSSR,
-} from "#lib/account";
-import { getReqBody } from "#server/requests";
+import { validateAccountInitFields, registerAccount } from "#lib/account";
+import { withSessionSSR, getReqBody } from "#server/requests";
 import { Page } from "#components/pages";
 import { Form } from "#components/forms";
 import { ErrorsView } from "#components/errors";
@@ -104,12 +100,12 @@ export const getServerSideProps = withSessionSSR<RegisterPageProps>(
 
     if (req.method === "POST") {
       const accInit = await getReqBody<IAccountInit>(req);
-      const result = await validateAccountInitFields(accInit);
+      const validationResult = await validateAccountInitFields(accInit);
 
-      if (!result) {
+      if (!validationResult.is_successful) {
         return {
           props: {
-            schemaValidationErrors: [...validateAccountInitFields.errors!],
+            schemaValidationErrors: [...validationResult.errors],
             accInit,
           },
         };

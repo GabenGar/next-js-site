@@ -1,6 +1,6 @@
 {
   "name": "next-js-site",
-  "version": "0.10.0",
+  "version": "0.13.0",
   "private": true,
   "engines": {
     "node": "^12.20.0"
@@ -14,9 +14,9 @@
     "start": "next start",
     "lint": "next lint",
     "migrate": "node scripts/migrate-up.js",
-    "clean": "node scripts/clean-db.js",
-    "reset": "node scripts/reset-db.js",
-    "codegen": "ts-node -r tsconfig-paths/register src/lib/codegen/_index.ts"
+    "wipe": "ts-node --require tsconfig-paths/register --require environment/dotenv src/cli/wipe-db.ts",
+    "reset": "ts-node --require tsconfig-paths/register --require environment/dotenv src/cli/reset-db.ts",
+    "codegen": "ts-node --require tsconfig-paths/register --require environment/dotenv src/lib/codegen/_index.ts"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.7.2",
@@ -41,6 +41,7 @@
     "raw-body": "^2.4.2",
     "react": "17.0.2",
     "react-dom": "17.0.2",
+    "react-markdown": "^8.0.2",
     "react-redux": "^7.2.6",
     "remark": "^14.0.2",
     "remark-html": "^15.0.1",
@@ -50,6 +51,7 @@
     "validator": "^13.7.0"
   },
   "devDependencies": {
+    "@faker-js/faker": "^6.1.2",
     "@types/content-type": "^1.1.5",
     "@types/crypto-js": "^4.1.0",
     "@types/fs-extra": "^9.0.13",
@@ -68,6 +70,8 @@
     "json-schema-to-typescript": "^10.1.5",
     "lint-staged": "^12.1.4",
     "prettier": "2.4.1",
+    "quicktype": "^15.0.261",
+    "quicktype-core": "^6.0.71",
     "sass": "^1.42.1",
     "ts-node": "^10.5.0",
     "tsconfig-paths": "^3.12.0",
