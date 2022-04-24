@@ -48,54 +48,6 @@ function FMCommentsPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
           content={`Frontend Mentor Challenge: ${title}`}
         />
       </Head>
-      <Article>
-        <ArticleHeader>
-          <Heading>The challenge</Heading>
-        </ArticleHeader>
-        <ArticleBody>
-          <p>Your users should be able to:</p>
-
-          <ul>
-            <li>
-              View the optimal layout for the app depending on their
-              device&apos;s screen size
-            </li>
-            <li>See hover states for all interactive elements on the page</li>
-            <li>Create, Read, Update, and Delete comments and replies</li>
-            <li>
-              **Bonus**: If you&apos;re building a purely front-end project, use
-              `localStorage` to save the current state in the browser that
-              persists when the browser is refreshed.
-            </li>
-          </ul>
-        </ArticleBody>
-      </Article>
-      <Article>
-        <ArticleHeader>
-          <Heading>Expected behaviour</Heading>
-        </ArticleHeader>
-        <ArticleBody>
-          <ul>
-            <li>
-              First-level comments should be ordered by their score, whereas
-              nested replies are ordered by time added.
-            </li>
-            <li>
-              Replying to a comment adds the new reply to the bottom of the
-              nested replies within that comment.
-            </li>
-            <li>
-              A confirmation modal should pop up before a comment or reply is
-              deleted.
-            </li>
-            <li>
-              Adding a new comment or reply uses the `currentUser` object from
-              within the `data.json` file.
-            </li>
-            <li>You can only edit or delete your own comments and replies.</li>
-          </ul>
-        </ArticleBody>
-      </Article>
       <Article className={styles.comments}>
         <ArticleHeader>
           <Heading level={2}>Comments</Heading>

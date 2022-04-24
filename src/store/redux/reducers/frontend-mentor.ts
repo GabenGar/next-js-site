@@ -64,6 +64,9 @@ const commentsSlice = createSlice({
   name: reducerName,
   initialState,
   reducers: {
+    /**
+     * @TODO `localStorage` integration
+     */
     createFMComment: (state, action: PayloadAction<ICommentInit>) => {
       const { content, parent_id } = action.payload;
       const idList = state.comments.map(({ id }) => id);

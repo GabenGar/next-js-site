@@ -3,7 +3,7 @@
 .block {
   &_reply {
     max-width: 100%;
-    padding: 0;
+    padding: $size-small;
     margin: 0;
   }
 }
@@ -13,7 +13,7 @@
     transition-duration: va(0--duration-global);
     transition-property: visibility, opacity;
   }
-  
+
   &_preview {
     .confirm {
       visibility: hidden;

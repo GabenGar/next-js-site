@@ -45,7 +45,9 @@ export const FMCommentCard = blockComponent<IFMCommentProps>(
 );
 
 /**
- * @TODO: rewrite into a dumb component
+ * @TODOs:
+ * - rewrite into a dumb component
+ * - fix deletion flow
  */
 function Component({
   comment,
@@ -136,9 +138,8 @@ function Component({
                   onSubmit={(event) => {
                     event.preventDefault();
                     const form = event.currentTarget as HTMLFormElement;
-                    const content = ( // @ts-expect-error
-                      form.elements["content"] as HTMLTextAreaElement
-                    ).value;
+                    const content = // @ts-expect-error
+                    (form.elements["content"] as HTMLTextAreaElement).value;
 
                     dispatch(updateFMComment({ id, content }));
                     switchMode("view");
@@ -247,14 +248,12 @@ function Component({
         )}
       </Card>
       {isReplying && (
-        <Card>
-          <NewCommentForm
-            parentID={id}
-            onClosing={() => {
-              switchMode("view");
-            }}
-          />
-        </Card>
+        <NewCommentForm
+          parentID={id}
+          onClosing={() => {
+            switchMode("view");
+          }}
+        />
       )}
     </>
   );
