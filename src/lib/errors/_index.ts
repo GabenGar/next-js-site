@@ -51,8 +51,8 @@ export class FieldsValidationError extends ProjectError {
   name = "FieldsValidationError";
 
   constructor(validationErrors: ErrorObject[], ...params: any[]) {
-    const message = toJSON<ErrorObject[]>(validationErrors);
-    super(message, ...params);
+    super(...params);
+    this.message = toJSON<ErrorObject[]>(validationErrors);
     this.validationErrors = validationErrors;
   }
 }
@@ -87,8 +87,8 @@ export class StoreError extends ClientError {
     options?: ErrorOptions,
     ...params: any[]
   ) {
-    const formattedMessage = [`${type}:`, message].join("\n");
-    super(formattedMessage, options, ...params);
+    super("", options, ...params);
+    this.message = [`${type}:`, message].join("\n");
     this.type = type;
   }
 }

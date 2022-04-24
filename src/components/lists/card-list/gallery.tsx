@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { blockComponent } from "#components/meta";
 import { Button } from "#components/fancy";
-import { ItemList, listTypes, listLayouts } from "./list";
+import { ItemList, listTypes, listLayoutKeys } from "./list";
 import styles from "./_index.module.scss";
 
 import type { BlockProps } from "#types/props";
 import type { ButtonClickEvent } from "#components/fancy";
+import type { IListLayout } from "./list";
 
 interface Props extends BlockProps<"div"> {
   type?: string;
@@ -14,9 +15,10 @@ interface Props extends BlockProps<"div"> {
 export const GalleryList = blockComponent<Props>(
   styles.block,
   ({ children, ...blockProps }) => {
-    const [currentLayout, changeCurrentLayout] = useState(listLayouts.mobile);
+    const [currentLayout, changeCurrentLayout] =
+      useState<IListLayout>("mobile");
 
-    function switchLayout(layout: string) {
+    function switchLayout(layout: IListLayout) {
       return (event: ButtonClickEvent) => {
         if (layout !== currentLayout) {
           changeCurrentLayout(layout);
@@ -30,13 +32,13 @@ export const GalleryList = blockComponent<Props>(
           {children}
         </ItemList>
         <div>
-          {Object.entries(listLayouts).map(([name, layout]) => (
+          {listLayoutKeys.map((layout) => (
             <Button
-              key={name}
+              key={layout}
               onClick={switchLayout(layout)}
               disabled={layout === currentLayout}
             >
-              {name}
+              {layout}
             </Button>
           ))}
         </div>
