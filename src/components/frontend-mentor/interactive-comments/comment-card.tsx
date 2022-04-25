@@ -12,7 +12,7 @@ import {
   updateFMComment,
 } from "#store/redux/reducers";
 import { blockComponent } from "#components/meta";
-import { Form } from "#components/forms";
+import { FormClient } from "#components/forms";
 import { TextArea } from "#components/forms/sections";
 import { Card, CardBody, CardHeader, CardFooter } from "#components/cards";
 import { Heading } from "#components/headings";
@@ -131,7 +131,7 @@ function Component({
               {!isEditing ? (
                 <p className={styles.content}>{content}</p>
               ) : (
-                <Form
+                <FormClient
                   id={formEditID}
                   className={styles.contentForm}
                   submitButton={<></>}
@@ -139,7 +139,7 @@ function Component({
                     event.preventDefault();
                     const form = event.currentTarget as HTMLFormElement;
                     const content = // @ts-expect-error
-                    (form.elements["content"] as HTMLTextAreaElement).value;
+                      (form.elements["content"] as HTMLTextAreaElement).value;
 
                     dispatch(updateFMComment({ id, content }));
                     switchMode("view");
@@ -150,7 +150,7 @@ function Component({
                     name="content"
                     defaultValue={content}
                   />
-                </Form>
+                </FormClient>
               )}
             </CardBody>
 
@@ -216,7 +216,7 @@ function Component({
                   Reply
                 </Button>
               </ButtonList>
-              <Form
+              <FormClient
                 className={styles.delete}
                 submitButton={
                   <ConfirmationDialogue
@@ -233,7 +233,7 @@ function Component({
                   event.preventDefault();
                   dispatch(deleteFMComment(id));
                 }}
-              ></Form>
+              ></FormClient>
               <ConfirmationDialogue
                 className={styles.edit}
                 formID={formEditID}

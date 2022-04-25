@@ -90,14 +90,13 @@ git config core.sshCommand "ssh -i ~/.ssh/id_rsa_file -F /dev/null"
 
 - figure out the problem between typescript, `ts-node` and `stringify-object` being a pure ESM package
 - one-button validation interface
-- prettier validation errors
+- styled validation errors
 - fix `$ref` parsing inconsistencies between `json-schema-to-typescript` and `ajv`
 - fix `useSWR` fetching account info when not needed.
 - scripts relying on `config.json.schema` to work with ref schemas
-- integrate nextJS middlewares
 - locale-specific date formatting
 - pre-deploy validation
-- update dependencies
 - CLI tool
 - JSON Schema validated forms
 - extendable layout
+- comment threads

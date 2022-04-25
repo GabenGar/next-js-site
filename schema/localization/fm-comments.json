@@ -1,0 +1,8 @@
+{
+  "$id": "http://schemas.com/localization/fm-comments.schema.json",
+  "title": "FMCommentsLocalization",
+  "description": "Localization for the FM comments challenge.",
+  "type": "object",
+  "required": [
+  ]
+}
