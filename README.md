@@ -94,7 +94,6 @@ git config core.sshCommand "ssh -i ~/.ssh/id_rsa_file -F /dev/null"
 - fix `$ref` parsing inconsistencies between `json-schema-to-typescript` and `ajv`
 - fix `useSWR` fetching account info when not needed.
 - scripts relying on `config.json.schema` to work with ref schemas
-- make `pgFormatter` extenstion to work
 - integrate nextJS middlewares
 - locale-specific date formatting
 - pre-deploy validation
