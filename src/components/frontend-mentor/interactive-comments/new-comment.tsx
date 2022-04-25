@@ -1,4 +1,3 @@
-import { faker } from "@faker-js/faker";
 import { useState } from "react";
 import { validateCommentInitFields } from "#codegen/schema/validations";
 import { FieldsValidationError } from "#lib/errors";
@@ -7,20 +6,17 @@ import { createFMComment } from "#store/redux/reducers";
 import { blockComponent } from "#components/meta";
 import { JSONView } from "#components/json";
 import { Button, ButtonList, ButtonSubmit } from "#components/buttons";
-import { Form } from "#components/forms";
+import { FormClient } from "#components/forms";
 import { TextArea, Hidden } from "#components/forms/sections";
 import { Heading, HeadingLevel } from "#components/headings";
-import { FMCommentCard } from "./comment-card";
 import styles from "./new-comment.module.scss";
 
 import type { ICommentInit, ISerialInteger } from "#types/entities";
-import type { IFMComment } from "#types/frontend-mentor";
 import type {
   IFormProps,
   ISubmitEvent,
   IFormElements,
 } from "#components/forms";
-import { nowISO } from "#lib/dates";
 import clsx from "clsx";
 
 export interface INewCommentFormProps extends IFormProps {
@@ -73,7 +69,7 @@ function Component({
   }
 
   return (
-    <Form
+    <FormClient
       className={formClass}
       submitButton={
         <ButtonList
@@ -120,6 +116,6 @@ function Component({
         Message:
       </TextArea>
       {errors.length ? <JSONView json={errors} /> : undefined}
-    </Form>
+    </FormClient>
   );
 }
