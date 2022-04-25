@@ -1,6 +1,6 @@
 import { withIronSessionApiRoute, withIronSessionSsr } from "iron-session/next";
 import { SITE_NAME, SECRET_KEY } from "#environment/vars";
-import { IS_DEVELOPMENT } from "#environment/derived";
+import { IS_DEVELOPMENT, SESSION_COOKIE } from "#environment/derived";
 
 import type { IronSessionOptions } from "iron-session";
 import type { GetServerSideProps, NextApiHandler } from "next";
@@ -9,7 +9,7 @@ import type { APIResponse } from "#types/api";
 
 export const sessionOptions: IronSessionOptions = {
   password: SECRET_KEY,
-  cookieName: `${SITE_NAME}_cookie_cutter`,
+  cookieName: SESSION_COOKIE,
   cookieOptions: {
     secure: !IS_DEVELOPMENT,
   },
