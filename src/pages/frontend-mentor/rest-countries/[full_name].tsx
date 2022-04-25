@@ -264,6 +264,7 @@ export default function RESTCountriesCountryDetail({
 }
 
 RESTCountriesCountryDetail.getLayout = function getLayout(page: NextPage) {
+  // @ts-expect-error fix type
   return <Layout>{page}</Layout>;
 };
 

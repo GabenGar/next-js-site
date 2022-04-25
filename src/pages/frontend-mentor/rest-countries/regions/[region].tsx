@@ -46,6 +46,7 @@ function RegionDetails({
 }
 
 RegionDetails.getLayout = function getLayout(page: NextPage) {
+  // @ts-expect-error fix type
   return <Layout>{page}</Layout>;
 };
 
