@@ -4,7 +4,7 @@ import { IS_PUBLIC, SESSION_COOKIE } from "#environment/derived";
 
 import type { NextFetchEvent, NextRequest } from "next/server";
 
-export function middleware(req: NextRequest, ev: NextFetchEvent) {
+export default function pageMiddleware(req: NextRequest, ev: NextFetchEvent) {
   const url = req.nextUrl.clone();
 
   // skip API routes because they are going to be handled by a separate middleware
