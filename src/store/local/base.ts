@@ -4,6 +4,7 @@ import { StoreError } from "#lib/errors";
 export const LOCAL_STORAGE = {
   TEST: "__storage_test__",
   THEME: "theme",
+  ACCOUNT: "account",
   FM_OWN_COMMENTS: "fm_own_comments",
 } as const;
 
