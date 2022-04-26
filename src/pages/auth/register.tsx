@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { FOUND } from "#environment/constants/http";
 import { IS_INVITE_ONLY } from "#environment/derived";
 import { AuthError } from "#lib/errors";
 import { siteTitle } from "#lib/util";
@@ -86,6 +87,7 @@ export const getServerSideProps = withSessionSSR<RegisterPageProps>(
     if (account_id) {
       return {
         redirect: {
+          statusCode: FOUND,
           destination: "/account",
           permanent: false,
         },
@@ -140,6 +142,7 @@ export const getServerSideProps = withSessionSSR<RegisterPageProps>(
 
       return {
         redirect: {
+          statusCode: FOUND,
           destination: "/auth/success",
           permanent: false,
         },

@@ -67,6 +67,10 @@
       "url": "./schema/localization/admin.schema.json"
     },
     {
+      "fileMatch": ["public/locales/*/frontend-mentor.json"],
+      "url": "./schema/localization/frontend-mentor.schema.json"
+    },
+    {
       "fileMatch": ["public/locales/*/fm-comments.json"],
       "url": "./schema/localization/fm-comments.schema.json"
     }

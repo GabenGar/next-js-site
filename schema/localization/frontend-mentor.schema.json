@@ -1,0 +1,16 @@
+{
+  "$id": "http://schemas.com/localization/frontend-mentor.schema.json",
+  "title": "FrontendMentorLocalization",
+  "description": "Localization for the frontend mentor pages.",
+  "type": "object",
+  "required": [
+    "index_title",
+    "index_desc",
+    "challenge_internal",
+    "challenge_external",
+    "challenge_desc",
+    "comments_title",
+    "comments_section",
+    "comments_none"
+  ]
+}

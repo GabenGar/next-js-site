@@ -3,7 +3,6 @@ import Head from "next/head";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { siteTitle } from "#lib/util";
-import { useAccount } from "#lib/hooks";
 import { useAppDispatch, useAppSelector } from "#store/redux";
 import { getFMCommentsAsync, selectFMSlice } from "#store/redux/reducers";
 import { Page } from "#components/pages";
@@ -14,12 +13,13 @@ import {
   ArticleBody,
 } from "#components/articles";
 import { Heading } from "#components/headings";
-import { CardList, listLayouts } from "#components/lists";
+import { CardList } from "#components/lists";
 import {
   FMCommentCard,
   NewCommentForm,
 } from "#components/frontend-mentor/interactive-comments";
 import { JSONView } from "#components/json";
+import { LoadingBar } from "#components/state";
 import styles from "./index.module.scss";
 
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
@@ -31,9 +31,10 @@ interface FMCommentsPageProps extends BasePageProps {}
 interface FMCommentsPageParams extends ParsedUrlQuery {}
 
 function FMCommentsPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
+  const { t } = useTranslation("frontend-mentor");
   const dispatch = useAppDispatch();
   const { comments, status, error } = useAppSelector(selectFMSlice);
-  const title = "Interactive comments section";
+  const title = t("comments_title");
 
   useEffect(() => {
     dispatch(getFMCommentsAsync());
@@ -43,14 +44,11 @@ function FMCommentsPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
     <Page heading={title}>
       <Head>
         <title>{siteTitle(title)}</title>
-        <meta
-          name="description"
-          content={`Frontend Mentor Challenge: ${title}`}
-        />
+        <meta name="description" content={t("challenge_desc", { title })} />
       </Head>
       <Article className={styles.comments}>
         <ArticleHeader>
-          <Heading level={2}>Comments</Heading>
+          <Heading level={2}>{t("comments_section")}</Heading>
         </ArticleHeader>
         <ArticleBody>
           {error && <JSONView json={error} />}
@@ -60,13 +58,13 @@ function FMCommentsPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
             defaultLayout="phone"
           >
             {status === "loading" ? (
-              <div>Loading...</div>
+              <LoadingBar />
             ) : comments.length ? (
               comments.map((comment) => (
                 <FMCommentCard key={comment.id} comment={comment} />
               ))
             ) : (
-              <Article>No comments available.</Article>
+              <Article>{t("comments_none")}</Article>
             )}
           </CardList>
         </ArticleBody>
@@ -87,6 +85,8 @@ export const getStaticProps: GetStaticProps<
   const localization = await serverSideTranslations(locale!, [
     "layout",
     "components",
+    "frontend-mentor",
+    "fm-comments",
   ]);
 
   return {

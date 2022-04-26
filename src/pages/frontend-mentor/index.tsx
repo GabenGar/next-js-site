@@ -17,13 +17,14 @@ interface FMHomePageProps extends BasePageProps {}
 interface FMHomePageParams extends ParsedUrlQuery {}
 
 function FMHomePage({}: InferGetStaticPropsType<typeof getStaticProps>) {
-  const title = "Frontend Mentor Challenges";
+  const { t } = useTranslation("frontend-mentor")
+  const title = t("index_title");
 
   return (
     <Page heading={title}>
       <Head>
         <title>{siteTitle(title)}</title>
-        <meta name="description" content="Frontend Mentor Challenges" />
+        <meta name="description" content={t("index_desc")} />
       </Head>
       <CardList>
         {challenges.map((challenge: Challenge) => (
@@ -34,20 +35,21 @@ function FMHomePage({}: InferGetStaticPropsType<typeof getStaticProps>) {
   );
 }
 
-export const getStaticProps: GetStaticProps<FMHomePageProps, FMHomePageParams> =
-  async (context) => {
-    const { locale } = context;
+export const getStaticProps: GetStaticProps<
+  FMHomePageProps,
+  FMHomePageParams
+> = async ({ locale }) => {
+  const localization = await serverSideTranslations(locale!, [
+    "layout",
+    "components",
+    "frontend-mentor",
+  ]);
 
-    const localization = await serverSideTranslations(locale!, [
-      "layout",
-      "components",
-    ]);
-
-    return {
-      props: {
-        ...localization,
-      },
-    };
+  return {
+    props: {
+      ...localization,
+    },
   };
+};
 
 export default FMHomePage;
