@@ -1,36 +1,30 @@
-import { useEffect } from "react";
-import useSWRMutation from "swr/mutation";
+import { useEffect, useState } from "react";
+import useSWRImmutable from "swr/immutable";
 import { getAccount } from "#lib/api/public";
-import { AuthError } from "#lib/errors";
 import { getLocalStoreItem } from "#store/local";
 
 export function useAccount() {
+  const [isRegistered, changeRegisteredStatus] = useState(false);
   const {
     data: account,
     error,
-    trigger,
-  } = useSWRMutation("/account", getAccount);
+    isLoading,
+  } = useSWRImmutable(isRegistered ? "/account" : null, getAccount, {
+    shouldRetryOnError: false,
+  });
 
   useEffect(() => {
-    async () => {
-      const isRegistered = getLocalStoreItem<boolean>("is_registered");
+    if (!getLocalStoreItem<boolean>("is_registered")) {
+      return;
+    }
 
-      if (!isRegistered) {
-        return;
-      }
-
-      const accResult = await trigger();
-
-      if (!accResult) {
-        throw new AuthError("Failed to authenticate");
-      }
-    };
+    changeRegisteredStatus(true);
   }, []);
 
   return {
     account,
     isAdmin: account?.role === "administrator",
-    isLoading: !error && !account,
+    isLoading,
     isError: Boolean(error),
     error: error,
   };

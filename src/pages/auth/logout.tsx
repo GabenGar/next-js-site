@@ -8,6 +8,7 @@ import { Form } from "#components/forms";
 
 import type { InferGetServerSidePropsType } from "next";
 import type { BasePageProps } from "#types/pages";
+import { FOUND, SEE_OTHER } from "#environment/constants/http";
 
 interface LogoutPageProps extends BasePageProps {}
 
@@ -51,8 +52,8 @@ export const getServerSideProps = withSessionSSR<LogoutPageProps>(
 
       return {
         redirect: {
+          statusCode: SEE_OTHER, 
           destination: "/",
-          statusCode: 303,
         },
       };
     }
