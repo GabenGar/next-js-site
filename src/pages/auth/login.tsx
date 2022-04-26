@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { FOUND, SEE_OTHER } from "#environment/constants/http";
 import { AuthError } from "#lib/errors";
 import { siteTitle } from "#lib/util";
 import { loginAccount, validateAccountInitFields } from "#lib/account";
@@ -17,6 +18,7 @@ import { LinkInternal } from "#components/links";
 import type { BasePageProps } from "#types/pages";
 import type { IAccountInit } from "#types/entities";
 import type { InferGetServerSidePropsType } from "next";
+
 
 interface LoginPageProps extends BasePageProps {
   accCreds?: IAccountInit;
@@ -77,8 +79,8 @@ export const getServerSideProps = withSessionSSR<LoginPageProps>(
     if (account_id) {
       return {
         redirect: {
+          statusCode: FOUND,
           destination: "/account",
-          permanent: false,
         },
       };
     }
@@ -120,8 +122,8 @@ export const getServerSideProps = withSessionSSR<LoginPageProps>(
 
       return {
         redirect: {
-          destination: "/account",
-          permanent: false,
+          statusCode: SEE_OTHER,
+          destination: "/auth/success",
         },
       };
     }

@@ -17,6 +17,9 @@
     "register",
     "logout_title",
     "logout_desc",
-    "log_out"
+    "log_out",
+    "auth_success_title",
+    "auth_success_desc",
+    "auth_success_message"
   ]
 }

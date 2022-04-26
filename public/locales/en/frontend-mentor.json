@@ -1,0 +1,10 @@
+{
+  "index_title": "Frontend Mentor Challenges",
+  "index_desc": "Frontend Mentor Challenges",
+  "challenge_internal": "Go to the page",
+  "challenge_external": "Original page",
+  "challenge_desc": "Frontend Mentor Challenge: {{title}}",
+  "comments_title": "Interactive comments section",
+  "comments_section": "Comments",
+  "comments_none": "No comments available."
+}

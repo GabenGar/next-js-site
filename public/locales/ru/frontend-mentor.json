@@ -1,0 +1,10 @@
+{
+  "index_title": "Испытания от Frontend Mentor",
+  "index_desc": "Испытания от Mentor Challenges",
+  "challenge_internal": "На страницу испытания",
+  "challenge_external": "На оригинальную страницу",
+  "challenge_desc": "Испытание Frontend Mentor: {{title}}",
+  "comments_title": "Интерактивные комментарии",
+  "comments_section": "Комментарии",
+  "comments_none": "Без комментариев."
+}

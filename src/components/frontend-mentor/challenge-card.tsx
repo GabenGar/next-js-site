@@ -1,3 +1,4 @@
+import { useTranslation } from "next-i18next";
 import { blockComponent } from "#components/meta";
 import { Card, CardHeader, CardBody, CardFooter } from "#components/cards";
 import { FancyImageExternal } from "#components/fancy";
@@ -14,6 +15,8 @@ interface Props extends ICardProps {
 export const ChallengeCard = blockComponent<Props>(
   styles.block,
   ({ challenge, ...blockProps }) => {
+    const { t } = useTranslation("frontend-mentor");
+
     return (
       <Card {...blockProps}>
         <CardHeader>
@@ -25,11 +28,13 @@ export const ChallengeCard = blockComponent<Props>(
         <CardFooter>
           <p>
             <LinkInternal href={`/frontend-mentor/${challenge.localLink}`}>
-              Go to the page
+              {t("challenge_internal")}
             </LinkInternal>
           </p>
           <p>
-            <LinkExternal href={challenge.link}>Original page</LinkExternal>
+            <LinkExternal href={challenge.link}>
+              {t("challenge_external")}
+            </LinkExternal>
           </p>
         </CardFooter>
       </Card>

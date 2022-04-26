@@ -4,6 +4,7 @@
   "description": "Localization for the components.",
   "type": "object",
   "required": [
+    "loading",
     "submit",
     "account_last_activity",
     "account_email",
@@ -22,7 +23,7 @@
     "blog_published",
     "blog_read_more",
     "blog_edited",
-    "commen_default_author",
+    "comment_default_author",
     "comment_blog",
     "comment_parent",
     "comment_created_at",
