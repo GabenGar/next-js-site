@@ -1,18 +1,12 @@
 import { useEffect } from "react";
-import useSWRMutation from 'swr/mutation'
+import useSWR from "swr";
+import useSWRMutation from "swr/mutation";
 import { getAccount } from "#lib/api/public";
 import { getLocalStoreItem } from "#store/local";
 import { IAccountClient } from "#types/entities";
 
 export function useAccount() {
-  const { data: account, error, trigger } = useSWRMutation("/account", getAccount);
-
-  useEffect(() => {
-    const localAcc = getLocalStoreItem<IAccountClient>("account")
-    if (!localAcc) {
-
-    }
-  }, []);
+  const { data: account, error } = useSWR("/account", getAccount);
 
   return {
     account,

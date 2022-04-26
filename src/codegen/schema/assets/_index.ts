@@ -22,6 +22,7 @@ export {
   blogLocalizationSchema,
   commonLocalizationSchema,
   componentLocalizationSchema,
+  fMCommentsLocalizationSchema,
   layoutLocalizationSchema,
   codeStringSchema,
   iSODateSchema,

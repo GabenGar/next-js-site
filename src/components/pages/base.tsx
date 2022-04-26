@@ -16,6 +16,7 @@ export function Page({ heading, pageClassName, children }: PageProps) {
     !heading && styles.content_headless,
     pageClassName
   );
+  
   return (
     <>
       {heading && (

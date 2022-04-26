@@ -140,7 +140,7 @@ export const getServerSideProps = withSessionSSR<RegisterPageProps>(
 
       return {
         redirect: {
-          destination: "/account",
+          destination: "/auth/success",
           permanent: false,
         },
       };
