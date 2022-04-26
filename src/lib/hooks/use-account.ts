@@ -1,12 +1,31 @@
 import { useEffect } from "react";
-import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
 import { getAccount } from "#lib/api/public";
+import { AuthError } from "#lib/errors";
 import { getLocalStoreItem } from "#store/local";
-import { IAccountClient } from "#types/entities";
 
 export function useAccount() {
-  const { data: account, error } = useSWR("/account", getAccount);
+  const {
+    data: account,
+    error,
+    trigger,
+  } = useSWRMutation("/account", getAccount);
+
+  useEffect(() => {
+    async () => {
+      const isRegistered = getLocalStoreItem<boolean>("is_registered");
+
+      if (!isRegistered) {
+        return;
+      }
+
+      const accResult = await trigger();
+
+      if (!accResult) {
+        throw new AuthError("Failed to authenticate");
+      }
+    };
+  }, []);
 
   return {
     account,
