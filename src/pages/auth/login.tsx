@@ -1,9 +1,9 @@
-import Head from "next/head";
+import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { FOUND, SEE_OTHER } from "#environment/constants/http";
 import { AuthError } from "#lib/errors";
-import { siteTitle } from "#lib/util";
+import { createSEOTags } from "#lib/seo";
 import { loginAccount, validateAccountInitFields } from "#lib/account";
 import { withSessionSSR, getReqBody } from "#server/requests";
 import { Page } from "#components/pages";
@@ -20,6 +20,7 @@ import type { IAccountInit } from "#types/entities";
 import type { InferGetServerSidePropsType } from "next";
 
 
+
 interface LoginPageProps extends BasePageProps {
   accCreds?: IAccountInit;
 }
@@ -29,15 +30,17 @@ export function LoginPage({
   accCreds,
   schemaValidationErrors,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const router = useRouter();
   const { t } = useTranslation("auth");
-  const title = t("login_title");
+  const seoTags = createSEOTags({
+    locale: router.locale!,
+    title: t("login_title"),
+    description: t("login_desc"),
+    urlPath: router.pathname,
+  });
 
   return (
-    <Page heading={title}>
-      <Head>
-        <title>{siteTitle(title)}</title>
-        <meta name="description" content={t("login_desc")} />
-      </Head>
+    <Page seoTags={seoTags}>
       <Form method="POST" submitButton={t("log_in")}>
         <p>
           {t("not_registered")}?{" "}
