@@ -1,12 +1,12 @@
-import Head from "next/head";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { siteTitle } from "#lib/util";
+import { createSEOTags } from "#lib/seo";
 import { getAccountDetails } from "#lib/account";
 import { withSessionSSR } from "#server/requests";
 import { useAppDispatch, useAppSelector } from "#store/redux";
 import {
-  selectComments,
   getPendingCommentsAsync,
   selectPendingComments,
 } from "#store/redux/reducers";
@@ -17,14 +17,18 @@ import { CommentCard } from "#components/entities/comments";
 
 import type { InferGetServerSidePropsType } from "next";
 import type { BasePageProps } from "#types/pages";
-import { useEffect } from "react";
 
 interface AdminPageProps extends BasePageProps {}
 
 function AdminPage({}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const router = useRouter();
   const { t } = useTranslation("admin");
+  const seoTags = createSEOTags({
+    locale: router.locale!,
+    title: t("comments_title"),
+    description: t("comments_desc"),
+  });
   const dispatch = useAppDispatch();
-  const title = t("comments_title");
   const comments = useAppSelector(selectPendingComments());
 
   useEffect(() => {
@@ -32,11 +36,7 @@ function AdminPage({}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   }, []);
 
   return (
-    <Page heading={title}>
-      <Head>
-        <title>{siteTitle(title)}</title>
-        <meta name="description" content={t("comments_desc")} />
-      </Head>
+    <Page seoTags={seoTags}>
       <Heading level={2}>Pending for approval</Heading>
       <CardList>
         {comments.map((comment) => (

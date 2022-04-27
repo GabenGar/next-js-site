@@ -1,8 +1,8 @@
-import Head from "next/head";
+import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { IS_DEVELOPMENT } from "#environment/derived";
-import { siteTitle } from "#lib/util";
+import { createSEOTags } from "#lib/seo";
 import {
   getAccountDetails,
   sendEmailConfirmation,
@@ -30,15 +30,16 @@ function AccountEmailPage({
   newEmail,
   isSent,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const router = useRouter();
   const { t } = useTranslation("account");
-  const title = t("email_title");
+  const seoTags = createSEOTags({
+    locale: router.locale!,
+    title: t("email_title"),
+    description: t("email_desc"),
+  });
 
   return (
-    <Page heading={title}>
-      <Head>
-        <title>{siteTitle(title)}</title>
-        <meta name="description" content={t("email_desc")} />
-      </Head>
+    <Page seoTags={seoTags}>
       <Form method="POST">
         {account.email && (
           <FormSectionEmail

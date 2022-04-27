@@ -15,6 +15,9 @@
     "current_email",
     "new_email",
     "confirmation_sent",
+    "email_code_title",
+    "email_code_desc",
+    "email_code_message",
     "calendar_title",
     "calendar_desc",
     "current_date"

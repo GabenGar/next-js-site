@@ -1,7 +1,7 @@
-import Head from "next/head";
+import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { siteTitle } from "#lib/util";
+import { createSEOTags } from "#lib/seo";
 import { Page } from "#components/pages";
 import { Nav, NavItem, NavList } from "#components/navigation";
 import { LinkInternal } from "#components/links";
@@ -16,17 +16,17 @@ interface IHomePageProps extends BasePageProps {}
 interface IHomePageParams extends ParsedUrlQuery {}
 
 function Home({}: InferGetStaticPropsType<typeof getStaticProps>) {
+  const router = useRouter();
   const { t } = useTranslation("common");
-  const pageTitle = t("title");
+  const seoTags = createSEOTags({
+    locale: router.locale!,
+    title: t("title"),
+    description: t("description"),
+    urlPath: router.pathname,
+  });
 
   return (
-    <Page heading={pageTitle}>
-      <Head>
-        <title>{siteTitle(pageTitle)}</title>
-        <meta name="description" content={t("description")} />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
+    <Page seoTags={seoTags}>
       <Nav>
         <NavList>
           <NavItem>
@@ -41,19 +41,21 @@ function Home({}: InferGetStaticPropsType<typeof getStaticProps>) {
   );
 }
 
-export const getStaticProps: GetStaticProps<IHomePageProps, IHomePageParams> =
-  async ({ locale }) => {
-    const localization = await serverSideTranslations(locale!, [
-      "layout",
-      "components",
-      "common",
-    ]);
+export const getStaticProps: GetStaticProps<
+  IHomePageProps,
+  IHomePageParams
+> = async ({ locale }) => {
+  const localization = await serverSideTranslations(locale!, [
+    "layout",
+    "components",
+    "common",
+  ]);
 
-    return {
-      props: {
-        ...localization,
-      },
-    };
+  return {
+    props: {
+      ...localization,
+    },
   };
+};
 
 export default Home;

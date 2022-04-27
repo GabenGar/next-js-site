@@ -11,7 +11,7 @@ import type { InferGetServerSidePropsType } from "next";
 import type { IAccountClient } from "#types/entities";
 import type { BasePageProps } from "#types/pages";
 
-interface ITemplatePageProps extends BasePageProps {
+interface IProps extends BasePageProps {
   account: IAccountClient;
 }
 
@@ -29,7 +29,7 @@ function TemplatePage({
   );
 }
 
-export const getServerSideProps = withSessionSSR<ITemplatePageProps>(
+export const getServerSideProps = withSessionSSR<IProps>(
   async (context) => {
     const { req, locale } = context;
     if (!IS_DEVELOPMENT) {

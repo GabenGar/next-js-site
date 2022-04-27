@@ -1,7 +1,7 @@
-import Head from "next/head";
+import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { siteTitle } from "#lib/util";
+import { createSEOTags } from "#lib/seo";
 import { Page } from "#components/pages";
 import { InternalNav } from "#components/navigation";
 
@@ -14,15 +14,17 @@ interface ITemplatePageProps extends BasePageProps {}
 interface ITemplatePageParams extends ParsedUrlQuery {}
 
 function StatusPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
+  const router = useRouter();
   const { t } = useTranslation("common");
-  const title = t("status_title");
+  const seoTags = createSEOTags({
+    locale: router.locale!,
+    title: t("status_title"),
+    description: t("status_desc"),
+    urlPath: router.pathname,
+  });
 
   return (
-    <Page heading={title}>
-      <Head>
-        <title>{siteTitle(title)}</title>
-        <meta name="description" content={t("status_desc")} />
-      </Head>
+    <Page seoTags={seoTags}>
       <InternalNav
         navLists={[
           {

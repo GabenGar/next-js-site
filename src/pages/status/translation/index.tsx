@@ -1,9 +1,9 @@
-import Head from "next/head";
+import { useRouter } from "next/router";
 import clsx from "clsx";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { getLanguagesOverview, getMaxLineCount } from "#lib/translation";
-import { siteTitle } from "#lib/util";
+import { createSEOTags } from "#lib/seo";
 import { Page } from "#components/pages";
 import { DL, DS, DT, DD } from "#components/lists/d-list";
 import { LanguageView } from "#components/language";
@@ -28,15 +28,17 @@ function TranslationPage({
   totalCount,
   languagesOverview,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+  const router = useRouter();
   const { t } = useTranslation("common");
-  const title = t("translation_title");
+  const seoTags = createSEOTags({
+    locale: router.locale!,
+    title: t("translation_title"),
+    description: t("translation_desc"),
+    urlPath: router.pathname,
+  });
 
   return (
-    <Page heading={title}>
-      <Head>
-        <title>{siteTitle(title)}</title>
-        <meta name="description" content={t("translation_desc")} />
-      </Head>
+    <Page seoTags={seoTags}>
       <DL className={styles.list}>
         {Object.entries(languagesOverview).map(([lang, count]) => (
           <DS key={lang} className={styles.item}>

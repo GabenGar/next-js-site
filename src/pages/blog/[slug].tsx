@@ -1,7 +1,7 @@
-import Head from "next/head";
+import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { siteTitle } from "#lib/util";
+import { createSEOTags } from "#lib/seo";
 import { getAllSlugs, getBlogPost } from "#lib/blog";
 import { Page } from "#components/pages";
 import { BlogPostArticle } from "#components/entities/blog";
@@ -26,12 +26,16 @@ interface BlogPostPageParams extends ParsedUrlQuery {
 function BlogPostPage({
   post,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+  const router = useRouter();
+  const seoTags = createSEOTags({
+    locale: router.locale!,
+    title: post.title,
+    description: post.excerpt,
+    urlPath: router.pathname,
+  });
+
   return (
-    <Page>
-      <Head>
-        <title>{siteTitle(post.title)}</title>
-        <meta name="description" content={post.excerpt} />
-      </Head>
+    <Page seoTags={seoTags}>
       <BlogPostArticle post={post} />
     </Page>
   );
@@ -47,8 +51,8 @@ export const getStaticPaths: GetStaticPaths<BlogPostPageParams> = async ({
   const paths = allSlugs.reduce<{ params: BlogPostPageParams }[]>(
     (paths, slug) => {
       const localePaths = locales!.map((locale) => {
-        return { params: { slug }, locale }
-      })
+        return { params: { slug }, locale };
+      });
       paths.push(...localePaths);
 
       return paths;

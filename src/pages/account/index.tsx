@@ -1,9 +1,9 @@
-import Head from "next/head";
+import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { IS_DEVELOPMENT } from "#environment/derived";
 import { getAccountDetails } from "#lib/account";
-import { siteTitle } from "#lib/util";
+import { createSEOTags } from "#lib/seo";
 import { withSessionSSR } from "#server/requests";
 import { LinkInternal } from "#components/links";
 import { Page } from "#components/pages";
@@ -23,16 +23,16 @@ interface AccountPageProps extends BasePageProps {
 function AccountPage({
   account,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const router = useRouter();
   const { t } = useTranslation("account");
-  const title = t("acc_title");
+  const seoTags = createSEOTags({
+    locale: router.locale!,
+    title: t("acc_title"),
+    description: t("acc_desc"),
+  });
 
   return (
-    <Page heading={title}>
-      <Head>
-        <title>{siteTitle(title)}</title>
-        <meta name="description" content={t("acc_desc")} />
-      </Head>
-
+    <Page seoTags={seoTags}>
       <Nav>
         <NavList>
           {IS_DEVELOPMENT && (

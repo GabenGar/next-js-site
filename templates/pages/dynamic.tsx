@@ -1,8 +1,8 @@
-import Head from "next/head";
+import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { IS_DEVELOPMENT } from "#environment/derived";
-import { siteTitle } from "#lib/util";
+import { createSEOTags } from "#lib/seo";
 import { Page } from "#components/pages";
 import { BaseLayout as Layout } from "#components/layout";
 
@@ -14,22 +14,22 @@ import type {
 import type { ParsedUrlQuery } from "querystring";
 import type { BasePageProps } from "#types/pages";
 
-interface ITemplatePageProps extends BasePageProps {}
+interface IProps extends BasePageProps {}
 
-interface ITemplatePageParams extends ParsedUrlQuery {}
+interface IParams extends ParsedUrlQuery {}
 
 function TemplatePage({}: InferGetServerSidePropsType<
   typeof getServerSideProps
 >) {
-  return (
-    <Page heading="template heading">
-      <Head>
-        <title>{siteTitle("template title")}</title>
-        <meta name="description" content="template description" />
-        {/* <link rel="icon" href="/favicon.ico" /> */}
-      </Head>
-    </Page>
-  );
+  const router = useRouter();
+  const { t } = useTranslation("SET TRANSLATION FILE");
+  const seoTags = createSEOTags({
+    locale: router.locale!,
+    title: "template title",
+    description: "template description",
+  });
+
+  return <Page seoTags={seoTags}></Page>;
 }
 
 TemplatePage.getLayout = function getLayout(page: NextPage) {
@@ -37,8 +37,8 @@ TemplatePage.getLayout = function getLayout(page: NextPage) {
 };
 
 export const getServerSideProps: GetServerSideProps<
-  ITemplatePageProps,
-  ITemplatePageParams
+  IProps,
+  IParams
 > = async (context) => {
   const { locale } = context;
 

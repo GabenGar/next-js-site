@@ -1,8 +1,8 @@
-import Head from "next/head";
+import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { AdminPhoto } from "#assets";
-import { siteTitle } from "#lib/util";
+import { createSEOTags } from "#lib/seo";
 import { Page } from "#components/pages";
 import {
   Article,
@@ -25,16 +25,17 @@ interface IAboutPageProps extends BasePageProps {}
 interface IAboutPageParams extends ParsedUrlQuery {}
 
 function AboutPage() {
+  const router = useRouter();
   const { t } = useTranslation("common");
-  const pageTitle = t("about_title");
+  const seoTags = createSEOTags({
+    locale: router.locale!,
+    title: t("about_title"),
+    description: t("about_desc"),
+    urlPath: router.pathname,
+  });
 
   return (
-    <Page heading={pageTitle} pageClassName={styles.block}>
-      <Head>
-        <title>{siteTitle(pageTitle)}</title>
-        <meta name="description" content={t("about_desc")} />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <Page seoTags={seoTags} pageClassName={styles.block}>
       <Article>
         <ArticleHeader>
           <Heading level={2} className={styles.heading}>
@@ -130,19 +131,21 @@ function AboutPage() {
   );
 }
 
-export const getStaticProps: GetStaticProps<IAboutPageProps, IAboutPageParams> =
-  async ({ locale }) => {
-    const localization = await serverSideTranslations(locale!, [
-      "layout",
-      "components",
-      "common"
-    ]);
+export const getStaticProps: GetStaticProps<
+  IAboutPageProps,
+  IAboutPageParams
+> = async ({ locale }) => {
+  const localization = await serverSideTranslations(locale!, [
+    "layout",
+    "components",
+    "common",
+  ]);
 
-    return {
-      props: {
-        ...localization,
-      },
-    };
+  return {
+    props: {
+      ...localization,
+    },
   };
+};
 
 export default AboutPage;

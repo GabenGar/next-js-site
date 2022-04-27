@@ -1,8 +1,8 @@
 import { useEffect } from "react";
-import Head from "next/head";
+import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { siteTitle } from "#lib/util";
+import { createSEOTags } from "#lib/seo";
 import { useAppDispatch, useAppSelector } from "#store/redux";
 import { getFMCommentsAsync, selectFMSlice } from "#store/redux/reducers";
 import { Page } from "#components/pages";
@@ -31,21 +31,22 @@ interface FMCommentsPageProps extends BasePageProps {}
 interface FMCommentsPageParams extends ParsedUrlQuery {}
 
 function FMCommentsPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
-  const { t } = useTranslation("frontend-mentor");
+  const router = useRouter();
   const dispatch = useAppDispatch();
+  const { t } = useTranslation("frontend-mentor");
+  const seoTags = createSEOTags({
+    locale: router.locale!,
+    title: t("comments_title"),
+    description: t("challenge_desc", { title: t("comments_title") }),
+  });
   const { comments, status, error } = useAppSelector(selectFMSlice);
-  const title = t("comments_title");
 
   useEffect(() => {
     dispatch(getFMCommentsAsync());
   }, []);
 
   return (
-    <Page heading={title}>
-      <Head>
-        <title>{siteTitle(title)}</title>
-        <meta name="description" content={t("challenge_desc", { title })} />
-      </Head>
+    <Page seoTags={seoTags}>
       <Article className={styles.comments}>
         <ArticleHeader>
           <Heading level={2}>{t("comments_section")}</Heading>
@@ -79,9 +80,7 @@ function FMCommentsPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
 export const getStaticProps: GetStaticProps<
   FMCommentsPageProps,
   FMCommentsPageParams
-> = async (context) => {
-  const { locale } = context;
-
+> = async ({ locale }) => {
   const localization = await serverSideTranslations(locale!, [
     "layout",
     "components",

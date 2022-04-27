@@ -10,6 +10,10 @@
   "current_email": "Current Email",
   "new_email": "New Email",
   "confirmation_sent": "The confirmation link is sent to the new email.",
+  "email_code_title": "Confirm Email",
+  "email_code_desc": "Email confirmation code.",
+  "email_code_message": "Your email \"{{email}}\" was verified. Go back to",
+  "email_code_message_acc": "account page",
   "calendar_title": "Calendar",
   "calendar_desc": "Calendar info",
   "current_date": "Current date"

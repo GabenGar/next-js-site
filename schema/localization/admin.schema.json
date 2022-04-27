@@ -6,9 +6,31 @@
   "required": [
     "admin_title",
     "admin_desc",
+    "admin_approval",
     "nav_accounts",
     "nav_comments",
     "nav_tables",
-    "nav_invites"
+    "nav_invites",
+    "invites_title",
+    "invites_desc",
+    "invites_nav_create",
+    "invite_active",
+    "invite_inactive",
+    "invite_created_at",
+    "invite_expires_at",
+    "invite_never",
+    "invite_max_uses",
+    "invite_unlimited",
+    "invite_creator",
+    "invite_details",
+    "invites_create_submit",
+    "invites_create_title",
+    "invites_create_desc",
+    "invites_create_never",
+    "invites_create_week",
+    "invites_create_month",
+    "invites_create_year",
+    "invites_create_expires_at",
+    "invites_create_max_uses"
   ]
 }

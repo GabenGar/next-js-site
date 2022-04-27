@@ -1,10 +1,10 @@
-import Head from "next/head";
+import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { FOUND } from "#environment/constants/http";
 import { IS_INVITE_ONLY } from "#environment/derived";
 import { AuthError } from "#lib/errors";
-import { siteTitle } from "#lib/util";
+import { createSEOTags } from "#lib/seo";
 import { validateAccountInitFields, registerAccount } from "#lib/account";
 import { withSessionSSR, getReqBody } from "#server/requests";
 import { Page } from "#components/pages";
@@ -29,14 +29,17 @@ function RegisterPage({
   errors,
   schemaValidationErrors,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const router = useRouter();
   const { t } = useTranslation("auth");
-  const title = t("reg_title");
+  const seoTags = createSEOTags({
+    locale: router.locale!,
+    title: t("reg_title"),
+    description: t("reg_desc"),
+    urlPath: router.pathname,
+  });
+
   return (
-    <Page heading={title}>
-      <Head>
-        <title>{siteTitle(title)}</title>
-        <meta name="description" content={t("reg_desc")} />
-      </Head>
+    <Page seoTags={seoTags}>
       <Form method="POST" submitButton={t("register")}>
         <p>
           {t("already_registered")}?{" "}

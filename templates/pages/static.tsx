@@ -1,8 +1,8 @@
-import Head from "next/head";
+import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { IS_DEVELOPMENT } from "#environment/derived";
-import { siteTitle } from "#lib/util";
+import { createSEOTags } from "#lib/seo";
 import { Page } from "#components/pages";
 import { BaseLayout as Layout } from "#components/layout";
 import { JSONView } from "#components/json";
@@ -16,20 +16,22 @@ import type {
 import type { ParsedUrlQuery } from "querystring";
 import type { BasePageProps } from "#types/pages";
 
-interface ITemplatePageProps extends BasePageProps {}
+interface IProps extends BasePageProps {}
 
-interface ITemplatePageParams extends ParsedUrlQuery {}
+interface IParams extends ParsedUrlQuery {}
 
 function TemplatePage({}: InferGetStaticPropsType<typeof getStaticProps>) {
+  const router = useRouter();
+  const { t } = useTranslation("SET TRANSLATION FILE");
+  const seoTags = createSEOTags({
+    locale: router.locale!,
+    title: "template title",
+    description: "template description",
+  });
   const title = "template title";
 
   return (
-    <Page heading={title}>
-      <Head>
-        <title>{siteTitle(title)}</title>
-        <meta name="description" content="template description" />
-        {/* <link rel="icon" href="/favicon.ico" /> */}
-      </Head>
+    <Page seoTags={seoTags}>
       {IS_DEVELOPMENT && <JSONView json={"props preview"} />}
     </Page>
   );
@@ -39,7 +41,7 @@ TemplatePage.getLayout = function getLayout(page: NextPage) {
   return <Layout>{page}</Layout>;
 };
 
-export const getStaticPaths: GetStaticPaths<ITemplatePageParams> = async (
+export const getStaticPaths: GetStaticPaths<IParams> = async (
   context
 ) => {
   const { locales } = context;
@@ -54,8 +56,8 @@ export const getStaticPaths: GetStaticPaths<ITemplatePageParams> = async (
 };
 
 export const getStaticProps: GetStaticProps<
-  ITemplatePageProps,
-  ITemplatePageParams
+  IProps,
+  IParams
 > = async (context) => {
   const { locale } = context;
 

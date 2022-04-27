@@ -1,4 +1,8 @@
-import Head from "next/head";
+import { Fragment } from "react";
+import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { createSEOTags } from "#lib/seo";
 import { countriesByCodes, countryByName } from "#lib/api/rest-countries";
 import { CardList } from "#components/lists";
 import { ImageCarousel } from "#components/image-carousel";
@@ -18,14 +22,13 @@ import type {
 } from "next";
 import type { ParsedUrlQuery } from "querystring";
 import type { Country } from "#lib/api/rest-countries";
-import { Fragment } from "react";
 
-interface Props {
+interface IProps {
   country: Country;
   borderCountries: Country[] | null;
 }
 
-interface Params extends ParsedUrlQuery {
+interface IParams extends ParsedUrlQuery {
   full_name: string;
 }
 
@@ -33,7 +36,14 @@ export default function RESTCountriesCountryDetail({
   country,
   borderCountries,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const router = useRouter();
+  const { t } = useTranslation("frontend-mentor");
   const countryName = country.name.official;
+  const seoTags = createSEOTags({
+    locale: router.locale!,
+    title: countryName,
+    description: `Detailed info for ${countryName}`,
+  });
   const images = [
     { src: country.flags.png, href: country.flags.svg, caption: "Flag" },
   ];
@@ -47,11 +57,7 @@ export default function RESTCountriesCountryDetail({
   }
 
   return (
-    <Page heading={`${countryName}`}>
-      <Head>
-        <title>Detailed Info for {countryName}</title>
-        <meta name="description" content={`Detailed info for ${countryName}`} />
-      </Head>
+    <Page seoTags={seoTags}>
       <article className={styles.info}>
         <header>
           <ImageCarousel images={images} className={styles.images} />
@@ -268,10 +274,11 @@ RESTCountriesCountryDetail.getLayout = function getLayout(page: NextPage) {
   return <Layout>{page}</Layout>;
 };
 
-export const getServerSideProps: GetServerSideProps<Props, Params> = async (
-  context
-) => {
-  const { full_name } = context.params!;
+export const getServerSideProps: GetServerSideProps<IProps, IParams> = async ({
+  locale,
+  params,
+}) => {
+  const { full_name } = params!;
   const country = await countryByName(full_name, true);
 
   if (!country) {
@@ -284,7 +291,13 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (
     ? await countriesByCodes(country.borders)
     : null;
 
+  const localization = await serverSideTranslations(locale!, [
+    "layout",
+    "components",
+    "frontend-mentor",
+  ]);
+
   return {
-    props: { country, borderCountries },
+    props: { ...localization, country, borderCountries },
   };
 };
