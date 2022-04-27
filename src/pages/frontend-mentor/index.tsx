@@ -1,9 +1,9 @@
-import Head from "next/head";
+import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { CardList } from "#components/lists/card-list";
-import { siteTitle } from "#lib/util";
+import { createSEOTags } from "#lib/seo";
 import { Page } from "#components/pages";
+import { CardList } from "#components/lists/card-list";
 import { ChallengeCard } from "#components/frontend-mentor";
 import challenges from "./challenges.json";
 
@@ -17,15 +17,16 @@ interface FMHomePageProps extends BasePageProps {}
 interface FMHomePageParams extends ParsedUrlQuery {}
 
 function FMHomePage({}: InferGetStaticPropsType<typeof getStaticProps>) {
-  const { t } = useTranslation("frontend-mentor")
-  const title = t("index_title");
+  const router = useRouter();
+  const { t } = useTranslation("frontend-mentor");
+  const seoTags = createSEOTags({
+    locale: router.locale!,
+    title: t("index_title"),
+    description: t("index_desc"),
+  });
 
   return (
-    <Page heading={title}>
-      <Head>
-        <title>{siteTitle(title)}</title>
-        <meta name="description" content={t("index_desc")} />
-      </Head>
+    <Page seoTags={seoTags}>
       <CardList>
         {challenges.map((challenge: Challenge) => (
           <ChallengeCard key={challenge.id} challenge={challenge} />
