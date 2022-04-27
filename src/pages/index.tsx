@@ -16,13 +16,13 @@ interface IHomePageProps extends BasePageProps {}
 interface IHomePageParams extends ParsedUrlQuery {}
 
 function Home({}: InferGetStaticPropsType<typeof getStaticProps>) {
-  const router = useRouter()
+  const router = useRouter();
   const { t } = useTranslation("common");
   const seoTags = createSEOTags({
     locale: router.locale!,
     title: t("title"),
     description: t("description"),
-    urlPath: router.pathname
+    urlPath: router.pathname,
   });
 
   return (

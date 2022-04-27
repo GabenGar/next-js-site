@@ -1,7 +1,6 @@
-import Head from "next/head";
+import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { siteTitle } from "#lib/util";
 import { getBlogPosts } from "#lib/blog";
 import { Page } from "#components/pages";
 import { CardList } from "#components/lists";
@@ -11,6 +10,7 @@ import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import type { ParsedUrlQuery } from "querystring";
 import type { BasePageProps } from "#types/pages";
 import type { BlogPost } from "#lib/blog";
+import { createSEOTags } from "#lib/seo";
 
 interface IBlogPageProps extends BasePageProps {
   posts: BlogPost[];
@@ -19,15 +19,17 @@ interface IBlogPageProps extends BasePageProps {
 interface IBlogPageParams extends ParsedUrlQuery {}
 
 function BlogPage({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
+  const router = useRouter();
   const { t } = useTranslation("blog");
-  const title = t("blog_title");
+  const seoTags = createSEOTags({
+    locale: router.locale!,
+    title: t("blog_title"),
+    description: t("blog_desc"),
+    urlPath: router.pathname,
+  });
 
   return (
-    <Page heading={title}>
-      <Head>
-        <title>{siteTitle(title)}</title>
-        <meta name="description" content={"blog_desc"} />
-      </Head>
+    <Page seoTags={seoTags}>
       <CardList>
         {posts.map((post) => (
           <BlogPostCard key={post.slug} post={post} />
@@ -37,21 +39,23 @@ function BlogPage({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
   );
 }
 
-export const getStaticProps: GetStaticProps<IBlogPageProps, IBlogPageParams> =
-  async ({ locale }) => {
-    const posts = await getBlogPosts();
-    const localization = await serverSideTranslations(locale!, [
-      "layout",
-      "components",
-      "blog",
-    ]);
+export const getStaticProps: GetStaticProps<
+  IBlogPageProps,
+  IBlogPageParams
+> = async ({ locale }) => {
+  const posts = await getBlogPosts();
+  const localization = await serverSideTranslations(locale!, [
+    "layout",
+    "components",
+    "blog",
+  ]);
 
-    return {
-      props: {
-        ...localization,
-        posts,
-      },
-    };
+  return {
+    props: {
+      ...localization,
+      posts,
+    },
   };
+};
 
 export default BlogPage;

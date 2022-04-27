@@ -8,7 +8,7 @@ import { BLOGS_FOLDER } from "#environment/constants";
 export interface BlogPost {
   slug: string;
   title: string;
-  excerpt?: string;
+  excerpt: string;
   content: string;
   author?: string;
   created_at: string;
@@ -62,7 +62,7 @@ export async function getBlogPost(slug: string): Promise<BlogPost> {
   const parsedContent = await remark().use(html).process(content);
   const blogPost = {
     slug,
-    excerpt,
+    excerpt: excerpt!,
     content: parsedContent.toString(),
     ...(data as MDMatter),
   };
