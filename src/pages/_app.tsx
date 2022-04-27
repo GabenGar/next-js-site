@@ -1,6 +1,8 @@
 import "#styles/globals.scss";
 import { appWithTranslation } from "next-i18next";
 import { Provider as ReduxProvider } from "react-redux";
+import { DefaultSeo } from "next-seo";
+import { defaultSEOProps } from "#lib/seo";
 import { reduxStore } from "#store/redux";
 import { BaseLayout } from "#components/layout";
 
@@ -21,6 +23,8 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 
   return (
     <ReduxProvider store={reduxStore}>
+      <DefaultSeo {...defaultSEOProps}
+      />
       {getLayout(<Component {...pageProps} />)}
     </ReduxProvider>
   );

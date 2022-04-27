@@ -1,7 +1,7 @@
-import Head from "next/head";
+import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { siteTitle } from "#lib/util";
+import { createSEOTags } from "#lib/seo";
 import { Page } from "#components/pages";
 import { Nav, NavItem, NavList } from "#components/navigation";
 import { LinkInternal } from "#components/links";
@@ -10,26 +10,23 @@ import { FELogo } from "#components/icons/logos";
 import type { ParsedUrlQuery } from "querystring";
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import type { BasePageProps } from "#types/pages";
-import { createSEOTags } from "#lib/seo";
 
 interface IHomePageProps extends BasePageProps {}
 
 interface IHomePageParams extends ParsedUrlQuery {}
 
 function Home({}: InferGetStaticPropsType<typeof getStaticProps>) {
+  const router = useRouter()
   const { t } = useTranslation("common");
   const seoTags = createSEOTags({
+    locale: router.locale!,
     title: t("title"),
     description: t("description"),
+    urlPath: router.pathname
   });
-  const pageTitle = t("title");
 
   return (
-    <Page heading={pageTitle} seoTags={seoTags}>
-      <Head>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
+    <Page seoTags={seoTags}>
       <Nav>
         <NavList>
           <NavItem>

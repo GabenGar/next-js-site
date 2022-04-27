@@ -8,9 +8,9 @@ import type { NextSeoProps } from "next-seo";
 import type { RootlessProps } from "#types/props";
 
 export interface PageProps extends RootlessProps {
+  seoTags: NextSeoProps;
   heading?: ReactNode;
   pageClassName?: string;
-  seoTags: NextSeoProps;
 }
 
 export function Page({ seoTags, heading, pageClassName, children }: PageProps) {
@@ -23,11 +23,9 @@ export function Page({ seoTags, heading, pageClassName, children }: PageProps) {
   return (
     <>
       <NextSeo {...seoTags} />
-      {heading && (
-        <Heading className={styles.heading} level={1}>
-          {heading}
-        </Heading>
-      )}
+      <Heading className={styles.heading} level={1}>
+        {heading ? heading : seoTags.title}
+      </Heading>
 
       <section className={pageClass}>{children}</section>
     </>
