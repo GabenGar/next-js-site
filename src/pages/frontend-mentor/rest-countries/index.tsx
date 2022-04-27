@@ -1,21 +1,32 @@
-import Head from "next/head";
+import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { createSEOTags } from "#lib/seo";
 import { RESTCountries as Layout } from "#components/layout/frontend-mentor";
 import { Page } from "#components/pages";
 import { LinkInternal } from "#components/links";
-import styles from "./index.module.scss";
 
-import type { NextPage } from "next";
+import type { NextPage, GetStaticProps, InferGetStaticPropsType } from "next";
+import type { ParsedUrlQuery } from "querystring";
+import type { BasePageProps } from "#types/pages";
 
-export default function RESTCountriesPage() {
+interface IProps extends BasePageProps {}
+
+interface IParams extends ParsedUrlQuery {}
+
+export default function RESTCountriesPage({}: InferGetStaticPropsType<
+  typeof getStaticProps
+>) {
+  const router = useRouter();
+  const { t } = useTranslation("frontend-mentor");
+  const seoTags = createSEOTags({
+    locale: router.locale!,
+    title: "REST Countries",
+    description: "REST Countries Frontend Mentor Challenge",
+  });
+
   return (
-    <Page heading="REST Countries">
-      <Head>
-        <title>REST Countries</title>
-        <meta
-          name="description"
-          content="REST Countries Frontend Mentor Challenge"
-        />
-      </Head>
+    <Page seoTags={seoTags}>
       <nav>
         <ul>
           <li>
@@ -54,4 +65,22 @@ export default function RESTCountriesPage() {
 RESTCountriesPage.getLayout = function getLayout(page: NextPage) {
   // @ts-expect-error fix type
   return <Layout>{page}</Layout>;
+};
+
+export const getStaticProps: GetStaticProps<IProps, IParams> = async (
+  context
+) => {
+  const { locale } = context;
+
+  const localization = await serverSideTranslations(locale!, [
+    "layout",
+    "components",
+    "frontend-mentor",
+  ]);
+
+  return {
+    props: {
+      ...localization,
+    },
+  };
 };

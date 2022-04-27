@@ -1,8 +1,11 @@
-import Head from "next/head";
+import { useTranslation } from "next-i18next";
+import { useRouter } from "next/router";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useEffect, useState } from "react";
+import { createSEOTags } from "#lib/seo";
 import { allCountries } from "#lib/api/rest-countries";
-import { siteTitle } from "#lib/util";
 import { CardList } from "#components/lists/card-list";
+import { LoadingBar } from "#components/state";
 import { Pagination } from "#components/pagination";
 import {
   Form,
@@ -24,18 +27,25 @@ import type {
 import type { FormEvent } from "react";
 import type { Country } from "#lib/api/rest-countries";
 
-interface Props {
+interface IProps {
   countries: Country[];
 }
 
 const limit = 25;
 
-export default function RESTCountriesPage({
+export default function RESTCountriesAllPage({
   countries,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const router = useRouter();
+  const { t } = useTranslation("frontend-mentor");
   const [currentPage, changeCurrentPage] = useState(1);
   const [filteredCountries, filterCountries] = useState(countries);
   const [currentCountries, changeCurrentCountries] = useState<Country[]>([]);
+  const seoTags = createSEOTags({
+    locale: router.locale!,
+    title: "All Countries",
+    description: "All Countries",
+  });
   const regions = Array.from(
     countries.reduce(
       (prev, current) => prev.add(current.region),
@@ -70,16 +80,11 @@ export default function RESTCountriesPage({
   }
 
   if (!countries) {
-    return <div>Loading...</div>;
+    return <LoadingBar />;
   }
 
   return (
-    <Page heading={pageTitle}>
-      <Head>
-        <title>{siteTitle(pageTitle)}</title>
-        <meta name="description" content={pageTitle} />
-      </Head>
-
+    <Page seoTags={seoTags}>
       <Form className={styles.search} onSubmit={handleSearch}>
         <TextSection id="country-search" name="country-name">
           Name:
@@ -115,12 +120,14 @@ export default function RESTCountriesPage({
   );
 }
 
-RESTCountriesPage.getLayout = function getLayout(page: NextPage) {
+RESTCountriesAllPage.getLayout = function getLayout(page: NextPage) {
   // @ts-expect-error fix type
   return <Layout>{page}</Layout>;
 };
 
-export const getServerSideProps: GetServerSideProps<Props> = async () => {
+export const getServerSideProps: GetServerSideProps<IProps> = async ({
+  locale,
+}) => {
   const countries = await allCountries();
 
   if (!countries) {
@@ -129,7 +136,13 @@ export const getServerSideProps: GetServerSideProps<Props> = async () => {
     };
   }
 
+  const localization = await serverSideTranslations(locale!, [
+    "layout",
+    "components",
+    "frontend-mentor",
+  ]);
+
   return {
-    props: { countries },
+    props: { ...localization, countries },
   };
 };

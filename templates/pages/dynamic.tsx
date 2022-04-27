@@ -14,9 +14,9 @@ import type {
 import type { ParsedUrlQuery } from "querystring";
 import type { BasePageProps } from "#types/pages";
 
-interface ITemplatePageProps extends BasePageProps {}
+interface IProps extends BasePageProps {}
 
-interface ITemplatePageParams extends ParsedUrlQuery {}
+interface IParams extends ParsedUrlQuery {}
 
 function TemplatePage({}: InferGetServerSidePropsType<
   typeof getServerSideProps
@@ -37,8 +37,8 @@ TemplatePage.getLayout = function getLayout(page: NextPage) {
 };
 
 export const getServerSideProps: GetServerSideProps<
-  ITemplatePageProps,
-  ITemplatePageParams
+  IProps,
+  IParams
 > = async (context) => {
   const { locale } = context;
 

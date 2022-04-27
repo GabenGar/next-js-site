@@ -1,6 +1,8 @@
-import Head from "next/head";
 import { Fragment } from "react";
-import { siteTitle } from "#lib/util";
+import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { createSEOTags } from "#lib/seo";
 import { allCountries } from "#lib/api/rest-countries";
 import { GalleryList } from "#components/lists";
 import { LocalNav } from "#components/fancy";
@@ -16,31 +18,33 @@ import type {
 import type { ParsedUrlQuery } from "querystring";
 import type { Country } from "#lib/api/rest-countries";
 
-interface Props {
+interface IProps {
   subregions: {
     [subregion: string]: Country[];
   };
 }
 
-interface Params extends ParsedUrlQuery {}
+interface IParams extends ParsedUrlQuery {}
 
 function RegionCountries({
   subregions,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const router = useRouter();
+  const { t } = useTranslation("frontend-mentor");
+  const seoTags = createSEOTags({
+    locale: router.locale!,
+    title: "Countries by Subregions",
+    description: "Countries by Subregions",
+  });
   const subRegionList = Object.keys(subregions).map((subregion) => {
     return {
       title: subregion,
       id: subregion.trim().toLowerCase(),
     };
   });
-  const pageTitle = "Countries by Subregions";
 
   return (
-    <Page heading={pageTitle}>
-      <Head>
-        <title>{siteTitle(pageTitle)}</title>
-        <meta name="description" content={pageTitle} />
-      </Head>
+    <Page seoTags={seoTags}>
       <LocalNav items={subRegionList}>Subregions</LocalNav>
       {Object.entries(subregions).map(([subregion, countries]) => (
         <Fragment key={subregion.trim().toLowerCase()}>
@@ -63,9 +67,9 @@ RegionCountries.getLayout = function getLayout(page: NextPage) {
   return <Layout>{page}</Layout>;
 };
 
-export const getServerSideProps: GetServerSideProps<Props, Params> = async (
-  context
-) => {
+export const getServerSideProps: GetServerSideProps<IProps, IParams> = async ({
+  locale,
+}) => {
   const countries = await allCountries();
 
   if (!countries) {
@@ -76,8 +80,15 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (
 
   const subregions = sortCountriesBySubRegions(countries);
 
+  const localization = await serverSideTranslations(locale!, [
+    "layout",
+    "components",
+    "frontend-mentor",
+  ]);
+
   return {
     props: {
+      ...localization,
       subregions,
     },
   };

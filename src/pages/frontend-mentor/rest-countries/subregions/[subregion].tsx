@@ -1,6 +1,7 @@
-import Head from "next/head";
-
-import { siteTitle } from "#lib/util";
+import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { createSEOTags } from "#lib/seo";
 import { countriesByRegion as countriesBySubRegion } from "#lib/api/rest-countries";
 import { CardList } from "#components/lists/card-list";
 import { RESTCountries as Layout } from "#components/layout/frontend-mentor";
@@ -15,12 +16,12 @@ import type {
 import type { ParsedUrlQuery } from "querystring";
 import type { Country } from "#lib/api/rest-countries";
 
-interface Props {
+interface IProps {
   subregion: string;
   countries: Country[];
 }
 
-interface Params extends ParsedUrlQuery {
+interface IParams extends ParsedUrlQuery {
   subregion: string;
 }
 
@@ -28,14 +29,17 @@ function SubRegionDetails({
   subregion,
   countries,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const router = useRouter();
+  const { t } = useTranslation("frontend-mentor");
   const pageTitle = `${countries.length} countries of ${subregion}`;
+  const seoTags = createSEOTags({
+    locale: router.locale!,
+    title: pageTitle,
+    description: pageTitle,
+  });
 
   return (
-    <Page heading={pageTitle}>
-      <Head>
-        <title>{siteTitle(pageTitle)}</title>
-        <meta name="description" content={pageTitle} />
-      </Head>
+    <Page seoTags={seoTags}>
       <CardList>
         {countries.map((country) => (
           <CountryCard key={country.cca2} country={country} />
@@ -50,10 +54,11 @@ SubRegionDetails.getLayout = function getLayout(page: NextPage) {
   return <Layout>{page}</Layout>;
 };
 
-export const getServerSideProps: GetServerSideProps<Props, Params> = async (
-  context
-) => {
-  const { subregion: region } = context.params!;
+export const getServerSideProps: GetServerSideProps<IProps, IParams> = async ({
+  locale,
+  params,
+}) => {
+  const { subregion: region } = params!;
   const countries = await countriesBySubRegion(region);
 
   if (!countries) {
@@ -62,8 +67,15 @@ export const getServerSideProps: GetServerSideProps<Props, Params> = async (
     };
   }
 
+  const localization = await serverSideTranslations(locale!, [
+    "layout",
+    "components",
+    "frontend-mentor",
+  ]);
+
   return {
     props: {
+      ...localization,
       subregion: region,
       countries,
     },

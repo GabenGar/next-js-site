@@ -16,9 +16,9 @@ import type {
 import type { ParsedUrlQuery } from "querystring";
 import type { BasePageProps } from "#types/pages";
 
-interface ITemplatePageProps extends BasePageProps {}
+interface IProps extends BasePageProps {}
 
-interface ITemplatePageParams extends ParsedUrlQuery {}
+interface IParams extends ParsedUrlQuery {}
 
 function TemplatePage({}: InferGetStaticPropsType<typeof getStaticProps>) {
   const router = useRouter();
@@ -41,7 +41,7 @@ TemplatePage.getLayout = function getLayout(page: NextPage) {
   return <Layout>{page}</Layout>;
 };
 
-export const getStaticPaths: GetStaticPaths<ITemplatePageParams> = async (
+export const getStaticPaths: GetStaticPaths<IParams> = async (
   context
 ) => {
   const { locales } = context;
@@ -56,8 +56,8 @@ export const getStaticPaths: GetStaticPaths<ITemplatePageParams> = async (
 };
 
 export const getStaticProps: GetStaticProps<
-  ITemplatePageProps,
-  ITemplatePageParams
+  IProps,
+  IParams
 > = async (context) => {
   const { locale } = context;
 
