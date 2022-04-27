@@ -10,6 +10,7 @@ import { FELogo } from "#components/icons/logos";
 import type { ParsedUrlQuery } from "querystring";
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import type { BasePageProps } from "#types/pages";
+import { createSEOTags } from "#lib/seo";
 
 interface IHomePageProps extends BasePageProps {}
 
@@ -17,13 +18,15 @@ interface IHomePageParams extends ParsedUrlQuery {}
 
 function Home({}: InferGetStaticPropsType<typeof getStaticProps>) {
   const { t } = useTranslation("common");
+  const seoTags = createSEOTags({
+    title: t("title"),
+    description: t("description"),
+  });
   const pageTitle = t("title");
 
   return (
-    <Page heading={pageTitle}>
+    <Page heading={pageTitle} seoTags={seoTags}>
       <Head>
-        <title>{siteTitle(pageTitle)}</title>
-        <meta name="description" content={t("description")} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -41,19 +44,21 @@ function Home({}: InferGetStaticPropsType<typeof getStaticProps>) {
   );
 }
 
-export const getStaticProps: GetStaticProps<IHomePageProps, IHomePageParams> =
-  async ({ locale }) => {
-    const localization = await serverSideTranslations(locale!, [
-      "layout",
-      "components",
-      "common",
-    ]);
+export const getStaticProps: GetStaticProps<
+  IHomePageProps,
+  IHomePageParams
+> = async ({ locale }) => {
+  const localization = await serverSideTranslations(locale!, [
+    "layout",
+    "components",
+    "common",
+  ]);
 
-    return {
-      props: {
-        ...localization,
-      },
-    };
+  return {
+    props: {
+      ...localization,
+    },
   };
+};
 
 export default Home;

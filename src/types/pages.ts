@@ -1,5 +1,6 @@
 import type { ErrorObject } from "ajv";
-import type { SSRConfig } from "next-i18next";
+import type { NextSeoProps } from "next-seo";
+
 export interface ISchemaValidationError extends ErrorObject {}
 
 export type IValidationResult<T> =

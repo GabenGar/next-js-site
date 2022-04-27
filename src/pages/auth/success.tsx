@@ -26,8 +26,8 @@ function AuthSuccessPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
         <title>{siteTitle(title)}</title>
         <meta name="description" content={t("auth_success_desc")} />
         <meta httpEquiv="refresh" content={`5; url=${SITE_ORIGIN}/account`} />
-        <p>{t("auth_success_message")}</p>
       </Head>
+      <p>{t("auth_success_message")}</p>
     </Page>
   );
 }
