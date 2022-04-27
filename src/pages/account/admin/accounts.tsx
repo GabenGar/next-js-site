@@ -1,14 +1,14 @@
-import Head from "next/head";
+import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { IS_DEVELOPMENT } from "#environment/derived";
-import { siteTitle } from "#lib/util";
+import { createSEOTags } from "#lib/seo";
 import { getAccountList } from "#lib/account/admin";
 import { withSessionSSR } from "#server/requests";
 import { Page } from "#components/pages";
 import { JSONView } from "#components/json";
 
-import type { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import type { InferGetServerSidePropsType } from "next";
 import type { IAccount } from "#types/entities";
 import type { BasePageProps } from "#types/pages";
 
@@ -19,15 +19,16 @@ interface AdminPageProps extends BasePageProps {
 function AccountsPage({
   accounts,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const router = useRouter();
   const { t } = useTranslation("admin");
-  const title = "Accounts overview";
+  const seoTags = createSEOTags({
+    locale: router.locale!,
+    title: "Accounts overview",
+    description: "Accounts details",
+  });
 
   return (
-    <Page heading={title}>
-      <Head>
-        <title>{siteTitle(title)}</title>
-        <meta name="description" content="Account details" />
-      </Head>
+    <Page seoTags={seoTags}>
       <JSONView json={accounts} />
     </Page>
   );

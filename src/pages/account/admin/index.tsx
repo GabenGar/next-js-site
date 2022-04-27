@@ -1,7 +1,7 @@
-import Head from "next/head";
+import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { siteTitle } from "#lib/util";
+import { createSEOTags } from "#lib/seo";
 import { getAccountDetails } from "#lib/account";
 import { withSessionSSR } from "#server/requests";
 import { LinkInternal } from "#components/links";
@@ -11,19 +11,19 @@ import { Nav, NavList } from "#components/navigation";
 import type { InferGetServerSidePropsType } from "next";
 import type { BasePageProps } from "#types/pages";
 
-interface AdminPageProps extends BasePageProps {
-}
+interface AdminPageProps extends BasePageProps {}
 
 function AdminPage({}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const router = useRouter();
   const { t } = useTranslation("admin");
-  const title = t("admin_title");
+  const seoTags = createSEOTags({
+    locale: router.locale!,
+    title: t("admin_title"),
+    description: t("admin_desc"),
+  });
 
   return (
-    <Page heading={title}>
-      <Head>
-        <title>{siteTitle(title)}</title>
-        <meta name="description" content={t("admin_desc")} />
-      </Head>
+    <Page seoTags={seoTags}>
       <Nav>
         <NavList>
           <LinkInternal href="/account/admin/accounts">
@@ -81,7 +81,7 @@ export const getServerSideProps = withSessionSSR<AdminPageProps>(
 
     return {
       props: {
-        ...localization
+        ...localization,
       },
     };
   }

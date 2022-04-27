@@ -1,5 +1,4 @@
 import { useRouter } from "next/router";
-import Head from "next/head";
 import { useTranslation } from "next-i18next";
 import { IS_DEVELOPMENT } from "#environment/derived";
 import { getAccountDetails, confirmNewEmail } from "#lib/account";
@@ -33,10 +32,6 @@ function EmailConfirmationPage({
 
   return (
     <Page seoTags={seoTags}>
-      <Head>
-        <title>Confirm Email</title>
-        <meta name="description" content="Confirm Email" />
-      </Head>
       {email && (
         // @ts-expect-error children error
         <p>

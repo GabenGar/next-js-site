@@ -1,5 +1,8 @@
-import Head from "next/head";
-import { siteTitle } from "#lib/util";
+import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { FOUND } from "#environment/constants/http";
+import { createSEOTags } from "#lib/seo";
 import { getAccountDetails } from "#lib/account";
 import { getReqBody, withSessionSSR } from "#server/requests";
 import { createInvite } from "#lib/account/admin";
@@ -24,7 +27,13 @@ function InviteCreationPage({
   errors,
   schemaValidationErrors,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const title = "New Invite";
+  const router = useRouter();
+  const { t } = useTranslation("admin");
+  const seoTags = createSEOTags({
+    locale: router.locale!,
+    title: "New Invite",
+    description: "New invite overview.",
+  });
   const selectOptions: IOptionProps[] = [
     {
       optionTitle: "Never",
@@ -36,11 +45,7 @@ function InviteCreationPage({
   ];
 
   return (
-    <Page heading={title}>
-      <Head>
-        <title>{siteTitle(title)}</title>
-        <meta name="description" content={`${title} info"`} />
-      </Head>
+    <Page seoTags={seoTags}>
       <Form method="POST" submitButton="Create">
         <Select id="expires-at" name="expires_at" options={selectOptions}>
           Expires in:
@@ -76,7 +81,7 @@ function InviteCreationPage({
 }
 
 export const getServerSideProps = withSessionSSR<IInviteCreationProps>(
-  async ({ req }) => {
+  async ({ req, locale }) => {
     const { account_id } = req.session;
 
     if (!account_id) {
@@ -121,14 +126,20 @@ export const getServerSideProps = withSessionSSR<IInviteCreationProps>(
 
       return {
         redirect: {
+          statusCode: FOUND,
           destination: "/account/admin/invites",
-          permanent: false,
         },
       };
     }
 
+    const localization = await serverSideTranslations(locale!, [
+      "layout",
+      "components",
+      "admin",
+    ]);
+
     return {
-      props: {},
+      props: { ...localization },
     };
   }
 );
