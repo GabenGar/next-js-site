@@ -1,8 +1,8 @@
-import Head from "next/head";
+import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { IS_DEVELOPMENT } from "#environment/derived";
-import { siteTitle } from "#lib/util";
+import { createSEOTags } from "#lib/seo";
 import { Page } from "#components/pages";
 import { BaseLayout as Layout } from "#components/layout";
 import { JSONView } from "#components/json";
@@ -21,15 +21,17 @@ interface ITemplatePageProps extends BasePageProps {}
 interface ITemplatePageParams extends ParsedUrlQuery {}
 
 function TemplatePage({}: InferGetStaticPropsType<typeof getStaticProps>) {
+  const router = useRouter();
+  const { t } = useTranslation("SET TRANSLATION FILE");
+  const seoTags = createSEOTags({
+    locale: router.locale!,
+    title: "template title",
+    description: "template description",
+  });
   const title = "template title";
 
   return (
-    <Page heading={title}>
-      <Head>
-        <title>{siteTitle(title)}</title>
-        <meta name="description" content="template description" />
-        {/* <link rel="icon" href="/favicon.ico" /> */}
-      </Head>
+    <Page seoTags={seoTags}>
       {IS_DEVELOPMENT && <JSONView json={"props preview"} />}
     </Page>
   );
