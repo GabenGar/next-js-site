@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { createSEOTags } from "#lib/seo";
 import { getBlogPosts } from "#lib/blog";
 import { Page } from "#components/pages";
 import { CardList } from "#components/lists";
@@ -10,7 +11,6 @@ import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import type { ParsedUrlQuery } from "querystring";
 import type { BasePageProps } from "#types/pages";
 import type { BlogPost } from "#lib/blog";
-import { createSEOTags } from "#lib/seo";
 
 interface IBlogPageProps extends BasePageProps {
   posts: BlogPost[];
