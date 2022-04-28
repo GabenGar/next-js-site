@@ -79,10 +79,20 @@ export const getServerSideProps = withSessionSSR<LoginPageProps>(
     const { account_id } = req.session;
 
     if (account_id) {
+      const redirectURL = createNextURL(
+        {
+          context: {
+            locale,
+            defaultLocale,
+          },
+        },
+        "/account"
+      ).toString();
+
       return {
         redirect: {
           statusCode: FOUND,
-          destination: "/account",
+          destination: redirectURL,
         },
       };
     }

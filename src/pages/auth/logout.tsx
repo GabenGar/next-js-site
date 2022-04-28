@@ -1,9 +1,10 @@
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { SEE_OTHER } from "#environment/constants/http";
+import { FOUND, SEE_OTHER } from "#environment/constants/http";
 import { withSessionSSR } from "#server/requests";
 import { createSEOTags } from "#lib/seo";
+import { createNextURL } from "#lib/language";
 import { Page } from "#components/pages";
 import { Form } from "#components/forms";
 
@@ -32,14 +33,19 @@ export function LogoutPage({}: InferGetServerSidePropsType<
 }
 
 export const getServerSideProps = withSessionSSR<LogoutPageProps>(
-  async ({ req, locale }) => {
+  async ({ req, locale, defaultLocale }) => {
     const { account_id } = req.session;
 
     if (!account_id) {
+      const redirectURL = createNextURL(
+        { context: { locale, defaultLocale } },
+        "/auth/login"
+      ).toString();
+
       return {
         redirect: {
-          destination: "/auth/login",
-          permanent: false,
+          statusCode: FOUND,
+          destination: redirectURL,
         },
       };
     }
@@ -53,10 +59,15 @@ export const getServerSideProps = withSessionSSR<LogoutPageProps>(
     if (req.method === "POST") {
       req.session.destroy();
 
+      const redirectURL = createNextURL(
+        { context: { locale, defaultLocale } },
+        "/"
+      ).toString();
+
       return {
         redirect: {
           statusCode: SEE_OTHER,
-          destination: "/",
+          destination: redirectURL,
         },
       };
     }

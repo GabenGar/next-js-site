@@ -8,36 +8,37 @@ import type { BCPLangTag } from "./types";
 
 interface Props {
   req?: NextRequest;
-  context?: GetServerSidePropsContext | GetStaticPropsContext;
+  context?: GetServerSidePropsContext | GetStaticPropsContext
   locale?: BCPLangTag;
 }
 
 export function createNextURL(
-  { req, context, locale }: Props,
+  { req, context, router, locale }: Props,
   pathname: string
 ): URL {
   if (!IS_BROWSER && context) {
     const { defaultLocale, locale: currentLocale } = context;
-    const locale = currentLocale === defaultLocale ? "" : currentLocale!;
+    const locale = currentLocale === defaultLocale ? "" : `/${currentLocale!}`;
 
-    const path = `/${locale}${pathname}`;
+    const path = `${locale}${pathname}`;
+
     return new URL(path, SITE_ORIGIN);
   }
 
   if (!IS_BROWSER && req) {
     const { locale: currentLocale, defaultLocale } = req.nextUrl.clone();
-    const locale = currentLocale === defaultLocale ? "" : currentLocale;
-    const path = `/${locale}${pathname}`;
+    const locale = currentLocale === defaultLocale ? "" : `/${currentLocale}`;
+    const path = `${locale}${pathname}`;
 
     return new URL(path, SITE_ORIGIN);
   }
 
-  if (IS_BROWSER && !locale) {
+  if (IS_BROWSER && router && !locale) {
     // both of these will be present on client
     const defaultLocale = Router.defaultLocale!;
     const currentLocale = Router.locale!;
-    const locale = currentLocale === defaultLocale ? "" : currentLocale;
-    const path = `/${locale}${pathname}`;
+    const locale = currentLocale === defaultLocale ? "" : `/${currentLocale}`;
+    const path = `${locale}${pathname}`;
 
     return new URL(path, SITE_ORIGIN);
   }

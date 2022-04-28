@@ -2,9 +2,9 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { SITE_ORIGIN } from "#environment/vars";
 import { createSEOTags } from "#lib/seo";
 import { setLocalStoreItem } from "#store/local";
+import { createNextURL } from "#lib/language";
 import { Page } from "#components/pages";
 
 import type { InferGetStaticPropsType, GetStaticProps } from "next";
@@ -21,6 +21,8 @@ function AuthSuccessPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
     description: t("auth_success_desc"),
     urlPath: router.pathname,
   });
+  const redirectURL = createNextURL({}, "/account").toString();
+  console.log(redirectURL);
 
   useEffect(() => {
     setLocalStoreItem<boolean>("is_registered", true);
@@ -33,7 +35,7 @@ function AuthSuccessPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
         additionalMetaTags: [
           {
             httpEquiv: "refresh",
-            content: `5; url=${SITE_ORIGIN}/account`,
+            content: `5; url=${redirectURL}`,
           },
         ],
       }}
