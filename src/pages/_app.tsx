@@ -1,4 +1,5 @@
 import "#styles/globals.scss";
+import Script from "next/script";
 import { appWithTranslation } from "next-i18next";
 import { Provider as ReduxProvider } from "react-redux";
 import { DefaultSeo } from "next-seo";
@@ -24,6 +25,12 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 
   return (
     <ErrorBoundary>
+      <Script id="theme-setup" strategy="beforeInteractive" async>{`
+        const theme = document.cookie
+          .split("; ")
+          .find((row) => row.startsWith("theme="));
+        const value = theme ? theme.split("=")[1] : "light";
+        document.documentElement.dataset.theme = value;`}</Script>
       <ReduxProvider store={reduxStore}>
         <DefaultSeo {...defaultSEOProps} />
         {getLayout(<Component {...pageProps} />)}
