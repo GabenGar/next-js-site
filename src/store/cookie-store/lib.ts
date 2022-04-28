@@ -16,7 +16,7 @@ const defaultOptions: CookieAttributes = {
   sameSite: "strict",
 };
 
-export function getCookie<Type>(name: ICookieKey): Type {
+export function getCookie(name: ICookieKey): string {
   const value = Cookies.get(name);
 
   if (!value) {
@@ -26,22 +26,21 @@ export function getCookie<Type>(name: ICookieKey): Type {
     );
   }
 
-  return fromJSON<Type>(value)!;
+  return value;
 }
 
 /**
  * @param options {@link CookieAttributes cookie options}. Uses {@link defaultOptions default options} if not passed. Partial options get merged with the defaults.}
  */
-export function setCookie<Type>(
+export function setCookie(
   name: ICookieKey,
-  value: Type,
+  value: string,
   options: CookieAttributes = defaultOptions
 ) {
-  const jsonValue = toJSON<Type>(value);
   const finalOptions = options
     ? { ...defaultOptions, ...options }
     : defaultOptions;
-  const result = Cookies.set(name, jsonValue, finalOptions);
+  const result = Cookies.set(name, value, finalOptions);
 
   if (!result) {
     throw new StoreError(
