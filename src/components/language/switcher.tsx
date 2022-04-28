@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import clsx from "clsx";
+import { setCookie } from "#store/cookie-store";
 import { blockComponent } from "#components/meta";
 import { List, ListItem } from "#components/lists";
 import { Button } from "#components/buttons";
@@ -8,7 +9,7 @@ import { LinkInternal } from "#components/links";
 import { LanguageView } from "./language";
 import styles from "./switcher.module.scss";
 
-import type { BCPLangTag } from "#lib/language";
+import type { ISOLangString } from "#lib/language";
 import type { BlockProps } from "#types/props";
 
 export interface ILanguageSwitcherProps extends BlockProps<"div"> {}
@@ -49,6 +50,9 @@ function Switcher({ ...blockProps }: ILanguageSwitcherProps) {
                   href={{ pathname, query }}
                   as={asPath}
                   locale={locale}
+                  onClick={() => {
+                    setCookie("NEXT_LOCALE", locale);
+                  }}
                 >
                   <LanguageView langString={locale} />
                 </LinkInternal>

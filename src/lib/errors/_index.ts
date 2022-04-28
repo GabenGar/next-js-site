@@ -73,7 +73,7 @@ export class CodegenError extends ServerError {}
  */
 export class ClientError extends ProjectError {}
 
-const storeTypes = ["localStorage", "redux"] as const;
+const storeTypes = ["localStorage", "redux", "cookie"] as const;
 type IStoreType = typeof storeTypes[number];
 
 export class StoreError extends ClientError {

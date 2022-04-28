@@ -9,6 +9,7 @@ import { BaseLayout } from "#components/layout";
 import type { AppProps } from "next/app";
 import type { NextPage } from "next";
 import type { ReactElement, ReactNode } from "react";
+import { ErrorBoundary } from "src/components/errors/error-boundary";
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -22,11 +23,12 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     Component.getLayout ?? ((page) => <BaseLayout>{page}</BaseLayout>);
 
   return (
-    <ReduxProvider store={reduxStore}>
-      <DefaultSeo {...defaultSEOProps}
-      />
-      {getLayout(<Component {...pageProps} />)}
-    </ReduxProvider>
+    <ErrorBoundary>
+      <ReduxProvider store={reduxStore}>
+        <DefaultSeo {...defaultSEOProps} />
+        {getLayout(<Component {...pageProps} />)}
+      </ReduxProvider>
+    </ErrorBoundary>
   );
 }
 
