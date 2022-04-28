@@ -5,6 +5,7 @@ import { FOUND, SEE_OTHER } from "#environment/constants/http";
 import { AuthError } from "#lib/errors";
 import { createSEOTags } from "#lib/seo";
 import { loginAccount, validateAccountInitFields } from "#lib/account";
+import { createNextURL } from "#lib/language";
 import { withSessionSSR, getReqBody } from "#server/requests";
 import { Page } from "#components/pages";
 import { Form } from "#components/forms";
@@ -18,8 +19,6 @@ import { LinkInternal } from "#components/links";
 import type { BasePageProps } from "#types/pages";
 import type { IAccountInit } from "#types/entities";
 import type { InferGetServerSidePropsType } from "next";
-
-
 
 interface LoginPageProps extends BasePageProps {
   accCreds?: IAccountInit;
@@ -76,7 +75,7 @@ export function LoginPage({
 }
 
 export const getServerSideProps = withSessionSSR<LoginPageProps>(
-  async ({ req, locale }) => {
+  async ({ req, locale, defaultLocale }) => {
     const { account_id } = req.session;
 
     if (account_id) {
@@ -123,10 +122,15 @@ export const getServerSideProps = withSessionSSR<LoginPageProps>(
       req.session.account_id = loginResult.id;
       await req.session.save();
 
+      const redirectURL = createNextURL(
+        { context: { locale, defaultLocale } },
+        "/auth/success"
+      ).toString();
+
       return {
         redirect: {
           statusCode: SEE_OTHER,
-          destination: "/auth/success",
+          destination: redirectURL,
         },
       };
     }
