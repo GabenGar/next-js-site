@@ -1,8 +1,8 @@
-import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { IS_DEVELOPMENT } from "#environment/derived";
 import { getAccountDetails } from "#lib/account";
+import { createNextURL } from "#lib/language";
 import { createSEOTags } from "#lib/seo";
 import { withSessionSSR } from "#server/requests";
 import { LinkInternal } from "#components/links";
@@ -21,14 +21,15 @@ interface AccountPageProps extends BasePageProps {
 }
 
 function AccountPage({
+  localeInfo,
   account,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const router = useRouter();
   const { t } = useTranslation("account");
   const seoTags = createSEOTags({
-    locale: router.locale!,
+    locale: localeInfo.locale,
     title: t("acc_title"),
     description: t("acc_desc"),
+    canonicalPath: createNextURL(localeInfo, "/account")
   });
 
   return (
@@ -67,7 +68,7 @@ function AccountPage({
 }
 
 export const getServerSideProps = withSessionSSR<AccountPageProps>(
-  async ({ req, locale }) => {
+  async ({ req, locale, defaultLocale }) => {
     const { account_id } = req.session;
 
     if (!account_id) {
@@ -98,6 +99,10 @@ export const getServerSideProps = withSessionSSR<AccountPageProps>(
     return {
       props: {
         ...localization,
+        localeInfo: {
+          locale: locale!,
+          defaultLocale: defaultLocale!,
+        },
         account: accountClient,
       },
     };

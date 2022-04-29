@@ -1,8 +1,8 @@
-import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { createSEOTags } from "#lib/seo";
 import { getAccountDetails } from "#lib/account";
+import { createNextURL } from "#lib/language";
 import { withSessionSSR } from "#server/requests";
 import { LinkInternal } from "#components/links";
 import { Page } from "#components/pages";
@@ -13,11 +13,12 @@ import type { BasePageProps } from "#types/pages";
 
 interface AdminPageProps extends BasePageProps {}
 
-function AdminPage({}: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const router = useRouter();
+function AdminPage({
+  localeInfo
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { t } = useTranslation("admin");
   const seoTags = createSEOTags({
-    locale: router.locale!,
+    locale: localeInfo.locale,
     title: t("admin_title"),
     description: t("admin_desc"),
   });
@@ -45,13 +46,16 @@ function AdminPage({}: InferGetServerSidePropsType<typeof getServerSideProps>) {
 }
 
 export const getServerSideProps = withSessionSSR<AdminPageProps>(
-  async ({ req, locale }) => {
+  async ({ req, locale, defaultLocale }) => {
     const { account_id } = req.session;
+    const localeInfo = { locale: locale!, defaultLocale: defaultLocale! };
 
     if (!account_id) {
+      const redirectURL = createNextURL(localeInfo, "/auth/login").toString();
+
       return {
         redirect: {
-          destination: "/auth/login",
+          destination: redirectURL,
           permanent: false,
         },
       };
@@ -82,6 +86,7 @@ export const getServerSideProps = withSessionSSR<AdminPageProps>(
     return {
       props: {
         ...localization,
+        localeInfo,
       },
     };
   }

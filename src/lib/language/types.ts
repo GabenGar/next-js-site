@@ -12,3 +12,8 @@ export type ISOLangString = string;
  * ISO 3166-1 string.
  */
 export type ISORegionString = string
+
+export interface ILocaleInfo {
+  locale: BCPLangTag;
+  defaultLocale: BCPLangTag;
+}

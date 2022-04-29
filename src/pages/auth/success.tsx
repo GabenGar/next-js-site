@@ -1,9 +1,8 @@
-import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { SITE_ORIGIN } from "#environment/vars";
 import { createSEOTags } from "#lib/seo";
+import { createNextURL } from "#lib/language";
 import { setLocalStoreItem } from "#store/local";
 import { Page } from "#components/pages";
 
@@ -12,15 +11,17 @@ import type { BasePageProps } from "#types/pages";
 
 interface RegisterPageProps extends BasePageProps {}
 
-function AuthSuccessPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
-  const router = useRouter();
+function AuthSuccessPage({
+  localeInfo,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   const { t } = useTranslation("auth");
   const seoTags = createSEOTags({
-    locale: router.locale!,
+    locale: localeInfo.locale,
     title: t("auth_success_title"),
     description: t("auth_success_desc"),
-    urlPath: router.pathname,
+    canonicalPath: createNextURL(localeInfo, "/auth/success"),
   });
+  const redirectURL = createNextURL(localeInfo, "/account").toString();
 
   useEffect(() => {
     setLocalStoreItem<boolean>("is_registered", true);
@@ -33,7 +34,7 @@ function AuthSuccessPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
         additionalMetaTags: [
           {
             httpEquiv: "refresh",
-            content: `5; url=${SITE_ORIGIN}/account`,
+            content: `5; url=${redirectURL}`,
           },
         ],
       }}
@@ -45,6 +46,7 @@ function AuthSuccessPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
 
 export const getStaticProps: GetStaticProps<RegisterPageProps> = async ({
   locale,
+  defaultLocale,
 }) => {
   const localization = await serverSideTranslations(locale!, [
     "layout",
@@ -55,6 +57,10 @@ export const getStaticProps: GetStaticProps<RegisterPageProps> = async ({
   return {
     props: {
       ...localization,
+      localeInfo: {
+        locale: locale!,
+        defaultLocale: defaultLocale!,
+      },
     },
   };
 };

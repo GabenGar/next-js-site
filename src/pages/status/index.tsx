@@ -1,7 +1,7 @@
-import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { createSEOTags } from "#lib/seo";
+import { createNextURL } from "#lib/language";
 import { Page } from "#components/pages";
 import { InternalNav } from "#components/navigation";
 
@@ -13,14 +13,15 @@ interface ITemplatePageProps extends BasePageProps {}
 
 interface ITemplatePageParams extends ParsedUrlQuery {}
 
-function StatusPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
-  const router = useRouter();
+function StatusPage({
+  localeInfo,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   const { t } = useTranslation("common");
   const seoTags = createSEOTags({
-    locale: router.locale!,
+    locale: localeInfo.locale,
     title: t("status_title"),
     description: t("status_desc"),
-    urlPath: router.pathname,
+    canonicalPath: createNextURL(localeInfo, "/status").toString(),
   });
 
   return (
@@ -45,7 +46,7 @@ function StatusPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
 export const getStaticProps: GetStaticProps<
   ITemplatePageProps,
   ITemplatePageParams
-> = async ({ locale }) => {
+> = async ({ locale, defaultLocale }) => {
   const localization = await serverSideTranslations(locale!, [
     "layout",
     "components",
@@ -55,6 +56,10 @@ export const getStaticProps: GetStaticProps<
   return {
     props: {
       ...localization,
+      localeInfo: {
+        locale: locale!,
+        defaultLocale: defaultLocale!,
+      },
     },
   };
 };

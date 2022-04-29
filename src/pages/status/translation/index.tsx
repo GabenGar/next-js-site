@@ -1,9 +1,9 @@
-import { useRouter } from "next/router";
 import clsx from "clsx";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { getLanguagesOverview, getMaxLineCount } from "#lib/translation";
 import { createSEOTags } from "#lib/seo";
+import { createNextURL } from "#lib/language";
 import { Page } from "#components/pages";
 import { DL, DS, DT, DD } from "#components/lists/d-list";
 import { LanguageView } from "#components/language";
@@ -25,16 +25,16 @@ interface ITranslationPageParams extends ParsedUrlQuery {}
  * @TODO Per language details
  */
 function TranslationPage({
+  localeInfo,
   totalCount,
   languagesOverview,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const router = useRouter();
   const { t } = useTranslation("common");
   const seoTags = createSEOTags({
-    locale: router.locale!,
+    locale: localeInfo.locale,
     title: t("translation_title"),
     description: t("translation_desc"),
-    urlPath: router.pathname,
+    canonicalPath: createNextURL(localeInfo, "/status/translation").toString(),
   });
 
   return (
@@ -72,7 +72,7 @@ function TranslationPage({
 export const getStaticProps: GetStaticProps<
   ITemplatePageProps,
   ITranslationPageParams
-> = async ({ locale }) => {
+> = async ({ locale, defaultLocale }) => {
   const localization = await serverSideTranslations(locale!, [
     "layout",
     "components",
@@ -85,6 +85,10 @@ export const getStaticProps: GetStaticProps<
   return {
     props: {
       ...localization,
+      localeInfo: {
+        locale: locale!,
+        defaultLocale: defaultLocale!,
+      },
       totalCount: totalLineCount,
       languagesOverview: languagesOverview,
     },

@@ -1,7 +1,7 @@
-import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { createSEOTags } from "#lib/seo";
+import { createNextURL } from "#lib/language";
 import { RESTCountries as Layout } from "#components/layout/frontend-mentor";
 import { Page } from "#components/pages";
 import { LinkInternal } from "#components/links";
@@ -14,15 +14,18 @@ interface IProps extends BasePageProps {}
 
 interface IParams extends ParsedUrlQuery {}
 
-export default function RESTCountriesPage({}: InferGetStaticPropsType<
-  typeof getStaticProps
->) {
-  const router = useRouter();
+export default function RESTCountriesPage({
+  localeInfo,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   const { t } = useTranslation("frontend-mentor");
   const seoTags = createSEOTags({
-    locale: router.locale!,
+    locale: localeInfo.locale,
     title: "REST Countries",
     description: "REST Countries Frontend Mentor Challenge",
+    canonicalPath: createNextURL(
+      localeInfo,
+      "/frontend-mentor/rest-countries"
+    ).toString(),
   });
 
   return (
@@ -67,11 +70,10 @@ RESTCountriesPage.getLayout = function getLayout(page: NextPage) {
   return <Layout>{page}</Layout>;
 };
 
-export const getStaticProps: GetStaticProps<IProps, IParams> = async (
-  context
-) => {
-  const { locale } = context;
-
+export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
+  locale,
+  defaultLocale,
+}) => {
   const localization = await serverSideTranslations(locale!, [
     "layout",
     "components",
@@ -81,6 +83,10 @@ export const getStaticProps: GetStaticProps<IProps, IParams> = async (
   return {
     props: {
       ...localization,
+      localeInfo: {
+        locale: locale!,
+        defaultLocale: defaultLocale!,
+      },
     },
   };
 };

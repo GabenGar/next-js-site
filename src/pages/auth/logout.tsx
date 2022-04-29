@@ -1,9 +1,9 @@
-import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { SEE_OTHER } from "#environment/constants/http";
+import { FOUND, SEE_OTHER } from "#environment/constants/http";
 import { withSessionSSR } from "#server/requests";
 import { createSEOTags } from "#lib/seo";
+import { createNextURL } from "#lib/language";
 import { Page } from "#components/pages";
 import { Form } from "#components/forms";
 
@@ -12,16 +12,15 @@ import type { BasePageProps } from "#types/pages";
 
 interface LogoutPageProps extends BasePageProps {}
 
-export function LogoutPage({}: InferGetServerSidePropsType<
-  typeof getServerSideProps
->) {
-  const router = useRouter();
+export function LogoutPage({
+  localeInfo,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { t } = useTranslation("auth");
   const seoTags = createSEOTags({
-    locale: router.locale!,
+    locale: localeInfo.locale,
     title: t("logout_title"),
     description: t("logout_desc"),
-    urlPath: router.pathname,
+    canonicalPath: createNextURL(localeInfo, "/auth/logout"),
   });
 
   return (
@@ -32,14 +31,17 @@ export function LogoutPage({}: InferGetServerSidePropsType<
 }
 
 export const getServerSideProps = withSessionSSR<LogoutPageProps>(
-  async ({ req, locale }) => {
+  async ({ req, locale, defaultLocale }) => {
     const { account_id } = req.session;
+    const localeInfo = { locale: locale!, defaultLocale: defaultLocale! };
 
     if (!account_id) {
+      const redirectURL = createNextURL(localeInfo, "/auth/login").toString();
+
       return {
         redirect: {
-          destination: "/auth/login",
-          permanent: false,
+          statusCode: FOUND,
+          destination: redirectURL,
         },
       };
     }
@@ -53,10 +55,12 @@ export const getServerSideProps = withSessionSSR<LogoutPageProps>(
     if (req.method === "POST") {
       req.session.destroy();
 
+      const redirectURL = createNextURL(localeInfo, "/").toString();
+
       return {
         redirect: {
           statusCode: SEE_OTHER,
-          destination: "/",
+          destination: redirectURL,
         },
       };
     }
@@ -64,6 +68,7 @@ export const getServerSideProps = withSessionSSR<LogoutPageProps>(
     return {
       props: {
         ...localization,
+        localeInfo,
       },
     };
   }

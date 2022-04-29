@@ -1,5 +1,6 @@
-import { SITE_ORIGIN, SITE_NAME } from "#environment/vars";
+import { SITE_NAME } from "#environment/vars";
 import { VercelLogo } from "#assets";
+import { ProjectURL } from "#lib/util";
 
 import type { StaticImageData } from "next/image";
 import type { NextSeoProps } from "next-seo";
@@ -10,9 +11,9 @@ export interface ICreateSEOTagsProps {
   title: string;
   description: string;
   /**
-   * Only use it for paths without search parameters.
+   * The path used to build a canonical URL.
    */
-  urlPath?: string;
+  canonicalPath?: string | URL;
   /**
    * An image url, will use the site logo if empty.
    */
@@ -20,19 +21,25 @@ export interface ICreateSEOTagsProps {
 }
 
 const logo = VercelLogo as StaticImageData;
+
+/**
+ * @TODO canonical url builder
+ */
 export function createSEOTags({
   title,
   description,
-  urlPath,
+  canonicalPath,
   locale,
   image,
 }: ICreateSEOTagsProps): NextSeoProps {
   const imageObj: OpenGraphMedia = image
     ? image
     : {
-        url: new URL(logo.src, SITE_ORIGIN).toString(),
+        url: new ProjectURL(logo.src).toString(),
       };
-  const canonicalURL = urlPath && new URL(urlPath, SITE_ORIGIN).toString();
+  const canonicalURL =
+    canonicalPath && new ProjectURL(canonicalPath).toString();
+
   const seoTags: NextSeoProps = {
     title: title,
     description: description,

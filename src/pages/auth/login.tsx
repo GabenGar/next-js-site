@@ -1,10 +1,10 @@
-import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { FOUND, SEE_OTHER } from "#environment/constants/http";
 import { AuthError } from "#lib/errors";
 import { createSEOTags } from "#lib/seo";
 import { loginAccount, validateAccountInitFields } from "#lib/account";
+import { createNextURL } from "#lib/language";
 import { withSessionSSR, getReqBody } from "#server/requests";
 import { Page } from "#components/pages";
 import { Form } from "#components/forms";
@@ -19,24 +19,22 @@ import type { BasePageProps } from "#types/pages";
 import type { IAccountInit } from "#types/entities";
 import type { InferGetServerSidePropsType } from "next";
 
-
-
 interface LoginPageProps extends BasePageProps {
   accCreds?: IAccountInit;
 }
 
 export function LoginPage({
+  localeInfo,
   errors,
   accCreds,
   schemaValidationErrors,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const router = useRouter();
   const { t } = useTranslation("auth");
   const seoTags = createSEOTags({
-    locale: router.locale!,
+    locale: localeInfo.locale,
     title: t("login_title"),
     description: t("login_desc"),
-    urlPath: router.pathname,
+    canonicalPath: createNextURL(localeInfo, "/auth/login"),
   });
 
   return (
@@ -76,14 +74,17 @@ export function LoginPage({
 }
 
 export const getServerSideProps = withSessionSSR<LoginPageProps>(
-  async ({ req, locale }) => {
+  async ({ req, locale, defaultLocale }) => {
     const { account_id } = req.session;
+    const localeInfo = { locale: locale!, defaultLocale: defaultLocale! };
 
     if (account_id) {
+      const redirectURL = createNextURL(localeInfo, "/account").toString();
+
       return {
         redirect: {
           statusCode: FOUND,
-          destination: "/account",
+          destination: redirectURL,
         },
       };
     }
@@ -102,6 +103,7 @@ export const getServerSideProps = withSessionSSR<LoginPageProps>(
         return {
           props: {
             ...localization,
+            localeInfo,
             schemaValidationErrors: [...validationResult.errors],
             accCreds,
           },
@@ -114,6 +116,7 @@ export const getServerSideProps = withSessionSSR<LoginPageProps>(
         return {
           props: {
             ...localization,
+            localeInfo,
             errors: [loginResult.message],
             accCreds,
           },
@@ -123,10 +126,12 @@ export const getServerSideProps = withSessionSSR<LoginPageProps>(
       req.session.account_id = loginResult.id;
       await req.session.save();
 
+      const redirectURL = createNextURL(localeInfo, "/auth/success").toString();
+
       return {
         redirect: {
           statusCode: SEE_OTHER,
-          destination: "/auth/success",
+          destination: redirectURL,
         },
       };
     }
@@ -134,6 +139,7 @@ export const getServerSideProps = withSessionSSR<LoginPageProps>(
     return {
       props: {
         ...localization,
+        localeInfo,
       },
     };
   }

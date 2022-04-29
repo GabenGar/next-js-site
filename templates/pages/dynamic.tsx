@@ -24,7 +24,7 @@ function TemplatePage({}: InferGetServerSidePropsType<
   const router = useRouter();
   const { t } = useTranslation("SET TRANSLATION FILE");
   const seoTags = createSEOTags({
-    locale: router.locale!,
+    locale: localeInfo.locale,
     title: "template title",
     description: "template description",
   });
@@ -36,12 +36,10 @@ TemplatePage.getLayout = function getLayout(page: NextPage) {
   return <Layout>{page}</Layout>;
 };
 
-export const getServerSideProps: GetServerSideProps<
-  IProps,
-  IParams
-> = async (context) => {
-  const { locale } = context;
-
+export const getServerSideProps: GetServerSideProps<IProps, IParams> = async ({
+  locale,
+  defaultLocale,
+}) => {
   if (!IS_DEVELOPMENT) {
     return {
       notFound: true,
@@ -64,6 +62,8 @@ export const getServerSideProps: GetServerSideProps<
   return {
     props: {
       ...localization,
+      locale,
+      defaultLocale,
     },
   };
 };
