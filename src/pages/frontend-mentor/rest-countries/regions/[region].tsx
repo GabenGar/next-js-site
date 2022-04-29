@@ -33,7 +33,7 @@ function RegionDetails({
   const { t } = useTranslation("frontend-mentor");
   const pageTitle = `${countries.length} countries of ${region}`;
   const seoTags = createSEOTags({
-    locale: localeInfo.locale,
+    localeInfo,
     title: pageTitle,
     description: pageTitle,
   });

@@ -34,10 +34,10 @@ function AccountEmailPage({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { t } = useTranslation("account");
   const seoTags = createSEOTags({
-    locale: localeInfo.locale,
+    localeInfo,
     title: t("email_title"),
     description: t("email_desc"),
-    canonicalPath: createNextURL(localeInfo, "/account/email"),
+    canonicalPath: "/account/email",
   });
 
   return (

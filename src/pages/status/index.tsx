@@ -18,10 +18,10 @@ function StatusPage({
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const { t } = useTranslation("common");
   const seoTags = createSEOTags({
-    locale: localeInfo.locale,
+    localeInfo,
     title: t("status_title"),
     description: t("status_desc"),
-    canonicalPath: createNextURL(localeInfo, "/status").toString(),
+    canonicalPath: "/status",
   });
 
   return (

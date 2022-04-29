@@ -16,10 +16,10 @@ function AuthSuccessPage({
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const { t } = useTranslation("auth");
   const seoTags = createSEOTags({
-    locale: localeInfo.locale,
+    localeInfo,
     title: t("auth_success_title"),
     description: t("auth_success_desc"),
-    canonicalPath: createNextURL(localeInfo, "/auth/success"),
+    canonicalPath: "/auth/success",
   });
   const redirectURL = createNextURL(localeInfo, "/account").toString();
 

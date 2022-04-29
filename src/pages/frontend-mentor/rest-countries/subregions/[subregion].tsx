@@ -17,8 +17,7 @@ import type { ParsedUrlQuery } from "querystring";
 import type { Country } from "#lib/api/rest-countries";
 import type { BasePageProps } from "#types/pages";
 
-
-interface IProps extends BasePageProps{
+interface IProps extends BasePageProps {
   subregion: string;
   countries: Country[];
 }
@@ -35,10 +34,10 @@ function SubRegionDetails({
   const { t } = useTranslation("frontend-mentor");
   const pageTitle = `${countries.length} countries of ${subregion}`;
   const seoTags = createSEOTags({
-    locale: localeInfo.locale,
+    localeInfo,
     title: pageTitle,
     description: pageTitle,
-    canonicalPath: createNextURL(localeInfo, `/frontend-mentor/rest-countries/subregions/${subregion}`)
+    canonicalPath: `/frontend-mentor/rest-countries/subregions/${subregion}`,
   });
 
   return (

@@ -26,10 +26,10 @@ function CalendarPage({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { t } = useTranslation("account");
   const seoTags = createSEOTags({
-    locale: localeInfo.locale,
+    localeInfo,
     title: t("calendar_title"),
     description: t("calendar_desc"),
-    canonicalPath: createNextURL(localeInfo, "/account/calendar"),
+    canonicalPath: "/account/calendar",
   });
   const currentDate = nowISO();
 

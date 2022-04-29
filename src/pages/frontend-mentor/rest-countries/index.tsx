@@ -19,13 +19,10 @@ export default function RESTCountriesPage({
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const { t } = useTranslation("frontend-mentor");
   const seoTags = createSEOTags({
-    locale: localeInfo.locale,
+    localeInfo,
     title: "REST Countries",
     description: "REST Countries Frontend Mentor Challenge",
-    canonicalPath: createNextURL(
-      localeInfo,
-      "/frontend-mentor/rest-countries"
-    ).toString(),
+    canonicalPath: "/frontend-mentor/rest-countries",
   });
 
   return (

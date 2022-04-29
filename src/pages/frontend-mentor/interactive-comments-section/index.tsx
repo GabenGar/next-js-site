@@ -36,13 +36,10 @@ function FMCommentsPage({
   const dispatch = useAppDispatch();
   const { t } = useTranslation("frontend-mentor");
   const seoTags = createSEOTags({
-    locale: localeInfo.locale,
+    localeInfo,
     title: t("comments_title"),
     description: t("challenge_desc", { title: t("comments_title") }),
-    canonicalPath: createNextURL(
-      localeInfo,
-      "/frontend-mentor/interactive-comments-section"
-    ).toString(),
+    canonicalPath: "/frontend-mentor/interactive-comments-section",
   });
   const { comments, status, error } = useAppSelector(selectFMSlice);
 

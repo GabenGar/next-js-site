@@ -17,10 +17,10 @@ export function LogoutPage({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { t } = useTranslation("auth");
   const seoTags = createSEOTags({
-    locale: localeInfo.locale,
+    localeInfo,
     title: t("logout_title"),
     description: t("logout_desc"),
-    canonicalPath: createNextURL(localeInfo, "/auth/logout"),
+    canonicalPath: "/auth/logout",
   });
 
   return (

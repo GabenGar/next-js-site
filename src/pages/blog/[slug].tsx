@@ -2,7 +2,6 @@ import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { createSEOTags } from "#lib/seo";
 import { getAllSlugs, getBlogPost } from "#lib/blog";
-import { createNextURL } from "#lib/language";
 import { Page } from "#components/pages";
 import { BlogPostArticle } from "#components/entities/blog";
 
@@ -28,10 +27,10 @@ function BlogPostPage({
   post,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const seoTags = createSEOTags({
-    locale: localeInfo.locale,
+    localeInfo,
     title: post.title,
     description: post.excerpt,
-    canonicalPath: createNextURL(localeInfo, `/blog/${post.slug}`),
+    canonicalPath: `/blog/${post.slug}`,
   });
 
   return (

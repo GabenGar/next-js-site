@@ -31,10 +31,10 @@ function TranslationPage({
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const { t } = useTranslation("common");
   const seoTags = createSEOTags({
-    locale: localeInfo.locale,
+    localeInfo,
     title: t("translation_title"),
     description: t("translation_desc"),
-    canonicalPath: createNextURL(localeInfo, "/status/translation").toString(),
+    canonicalPath: "/status/translation",
   });
 
   return (

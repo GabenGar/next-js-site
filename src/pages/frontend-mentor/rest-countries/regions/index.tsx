@@ -33,10 +33,10 @@ function RegionCountries({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { t } = useTranslation("frontend-mentor");
   const seoTags = createSEOTags({
-    locale: localeInfo.locale,
+    localeInfo,
     title: "Countries by Regions",
     description: "Countries by Regions",
-    canonicalPath: createNextURL(localeInfo, "/frontend-mentor/rest-countries/regions")
+    canonicalPath: "/frontend-mentor/rest-countries/regions",
   });
   const regionList = Object.keys(regions).map((region) => {
     return {

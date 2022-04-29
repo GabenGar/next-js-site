@@ -31,10 +31,10 @@ export function LoginPage({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { t } = useTranslation("auth");
   const seoTags = createSEOTags({
-    locale: localeInfo.locale,
+    localeInfo,
     title: t("login_title"),
     description: t("login_desc"),
-    canonicalPath: createNextURL(localeInfo, "/auth/login"),
+    canonicalPath: "/auth/login",
   });
 
   return (

@@ -18,7 +18,7 @@ function AdminPage({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { t } = useTranslation("admin");
   const seoTags = createSEOTags({
-    locale: localeInfo.locale,
+    localeInfo,
     title: t("admin_title"),
     description: t("admin_desc"),
   });

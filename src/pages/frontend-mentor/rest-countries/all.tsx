@@ -43,13 +43,10 @@ export default function RESTCountriesAllPage({
   const [filteredCountries, filterCountries] = useState(countries);
   const [currentCountries, changeCurrentCountries] = useState<Country[]>([]);
   const seoTags = createSEOTags({
-    locale: localeInfo.locale,
+    localeInfo,
     title: "All Countries",
     description: "All Countries",
-    canonicalPath: createNextURL(
-      localeInfo,
-      "/frontend-mentor/rest-countries/all"
-    ).toString(),
+    canonicalPath: "/frontend-mentor/rest-countries/all",
   });
   const regions = Array.from(
     countries.reduce(

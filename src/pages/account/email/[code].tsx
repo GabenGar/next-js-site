@@ -26,7 +26,7 @@ function EmailConfirmationPage({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { t } = useTranslation("account");
   const seoTags = createSEOTags({
-    locale: localeInfo.locale,
+    localeInfo,
     title: t("email_code_title"),
     description: t("email_code_desc"),
   });

@@ -32,10 +32,10 @@ function RegisterPage({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { t } = useTranslation("auth");
   const seoTags = createSEOTags({
-    locale: localeInfo.locale,
+    localeInfo,
     title: t("reg_title"),
     description: t("reg_desc"),
-    canonicalPath: createNextURL(localeInfo, "/auth/register"),
+    canonicalPath: "/auth/register",
   });
 
   return (

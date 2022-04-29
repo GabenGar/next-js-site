@@ -28,7 +28,7 @@ function InvitesPage({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { t } = useTranslation("admin");
   const seoTags = createSEOTags({
-    locale: localeInfo.locale,
+    localeInfo,
     title: "Invites",
     description: "Invites overview",
   });
