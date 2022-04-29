@@ -22,18 +22,21 @@ type AppPropsWithLayout = Omit<AppProps<BasePageProps>, "pageProps"> & {
 };
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+  const { localeInfo } = pageProps;
   const getLayout =
     Component.getLayout ?? ((page) => <BaseLayout>{page}</BaseLayout>);
 
   return (
     <ErrorBoundary>
       <ReduxProvider store={reduxStore}>
-        <DefaultSeo {...defaultSEOProps} />
+        <DefaultSeo
+          openGraph={{ locale: localeInfo.locale }}
+          {...defaultSEOProps}
+        />
         {getLayout(<Component {...pageProps} />)}
       </ReduxProvider>
     </ErrorBoundary>
   );
 }
-
 
 export default appWithTranslation<AppPropsWithLayout>(MyApp);
