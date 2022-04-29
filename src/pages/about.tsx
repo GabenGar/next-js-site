@@ -18,7 +18,6 @@ import styles from "./about.module.scss";
 import type { ParsedUrlQuery } from "querystring";
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import type { BasePageProps } from "#types/pages";
-import { createNextURL } from "#lib/language";
 
 interface IAboutPageProps extends BasePageProps {}
 

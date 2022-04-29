@@ -1,7 +1,6 @@
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { createSEOTags } from "#lib/seo";
-import { createNextURL } from "#lib/language";
 import { Page } from "#components/pages";
 import { InternalNav } from "#components/navigation";
 

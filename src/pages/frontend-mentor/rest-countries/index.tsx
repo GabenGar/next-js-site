@@ -1,7 +1,6 @@
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { createSEOTags } from "#lib/seo";
-import { createNextURL } from "#lib/language";
 import { RESTCountries as Layout } from "#components/layout/frontend-mentor";
 import { Page } from "#components/pages";
 import { LinkInternal } from "#components/links";

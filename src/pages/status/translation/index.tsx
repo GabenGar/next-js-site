@@ -3,7 +3,6 @@ import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { getLanguagesOverview, getMaxLineCount } from "#lib/translation";
 import { createSEOTags } from "#lib/seo";
-import { createNextURL } from "#lib/language";
 import { Page } from "#components/pages";
 import { DL, DS, DT, DD } from "#components/lists/d-list";
 import { LanguageView } from "#components/language";

@@ -1,7 +1,6 @@
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { createSEOTags } from "#lib/seo";
-import { createNextURL } from "#lib/language";
 import { countriesByRegion as countriesBySubRegion } from "#lib/api/rest-countries";
 import { CardList } from "#components/lists/card-list";
 import { RESTCountries as Layout } from "#components/layout/frontend-mentor";

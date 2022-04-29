@@ -22,7 +22,6 @@ import type {
 import type { ParsedUrlQuery } from "querystring";
 import type { Country } from "#lib/api/rest-countries";
 import type { BasePageProps } from "#types/pages";
-import { createNextURL } from "#lib/language";
 
 interface IProps extends BasePageProps {
   country: Country;
