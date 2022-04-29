@@ -3,8 +3,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { FOUND } from "#environment/constants/http";
 import { createSEOTags } from "#lib/seo";
 import { getAccountDetails } from "#lib/account";
-import { createNextURL } from "#lib/language";
-import { getReqBody, withSessionSSR } from "#server/requests";
+import { getReqBody, withSessionSSR, Redirect } from "#server/requests";
 import { createInvite } from "#lib/account/admin";
 import { validateInviteInitFields } from "#codegen/schema/validations";
 import { Page } from "#components/pages";
@@ -86,14 +85,7 @@ export const getServerSideProps = withSessionSSR<IInviteCreationProps>(
     const localeInfo = { locale: locale!, defaultLocale: defaultLocale! };
 
     if (!account_id) {
-      const redirectURL = createNextURL(localeInfo, "/auth/login").toString();
-
-      return {
-        redirect: {
-          statusCode: FOUND,
-          destination: redirectURL,
-        },
-      };
+      return new Redirect(localeInfo, "/auth/login", FOUND);
     }
 
     const account = await getAccountDetails(account_id);
@@ -134,17 +126,8 @@ export const getServerSideProps = withSessionSSR<IInviteCreationProps>(
       }
 
       const newInvite = await createInvite(inviteInit, account);
-      const redirectURL = createNextURL(
-        localeInfo,
-        "/account/admin/invites"
-      ).toString();
 
-      return {
-        redirect: {
-          statusCode: FOUND,
-          destination: redirectURL,
-        },
-      };
+      return new Redirect(localeInfo, "/account/admin/invites", FOUND);
     }
 
     return {

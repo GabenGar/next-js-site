@@ -6,6 +6,9 @@ import {
   PERMANENT_REDIRECT,
 } from "#environment/constants/http";
 import { ILocaleInfo } from "#lib/language";
+import { ProjectURL } from "#lib/url";
+
+import type { Redirect as NextRedirect } from "next";
 
 const redirectStatuses = [
   MOVED_PERMANENTLY,
@@ -19,20 +22,25 @@ type IRedirectStatus = typeof redirectStatuses[number];
 
 /**
  * Not extending the next `Redirect` because it's a type union and annoying to implement.
+ * Using the `statusCode` because redirects on SSR
+ * do frequently require changing method.
+ *
+ * @TODO fix types
  */
 interface IRedirect {
-  destination: string;
-  statusCode?: IRedirectStatus;
-  basePath?: false;
+  redirect: {
+    destination: string;
+    statusCode?: IRedirectStatus;
+    basePath?: false;
+  };
 }
 
-/**
- * @TODO Locale-aware destination
- */
-class Redirect implements IRedirect {
-  destination: string;
-  statusCode: IRedirectStatus;
-  basePath: false;
+export class Redirect implements IRedirect {
+  redirect: {
+    destination: string;
+    statusCode: 301 | 302 | 303 | 307 | 308;
+    basePath?: false;
+  };
 
   constructor(
     localeInfo: ILocaleInfo,
@@ -40,8 +48,10 @@ class Redirect implements IRedirect {
     statusCode: IRedirectStatus = FOUND,
     basePath: false = false
   ) {
-    this.destination = destination;
-    this.statusCode = statusCode;
-    this.basePath = basePath;
+    this.redirect = {
+      destination: new ProjectURL(localeInfo, destination).toString(),
+      statusCode: statusCode,
+      basePath: basePath,
+    };
   }
 }
