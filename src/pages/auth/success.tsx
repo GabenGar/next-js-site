@@ -24,7 +24,6 @@ function AuthSuccessPage({
     urlPath: router.pathname,
   });
   const redirectURL = createNextURL({ localeInfo }, "/account").toString();
-  console.log(redirectURL);
 
   useEffect(() => {
     setLocalStoreItem<boolean>("is_registered", true);

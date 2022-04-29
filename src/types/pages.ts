@@ -14,11 +14,14 @@ export type IValidationResult<T> =
  * - pass locale and default locale in all pages.
  */
 export interface BasePageProps extends Record<string, unknown> {
-  theme?: string;
-  errors?: Array<string>;
-  schemaValidationErrors?: ISchemaValidationError[];
-  localeInfo?: {
+  /**
+   * This info has to be passed to generate links server-side.
+   */
+  localeInfo: {
     locale: ISOLangString;
     defaultLocale: ISOLangString;
   };
+  theme?: string;
+  errors?: Array<string>;
+  schemaValidationErrors?: ISchemaValidationError[];
 }
