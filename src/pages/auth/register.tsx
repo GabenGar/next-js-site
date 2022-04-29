@@ -155,6 +155,10 @@ export const getServerSideProps = withSessionSSR<RegisterPageProps>(
     return {
       props: {
         ...localization,
+        localeInfo: {
+          locale: locale!,
+          defaultLocale: defaultLocale!,
+        },
       },
     };
   }

@@ -81,6 +81,10 @@ export const getServerSideProps = withSessionSSR<ICalendarPageProps>(
     return {
       props: {
         ...localization,
+        localeInfo: {
+          locale: locale!,
+          defaultLocale: defaultLocale!,
+        },
         account: accountClient,
       },
     };

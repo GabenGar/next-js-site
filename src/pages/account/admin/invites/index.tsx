@@ -151,6 +151,10 @@ export const getServerSideProps = withSessionSSR<IInvitesPageProps>(
     return {
       props: {
         ...localization,
+        localeInfo: {
+          locale: locale!,
+          defaultLocale: defaultLocale!,
+        },
         invites,
       },
     };

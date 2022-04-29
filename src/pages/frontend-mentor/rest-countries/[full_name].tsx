@@ -298,6 +298,14 @@ export const getServerSideProps: GetServerSideProps<IProps, IParams> = async ({
   ]);
 
   return {
-    props: { ...localization, country, borderCountries },
+    props: {
+      ...localization,
+      localeInfo: {
+        locale: locale!,
+        defaultLocale: defaultLocale!,
+      },
+      country,
+      borderCountries,
+    },
   };
 };

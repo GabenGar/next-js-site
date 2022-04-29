@@ -139,7 +139,13 @@ export const getServerSideProps = withSessionSSR<IInviteCreationProps>(
     ]);
 
     return {
-      props: { ...localization },
+      props: {
+        ...localization,
+        localeInfo: {
+          locale: locale!,
+          defaultLocale: defaultLocale!,
+        },
+      },
     };
   }
 );

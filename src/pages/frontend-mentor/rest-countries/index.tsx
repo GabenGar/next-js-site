@@ -81,6 +81,10 @@ export const getStaticProps: GetStaticProps<IProps, IParams> = async (
   return {
     props: {
       ...localization,
+      localeInfo: {
+        locale: locale!,
+        defaultLocale: defaultLocale!,
+      },
     },
   };
 };

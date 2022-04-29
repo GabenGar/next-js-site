@@ -54,6 +54,10 @@ export const getServerSideProps: GetServerSideProps<TablesPageProps> = async ({
   return {
     props: {
       ...localization,
+      localeInfo: {
+        locale: locale!,
+        defaultLocale: defaultLocale!,
+      },
     },
   };
 };

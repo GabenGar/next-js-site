@@ -56,7 +56,7 @@ export const getServerSideProps = withSessionSSR<
     };
   }
   const { account_id } = req.session;
-
+  
   if (!account_id) {
     return {
       redirect: {
@@ -79,8 +79,19 @@ export const getServerSideProps = withSessionSSR<
 
   const { email } = await confirmNewEmail(account_id, code);
 
+  const localization = await serverSideTranslations(locale!, [
+    "layout",
+    "components",
+    "account",
+  ]);
+
   return {
     props: {
+      ...localization,
+      localeInfo: {
+        locale: locale!,
+        defaultLocale: defaultLocale!,
+      },
       email,
     },
   };

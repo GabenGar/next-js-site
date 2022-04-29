@@ -135,6 +135,10 @@ export const getServerSideProps = withSessionSSR<AccountEmailProps>(
     return {
       props: {
         ...localization,
+        localeInfo: {
+          locale: locale!,
+          defaultLocale: defaultLocale!,
+        },
         account: accountClient,
       },
     };

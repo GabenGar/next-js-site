@@ -75,6 +75,10 @@ export const getServerSideProps = withSessionSSR<LogoutPageProps>(
     return {
       props: {
         ...localization,
+        localeInfo: {
+          locale: locale!,
+          defaultLocale: defaultLocale!,
+        },
       },
     };
   }
