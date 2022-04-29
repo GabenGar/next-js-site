@@ -2,18 +2,22 @@ import Router from "next/router";
 import { NextRequest } from "next/server";
 import { SITE_ORIGIN } from "#environment/vars";
 import { IS_BROWSER } from "#environment/constants";
+import { ProjectError } from "#lib/errors";
 
 import type { GetServerSidePropsContext, GetStaticPropsContext } from "next";
 import type { BCPLangTag } from "./types";
 
 interface Props {
   req?: NextRequest;
-  context?: GetServerSidePropsContext | GetStaticPropsContext
-  locale?: BCPLangTag;
+  context?: GetServerSidePropsContext | GetStaticPropsContext;
+  localeInfo?: {
+    locale: BCPLangTag;
+    defaultLocale: BCPLangTag;
+  };
 }
 
 export function createNextURL(
-  { req, context, router, locale }: Props,
+  { req, context, localeInfo }: Props,
   pathname: string
 ): URL {
   if (!IS_BROWSER && context) {
@@ -33,7 +37,7 @@ export function createNextURL(
     return new URL(path, SITE_ORIGIN);
   }
 
-  if (IS_BROWSER && router && !locale) {
+  if (IS_BROWSER && !localeInfo) {
     // both of these will be present on client
     const defaultLocale = Router.defaultLocale!;
     const currentLocale = Router.locale!;
@@ -43,7 +47,13 @@ export function createNextURL(
     return new URL(path, SITE_ORIGIN);
   }
 
-  const path = `/${locale}${pathname}`;
+  if (!localeInfo) {
+    throw new ProjectError("`createNextURL()` should have at least `localeInfo` argument provided")
+  }
+
+  const { defaultLocale, locale: currentLocale } = localeInfo;
+  const locale = currentLocale === defaultLocale ? "" : `/${currentLocale}`;
+  const path = `${locale}${pathname}`;
 
   return new URL(path, SITE_ORIGIN);
 }

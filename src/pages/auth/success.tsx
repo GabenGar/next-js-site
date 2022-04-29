@@ -3,8 +3,8 @@ import { useEffect } from "react";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { createSEOTags } from "#lib/seo";
-import { setLocalStoreItem } from "#store/local";
 import { createNextURL } from "#lib/language";
+import { setLocalStoreItem } from "#store/local";
 import { Page } from "#components/pages";
 
 import type { InferGetStaticPropsType, GetStaticProps } from "next";
@@ -12,7 +12,9 @@ import type { BasePageProps } from "#types/pages";
 
 interface RegisterPageProps extends BasePageProps {}
 
-function AuthSuccessPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
+function AuthSuccessPage({
+  localeInfo,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   const router = useRouter();
   const { t } = useTranslation("auth");
   const seoTags = createSEOTags({
@@ -21,7 +23,7 @@ function AuthSuccessPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
     description: t("auth_success_desc"),
     urlPath: router.pathname,
   });
-  const redirectURL = createNextURL({}, "/account").toString();
+  const redirectURL = createNextURL({ localeInfo }, "/account").toString();
   console.log(redirectURL);
 
   useEffect(() => {
@@ -47,6 +49,7 @@ function AuthSuccessPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
 
 export const getStaticProps: GetStaticProps<RegisterPageProps> = async ({
   locale,
+  defaultLocale,
 }) => {
   const localization = await serverSideTranslations(locale!, [
     "layout",
@@ -57,6 +60,10 @@ export const getStaticProps: GetStaticProps<RegisterPageProps> = async ({
   return {
     props: {
       ...localization,
+      localeInfo: {
+        locale: locale!,
+        defaultLocale: defaultLocale!,
+      },
     },
   };
 };

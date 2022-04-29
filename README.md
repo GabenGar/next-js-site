@@ -11,8 +11,8 @@
 
 ## Requirements
 
-NodeJS - 12.20+
-PostgreSQL - 10+
+- NodeJS - 12.20+
+- PostgreSQL - 10+
 
 ## Installation
 

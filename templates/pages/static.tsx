@@ -41,9 +41,7 @@ TemplatePage.getLayout = function getLayout(page: NextPage) {
   return <Layout>{page}</Layout>;
 };
 
-export const getStaticPaths: GetStaticPaths<IParams> = async (
-  context
-) => {
+export const getStaticPaths: GetStaticPaths<IParams> = async (context) => {
   const { locales } = context;
   const paths = locales!.map((locale) => {
     return { params: {}, locale };
@@ -55,12 +53,10 @@ export const getStaticPaths: GetStaticPaths<IParams> = async (
   };
 };
 
-export const getStaticProps: GetStaticProps<
-  IProps,
-  IParams
-> = async (context) => {
-  const { locale } = context;
-
+export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
+  locale,
+  defaultLocale,
+}) => {
   if (!IS_DEVELOPMENT) {
     return {
       notFound: true,
@@ -75,6 +71,10 @@ export const getStaticProps: GetStaticProps<
   return {
     props: {
       ...localization,
+      localeInfo: {
+        locale,
+        defaultLocale,
+      },
     },
   };
 };

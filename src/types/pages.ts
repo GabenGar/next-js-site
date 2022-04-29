@@ -1,5 +1,5 @@
 import type { ErrorObject } from "ajv";
-import type { NextSeoProps } from "next-seo";
+import type { ISOLangString } from "#lib/language";
 
 export interface ISchemaValidationError extends ErrorObject {}
 
@@ -9,10 +9,16 @@ export type IValidationResult<T> =
 
 /**
  * Props shared across all pages.
- * @TODO Implement cookie-based theme.
+ * @TODOs
+ * - Implement cookie-based theme.
+ * - pass locale and default locale in all pages.
  */
 export interface BasePageProps extends Record<string, unknown> {
   theme?: string;
   errors?: Array<string>;
   schemaValidationErrors?: ISchemaValidationError[];
+  localeInfo?: {
+    locale: ISOLangString;
+    defaultLocale: ISOLangString;
+  };
 }
