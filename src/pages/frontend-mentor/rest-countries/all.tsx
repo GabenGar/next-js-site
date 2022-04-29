@@ -1,8 +1,8 @@
 import { useTranslation } from "next-i18next";
-import { useRouter } from "next/router";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useEffect, useState } from "react";
 import { createSEOTags } from "#lib/seo";
+import { createNextURL } from "#lib/language";
 import { allCountries } from "#lib/api/rest-countries";
 import { CardList } from "#components/lists/card-list";
 import { LoadingBar } from "#components/state";
@@ -26,25 +26,30 @@ import type {
 } from "next";
 import type { FormEvent } from "react";
 import type { Country } from "#lib/api/rest-countries";
+import type { BasePageProps } from "#types/pages";
 
-interface IProps {
+interface IProps extends BasePageProps {
   countries: Country[];
 }
 
 const limit = 25;
 
 export default function RESTCountriesAllPage({
+  localeInfo,
   countries,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const router = useRouter();
   const { t } = useTranslation("frontend-mentor");
   const [currentPage, changeCurrentPage] = useState(1);
   const [filteredCountries, filterCountries] = useState(countries);
   const [currentCountries, changeCurrentCountries] = useState<Country[]>([]);
   const seoTags = createSEOTags({
-    locale: router.locale!,
+    locale: localeInfo.locale,
     title: "All Countries",
     description: "All Countries",
+    canonicalPath: createNextURL(
+      localeInfo,
+      "/frontend-mentor/rest-countries/all"
+    ).toString(),
   });
   const regions = Array.from(
     countries.reduce(
@@ -52,7 +57,6 @@ export default function RESTCountriesAllPage({
       new Set<string>()
     )
   );
-  const pageTitle = "All Countries";
 
   useEffect(() => {
     const currentRange = [(currentPage - 1) * limit, currentPage * limit];
@@ -127,6 +131,7 @@ RESTCountriesAllPage.getLayout = function getLayout(page: NextPage) {
 
 export const getServerSideProps: GetServerSideProps<IProps> = async ({
   locale,
+  defaultLocale,
 }) => {
   const countries = await allCountries();
 

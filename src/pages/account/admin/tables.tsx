@@ -18,7 +18,7 @@ function TablesPage({}: InferGetServerSidePropsType<
   const router = useRouter();
   const { t } = useTranslation();
   const seoTags = createSEOTags({
-    locale: router.locale!,
+    locale: localeInfo.locale,
     title: "Tables",
     description: "Database tables overview",
   });

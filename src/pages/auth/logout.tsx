@@ -19,10 +19,10 @@ export function LogoutPage({}: InferGetServerSidePropsType<
   const router = useRouter();
   const { t } = useTranslation("auth");
   const seoTags = createSEOTags({
-    locale: router.locale!,
+    locale: localeInfo.locale,
     title: t("logout_title"),
     description: t("logout_desc"),
-    urlPath: router.pathname,
+    canonicalPath: router.pathname,
   });
 
   return (

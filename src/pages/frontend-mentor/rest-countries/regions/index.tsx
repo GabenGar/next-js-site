@@ -1,8 +1,8 @@
 import { Fragment } from "react";
-import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { createSEOTags } from "#lib/seo";
+import { createNextURL } from "#lib/language";
 import { allCountries } from "#lib/api/rest-countries";
 import { GalleryList } from "#components/lists";
 import { LocalNav } from "#components/fancy";
@@ -17,8 +17,9 @@ import type {
 } from "next";
 import type { ParsedUrlQuery } from "querystring";
 import type { Country } from "#lib/api/rest-countries";
+import type { BasePageProps } from "#types/pages";
 
-interface IProps {
+interface IProps extends BasePageProps {
   regions: {
     [region: string]: Country[];
   };
@@ -27,14 +28,15 @@ interface IProps {
 interface IParams extends ParsedUrlQuery {}
 
 function RegionCountries({
+  localeInfo,
   regions,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const router = useRouter();
   const { t } = useTranslation("frontend-mentor");
   const seoTags = createSEOTags({
-    locale: router.locale!,
+    locale: localeInfo.locale,
     title: "Countries by Regions",
     description: "Countries by Regions",
+    canonicalPath: createNextURL(localeInfo, "/frontend-mentor/rest-countries/regions")
   });
   const regionList = Object.keys(regions).map((region) => {
     return {
@@ -69,6 +71,7 @@ RegionCountries.getLayout = function getLayout(page: NextPage) {
 
 export const getServerSideProps: GetServerSideProps<IProps, IParams> = async ({
   locale,
+  defaultLocale,
 }) => {
   const countries = await allCountries();
   const regions = sortCountriesByRegions(countries);

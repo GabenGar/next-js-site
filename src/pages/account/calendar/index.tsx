@@ -25,7 +25,7 @@ function CalendarPage({
   const router = useRouter();
   const { t } = useTranslation("account");
   const seoTags = createSEOTags({
-    locale: router.locale!,
+    locale: localeInfo.locale,
     title: t("calendar_title"),
     description: t("calendar_desc"),
   });

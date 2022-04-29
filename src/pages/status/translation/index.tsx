@@ -34,7 +34,7 @@ function TranslationPage({
     locale: localeInfo.locale,
     title: t("translation_title"),
     description: t("translation_desc"),
-    urlPath: createNextURL(localeInfo, "/status/translation").toString(),
+    canonicalPath: createNextURL(localeInfo, "/status/translation").toString(),
   });
 
   return (

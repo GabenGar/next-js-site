@@ -28,10 +28,10 @@ function BlogPostPage({
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const router = useRouter();
   const seoTags = createSEOTags({
-    locale: router.locale!,
+    locale: localeInfo.locale,
     title: post.title,
     description: post.excerpt,
-    urlPath: router.pathname,
+    canonicalPath: router.pathname,
   });
 
   return (

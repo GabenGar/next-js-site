@@ -32,7 +32,7 @@ function AboutPage({
     locale: localeInfo.locale,
     title: t("about_title"),
     description: t("about_desc"),
-    urlPath: createNextURL(localeInfo, "/about").toString(),
+    canonicalPath: createNextURL(localeInfo, "/about").toString(),
   });
 
   return (

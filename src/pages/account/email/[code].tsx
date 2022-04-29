@@ -25,7 +25,7 @@ function EmailConfirmationPage({
   const router = useRouter();
   const { t } = useTranslation("account");
   const seoTags = createSEOTags({
-    locale: router.locale!,
+    locale: localeInfo.locale,
     title: t("email_code_title"),
     description: t("email_code_desc"),
   });

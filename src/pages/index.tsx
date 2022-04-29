@@ -22,7 +22,7 @@ function Home({ localeInfo }: InferGetStaticPropsType<typeof getStaticProps>) {
     locale: localeInfo.locale,
     title: t("title"),
     description: t("description"),
-    urlPath: createNextURL(localeInfo, "/").toString(),
+    canonicalPath: createNextURL(localeInfo, "/").toString(),
   });
 
   return (

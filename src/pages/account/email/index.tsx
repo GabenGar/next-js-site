@@ -33,7 +33,7 @@ function AccountEmailPage({
   const router = useRouter();
   const { t } = useTranslation("account");
   const seoTags = createSEOTags({
-    locale: router.locale!,
+    locale: localeInfo.locale,
     title: t("email_title"),
     description: t("email_desc"),
   });

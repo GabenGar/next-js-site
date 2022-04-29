@@ -1,7 +1,7 @@
-import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { createSEOTags } from "#lib/seo";
+import { createNextURL } from "#lib/language";
 import { countriesByRegion as countriesBySubRegion } from "#lib/api/rest-countries";
 import { CardList } from "#components/lists/card-list";
 import { RESTCountries as Layout } from "#components/layout/frontend-mentor";
@@ -15,8 +15,10 @@ import type {
 } from "next";
 import type { ParsedUrlQuery } from "querystring";
 import type { Country } from "#lib/api/rest-countries";
+import type { BasePageProps } from "#types/pages";
 
-interface IProps {
+
+interface IProps extends BasePageProps{
   subregion: string;
   countries: Country[];
 }
@@ -26,16 +28,17 @@ interface IParams extends ParsedUrlQuery {
 }
 
 function SubRegionDetails({
+  localeInfo,
   subregion,
   countries,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const router = useRouter();
   const { t } = useTranslation("frontend-mentor");
   const pageTitle = `${countries.length} countries of ${subregion}`;
   const seoTags = createSEOTags({
-    locale: router.locale!,
+    locale: localeInfo.locale,
     title: pageTitle,
     description: pageTitle,
+    canonicalPath: createNextURL(localeInfo, `/frontend-mentor/rest-countries/subregions/${subregion}`)
   });
 
   return (
@@ -56,6 +59,7 @@ SubRegionDetails.getLayout = function getLayout(page: NextPage) {
 
 export const getServerSideProps: GetServerSideProps<IProps, IParams> = async ({
   locale,
+  defaultLocale,
   params,
 }) => {
   const { subregion: region } = params!;

@@ -22,7 +22,7 @@ function AccountsPage({
   const router = useRouter();
   const { t } = useTranslation("admin");
   const seoTags = createSEOTags({
-    locale: router.locale!,
+    locale: localeInfo.locale,
     title: "Accounts overview",
     description: "Accounts details",
   });

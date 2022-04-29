@@ -21,7 +21,6 @@ export interface BasePageProps extends Record<string, unknown> {
     locale: ISOLangString;
     defaultLocale: ISOLangString;
   };
-  theme?: string;
   errors?: Array<string>;
   schemaValidationErrors?: ISchemaValidationError[];
 }

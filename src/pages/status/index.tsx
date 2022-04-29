@@ -21,7 +21,7 @@ function StatusPage({
     locale: localeInfo.locale,
     title: t("status_title"),
     description: t("status_desc"),
-    urlPath: createNextURL(localeInfo, "/status").toString(),
+    canonicalPath: createNextURL(localeInfo, "/status").toString(),
   });
 
   return (

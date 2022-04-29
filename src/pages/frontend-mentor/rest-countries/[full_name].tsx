@@ -1,5 +1,4 @@
 import { Fragment } from "react";
-import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { createSEOTags } from "#lib/seo";
@@ -22,8 +21,10 @@ import type {
 } from "next";
 import type { ParsedUrlQuery } from "querystring";
 import type { Country } from "#lib/api/rest-countries";
+import type { BasePageProps } from "#types/pages";
+import { createNextURL } from "#lib/language";
 
-interface IProps {
+interface IProps extends BasePageProps{
   country: Country;
   borderCountries: Country[] | null;
 }
@@ -33,16 +34,17 @@ interface IParams extends ParsedUrlQuery {
 }
 
 export default function RESTCountriesCountryDetail({
+  localeInfo,
   country,
   borderCountries,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const router = useRouter();
   const { t } = useTranslation("frontend-mentor");
   const countryName = country.name.official;
   const seoTags = createSEOTags({
-    locale: router.locale!,
+    locale: localeInfo.locale,
     title: countryName,
     description: `Detailed info for ${countryName}`,
+    canonicalPath: createNextURL(localeInfo, `/frontend-mentor/rest-countries/${countryName}`).toString()
   });
   const images = [
     { src: country.flags.png, href: country.flags.svg, caption: "Flag" },
@@ -276,6 +278,7 @@ RESTCountriesCountryDetail.getLayout = function getLayout(page: NextPage) {
 
 export const getServerSideProps: GetServerSideProps<IProps, IParams> = async ({
   locale,
+  defaultLocale,
   params,
 }) => {
   const { full_name } = params!;

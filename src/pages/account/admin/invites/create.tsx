@@ -30,7 +30,7 @@ function InviteCreationPage({
   const router = useRouter();
   const { t } = useTranslation("admin");
   const seoTags = createSEOTags({
-    locale: router.locale!,
+    locale: localeInfo.locale,
     title: "New Invite",
     description: "New invite overview.",
   });

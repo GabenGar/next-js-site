@@ -32,10 +32,10 @@ function RegisterPage({
   const router = useRouter();
   const { t } = useTranslation("auth");
   const seoTags = createSEOTags({
-    locale: router.locale!,
+    locale: localeInfo.locale,
     title: t("reg_title"),
     description: t("reg_desc"),
-    urlPath: router.pathname,
+    canonicalPath: router.pathname,
   });
 
   return (

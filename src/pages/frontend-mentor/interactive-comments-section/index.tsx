@@ -1,8 +1,8 @@
 import { useEffect } from "react";
-import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { createSEOTags } from "#lib/seo";
+import { createNextURL } from "#lib/language";
 import { useAppDispatch, useAppSelector } from "#store/redux";
 import { getFMCommentsAsync, selectFMSlice } from "#store/redux/reducers";
 import { Page } from "#components/pages";
@@ -30,14 +30,19 @@ interface FMCommentsPageProps extends BasePageProps {}
 
 interface FMCommentsPageParams extends ParsedUrlQuery {}
 
-function FMCommentsPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
-  const router = useRouter();
+function FMCommentsPage({
+  localeInfo,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   const dispatch = useAppDispatch();
   const { t } = useTranslation("frontend-mentor");
   const seoTags = createSEOTags({
-    locale: router.locale!,
+    locale: localeInfo.locale,
     title: t("comments_title"),
     description: t("challenge_desc", { title: t("comments_title") }),
+    canonicalPath: createNextURL(
+      localeInfo,
+      "/frontend-mentor/interactive-comments-section"
+    ).toString(),
   });
   const { comments, status, error } = useAppSelector(selectFMSlice);
 
@@ -80,7 +85,7 @@ function FMCommentsPage({}: InferGetStaticPropsType<typeof getStaticProps>) {
 export const getStaticProps: GetStaticProps<
   FMCommentsPageProps,
   FMCommentsPageParams
-> = async ({ locale }) => {
+> = async ({ locale, defaultLocale }) => {
   const localization = await serverSideTranslations(locale!, [
     "layout",
     "components",

@@ -32,10 +32,10 @@ export function LoginPage({
   const router = useRouter();
   const { t } = useTranslation("auth");
   const seoTags = createSEOTags({
-    locale: router.locale!,
+    locale: localeInfo.locale,
     title: t("login_title"),
     description: t("login_desc"),
-    urlPath: router.pathname,
+    canonicalPath: router.pathname,
   });
 
   return (

@@ -26,7 +26,7 @@ function AccountPage({
   const router = useRouter();
   const { t } = useTranslation("account");
   const seoTags = createSEOTags({
-    locale: router.locale!,
+    locale: localeInfo.locale,
     title: t("acc_title"),
     description: t("acc_desc"),
   });
