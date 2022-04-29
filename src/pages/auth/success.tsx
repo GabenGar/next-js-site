@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
@@ -15,15 +14,14 @@ interface RegisterPageProps extends BasePageProps {}
 function AuthSuccessPage({
   localeInfo,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const router = useRouter();
   const { t } = useTranslation("auth");
   const seoTags = createSEOTags({
     locale: localeInfo.locale,
     title: t("auth_success_title"),
     description: t("auth_success_desc"),
-    canonicalPath: router.pathname,
+    canonicalPath: createNextURL(localeInfo, "/auth/success"),
   });
-  const redirectURL = createNextURL({ localeInfo }, "/account").toString();
+  const redirectURL = createNextURL(localeInfo, "/account").toString();
 
   useEffect(() => {
     setLocalStoreItem<boolean>("is_registered", true);

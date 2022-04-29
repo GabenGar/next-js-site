@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { FOUND, SEE_OTHER } from "#environment/constants/http";
@@ -25,17 +24,17 @@ interface LoginPageProps extends BasePageProps {
 }
 
 export function LoginPage({
+  localeInfo,
   errors,
   accCreds,
   schemaValidationErrors,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const router = useRouter();
   const { t } = useTranslation("auth");
   const seoTags = createSEOTags({
     locale: localeInfo.locale,
     title: t("login_title"),
     description: t("login_desc"),
-    canonicalPath: router.pathname,
+    canonicalPath: createNextURL(localeInfo, "/auth/login"),
   });
 
   return (
@@ -77,17 +76,10 @@ export function LoginPage({
 export const getServerSideProps = withSessionSSR<LoginPageProps>(
   async ({ req, locale, defaultLocale }) => {
     const { account_id } = req.session;
+    const localeInfo = { locale: locale!, defaultLocale: defaultLocale! };
 
     if (account_id) {
-      const redirectURL = createNextURL(
-        {
-          context: {
-            locale,
-            defaultLocale,
-          },
-        },
-        "/account"
-      ).toString();
+      const redirectURL = createNextURL(localeInfo, "/account").toString();
 
       return {
         redirect: {
@@ -111,6 +103,7 @@ export const getServerSideProps = withSessionSSR<LoginPageProps>(
         return {
           props: {
             ...localization,
+            localeInfo,
             schemaValidationErrors: [...validationResult.errors],
             accCreds,
           },
@@ -123,6 +116,7 @@ export const getServerSideProps = withSessionSSR<LoginPageProps>(
         return {
           props: {
             ...localization,
+            localeInfo,
             errors: [loginResult.message],
             accCreds,
           },
@@ -132,10 +126,7 @@ export const getServerSideProps = withSessionSSR<LoginPageProps>(
       req.session.account_id = loginResult.id;
       await req.session.save();
 
-      const redirectURL = createNextURL(
-        { context: { locale, defaultLocale } },
-        "/auth/success"
-      ).toString();
+      const redirectURL = createNextURL(localeInfo, "/auth/success").toString();
 
       return {
         redirect: {
@@ -148,10 +139,7 @@ export const getServerSideProps = withSessionSSR<LoginPageProps>(
     return {
       props: {
         ...localization,
-        localeInfo: {
-          locale: locale!,
-          defaultLocale: defaultLocale!,
-        },
+        localeInfo,
       },
     };
   }

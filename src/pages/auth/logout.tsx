@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { FOUND, SEE_OTHER } from "#environment/constants/http";
@@ -13,16 +12,15 @@ import type { BasePageProps } from "#types/pages";
 
 interface LogoutPageProps extends BasePageProps {}
 
-export function LogoutPage({}: InferGetServerSidePropsType<
-  typeof getServerSideProps
->) {
-  const router = useRouter();
+export function LogoutPage({
+  localeInfo,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { t } = useTranslation("auth");
   const seoTags = createSEOTags({
     locale: localeInfo.locale,
     title: t("logout_title"),
     description: t("logout_desc"),
-    canonicalPath: router.pathname,
+    canonicalPath: createNextURL(localeInfo, "/auth/logout"),
   });
 
   return (
@@ -35,12 +33,10 @@ export function LogoutPage({}: InferGetServerSidePropsType<
 export const getServerSideProps = withSessionSSR<LogoutPageProps>(
   async ({ req, locale, defaultLocale }) => {
     const { account_id } = req.session;
+    const localeInfo = { locale: locale!, defaultLocale: defaultLocale! };
 
     if (!account_id) {
-      const redirectURL = createNextURL(
-        { context: { locale, defaultLocale } },
-        "/auth/login"
-      ).toString();
+      const redirectURL = createNextURL(localeInfo, "/auth/login").toString();
 
       return {
         redirect: {
@@ -59,10 +55,7 @@ export const getServerSideProps = withSessionSSR<LogoutPageProps>(
     if (req.method === "POST") {
       req.session.destroy();
 
-      const redirectURL = createNextURL(
-        { context: { locale, defaultLocale } },
-        "/"
-      ).toString();
+      const redirectURL = createNextURL(localeInfo, "/").toString();
 
       return {
         redirect: {
@@ -75,10 +68,7 @@ export const getServerSideProps = withSessionSSR<LogoutPageProps>(
     return {
       props: {
         ...localization,
-        localeInfo: {
-          locale: locale!,
-          defaultLocale: defaultLocale!,
-        },
+        localeInfo,
       },
     };
   }
