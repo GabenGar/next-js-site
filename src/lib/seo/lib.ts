@@ -36,6 +36,8 @@ export function createSEOTags({
     ? image
     : {
         url: new ProjectURL(logo.src).toString(),
+        width: 100,
+        height: 100,
       };
   const canonicalURL =
     canonicalPath && new ProjectURL(canonicalPath).toString();

@@ -5,17 +5,20 @@ import { DefaultSeo } from "next-seo";
 import { defaultSEOProps } from "#lib/seo";
 import { reduxStore } from "#store/redux";
 import { BaseLayout } from "#components/layout";
+import { ErrorBoundary } from "#components/errors";
 
 import type { AppProps } from "next/app";
 import type { NextPage } from "next";
 import type { ReactElement, ReactNode } from "react";
-import { ErrorBoundary } from "src/components/errors/error-boundary";
+import type { BasePageProps } from "#types/pages";
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
 };
-type AppPropsWithLayout = AppProps & {
+
+type AppPropsWithLayout = Omit<AppProps<BasePageProps>, "pageProps"> & {
   Component: NextPageWithLayout;
+  pageProps: BasePageProps;
 };
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
@@ -32,4 +35,5 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   );
 }
 
-export default appWithTranslation(MyApp);
+
+export default appWithTranslation<AppPropsWithLayout>(MyApp);

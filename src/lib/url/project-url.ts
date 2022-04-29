@@ -10,26 +10,26 @@ export class ProjectURL extends URL {
   locale: ILocaleInfo["locale"];
   defaultLocale: ILocaleInfo["defaultLocale"];
 
-  static fromProjectURL(url: ProjectURL, path: string) {
+  static fromProjectURL(url: ProjectURL, path?: string) {
     if (!(url instanceof ProjectURL)) {
       throw new ProjectError('The url has to be an instance of "ProjectURL"');
     }
 
     const newURL = new ProjectURL(url, url);
 
-    if (newURL.locale !== newURL.defaultLocale) {
-      newURL.pathname = `/${newURL.locale}${path}`;
-    } else {
-      newURL.pathname = path;
+    if (path) {
+      const { locale, defaultLocale } = newURL;
+      const localePrefix = locale === defaultLocale ? "" : `/${locale}`;
+      newURL.pathname = `${localePrefix}${path}`;
     }
 
     return newURL;
   }
 
   /**
-   * @param url A locale-unaware url string or an URL object
+   * @param url A locale-unaware url absolute string or an URL object
    */
-  constructor(url: string | URL, { locale, defaultLocale }: ILocaleInfo) {
+  constructor({ locale, defaultLocale }: ILocaleInfo, url: string | URL) {
     super(url, SITE_ORIGIN);
 
     this.locale = locale;
@@ -44,7 +44,7 @@ export class ProjectURL extends URL {
    * @returns A URL suitable for use in a `<meta rel="canonical">` tag.
    */
   asCanonical() {
-    const newURL = new ProjectURL(this, this);
+    const newURL = ProjectURL.fromProjectURL(this);
     newURL.search = "";
     newURL.hash = "";
 
