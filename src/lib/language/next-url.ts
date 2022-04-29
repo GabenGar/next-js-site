@@ -1,5 +1,5 @@
 import { SITE_ORIGIN } from "#environment/vars";
-import { ProjectURL } from "#lib/util";
+import { ProjectURL } from "#lib/url";
 
 import type { ILocaleInfo } from "./types";
 

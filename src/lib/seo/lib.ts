@@ -1,6 +1,6 @@
 import { SITE_NAME } from "#environment/vars";
 import { VercelLogo } from "#assets";
-import { ProjectURL } from "#lib/util";
+import { ProjectURL } from "#lib/url";
 
 import type { StaticImageData } from "next/image";
 import type { NextSeoProps } from "next-seo";
