@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { IS_DEVELOPMENT } from "#environment/derived";
@@ -17,9 +16,9 @@ interface AdminPageProps extends BasePageProps {
 }
 
 function AccountsPage({
+  localeInfo,
   accounts,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const router = useRouter();
   const { t } = useTranslation("admin");
   const seoTags = createSEOTags({
     locale: localeInfo.locale,
@@ -35,7 +34,7 @@ function AccountsPage({
 }
 
 export const getServerSideProps = withSessionSSR<AdminPageProps>(
-  async ({ req, locale }) => {
+  async ({ req, locale, defaultLocale }) => {
     if (!IS_DEVELOPMENT) {
       return {
         notFound: true,

@@ -1,8 +1,9 @@
-import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { IS_DEVELOPMENT } from "#environment/derived";
 import { getAccountDetails, confirmNewEmail } from "#lib/account";
 import { createSEOTags } from "#lib/seo";
+import { createNextURL } from "#lib/language";
 import { withSessionSSR } from "#server/requests";
 import { Page } from "#components/pages";
 import { LinkInternal } from "#components/links";
@@ -20,9 +21,9 @@ interface AccountEmailParams extends ParsedUrlQuery {
 }
 
 function EmailConfirmationPage({
+  localeInfo,
   email,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const router = useRouter();
   const { t } = useTranslation("account");
   const seoTags = createSEOTags({
     locale: localeInfo.locale,
@@ -49,18 +50,20 @@ function EmailConfirmationPage({
 export const getServerSideProps = withSessionSSR<
   AccountEmailProps,
   AccountEmailParams
->(async ({ req, params }) => {
+>(async ({ req, params, locale, defaultLocale }) => {
   if (!IS_DEVELOPMENT) {
     return {
       notFound: true,
     };
   }
   const { account_id } = req.session;
-  
+  const localeInfo = { locale: locale!, defaultLocale: defaultLocale! };
+
   if (!account_id) {
+    const redirectURL = createNextURL(localeInfo, "/auth/login").toString();
     return {
       redirect: {
-        destination: "/auth/login",
+        destination: redirectURL,
         permanent: false,
       },
     };
@@ -70,6 +73,7 @@ export const getServerSideProps = withSessionSSR<
 
   if (!account) {
     req.session.destroy();
+
     return {
       notFound: true,
     };
@@ -88,10 +92,7 @@ export const getServerSideProps = withSessionSSR<
   return {
     props: {
       ...localization,
-      localeInfo: {
-        locale: locale!,
-        defaultLocale: defaultLocale!,
-      },
+      localeInfo,
       email,
     },
   };

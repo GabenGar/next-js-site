@@ -1,8 +1,8 @@
-import { useRouter } from "next/router";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 import { getAccountDetails } from "#lib/account";
 import { createSEOTags } from "#lib/seo";
+import { createNextURL } from "#lib/language";
 import { withSessionSSR } from "#server/requests";
 import { getInvites } from "#database/queries/account/admin";
 import { Page } from "#components/pages";
@@ -23,9 +23,9 @@ interface IInvitesPageProps extends BasePageProps {
 }
 
 function InvitesPage({
+  localeInfo,
   invites,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const router = useRouter();
   const { t } = useTranslation("admin");
   const seoTags = createSEOTags({
     locale: localeInfo.locale,
@@ -112,13 +112,16 @@ function InvitesPage({
 }
 
 export const getServerSideProps = withSessionSSR<IInvitesPageProps>(
-  async ({ req, locale }) => {
+  async ({ req, locale, defaultLocale }) => {
     const { account_id } = req.session;
+    const localeInfo = { locale: locale!, defaultLocale: defaultLocale! };
 
     if (!account_id) {
+      const redirectURL = createNextURL(localeInfo, "/auth/login").toString();
+
       return {
         redirect: {
-          destination: "/auth/login",
+          destination: redirectURL,
           permanent: false,
         },
       };
@@ -151,10 +154,7 @@ export const getServerSideProps = withSessionSSR<IInvitesPageProps>(
     return {
       props: {
         ...localization,
-        localeInfo: {
-          locale: locale!,
-          defaultLocale: defaultLocale!,
-        },
+        localeInfo,
         invites,
       },
     };

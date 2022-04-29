@@ -1,9 +1,9 @@
-import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { FOUND } from "#environment/constants/http";
 import { createSEOTags } from "#lib/seo";
 import { getAccountDetails } from "#lib/account";
+import { createNextURL } from "#lib/language";
 import { getReqBody, withSessionSSR } from "#server/requests";
 import { createInvite } from "#lib/account/admin";
 import { validateInviteInitFields } from "#codegen/schema/validations";
@@ -23,11 +23,11 @@ interface IInviteCreationProps extends BasePageProps {
 }
 
 function InviteCreationPage({
+  localeInfo,
   inviteInit,
   errors,
   schemaValidationErrors,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const router = useRouter();
   const { t } = useTranslation("admin");
   const seoTags = createSEOTags({
     locale: localeInfo.locale,
@@ -81,14 +81,17 @@ function InviteCreationPage({
 }
 
 export const getServerSideProps = withSessionSSR<IInviteCreationProps>(
-  async ({ req, locale }) => {
+  async ({ req, locale, defaultLocale }) => {
     const { account_id } = req.session;
+    const localeInfo = { locale: locale!, defaultLocale: defaultLocale! };
 
     if (!account_id) {
+      const redirectURL = createNextURL(localeInfo, "/auth/login").toString();
+
       return {
         redirect: {
-          destination: "/auth/login",
-          permanent: false,
+          statusCode: FOUND,
+          destination: redirectURL,
         },
       };
     }
@@ -109,6 +112,12 @@ export const getServerSideProps = withSessionSSR<IInviteCreationProps>(
       };
     }
 
+    const localization = await serverSideTranslations(locale!, [
+      "layout",
+      "components",
+      "admin",
+    ]);
+
     if (req.method === "POST") {
       const inviteInit = await getReqBody<IInviteInit>(req);
       const validationResult = await validateInviteInitFields(inviteInit);
@@ -116,6 +125,8 @@ export const getServerSideProps = withSessionSSR<IInviteCreationProps>(
       if (!validationResult.is_successful) {
         return {
           props: {
+            ...localization,
+            localeInfo,
             schemaValidationErrors: validationResult.errors,
             inviteInit,
           },
@@ -123,28 +134,23 @@ export const getServerSideProps = withSessionSSR<IInviteCreationProps>(
       }
 
       const newInvite = await createInvite(inviteInit, account);
+      const redirectURL = createNextURL(
+        localeInfo,
+        "/account/admin/invites"
+      ).toString();
 
       return {
         redirect: {
           statusCode: FOUND,
-          destination: "/account/admin/invites",
+          destination: redirectURL,
         },
       };
     }
 
-    const localization = await serverSideTranslations(locale!, [
-      "layout",
-      "components",
-      "admin",
-    ]);
-
     return {
       props: {
         ...localization,
-        localeInfo: {
-          locale: locale!,
-          defaultLocale: defaultLocale!,
-        },
+        localeInfo,
       },
     };
   }

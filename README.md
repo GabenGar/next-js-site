@@ -98,3 +98,5 @@ git config core.sshCommand "ssh -i ~/.ssh/id_rsa_file -F /dev/null"
 - JSON Schema validated forms
 - extendable layout
 - comment threads
+- multilang error pages
+- abstract away per-page locale management
