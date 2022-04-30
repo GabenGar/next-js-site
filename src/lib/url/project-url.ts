@@ -9,6 +9,8 @@ import type { ILocaleInfo } from "#lib/language";
 export class ProjectURL extends URL {
   locale: ILocaleInfo["locale"];
   defaultLocale: ILocaleInfo["defaultLocale"];
+  isDefaultLocale: boolean;
+  localizedPathname: string;
 
   static fromProjectURL(url: ProjectURL, path?: string) {
     if (!(url instanceof ProjectURL)) {
@@ -35,11 +37,12 @@ export class ProjectURL extends URL {
     this.locale = locale;
     this.defaultLocale = defaultLocale;
 
-    if (locale !== defaultLocale) {
-      this.pathname = `/${locale}${this.pathname}`;
-    }
+    const isDefaultLocale = locale === defaultLocale;
+    this.isDefaultLocale = isDefaultLocale;
+    this.localizedPathname = isDefaultLocale
+      ? this.pathname
+      : `/${locale}${this.pathname}`;
   }
-
   /**
    * @returns A URL suitable for use in a `<meta rel="canonical">` tag.
    */
@@ -49,5 +52,12 @@ export class ProjectURL extends URL {
     newURL.hash = "";
 
     return newURL;
+  }
+
+  toString(): string {
+    const newURL = new URL(this);
+    newURL.pathname = this.localizedPathname;
+
+    return newURL.toString();
   }
 }
