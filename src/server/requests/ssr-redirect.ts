@@ -8,7 +8,7 @@ import {
 import { ILocaleInfo } from "#lib/language";
 import { ProjectURL } from "#lib/url";
 
-import type { Redirect as NextRedirect } from "next";
+import type { Redirect as NextRedirect } from "next"
 
 const redirectStatuses = [
   MOVED_PERMANENTLY,
@@ -23,22 +23,23 @@ type IRedirectStatus = typeof redirectStatuses[number];
 /**
  * Not extending the next `Redirect` because it's a type union and annoying to implement.
  * Using the `statusCode` because redirects on SSR
- * do frequently require changing method.
- *
- * @TODO fix types
+ * do frequently require changing a method.
  */
 interface IRedirect {
   redirect: {
     destination: string;
-    statusCode?: IRedirectStatus;
+    statusCode: IRedirectStatus;
     basePath?: false;
   };
 }
 
+/**
+ * Used in place of {@link NextRedirect `Redirect`} interface
+ */
 export class Redirect implements IRedirect {
   redirect: {
     destination: string;
-    statusCode: 301 | 302 | 303 | 307 | 308;
+    statusCode: IRedirectStatus;
     basePath?: false;
   };
 

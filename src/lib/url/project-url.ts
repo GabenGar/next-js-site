@@ -27,7 +27,7 @@ export class ProjectURL extends URL {
   }
 
   /**
-   * @param url A locale-unaware url absolute string or an URL object
+   * @param url A locale-unaware absolute url string or an URL object
    */
   constructor({ locale, defaultLocale }: ILocaleInfo, url: string | URL) {
     super(url, SITE_ORIGIN);
@@ -43,7 +43,7 @@ export class ProjectURL extends URL {
   /**
    * @returns A URL suitable for use in a `<meta rel="canonical">` tag.
    */
-  asCanonical() {
+  toCanonical() {
     const newURL = ProjectURL.fromProjectURL(this);
     newURL.search = "";
     newURL.hash = "";

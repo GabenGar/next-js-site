@@ -5,8 +5,7 @@ import { IS_INVITE_ONLY } from "#environment/derived";
 import { AuthError } from "#lib/errors";
 import { createSEOTags } from "#lib/seo";
 import { validateAccountInitFields, registerAccount } from "#lib/account";
-import { createNextURL } from "#lib/language";
-import { withSessionSSR, getReqBody } from "#server/requests";
+import { withSessionSSR, getReqBody, Redirect } from "#server/requests";
 import { Page } from "#components/pages";
 import { Form } from "#components/forms";
 import { ErrorsView } from "#components/errors";
@@ -89,15 +88,7 @@ export const getServerSideProps = withSessionSSR<RegisterPageProps>(
     const localeInfo = { locale: locale!, defaultLocale: defaultLocale! };
 
     if (account_id) {
-      const redirectURL = createNextURL(localeInfo, "/account").toString();
-
-      return {
-        redirect: {
-          statusCode: FOUND,
-          destination: redirectURL,
-          permanent: false,
-        },
-      };
+      return new Redirect(localeInfo, "/account", FOUND);
     }
 
     const localization = await serverSideTranslations(locale!, [
@@ -150,15 +141,7 @@ export const getServerSideProps = withSessionSSR<RegisterPageProps>(
       req.session.account_id = newAcc.id;
       await req.session.save();
 
-      const redirectURL = createNextURL(localeInfo, "/auth/success").toString();
-
-      return {
-        redirect: {
-          statusCode: FOUND,
-          destination: redirectURL,
-          permanent: false,
-        },
-      };
+      return new Redirect(localeInfo, "/auth/success", FOUND);
     }
 
     return {

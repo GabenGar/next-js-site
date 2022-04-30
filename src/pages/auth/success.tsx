@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { createSEOTags } from "#lib/seo";
-import { createNextURL } from "#lib/language";
+import { ProjectURL } from "#lib/url";
 import { setLocalStoreItem } from "#store/local";
 import { Page } from "#components/pages";
 
@@ -21,7 +21,7 @@ function AuthSuccessPage({
     description: t("auth_success_desc"),
     canonicalPath: "/auth/success",
   });
-  const redirectURL = createNextURL(localeInfo, "/account").toString();
+  const redirectURL = new ProjectURL(localeInfo, "/account").toString();
 
   useEffect(() => {
     setLocalStoreItem<boolean>("is_registered", true);

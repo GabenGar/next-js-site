@@ -18,9 +18,6 @@ export interface ICreateSEOTagsProps {
   image?: OpenGraphMedia;
 }
 
-/**
- * @TODO canonical url builder
- */
 export function createSEOTags({
   title,
   description,
@@ -30,7 +27,7 @@ export function createSEOTags({
 }: ICreateSEOTagsProps): NextSeoProps {
   const canonicalURL =
     canonicalPath &&
-    new ProjectURL(localeInfo, canonicalPath).asCanonical().toString();
+    new ProjectURL(localeInfo, canonicalPath).toCanonical().toString();
 
   const seoTags: NextSeoProps = {
     title: title,

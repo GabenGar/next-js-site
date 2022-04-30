@@ -1,9 +1,9 @@
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
+import { FOUND } from "#environment/constants/http";
 import { getAccountDetails } from "#lib/account";
 import { createSEOTags } from "#lib/seo";
-import { createNextURL } from "#lib/language";
-import { withSessionSSR } from "#server/requests";
+import { withSessionSSR, Redirect } from "#server/requests";
 import { getInvites } from "#database/queries/account/admin";
 import { Page } from "#components/pages";
 import { Nav, NavList } from "#components/navigation";
@@ -117,14 +117,7 @@ export const getServerSideProps = withSessionSSR<IInvitesPageProps>(
     const localeInfo = { locale: locale!, defaultLocale: defaultLocale! };
 
     if (!account_id) {
-      const redirectURL = createNextURL(localeInfo, "/auth/login").toString();
-
-      return {
-        redirect: {
-          destination: redirectURL,
-          permanent: false,
-        },
-      };
+      return new Redirect(localeInfo, "/auth/login", FOUND);
     }
 
     const account = await getAccountDetails(account_id);

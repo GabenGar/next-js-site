@@ -4,8 +4,7 @@ import { FOUND } from "#environment/constants/http";
 import { getAccountDetails } from "#lib/account";
 import { nowISO } from "#lib/dates";
 import { createSEOTags } from "#lib/seo";
-import { createNextURL } from "#lib/language";
-import { withSessionSSR } from "#server/requests";
+import { withSessionSSR, Redirect } from "#server/requests";
 import { Page } from "#components/pages";
 import { Article, ArticleBody, ArticleHeader } from "#components/articles";
 import { DL, DS } from "#components/lists/d-list";
@@ -58,14 +57,7 @@ export const getServerSideProps = withSessionSSR<ICalendarPageProps>(
     const localeInfo = { locale: locale!, defaultLocale: defaultLocale! };
 
     if (!account_id) {
-      const redirectURL = createNextURL(localeInfo, "/auth/login").toString();
-
-      return {
-        redirect: {
-          statusCode: FOUND,
-          destination: redirectURL,
-        },
-      };
+      return new Redirect(localeInfo, "/auth/login", FOUND);
     }
 
     const account = await getAccountDetails(account_id);
