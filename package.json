@@ -19,7 +19,6 @@
     "codegen": "ts-node --require tsconfig-paths/register --require environment/dotenv src/lib/codegen/_index.ts"
   },
   "dependencies": {
-    "@next/bundle-analyzer": "^12.1.5",
     "@reduxjs/toolkit": "^1.8.1",
     "@types/js-cookie": "^3.0.2",
     "ajv": "^8.11.0",

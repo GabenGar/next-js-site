@@ -1,11 +1,6 @@
 // @ts-check
 const path = require("path");
 const { i18n } = require("./next-i18next.config");
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: process.env.ANALYZE === 'true',
-})
-
-
 
 /** @type {import('next').NextConfig} */
 const nextJSConfig = {
@@ -23,9 +18,13 @@ const nextJSConfig = {
    * @param {import("next/dist/server/config-shared").WebpackConfigContext } context
    * @returns {import("webpack").Configuration}
    */
-  webpack: (config, { dev, isServer, dir }) => {
+  webpack: function (config, context) {
+    const { dev, isServer, dir } = context;
 
-    if (!dev) {
+    // going this roundabout way because `@next/bundle-analyzer`
+    // opens a browser and doesn't have plugin options
+    if (!dev && process.env.ANALYZE === 'true') {
+
       const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
       const filename = isServer ? "server.html" : "client.html"
       const reportFilename = path.join(dir, ".next", "analyze", filename)
@@ -37,6 +36,11 @@ const nextJSConfig = {
           openAnalyzer: false
         })
       )
+    }
+
+    if (typeof this === "function") {
+      // @ts-expect-error
+      return this(config, context)
     }
 
     return config
