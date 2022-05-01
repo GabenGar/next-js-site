@@ -1,8 +1,6 @@
-import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { createSEOTags } from "#lib/seo";
-import { createNextURL } from "#lib/language";
 import { Page } from "#components/pages";
 import { Nav, NavItem, NavList } from "#components/navigation";
 import { LinkInternal } from "#components/links";
@@ -19,10 +17,10 @@ interface IHomePageParams extends ParsedUrlQuery {}
 function Home({ localeInfo }: InferGetStaticPropsType<typeof getStaticProps>) {
   const { t } = useTranslation("common");
   const seoTags = createSEOTags({
-    locale: localeInfo.locale,
+    localeInfo,
     title: t("title"),
     description: t("description"),
-    canonicalPath: createNextURL(localeInfo, "/").toString(),
+    canonicalPath: "/",
   });
 
   return (

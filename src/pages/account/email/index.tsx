@@ -8,8 +8,7 @@ import {
   sendEmailConfirmation,
   validateEmailString,
 } from "#lib/account";
-import { createNextURL } from "#lib/language";
-import { getReqBody, withSessionSSR } from "#server/requests";
+import { getReqBody, withSessionSSR, Redirect } from "#server/requests";
 import { Page } from "#components/pages";
 import { Form } from "#components/forms";
 import { FormSectionEmail } from "#components/forms/sections";
@@ -34,10 +33,10 @@ function AccountEmailPage({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { t } = useTranslation("account");
   const seoTags = createSEOTags({
-    locale: localeInfo.locale,
+    localeInfo,
     title: t("email_title"),
     description: t("email_desc"),
-    canonicalPath: createNextURL(localeInfo, "/account/email"),
+    canonicalPath: "/account/email",
   });
 
   return (
@@ -85,20 +84,14 @@ export const getServerSideProps = withSessionSSR<AccountEmailProps>(
     const { account_id } = req.session;
 
     if (!account_id) {
-      const redirectURL = createNextURL(localeInfo, "/auth/login").toString();
-
-      return {
-        redirect: {
-          statusCode: FOUND,
-          destination: redirectURL,
-        },
-      };
+      return new Redirect(localeInfo, "/auth/login", FOUND);
     }
 
     const account = await getAccountDetails(account_id);
 
     if (!account) {
       req.session.destroy();
+
       return {
         notFound: true,
       };

@@ -1,7 +1,6 @@
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { createSEOTags } from "#lib/seo";
-import { createNextURL } from "#lib/language";
 import { Page } from "#components/pages";
 import { InternalNav } from "#components/navigation";
 
@@ -18,10 +17,10 @@ function StatusPage({
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const { t } = useTranslation("common");
   const seoTags = createSEOTags({
-    locale: localeInfo.locale,
+    localeInfo,
     title: t("status_title"),
     description: t("status_desc"),
-    canonicalPath: createNextURL(localeInfo, "/status").toString(),
+    canonicalPath: "/status",
   });
 
   return (

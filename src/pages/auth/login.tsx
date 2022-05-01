@@ -4,8 +4,7 @@ import { FOUND, SEE_OTHER } from "#environment/constants/http";
 import { AuthError } from "#lib/errors";
 import { createSEOTags } from "#lib/seo";
 import { loginAccount, validateAccountInitFields } from "#lib/account";
-import { createNextURL } from "#lib/language";
-import { withSessionSSR, getReqBody } from "#server/requests";
+import { withSessionSSR, getReqBody, Redirect } from "#server/requests";
 import { Page } from "#components/pages";
 import { Form } from "#components/forms";
 import { ErrorsView } from "#components/errors";
@@ -31,10 +30,10 @@ export function LoginPage({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { t } = useTranslation("auth");
   const seoTags = createSEOTags({
-    locale: localeInfo.locale,
+    localeInfo,
     title: t("login_title"),
     description: t("login_desc"),
-    canonicalPath: createNextURL(localeInfo, "/auth/login"),
+    canonicalPath: "/auth/login",
   });
 
   return (
@@ -79,14 +78,7 @@ export const getServerSideProps = withSessionSSR<LoginPageProps>(
     const localeInfo = { locale: locale!, defaultLocale: defaultLocale! };
 
     if (account_id) {
-      const redirectURL = createNextURL(localeInfo, "/account").toString();
-
-      return {
-        redirect: {
-          statusCode: FOUND,
-          destination: redirectURL,
-        },
-      };
+      return new Redirect(localeInfo, "/account", FOUND);
     }
 
     const localization = await serverSideTranslations(locale!, [
@@ -126,14 +118,7 @@ export const getServerSideProps = withSessionSSR<LoginPageProps>(
       req.session.account_id = loginResult.id;
       await req.session.save();
 
-      const redirectURL = createNextURL(localeInfo, "/auth/success").toString();
-
-      return {
-        redirect: {
-          statusCode: SEE_OTHER,
-          destination: redirectURL,
-        },
-      };
+      return new Redirect(localeInfo, "/auth/success", SEE_OTHER);
     }
 
     return {

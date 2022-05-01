@@ -10,7 +10,6 @@ import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import type { ParsedUrlQuery } from "querystring";
 import type { Challenge } from "#types/frontend-mentor";
 import type { BasePageProps } from "#types/pages";
-import { createNextURL } from "#lib/language";
 
 interface FMHomePageProps extends BasePageProps {}
 
@@ -21,10 +20,10 @@ function FMHomePage({
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const { t } = useTranslation("frontend-mentor");
   const seoTags = createSEOTags({
-    locale: localeInfo.locale,
+    localeInfo,
     title: t("index_title"),
     description: t("index_desc"),
-    canonicalPath: createNextURL(localeInfo, "frontend-mentor").toString(),
+    canonicalPath: "frontend-mentor",
   });
 
   return (

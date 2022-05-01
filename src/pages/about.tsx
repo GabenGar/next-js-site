@@ -18,7 +18,6 @@ import styles from "./about.module.scss";
 import type { ParsedUrlQuery } from "querystring";
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import type { BasePageProps } from "#types/pages";
-import { createNextURL } from "#lib/language";
 
 interface IAboutPageProps extends BasePageProps {}
 
@@ -29,10 +28,10 @@ function AboutPage({
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const { t } = useTranslation("common");
   const seoTags = createSEOTags({
-    locale: localeInfo.locale,
+    localeInfo,
     title: t("about_title"),
     description: t("about_desc"),
-    canonicalPath: createNextURL(localeInfo, "/about").toString(),
+    canonicalPath: "/about",
   });
 
   return (

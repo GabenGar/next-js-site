@@ -1,3 +1,4 @@
+import type { SSRConfig } from "next-i18next";
 import type { ErrorObject } from "ajv";
 import type { ISOLangString } from "#lib/language";
 
@@ -11,9 +12,8 @@ export type IValidationResult<T> =
  * Props shared across all pages.
  * @TODOs
  * - Implement cookie-based theme.
- * - pass locale and default locale in all pages.
  */
-export interface BasePageProps extends Record<string, unknown> {
+export interface BasePageProps extends Record<string, unknown>, SSRConfig {
   /**
    * This info has to be passed to generate links server-side.
    */

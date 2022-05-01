@@ -1,9 +1,8 @@
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { FOUND, SEE_OTHER } from "#environment/constants/http";
-import { withSessionSSR } from "#server/requests";
+import { withSessionSSR, Redirect } from "#server/requests";
 import { createSEOTags } from "#lib/seo";
-import { createNextURL } from "#lib/language";
 import { Page } from "#components/pages";
 import { Form } from "#components/forms";
 
@@ -17,10 +16,10 @@ export function LogoutPage({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { t } = useTranslation("auth");
   const seoTags = createSEOTags({
-    locale: localeInfo.locale,
+    localeInfo,
     title: t("logout_title"),
     description: t("logout_desc"),
-    canonicalPath: createNextURL(localeInfo, "/auth/logout"),
+    canonicalPath: "/auth/logout",
   });
 
   return (
@@ -36,14 +35,7 @@ export const getServerSideProps = withSessionSSR<LogoutPageProps>(
     const localeInfo = { locale: locale!, defaultLocale: defaultLocale! };
 
     if (!account_id) {
-      const redirectURL = createNextURL(localeInfo, "/auth/login").toString();
-
-      return {
-        redirect: {
-          statusCode: FOUND,
-          destination: redirectURL,
-        },
-      };
+      return new Redirect(localeInfo, "/auth/login", FOUND);
     }
 
     const localization = await serverSideTranslations(locale!, [
@@ -55,14 +47,7 @@ export const getServerSideProps = withSessionSSR<LogoutPageProps>(
     if (req.method === "POST") {
       req.session.destroy();
 
-      const redirectURL = createNextURL(localeInfo, "/").toString();
-
-      return {
-        redirect: {
-          statusCode: SEE_OTHER,
-          destination: redirectURL,
-        },
-      };
+      return new Redirect(localeInfo, "/", SEE_OTHER)
     }
 
     return {

@@ -22,9 +22,8 @@ import type {
 import type { ParsedUrlQuery } from "querystring";
 import type { Country } from "#lib/api/rest-countries";
 import type { BasePageProps } from "#types/pages";
-import { createNextURL } from "#lib/language";
 
-interface IProps extends BasePageProps{
+interface IProps extends BasePageProps {
   country: Country;
   borderCountries: Country[] | null;
 }
@@ -41,10 +40,10 @@ export default function RESTCountriesCountryDetail({
   const { t } = useTranslation("frontend-mentor");
   const countryName = country.name.official;
   const seoTags = createSEOTags({
-    locale: localeInfo.locale,
+    localeInfo,
     title: countryName,
     description: `Detailed info for ${countryName}`,
-    canonicalPath: createNextURL(localeInfo, `/frontend-mentor/rest-countries/${countryName}`).toString()
+    canonicalPath: `/frontend-mentor/rest-countries/${countryName}`,
   });
   const images = [
     { src: country.flags.png, href: country.flags.svg, caption: "Flag" },

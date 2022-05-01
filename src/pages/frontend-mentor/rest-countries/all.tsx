@@ -2,7 +2,6 @@ import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useEffect, useState } from "react";
 import { createSEOTags } from "#lib/seo";
-import { createNextURL } from "#lib/language";
 import { allCountries } from "#lib/api/rest-countries";
 import { CardList } from "#components/lists/card-list";
 import { LoadingBar } from "#components/state";
@@ -43,13 +42,10 @@ export default function RESTCountriesAllPage({
   const [filteredCountries, filterCountries] = useState(countries);
   const [currentCountries, changeCurrentCountries] = useState<Country[]>([]);
   const seoTags = createSEOTags({
-    locale: localeInfo.locale,
+    localeInfo,
     title: "All Countries",
     description: "All Countries",
-    canonicalPath: createNextURL(
-      localeInfo,
-      "/frontend-mentor/rest-countries/all"
-    ).toString(),
+    canonicalPath: "/frontend-mentor/rest-countries/all",
   });
   const regions = Array.from(
     countries.reduce(

@@ -1,8 +1,9 @@
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { FOUND } from "#environment/constants/http";
 import { createSEOTags } from "#lib/seo";
 import { getAccountDetails } from "#lib/account";
-import { createNextURL } from "#lib/language";
+import { ProjectURL } from "#lib/url";
 import { withSessionSSR } from "#server/requests";
 import { LinkInternal } from "#components/links";
 import { Page } from "#components/pages";
@@ -14,11 +15,11 @@ import type { BasePageProps } from "#types/pages";
 interface AdminPageProps extends BasePageProps {}
 
 function AdminPage({
-  localeInfo
+  localeInfo,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { t } = useTranslation("admin");
   const seoTags = createSEOTags({
-    locale: localeInfo.locale,
+    localeInfo,
     title: t("admin_title"),
     description: t("admin_desc"),
   });
@@ -51,12 +52,10 @@ export const getServerSideProps = withSessionSSR<AdminPageProps>(
     const localeInfo = { locale: locale!, defaultLocale: defaultLocale! };
 
     if (!account_id) {
-      const redirectURL = createNextURL(localeInfo, "/auth/login").toString();
-
       return {
         redirect: {
-          destination: redirectURL,
-          permanent: false,
+          statusCode: FOUND,
+          destination: new ProjectURL(localeInfo, "/auth/login").toString(),
         },
       };
     }

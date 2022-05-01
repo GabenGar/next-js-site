@@ -2,7 +2,6 @@ import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { IS_DEVELOPMENT } from "#environment/derived";
 import { getAccountDetails } from "#lib/account";
-import { createNextURL } from "#lib/language";
 import { createSEOTags } from "#lib/seo";
 import { withSessionSSR } from "#server/requests";
 import { LinkInternal } from "#components/links";
@@ -26,10 +25,10 @@ function AccountPage({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { t } = useTranslation("account");
   const seoTags = createSEOTags({
-    locale: localeInfo.locale,
+    localeInfo,
     title: t("acc_title"),
     description: t("acc_desc"),
-    canonicalPath: createNextURL(localeInfo, "/account")
+    canonicalPath: "/account",
   });
 
   return (

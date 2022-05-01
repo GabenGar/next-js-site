@@ -21,7 +21,7 @@ function AccountsPage({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { t } = useTranslation("admin");
   const seoTags = createSEOTags({
-    locale: localeInfo.locale,
+    localeInfo,
     title: "Accounts overview",
     description: "Accounts details",
   });

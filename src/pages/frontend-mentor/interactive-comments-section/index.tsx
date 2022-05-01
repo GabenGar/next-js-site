@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { createSEOTags } from "#lib/seo";
-import { createNextURL } from "#lib/language";
 import { useAppDispatch, useAppSelector } from "#store/redux";
 import { getFMCommentsAsync, selectFMSlice } from "#store/redux/reducers";
 import { Page } from "#components/pages";
@@ -36,13 +35,10 @@ function FMCommentsPage({
   const dispatch = useAppDispatch();
   const { t } = useTranslation("frontend-mentor");
   const seoTags = createSEOTags({
-    locale: localeInfo.locale,
+    localeInfo,
     title: t("comments_title"),
     description: t("challenge_desc", { title: t("comments_title") }),
-    canonicalPath: createNextURL(
-      localeInfo,
-      "/frontend-mentor/interactive-comments-section"
-    ).toString(),
+    canonicalPath: "/frontend-mentor/interactive-comments-section",
   });
   const { comments, status, error } = useAppSelector(selectFMSlice);
 

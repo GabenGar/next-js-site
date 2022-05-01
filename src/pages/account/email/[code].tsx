@@ -1,10 +1,10 @@
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { FOUND } from "#environment/constants/http";
 import { IS_DEVELOPMENT } from "#environment/derived";
 import { getAccountDetails, confirmNewEmail } from "#lib/account";
 import { createSEOTags } from "#lib/seo";
-import { createNextURL } from "#lib/language";
-import { withSessionSSR } from "#server/requests";
+import { withSessionSSR, Redirect } from "#server/requests";
 import { Page } from "#components/pages";
 import { LinkInternal } from "#components/links";
 
@@ -26,7 +26,7 @@ function EmailConfirmationPage({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { t } = useTranslation("account");
   const seoTags = createSEOTags({
-    locale: localeInfo.locale,
+    localeInfo,
     title: t("email_code_title"),
     description: t("email_code_desc"),
   });
@@ -60,13 +60,7 @@ export const getServerSideProps = withSessionSSR<
   const localeInfo = { locale: locale!, defaultLocale: defaultLocale! };
 
   if (!account_id) {
-    const redirectURL = createNextURL(localeInfo, "/auth/login").toString();
-    return {
-      redirect: {
-        destination: redirectURL,
-        permanent: false,
-      },
-    };
+    return new Redirect(localeInfo, "/auth/login", FOUND);
   }
 
   const account = await getAccountDetails(account_id);

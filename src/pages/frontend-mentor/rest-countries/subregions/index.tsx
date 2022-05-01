@@ -2,7 +2,6 @@ import { Fragment } from "react";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { createSEOTags } from "#lib/seo";
-import { createNextURL } from "#lib/language";
 import { allCountries } from "#lib/api/rest-countries";
 import { GalleryList } from "#components/lists";
 import { LocalNav } from "#components/fancy";
@@ -33,13 +32,10 @@ function RegionCountries({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { t } = useTranslation("frontend-mentor");
   const seoTags = createSEOTags({
-    locale: localeInfo.locale,
+    localeInfo,
     title: "Countries by Subregions",
     description: "Countries by Subregions",
-    canonicalPath: createNextURL(
-      localeInfo,
-      "/frontend-mentor/rest-countries/subregions"
-    ),
+    canonicalPath: "/frontend-mentor/rest-countries/subregions",
   });
   const subRegionList = Object.keys(subregions).map((subregion) => {
     return {
