@@ -1,4 +1,4 @@
-import { faker } from "@faker-js/faker";
+import faker from "@faker-js/faker/locale/en";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { nowISO } from "#lib/dates";
 import { fetchComments } from "#lib/api/public";
