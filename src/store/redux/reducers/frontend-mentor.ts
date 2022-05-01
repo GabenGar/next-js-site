@@ -1,9 +1,11 @@
-import faker from "@faker-js/faker/locale/en";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { VercelLogo } from "#assets";
 import { nowISO } from "#lib/dates";
 import { fetchComments } from "#lib/api/public";
 import { StoreError } from "#lib/errors";
 import { validateFMCommentFields } from "#codegen/schema/validations";
+
+
 
 import type {
   ICommentClient,
@@ -75,10 +77,10 @@ const commentsSlice = createSlice({
         content,
         parent_id,
         created_at: nowISO(),
-        avatar_url: faker.image.avatar(),
+        avatar_url: VercelLogo.src,
         likes: 1,
         dislikes: 0,
-        name: faker.name.findName(),
+        name: "Anonymous",
         id: currentMaxID + 1,
       };
 
@@ -305,17 +307,23 @@ export async function transformComment(
 ): Promise<IFMComment> {
   const { id, content, created_at, parent_id, is_public } = comment;
   const fmComment: IFMComment = {
-    name: faker.name.findName(),
+    name: "Anonymous",
     id,
     content,
     created_at,
     parent_id,
-    likes: faker.datatype.number({ min: 1 }),
-    dislikes: faker.datatype.number({ min: 0 }),
-    avatar_url: faker.image.avatar(),
+    likes: randomInteger(1),
+    dislikes: randomInteger(0),
+    avatar_url: VercelLogo.src,
   };
 
   await validateFMCommentFields(fmComment);
 
   return fmComment;
+}
+
+function randomInteger(min: number, max: number = Infinity) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1) + min)
 }
