@@ -5,12 +5,12 @@ import type { ILocaleInfo } from "#lib/language";
 
 /**
  * A locale-aware `URL` with {@link SITE_ORIGIN `SITE_ORIGIN`} as `base` argument.
+ * @TODO proepr locale handling
  */
 export class ProjectURL extends URL {
   locale: ILocaleInfo["locale"];
   defaultLocale: ILocaleInfo["defaultLocale"];
   isDefaultLocale: boolean;
-  localizedPathname: string;
 
   static fromProjectURL(url: ProjectURL, path?: string) {
     if (!(url instanceof ProjectURL)) {
@@ -20,8 +20,8 @@ export class ProjectURL extends URL {
     const newURL = new ProjectURL(url, url);
 
     if (path) {
-      const { locale, defaultLocale } = newURL;
-      const localePrefix = locale === defaultLocale ? "" : `/${locale}`;
+      const { locale, isDefaultLocale } = newURL;
+      const localePrefix = isDefaultLocale ? "" : `/${locale}`;
       newURL.pathname = `${localePrefix}${path}`;
     }
 
@@ -39,25 +39,19 @@ export class ProjectURL extends URL {
 
     const isDefaultLocale = locale === defaultLocale;
     this.isDefaultLocale = isDefaultLocale;
-    this.localizedPathname = isDefaultLocale
-      ? this.pathname
-      : `/${locale}${this.pathname}`;
+
+    if (!isDefaultLocale) {
+      this.pathname = `/${locale}${this.pathname}`;
+    }
   }
   /**
    * @returns A URL suitable for use in a `<meta rel="canonical">` tag.
    */
   toCanonical() {
-    const newURL = ProjectURL.fromProjectURL(this);
+    const newURL = new URL(this);
     newURL.search = "";
     newURL.hash = "";
 
     return newURL;
-  }
-
-  toString(): string {
-    const newURL = new URL(this);
-    newURL.pathname = this.localizedPathname;
-
-    return newURL.toString();
   }
 }
