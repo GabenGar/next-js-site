@@ -1,4 +1,4 @@
-@use "../../../styles/variables/sass" as *;
+@use "../../../styles/variables/sass.scss" as *;
 @use "../../../styles/mixins" as mixins;
 
 .block {
@@ -25,11 +25,6 @@
   transition-duration: var(--duration-global);
   transition-property: opacity, box-shadow, background-color, border-color;
 
-  // 
-  & * {
-
-  }
-
   &:focus,
   &:hover {
     background-color: var(--local-colour2-primary);
@@ -43,10 +38,15 @@
     opacity: 0.5;
     background-color: var(--local-colour2-secondary);
     box-shadow: inset 2px 2px 3px hsla(0, 0%, 90%, 40%),
-    inset -2px -2px 3px hsla(0, 0%, 0%, 50%);
+      inset -2px -2px 3px hsla(0, 0%, 0%, 50%);
   }
 }
 
 .content {
+  display: none;
   white-space: nowrap;
+
+  @media (min-width: $width-phone) {
+    display: unset;
+  }
 }

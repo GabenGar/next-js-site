@@ -65,27 +65,31 @@ export function BaseLayout({ children }: Props) {
             className={clsx(styles.list, isVisible && styles.list_visible)}
           >
             <NavItem>
-              <LinkInternal href="/" className={styles.navLink}>
-                <SVGIcon iconID="react" />
-                <span>{t("home")}</span>
+              <LinkInternal className={styles.navLink} href="/" iconID="react">
+                {t("home")}
               </LinkInternal>
             </NavItem>
             <NavItem>
-              <LinkInternal href="/blog" className={styles.navLink}>
-                <SVGIcon iconID="blog" />
-                <span>{t("blog")}</span>
+              <LinkInternal
+                className={styles.navLink}
+                iconID="blog"
+                href="/blog"
+              >
+                {t("blog")}
               </LinkInternal>
             </NavItem>
             <NavItem>
-              <LinkInternal href="/about" className={styles.navLink}>
-                <SVGIcon iconID="biohazard" />
-                <span>{t("about")}</span>
+              <LinkInternal
+                className={styles.navLink}
+                iconID="biohazard"
+                href="/about"
+              >
+                {t("about")}
               </LinkInternal>
             </NavItem>
             <NavItem>
-              <LinkInternal href="/status" className={styles.navLink}>
-                <SVGIcon iconID="temperature-three-quarters" />
-                <span>{t("status")}</span>
+              <LinkInternal className={styles.navLink} iconID="temperature-three-quarters" href="/status">
+                {t("status")}
               </LinkInternal>
             </NavItem>
           </NavList>
