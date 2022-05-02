@@ -15,6 +15,8 @@
     "register",
     "login",
     "logout",
-    "contacts"
+    "contacts",
+    "theme_light",
+    "theme_dark"
   ]
 }

@@ -1,7 +1,2 @@
-export {
-  getCurrentTheme,
-  setCurrentTheme,
-  init as initTheme,
-  AVAILABLE_THEMES,
-  defaultTheme,
-} from "./base";
+export { AVAILABLE_THEMES, getTheme, setTheme } from "./lib";
+export type { ITheme } from "./lib"

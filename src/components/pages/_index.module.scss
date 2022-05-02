@@ -5,14 +5,15 @@
   margin-bottom: $size-small;
 }
 
-.heading {}
+.heading {
+}
 
 .content {
-  
+
   &_headless {
     padding-top: $size-normal;
   }
-  
+
   & > * {
     margin-bottom: $size-normal;
   }

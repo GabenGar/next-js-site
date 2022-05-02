@@ -1,14 +1,8 @@
 import clsx from "clsx";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { REPOSITORY, EMAIL_ADDRESS } from "#environment/vars";
-import {
-  AVAILABLE_THEMES,
-  defaultTheme,
-  setCurrentTheme,
-  getCurrentTheme,
-} from "#lib/theme";
+import { AVAILABLE_THEMES, getTheme, setTheme } from "#lib/theme";
 import { LanguageSwitcher } from "#components/language";
 import { useAccount } from "#lib/hooks";
 import { SVGIcon } from "#components/icons";
@@ -16,11 +10,11 @@ import { LinkExternal, LinkInternal, LinkEmail } from "#components/links";
 import { FancyNav, NavList, NavItem } from "#components/fancy/nav";
 import { Form } from "#components/forms";
 import { ButtonSubmit, Button } from "#components/buttons";
-import { onParentBlur } from "#lib/browser/dom"
+import { onParentBlur } from "#lib/browser/dom";
 import styles from "./base.module.scss";
 
-import type { FocusEvent } from "react";
 import type { RootlessProps } from "#types/props";
+import type { ITheme } from "#lib/theme";
 import type { ButtonClickEvent } from "#components/fancy";
 
 interface Props extends RootlessProps {}
@@ -30,28 +24,32 @@ interface Props extends RootlessProps {}
  */
 export function BaseLayout({ children }: Props) {
   const { t } = useTranslation("layout");
+  const [currentTheme, switchCurrentTheme] = useState<ITheme | undefined>(
+    undefined
+  );
   const [isVisible, changeVisibility] = useState(false);
 
-  // const [currentTheme, switchCurrentTheme] = useState("");
+  useEffect(() => {
+    switchCurrentTheme(() => getTheme());
+  }, []);
 
-  // useEffect(() => {
-  //   switchCurrentTheme(() => getCurrentTheme());
-  // }, []);
+  function switchTheme(event: ButtonClickEvent) {
+    const nextTheme =
+      currentTheme === AVAILABLE_THEMES.DARK
+        ? AVAILABLE_THEMES.LIGHT
+        : AVAILABLE_THEMES.DARK;
 
-  // function switchTheme(event: ButtonClickEvent) {
-  //   const nextTheme =
-  //     currentTheme === AVAILABLE_THEMES.DARK
-  //       ? AVAILABLE_THEMES.LIGHT
-  //       : AVAILABLE_THEMES.DARK;
-
-  //   switchCurrentTheme(() => nextTheme);
-  //   setCurrentTheme(nextTheme);
-  // }
+    setTheme(nextTheme);
+    switchCurrentTheme(() => nextTheme);
+  }
 
   return (
     <>
       <header className={styles.header}>
-        <FancyNav className={styles.nav} onBlur={onParentBlur(changeVisibility, false)}>
+        <FancyNav
+          className={styles.nav}
+          onBlur={onParentBlur(changeVisibility, false)}
+        >
           <Button
             className={styles.button}
             iconID={"signs-post"}
@@ -65,46 +63,57 @@ export function BaseLayout({ children }: Props) {
             className={clsx(styles.list, isVisible && styles.list_visible)}
           >
             <NavItem>
-              <LinkInternal href="/" className={styles.navLink}>
-                <SVGIcon iconID="react" />
-                <span>{t("home")}</span>
+              <LinkInternal className={styles.navLink} href="/" iconID="react">
+                {t("home")}
               </LinkInternal>
             </NavItem>
             <NavItem>
-              <LinkInternal href="/blog" className={styles.navLink}>
-                <SVGIcon iconID="blog" />
-                <span>{t("blog")}</span>
+              <LinkInternal
+                className={styles.navLink}
+                iconID="blog"
+                href="/blog"
+              >
+                {t("blog")}
               </LinkInternal>
             </NavItem>
             <NavItem>
-              <LinkInternal href="/about" className={styles.navLink}>
-                <SVGIcon iconID="biohazard" />
-                <span>{t("about")}</span>
+              <LinkInternal
+                className={styles.navLink}
+                iconID="biohazard"
+                href="/about"
+              >
+                {t("about")}
               </LinkInternal>
             </NavItem>
             <NavItem>
-              <LinkInternal href="/status" className={styles.navLink}>
-                <SVGIcon iconID="temperature-three-quarters" />
-                <span>{t("status")}</span>
+              <LinkInternal
+                className={styles.navLink}
+                iconID="temperature-three-quarters"
+                href="/status"
+              >
+                {t("status")}
               </LinkInternal>
             </NavItem>
           </NavList>
 
           <NavList className={styles.misc}>
+            <NavItem className={styles.theme}>
+              <Button
+                className={styles.switch}
+                iconID="adjust"
+                onClick={switchTheme}
+              >
+                {currentTheme === AVAILABLE_THEMES.LIGHT
+                  ? t("theme_light")
+                  : t("theme_dark")}
+              </Button>
+            </NavItem>
             <NavItem className={styles.lang}>
               <LanguageSwitcher />
             </NavItem>
             <AccountNav />
           </NavList>
         </FancyNav>
-        {/* <Button className={styles.switch} onClick={switchTheme}>
-          <SVGIcon iconID="adjust" />
-          <span>
-            {currentTheme === AVAILABLE_THEMES.LIGHT
-              ? AVAILABLE_THEMES.DARK
-              : AVAILABLE_THEMES.LIGHT}
-          </span>
-        </Button> */}
       </header>
 
       <main className={styles.main}>{children}</main>

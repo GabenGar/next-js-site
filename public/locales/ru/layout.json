@@ -10,5 +10,7 @@
   "register": "Зарегистрироваться",
   "login": "Войти",
   "logout": "Выйти",
-  "contacts": "Контакты"
+  "contacts": "Контакты",
+  "theme_light": "светлая",
+  "theme_dark": "тёмная"
 }

@@ -2,9 +2,6 @@ import { useEffect, useState } from "react";
 import { REPOSITORY } from "#environment/vars";
 import {
   AVAILABLE_THEMES,
-  defaultTheme,
-  setCurrentTheme,
-  getCurrentTheme,
 } from "#lib/theme";
 import { Button } from "#components/fancy";
 import { LinkInternal, LinkExternal } from "#components/links";
@@ -56,11 +53,6 @@ export function RESTCountries({ children }: Props) {
             </li>
           </ul>
         </nav>
-        {/* <Button onClick={switchTheme}>
-          {currentTheme === AVAILABLE_THEMES.LIGHT
-            ? AVAILABLE_THEMES.DARK
-            : AVAILABLE_THEMES.LIGHT}
-        </Button> */}
       </header>
 
       <main className={styles.main}>{children}</main>
