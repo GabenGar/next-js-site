@@ -33,6 +33,8 @@
     --colour1-tertiary: hsl(209, 23%, 22%);
     --colour1-tertiary-transparent: hsla(209, 23%, 22%, 40%);
   }
+
+  color: var(--colour0-primary);
 }
 
 .header {
