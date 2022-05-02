@@ -88,7 +88,11 @@ export function BaseLayout({ children }: Props) {
               </LinkInternal>
             </NavItem>
             <NavItem>
-              <LinkInternal className={styles.navLink} iconID="temperature-three-quarters" href="/status">
+              <LinkInternal
+                className={styles.navLink}
+                iconID="temperature-three-quarters"
+                href="/status"
+              >
                 {t("status")}
               </LinkInternal>
             </NavItem>
@@ -102,8 +106,8 @@ export function BaseLayout({ children }: Props) {
                 onClick={switchTheme}
               >
                 {currentTheme === AVAILABLE_THEMES.LIGHT
-                  ? t("theme_dark")
-                  : t("theme_light")}
+                  ? t("theme_light")
+                  : t("theme_dark")}
               </Button>
             </NavItem>
             <NavItem className={styles.lang}>
