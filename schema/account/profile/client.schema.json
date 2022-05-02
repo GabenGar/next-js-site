@@ -1,0 +1,32 @@
+{
+  "$id": "http://schemas.com/account/profile/client.schema.json",
+  "title": "AccountProfileClient",
+  "description": "The profile of an account used by client.",
+  "type": "object",
+  "required": ["id", "created_at", "updated_at", "name"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "$ref": "/types/serial.schema.json"
+    },
+    "created_at": {
+      "$ref": "/types/dates/iso-datetime.schema.json"
+    },
+    "updated_at": {
+      "$ref": "/types/dates/iso-datetime.schema.json"
+    },
+    "name": {
+      "description": "The name shown in the link. Only latin lower-cased letters allowed.",
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 15,
+      "pattern": "^[a-z]+$"
+    },
+    "full_name": {
+      "description": "The name shown on the profile card.",
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 25
+    }
+  }
+}
