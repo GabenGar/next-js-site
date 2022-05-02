@@ -4,10 +4,7 @@ import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { REPOSITORY, EMAIL_ADDRESS } from "#environment/vars";
 import {
-  AVAILABLE_THEMES,
-  defaultTheme,
-  setCurrentTheme,
-  getCurrentTheme,
+  AVAILABLE_THEMES
 } from "#lib/theme";
 import { LanguageSwitcher } from "#components/language";
 import { useAccount } from "#lib/hooks";
@@ -19,14 +16,13 @@ import { ButtonSubmit, Button } from "#components/buttons";
 import { onParentBlur } from "#lib/browser/dom"
 import styles from "./base.module.scss";
 
-import type { FocusEvent } from "react";
 import type { RootlessProps } from "#types/props";
 import type { ButtonClickEvent } from "#components/fancy";
 
 interface Props extends RootlessProps {}
 
 /**
- * @TODO: rewrite into a single nested lest.
+ * @TODO: rewrite into a single nested list.
  */
 export function BaseLayout({ children }: Props) {
   const { t } = useTranslation("layout");

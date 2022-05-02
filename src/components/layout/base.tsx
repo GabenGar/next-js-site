@@ -1,6 +1,5 @@
 import clsx from "clsx";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { REPOSITORY, EMAIL_ADDRESS } from "#environment/vars";
 import { AVAILABLE_THEMES, getTheme, setTheme } from "#lib/theme";
@@ -14,7 +13,6 @@ import { ButtonSubmit, Button } from "#components/buttons";
 import { onParentBlur } from "#lib/browser/dom";
 import styles from "./base.module.scss";
 
-import type { FocusEvent } from "react";
 import type { RootlessProps } from "#types/props";
 import type { ITheme } from "#lib/theme";
 import type { ButtonClickEvent } from "#components/fancy";
