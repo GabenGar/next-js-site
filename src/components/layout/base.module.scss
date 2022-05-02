@@ -157,18 +157,18 @@
 
   & .list {
     position: absolute;
-    top: 100%;
-    // @TODO: use proper value
-    left: -34%;
+    left: unset;
+    right: 0;
     visibility: hidden;
     opacity: 0;
     flex-flow: column nowrap;
     align-items: flex-end;
     gap: $size-small;
-    min-width: 130%;
+    // @TODO: make it responsive
+    width: 13em;
     background-color: var(--colour1-primary);
     padding: $size-small;
-    box-shadow: 0 0 3px 3px var(--colour0-tertiary-transparent);
+    box-shadow: 3px 0 3px 3px var(--colour0-tertiary-transparent);
     transition-duration: var(--duration-global);
     transition-property: visibility, opacity;
   }
