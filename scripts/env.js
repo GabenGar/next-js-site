@@ -14,8 +14,6 @@ import { fileURLToPath } from "url";
  * @typedef ConfigSchema
  * @property {Record<string, EnvSchema>} properties
  */
-
-// @ts-expect-error ts config
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootPath = path.resolve(__dirname, "..");
 
@@ -32,12 +30,21 @@ const envTypes = {
 };
 
 if (process.env.NODE_ENV !== "production") {
-  setupEnvFile();
+  const envFilePath = path.join(rootPath, ".env.local");
+  const envProdFilePath = path.join(rootPath, ".env.production.local");
+  setupEnvFile(envFilePath);
+
+  setupProdEnvFile(envProdFilePath)
 }
 
-function setupEnvFile() {
+/**
+ *
+ * @param {string} envFilePath
+ */
+function setupEnvFile(envFilePath) {
   const envSchemaPath = path.join(rootPath, "schema", "config.schema.json");
-  const envFilePath = path.join(rootPath, ".env.local");
+
+
 
   /**
    * @type {ConfigSchema}
@@ -100,4 +107,20 @@ function setupEnvFile() {
     .join("\n");
 
   fse.appendFileSync(envFilePath, `\n${envDiffString}`);
+}
+
+/**
+ * Create a local production env file
+ * to run bundle analyzer on build,
+ * but not on deploy.
+ * @param {string} envProdFilePath
+ */
+function setupProdEnvFile(envProdFilePath) {
+  const prodEnv = {
+    NODE_ENV: "production",
+    ANALYZE: true
+  }
+  const envString = Object.entries(prodEnv).map(([key, value]) => { return `${key}=${value}` }).join("\n")
+
+  fse.writeFileSync(envProdFilePath, envString);
 }

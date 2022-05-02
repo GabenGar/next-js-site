@@ -4,6 +4,7 @@ export { buttonClicked } from "./dom";
 export { transformChildrenProps, getValidChildren } from "./react";
 export { createSingleton } from "./create-singleton";
 export { guessLinkType } from "./guess-link-type";
+
 export type { ILinkTypes } from "./guess-link-type";
 
 export function siteTitle(text: string) {

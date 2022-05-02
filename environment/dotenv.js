@@ -6,5 +6,9 @@ const path = require("path");
 const { config } = require("dotenv");
 
 config({
+  path: path.resolve(process.cwd(), ".env.development.local")
+});
+
+config({
   path: path.resolve(process.cwd(), ".env.local"),
 });

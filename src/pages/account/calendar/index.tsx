@@ -1,10 +1,10 @@
-import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { FOUND } from "#environment/constants/http";
 import { getAccountDetails } from "#lib/account";
 import { nowISO } from "#lib/dates";
 import { createSEOTags } from "#lib/seo";
-import { withSessionSSR } from "#server/requests";
+import { withSessionSSR, Redirect } from "#server/requests";
 import { Page } from "#components/pages";
 import { Article, ArticleBody, ArticleHeader } from "#components/articles";
 import { DL, DS } from "#components/lists/d-list";
@@ -20,14 +20,15 @@ interface ICalendarPageProps extends BasePageProps {
 }
 
 function CalendarPage({
+  localeInfo,
   account,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const router = useRouter();
   const { t } = useTranslation("account");
   const seoTags = createSEOTags({
-    locale: router.locale!,
+    localeInfo,
     title: t("calendar_title"),
     description: t("calendar_desc"),
+    canonicalPath: "/account/calendar",
   });
   const currentDate = nowISO();
 
@@ -51,22 +52,19 @@ function CalendarPage({
 }
 
 export const getServerSideProps = withSessionSSR<ICalendarPageProps>(
-  async ({ req, locale }) => {
+  async ({ req, locale, defaultLocale }) => {
     const { account_id } = req.session;
+    const localeInfo = { locale: locale!, defaultLocale: defaultLocale! };
 
     if (!account_id) {
-      return {
-        redirect: {
-          destination: "/auth/login",
-          permanent: false,
-        },
-      };
+      return new Redirect(localeInfo, "/auth/login", FOUND);
     }
 
     const account = await getAccountDetails(account_id);
 
     if (!account) {
       req.session.destroy();
+
       return {
         notFound: true,
       };
@@ -81,6 +79,7 @@ export const getServerSideProps = withSessionSSR<ICalendarPageProps>(
     return {
       props: {
         ...localization,
+        localeInfo,
         account: accountClient,
       },
     };

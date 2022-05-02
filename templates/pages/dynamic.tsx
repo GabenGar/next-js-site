@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { IS_DEVELOPMENT } from "#environment/derived";
@@ -18,13 +17,14 @@ interface IProps extends BasePageProps {}
 
 interface IParams extends ParsedUrlQuery {}
 
-function TemplatePage({}: InferGetServerSidePropsType<
+function TemplatePage({
+  localeInfo
+}: InferGetServerSidePropsType<
   typeof getServerSideProps
 >) {
-  const router = useRouter();
   const { t } = useTranslation("SET TRANSLATION FILE");
   const seoTags = createSEOTags({
-    locale: router.locale!,
+    localeInfo,
     title: "template title",
     description: "template description",
   });
@@ -36,12 +36,10 @@ TemplatePage.getLayout = function getLayout(page: NextPage) {
   return <Layout>{page}</Layout>;
 };
 
-export const getServerSideProps: GetServerSideProps<
-  IProps,
-  IParams
-> = async (context) => {
-  const { locale } = context;
-
+export const getServerSideProps: GetServerSideProps<IProps, IParams> = async ({
+  locale,
+  defaultLocale,
+}) => {
   if (!IS_DEVELOPMENT) {
     return {
       notFound: true,
@@ -64,6 +62,8 @@ export const getServerSideProps: GetServerSideProps<
   return {
     props: {
       ...localization,
+      locale,
+      defaultLocale,
     },
   };
 };

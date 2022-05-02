@@ -1,47 +1,40 @@
-import { SITE_ORIGIN, SITE_NAME } from "#environment/vars";
-import { VercelLogo } from "#assets";
+import { ProjectURL } from "#lib/url";
 
-import type { StaticImageData } from "next/image";
 import type { NextSeoProps } from "next-seo";
+import type { ILocaleInfo } from "#lib/language";
 import type { OpenGraphMedia } from "next-seo/lib/types";
 
 export interface ICreateSEOTagsProps {
-  locale: string;
+  localeInfo: ILocaleInfo;
   title: string;
   description: string;
   /**
-   * Only use it for paths without search parameters.
+   * The path used to build a canonical URL.
    */
-  urlPath?: string;
+  canonicalPath?: string | URL;
   /**
    * An image url, will use the site logo if empty.
    */
   image?: OpenGraphMedia;
 }
 
-const logo = VercelLogo as StaticImageData;
 export function createSEOTags({
   title,
   description,
-  urlPath,
-  locale,
+  canonicalPath,
+  localeInfo,
   image,
 }: ICreateSEOTagsProps): NextSeoProps {
-  const imageObj: OpenGraphMedia = image
-    ? image
-    : {
-        url: new URL(logo.src, SITE_ORIGIN).toString(),
-      };
-  const canonicalURL = urlPath && new URL(urlPath, SITE_ORIGIN).toString();
+  const canonicalURL =
+    canonicalPath &&
+    new ProjectURL(localeInfo, canonicalPath).toCanonical().toString();
+
   const seoTags: NextSeoProps = {
     title: title,
     description: description,
     canonical: canonicalURL,
     openGraph: {
-      type: "website",
-      site_name: SITE_NAME,
-      locale: locale,
-      images: [imageObj],
+      images: image && [image],
     },
   };
 

@@ -5,4 +5,5 @@ export type {
   LangTagSchema,
   ISOLangString,
   ISORegionString,
+  ILocaleInfo
 } from "./types";

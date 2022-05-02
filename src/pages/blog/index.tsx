@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { createSEOTags } from "#lib/seo";
@@ -18,14 +17,16 @@ interface IBlogPageProps extends BasePageProps {
 
 interface IBlogPageParams extends ParsedUrlQuery {}
 
-function BlogPage({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const router = useRouter();
+function BlogPage({
+  localeInfo,
+  posts,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   const { t } = useTranslation("blog");
   const seoTags = createSEOTags({
-    locale: router.locale!,
+    localeInfo,
     title: t("blog_title"),
     description: t("blog_desc"),
-    urlPath: router.pathname,
+    canonicalPath: "/blog",
   });
 
   return (
@@ -42,7 +43,7 @@ function BlogPage({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
 export const getStaticProps: GetStaticProps<
   IBlogPageProps,
   IBlogPageParams
-> = async ({ locale }) => {
+> = async ({ locale, defaultLocale }) => {
   const posts = await getBlogPosts();
   const localization = await serverSideTranslations(locale!, [
     "layout",
@@ -53,6 +54,10 @@ export const getStaticProps: GetStaticProps<
   return {
     props: {
       ...localization,
+      localeInfo: {
+        locale: locale!,
+        defaultLocale: defaultLocale!,
+      },
       posts,
     },
   };

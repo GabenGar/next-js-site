@@ -11,8 +11,8 @@
 
 ## Requirements
 
-NodeJS - 12.20+
-PostgreSQL - 10+
+- NodeJS - 12.20+
+- PostgreSQL - 10+
 
 ## Installation
 
@@ -65,10 +65,10 @@ npx node-pg-migrate create {migration_name} --migrations-dir src/database/migrat
 ### Clean database:
 
 ```sh
-npm run clean
+npm run wipe
 ```
 
-This drops all project tables, including migrations ones.
+Drops all project tables and non-default schema including migrations ones.
 
 ### Reset database:
 
@@ -76,7 +76,7 @@ This drops all project tables, including migrations ones.
 npm run reset
 ```
 
-This truncates all non-migration project tables.
+Truncates all non-migration project tables.
 
 ## MISC
 
@@ -98,3 +98,5 @@ git config core.sshCommand "ssh -i ~/.ssh/id_rsa_file -F /dev/null"
 - JSON Schema validated forms
 - extendable layout
 - comment threads
+- multilang error pages
+- abstract away per-page locale management

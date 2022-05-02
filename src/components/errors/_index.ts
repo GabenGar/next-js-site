@@ -4,3 +4,4 @@ export { ErrorDict } from "./dict";
 export type { ErrorDictProps } from "./dict";
 export { ErrorList } from "./list";
 export type { ErrorListProps } from "./list";
+export { ErrorBoundary } from "./boundary";

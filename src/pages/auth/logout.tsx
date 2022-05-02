@@ -1,8 +1,7 @@
-import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { SEE_OTHER } from "#environment/constants/http";
-import { withSessionSSR } from "#server/requests";
+import { FOUND, SEE_OTHER } from "#environment/constants/http";
+import { withSessionSSR, Redirect } from "#server/requests";
 import { createSEOTags } from "#lib/seo";
 import { Page } from "#components/pages";
 import { Form } from "#components/forms";
@@ -12,16 +11,15 @@ import type { BasePageProps } from "#types/pages";
 
 interface LogoutPageProps extends BasePageProps {}
 
-export function LogoutPage({}: InferGetServerSidePropsType<
-  typeof getServerSideProps
->) {
-  const router = useRouter();
+export function LogoutPage({
+  localeInfo,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { t } = useTranslation("auth");
   const seoTags = createSEOTags({
-    locale: router.locale!,
+    localeInfo,
     title: t("logout_title"),
     description: t("logout_desc"),
-    urlPath: router.pathname,
+    canonicalPath: "/auth/logout",
   });
 
   return (
@@ -32,16 +30,12 @@ export function LogoutPage({}: InferGetServerSidePropsType<
 }
 
 export const getServerSideProps = withSessionSSR<LogoutPageProps>(
-  async ({ req, locale }) => {
+  async ({ req, locale, defaultLocale }) => {
     const { account_id } = req.session;
+    const localeInfo = { locale: locale!, defaultLocale: defaultLocale! };
 
     if (!account_id) {
-      return {
-        redirect: {
-          destination: "/auth/login",
-          permanent: false,
-        },
-      };
+      return new Redirect(localeInfo, "/auth/login", FOUND);
     }
 
     const localization = await serverSideTranslations(locale!, [
@@ -53,17 +47,13 @@ export const getServerSideProps = withSessionSSR<LogoutPageProps>(
     if (req.method === "POST") {
       req.session.destroy();
 
-      return {
-        redirect: {
-          statusCode: SEE_OTHER,
-          destination: "/",
-        },
-      };
+      return new Redirect(localeInfo, "/", SEE_OTHER)
     }
 
     return {
       props: {
         ...localization,
+        localeInfo,
       },
     };
   }

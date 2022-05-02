@@ -6,20 +6,24 @@ import { DefaultSeo } from "next-seo";
 import { defaultSEOProps } from "#lib/seo";
 import { reduxStore } from "#store/redux";
 import { BaseLayout } from "#components/layout";
+import { ErrorBoundary } from "#components/errors";
 
 import type { AppProps } from "next/app";
 import type { NextPage } from "next";
 import type { ReactElement, ReactNode } from "react";
-import { ErrorBoundary } from "src/components/errors/error-boundary";
+import type { BasePageProps } from "#types/pages";
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
 };
-type AppPropsWithLayout = AppProps & {
+
+type AppPropsWithLayout = Omit<AppProps<BasePageProps>, "pageProps"> & {
   Component: NextPageWithLayout;
+  pageProps: BasePageProps;
 };
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+  const { localeInfo } = pageProps;
   const getLayout =
     Component.getLayout ?? ((page) => <BaseLayout>{page}</BaseLayout>);
 
@@ -32,11 +36,14 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         const value = theme ? theme.split("=")[1] : "light";
         document.documentElement.dataset.theme = value;`}</Script>
       <ReduxProvider store={reduxStore}>
-        <DefaultSeo {...defaultSEOProps} />
+        <DefaultSeo
+          openGraph={{ locale: localeInfo.locale }}
+          {...defaultSEOProps}
+        />
         {getLayout(<Component {...pageProps} />)}
       </ReduxProvider>
     </ErrorBoundary>
   );
 }
 
-export default appWithTranslation(MyApp);
+export default appWithTranslation<AppPropsWithLayout>(MyApp);

@@ -1,6 +1,6 @@
-import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { FOUND } from "#environment/constants/http";
 import { IS_DEVELOPMENT } from "#environment/derived";
 import { createSEOTags } from "#lib/seo";
 import {
@@ -8,7 +8,7 @@ import {
   sendEmailConfirmation,
   validateEmailString,
 } from "#lib/account";
-import { getReqBody, withSessionSSR } from "#server/requests";
+import { getReqBody, withSessionSSR, Redirect } from "#server/requests";
 import { Page } from "#components/pages";
 import { Form } from "#components/forms";
 import { FormSectionEmail } from "#components/forms/sections";
@@ -25,17 +25,18 @@ interface AccountEmailProps extends BasePageProps {
 }
 
 function AccountEmailPage({
+  localeInfo,
   errors,
   account,
   newEmail,
   isSent,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const router = useRouter();
   const { t } = useTranslation("account");
   const seoTags = createSEOTags({
-    locale: router.locale!,
+    localeInfo,
     title: t("email_title"),
     description: t("email_desc"),
+    canonicalPath: "/account/email",
   });
 
   return (
@@ -72,28 +73,25 @@ function AccountEmailPage({
 }
 
 export const getServerSideProps = withSessionSSR<AccountEmailProps>(
-  async ({ req, locale }) => {
+  async ({ req, locale, defaultLocale }) => {
     if (!IS_DEVELOPMENT) {
       return {
         notFound: true,
       };
     }
 
+    const localeInfo = { locale: locale!, defaultLocale: defaultLocale! };
     const { account_id } = req.session;
 
     if (!account_id) {
-      return {
-        redirect: {
-          destination: "/auth/login",
-          permanent: false,
-        },
-      };
+      return new Redirect(localeInfo, "/auth/login", FOUND);
     }
 
     const account = await getAccountDetails(account_id);
 
     if (!account) {
       req.session.destroy();
+
       return {
         notFound: true,
       };
@@ -115,6 +113,7 @@ export const getServerSideProps = withSessionSSR<AccountEmailProps>(
         return {
           props: {
             ...localization,
+            localeInfo,
             account: accountClient,
             schemaValidationErrors: result.schemaValidationErrors,
           },
@@ -126,6 +125,7 @@ export const getServerSideProps = withSessionSSR<AccountEmailProps>(
       return {
         props: {
           ...localization,
+          localeInfo,
           account: accountClient,
           isSent: true,
         },
@@ -135,6 +135,7 @@ export const getServerSideProps = withSessionSSR<AccountEmailProps>(
     return {
       props: {
         ...localization,
+        localeInfo,
         account: accountClient,
       },
     };

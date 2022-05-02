@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { createSEOTags } from "#lib/seo";
@@ -16,13 +15,15 @@ interface FMHomePageProps extends BasePageProps {}
 
 interface FMHomePageParams extends ParsedUrlQuery {}
 
-function FMHomePage({}: InferGetStaticPropsType<typeof getStaticProps>) {
-  const router = useRouter();
+function FMHomePage({
+  localeInfo,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   const { t } = useTranslation("frontend-mentor");
   const seoTags = createSEOTags({
-    locale: router.locale!,
+    localeInfo,
     title: t("index_title"),
     description: t("index_desc"),
+    canonicalPath: "frontend-mentor",
   });
 
   return (
@@ -39,7 +40,7 @@ function FMHomePage({}: InferGetStaticPropsType<typeof getStaticProps>) {
 export const getStaticProps: GetStaticProps<
   FMHomePageProps,
   FMHomePageParams
-> = async ({ locale }) => {
+> = async ({ locale, defaultLocale }) => {
   const localization = await serverSideTranslations(locale!, [
     "layout",
     "components",
@@ -49,6 +50,10 @@ export const getStaticProps: GetStaticProps<
   return {
     props: {
       ...localization,
+      localeInfo: {
+        locale: locale!,
+        defaultLocale: defaultLocale!,
+      },
     },
   };
 };

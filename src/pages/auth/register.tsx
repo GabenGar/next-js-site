@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { FOUND } from "#environment/constants/http";
@@ -6,7 +5,7 @@ import { IS_INVITE_ONLY } from "#environment/derived";
 import { AuthError } from "#lib/errors";
 import { createSEOTags } from "#lib/seo";
 import { validateAccountInitFields, registerAccount } from "#lib/account";
-import { withSessionSSR, getReqBody } from "#server/requests";
+import { withSessionSSR, getReqBody, Redirect } from "#server/requests";
 import { Page } from "#components/pages";
 import { Form } from "#components/forms";
 import { ErrorsView } from "#components/errors";
@@ -25,17 +24,17 @@ interface RegisterPageProps extends BasePageProps {
 }
 
 function RegisterPage({
+  localeInfo,
   accCreds,
   errors,
   schemaValidationErrors,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const router = useRouter();
   const { t } = useTranslation("auth");
   const seoTags = createSEOTags({
-    locale: router.locale!,
+    localeInfo,
     title: t("reg_title"),
     description: t("reg_desc"),
-    urlPath: router.pathname,
+    canonicalPath: "/auth/register",
   });
 
   return (
@@ -84,17 +83,12 @@ function RegisterPage({
 }
 
 export const getServerSideProps = withSessionSSR<RegisterPageProps>(
-  async ({ req, locale }) => {
+  async ({ req, locale, defaultLocale }) => {
     const { account_id } = req.session;
+    const localeInfo = { locale: locale!, defaultLocale: defaultLocale! };
 
     if (account_id) {
-      return {
-        redirect: {
-          statusCode: FOUND,
-          destination: "/account",
-          permanent: false,
-        },
-      };
+      return new Redirect(localeInfo, "/account", FOUND);
     }
 
     const localization = await serverSideTranslations(locale!, [
@@ -110,6 +104,8 @@ export const getServerSideProps = withSessionSSR<RegisterPageProps>(
       if (!validationResult.is_successful) {
         return {
           props: {
+            ...localization,
+            localeInfo,
             schemaValidationErrors: [...validationResult.errors],
             accInit,
           },
@@ -121,6 +117,7 @@ export const getServerSideProps = withSessionSSR<RegisterPageProps>(
           return {
             props: {
               ...localization,
+              localeInfo,
               errors: ["No invite key is provided."],
               accInit,
             },
@@ -134,6 +131,7 @@ export const getServerSideProps = withSessionSSR<RegisterPageProps>(
         return {
           props: {
             ...localization,
+            localeInfo,
             errors: [newAcc.message],
             accInit,
           },
@@ -143,18 +141,13 @@ export const getServerSideProps = withSessionSSR<RegisterPageProps>(
       req.session.account_id = newAcc.id;
       await req.session.save();
 
-      return {
-        redirect: {
-          statusCode: FOUND,
-          destination: "/auth/success",
-          permanent: false,
-        },
-      };
+      return new Redirect(localeInfo, "/auth/success", FOUND);
     }
 
     return {
       props: {
         ...localization,
+        localeInfo,
       },
     };
   }

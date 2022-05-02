@@ -1,9 +1,10 @@
-import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { FOUND } from "#environment/constants/http";
 import { IS_DEVELOPMENT } from "#environment/derived";
 import { getAccountDetails, confirmNewEmail } from "#lib/account";
 import { createSEOTags } from "#lib/seo";
-import { withSessionSSR } from "#server/requests";
+import { withSessionSSR, Redirect } from "#server/requests";
 import { Page } from "#components/pages";
 import { LinkInternal } from "#components/links";
 
@@ -20,12 +21,12 @@ interface AccountEmailParams extends ParsedUrlQuery {
 }
 
 function EmailConfirmationPage({
+  localeInfo,
   email,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const router = useRouter();
   const { t } = useTranslation("account");
   const seoTags = createSEOTags({
-    locale: router.locale!,
+    localeInfo,
     title: t("email_code_title"),
     description: t("email_code_desc"),
   });
@@ -49,27 +50,24 @@ function EmailConfirmationPage({
 export const getServerSideProps = withSessionSSR<
   AccountEmailProps,
   AccountEmailParams
->(async ({ req, params }) => {
+>(async ({ req, params, locale, defaultLocale }) => {
   if (!IS_DEVELOPMENT) {
     return {
       notFound: true,
     };
   }
   const { account_id } = req.session;
+  const localeInfo = { locale: locale!, defaultLocale: defaultLocale! };
 
   if (!account_id) {
-    return {
-      redirect: {
-        destination: "/auth/login",
-        permanent: false,
-      },
-    };
+    return new Redirect(localeInfo, "/auth/login", FOUND);
   }
 
   const account = await getAccountDetails(account_id);
 
   if (!account) {
     req.session.destroy();
+
     return {
       notFound: true,
     };
@@ -79,8 +77,16 @@ export const getServerSideProps = withSessionSSR<
 
   const { email } = await confirmNewEmail(account_id, code);
 
+  const localization = await serverSideTranslations(locale!, [
+    "layout",
+    "components",
+    "account",
+  ]);
+
   return {
     props: {
+      ...localization,
+      localeInfo,
       email,
     },
   };

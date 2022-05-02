@@ -1,9 +1,10 @@
 import { useEffect } from "react";
-import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { FOUND } from "#environment/constants/http";
 import { createSEOTags } from "#lib/seo";
 import { getAccountDetails } from "#lib/account";
+import { ProjectURL } from "#lib/url";
 import { withSessionSSR } from "#server/requests";
 import { useAppDispatch, useAppSelector } from "#store/redux";
 import {
@@ -20,11 +21,12 @@ import type { BasePageProps } from "#types/pages";
 
 interface AdminPageProps extends BasePageProps {}
 
-function AdminPage({}: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const router = useRouter();
+function AdminPage({
+  localeInfo,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { t } = useTranslation("admin");
   const seoTags = createSEOTags({
-    locale: router.locale!,
+    localeInfo,
     title: t("comments_title"),
     description: t("comments_desc"),
   });
@@ -52,14 +54,15 @@ function AdminPage({}: InferGetServerSidePropsType<typeof getServerSideProps>) {
 }
 
 export const getServerSideProps = withSessionSSR<AdminPageProps>(
-  async ({ req, locale }) => {
+  async ({ req, locale, defaultLocale }) => {
     const { account_id } = req.session;
+    const localeInfo = { locale: locale!, defaultLocale: defaultLocale! };
 
     if (!account_id) {
       return {
         redirect: {
-          destination: "/auth/login",
-          permanent: false,
+          statusCode: FOUND,
+          destination: new ProjectURL(localeInfo, "/auth/login").toString(),
         },
       };
     }
@@ -89,6 +92,7 @@ export const getServerSideProps = withSessionSSR<AdminPageProps>(
     return {
       props: {
         ...localization,
+        localeInfo,
       },
     };
   }
