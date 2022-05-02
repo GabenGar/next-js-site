@@ -10,5 +10,7 @@
   "register": "Register",
   "login": "Login",
   "logout": "Logout",
-  "contacts": "Contacts"
+  "contacts": "Contacts",
+  "theme_light": "light",
+  "theme_dark": "dark"
 }

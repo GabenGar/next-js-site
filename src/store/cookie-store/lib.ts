@@ -1,5 +1,4 @@
 import Cookies from "js-cookie";
-import { fromJSON, toJSON } from "#lib/json";
 import { StoreError } from "#lib/errors";
 
 import type { CookieAttributes } from "js-cookie";
@@ -7,7 +6,7 @@ import type { CookieAttributes } from "js-cookie";
 /**
  * Only includes client-accessible cookies.
  */
-const cookieKeys = ["NEXT_LOCALE"] as const;
+const cookieKeys = ["NEXT_LOCALE", "theme"] as const;
 type ICookieKey = typeof cookieKeys[number];
 
 const defaultOptions: CookieAttributes = {
