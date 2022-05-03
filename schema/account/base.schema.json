@@ -41,6 +41,9 @@
     },
     "invite_id": {
       "$ref": "/types/serial.schema.json"
+    },
+    "profile": {
+      "$ref": "/account/profile/base.schema.json"
     }
   },
   "additionalProperties": false

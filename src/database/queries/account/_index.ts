@@ -12,7 +12,7 @@ const { db } = getDB();
 
 export async function addAdminAccount({ name, password }: IAccountInit) {
   const query = `
-    INSERT INTO accounts (name, password, role)
+    INSERT INTO accounts.entries (name, password, role)
     VALUES ($(name), $(password), 'administrator')
     RETURNING *
   `;
@@ -23,7 +23,7 @@ export async function addAdminAccount({ name, password }: IAccountInit) {
 
 export async function addAccount(name: string, password: string) {
   const query = `
-    INSERT INTO accounts (name, password)
+    INSERT INTO accounts.entries (name, password)
     VALUES ($(name), $(password))
     RETURNING *
   `;
@@ -33,7 +33,7 @@ export async function addAccount(name: string, password: string) {
 
 export async function addAccountEmail(account_id: number, email: string) {
   const emailQuery = `
-    UPDATE accounts
+    UPDATE accounts.entries
     SET email = $(email), is_verified = true
     WHERE id = $(account_id)
     RETURNING *
@@ -57,7 +57,7 @@ export async function addAccountEmail(account_id: number, email: string) {
 export async function findAccount({ name, password }: IAccountInit) {
   const query = `
     SELECT *
-    FROM accounts
+    FROM accounts.entries
     WHERE
       name = $(name)
       AND password = $(password)
@@ -70,7 +70,7 @@ export async function findAccount({ name, password }: IAccountInit) {
 export async function findAccountByName({ name }: IAccountInit) {
   const query = `
     SELECT *
-    FROM accounts
+    FROM accounts.entries
     WHERE
       name = $(name)
   `;
@@ -82,7 +82,7 @@ export async function findAccountByName({ name }: IAccountInit) {
 export async function getAccount(id: number) {
   const query = `
     SELECT *
-    FROM accounts
+    FROM accounts.entries
     WHERE id = $(id)
   `;
 
