@@ -47,7 +47,7 @@ async function cleanDatabase() {
 
   // @TODO: more configurable way
   const query = `
-    DROP TABLE ${publicList.join(", ")} CASCADE;
+    DROP TABLE IF EXISTS ${publicList.join(", ")} CASCADE;
     DROP SCHEMA comments CASCADE;
   `;
   console.log(
