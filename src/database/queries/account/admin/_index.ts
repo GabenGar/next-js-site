@@ -9,7 +9,7 @@ const { db } = getDB();
 export async function getAccounts({ offset, limit }: PaginationDB) {
   const query = `
     SELECT *
-    FROM accounts
+    FROM accounts.entries
     ORDER BY
       created_at DESC
     OFFSET $(offset)
@@ -21,7 +21,7 @@ export async function getAccounts({ offset, limit }: PaginationDB) {
 }
 
 export async function clearAccounts() {
-  const query = "TRUNCATE TABLE accounts CASCADE";
+  const query = "TRUNCATE TABLE accounts.entries CASCADE";
 
   await db.none(query);
   return true;
@@ -38,7 +38,7 @@ async function getDBInfo() {
 export async function getInvites() {
   const query = `
     SELECT *
-    FROM invites
+    FROM accounts.invites
     ORDER BY
       created_at DESC
   `;

@@ -39,7 +39,7 @@ export async function addAccountEmail(account_id: number, email: string) {
     RETURNING *
   `;
   const confirmationQuery = `
-    DELETE FROM email_confirmations
+    DELETE FROM accounts.email_confirmations
     WHERE account_id = $(account_id)
     RETURNING *
   `;
@@ -98,7 +98,7 @@ export async function createEmailConfirmation(
   const expirationDate = new Date(Date.now() + DAY);
   const expires_at = toISODateTime(expirationDate);
   const query = `
-    INSERT INTO email_confirmations
+    INSERT INTO accounts.email_confirmations
       (account_id, confirmation_key, email, expires_at)
     VALUES ($(account_id), $(confirmation_key), $(email), $(expires_at))
     RETURNING *
@@ -119,7 +119,7 @@ export async function findEmailConfirmationByKey(
 ) {
   const query = `
     SELECT *
-    FROM email_confirmations
+    FROM accounts.email_confirmations
     WHERE
       confirmation_key = $(confirmation_key)
       AND account_id = $(account_id)
