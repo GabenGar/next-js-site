@@ -3,7 +3,7 @@
   "title": "AccountProfile",
   "description": "The profile of an account.",
   "type": "object",
-  "required": ["id", "created_at", "updated_at", "account_id", "name"],
+  "required": ["id", "created_at", "updated_at", "account_id"],
   "additionalProperties": false,
   "properties": {
     "id": {
@@ -17,13 +17,6 @@
     },
     "account_id": {
       "$ref": "/types/serial.schema.json"
-    },
-    "name": {
-      "description": "The name shown in the link. Only latin lower-cased letters allowed.",
-      "type": "string",
-      "minLength": 5,
-      "maxLength": 15,
-      "pattern": "^[a-z]+$"
     },
     "full_name": {
       "description": "The name shown on the profile card.",

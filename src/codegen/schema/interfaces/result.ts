@@ -131,10 +131,6 @@ export interface AccountProfile {
   updated_at: ISODateTime;
   account_id: SerialInteger;
   /**
-   * The name shown in the link. Only latin lower-cased letters allowed.
-   */
-  name: string;
-  /**
    * The name shown on the profile card.
    */
   full_name?: string;
@@ -152,10 +148,6 @@ export interface AccountProfileClient {
   created_at: ISODateTime;
   updated_at: ISODateTime;
   /**
-   * The name shown in the link. Only latin lower-cased letters allowed.
-   */
-  name: string;
-  /**
    * The name shown on the profile card.
    */
   full_name: string;
@@ -169,10 +161,6 @@ export interface AccountProfileClient {
  * Profile initializer.
  */
 export interface AccountProfileInit {
-  /**
-   * The name shown in the link. Only latin lower-cased letters allowed.
-   */
-  name: string;
   /**
    * The name shown on the profile card.
    */

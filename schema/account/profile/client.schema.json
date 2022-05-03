@@ -3,7 +3,7 @@
   "title": "AccountProfileClient",
   "description": "The profile of an account used by client.",
   "type": "object",
-  "required": ["id", "created_at", "updated_at", "name", "full_name"],
+  "required": ["id", "created_at", "updated_at", "full_name"],
   "additionalProperties": false,
   "properties": {
     "id": {
@@ -14,13 +14,6 @@
     },
     "updated_at": {
       "$ref": "/types/dates/iso-datetime.schema.json"
-    },
-    "name": {
-      "description": "The name shown in the link. Only latin lower-cased letters allowed.",
-      "type": "string",
-      "minLength": 5,
-      "maxLength": 15,
-      "pattern": "^[a-z]+$"
     },
     "full_name": {
       "description": "The name shown on the profile card.",
