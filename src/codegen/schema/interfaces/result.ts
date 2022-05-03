@@ -123,6 +123,64 @@ export interface InviteInit {
 }
 
 /**
+ * The profile of an account.
+ */
+export interface AccountProfile {
+  id: SerialInteger;
+  created_at: ISODateTime;
+  updated_at: ISODateTime;
+  account_id: SerialInteger;
+  /**
+   * The name shown in the link. Only latin lower-cased letters allowed.
+   */
+  name: string;
+  /**
+   * The name shown on the profile card.
+   */
+  full_name?: string;
+  /**
+   * The file of the avatar.
+   */
+  avatar_url?: string;
+}
+
+/**
+ * The profile of an account used by client.
+ */
+export interface AccountProfileClient {
+  id: SerialInteger;
+  created_at: ISODateTime;
+  updated_at: ISODateTime;
+  /**
+   * The name shown in the link. Only latin lower-cased letters allowed.
+   */
+  name: string;
+  /**
+   * The name shown on the profile card.
+   */
+  full_name: string;
+  /**
+   * URL of the avatar.
+   */
+  avatar_url?: string;
+}
+
+/**
+ * Profile initializer.
+ */
+export interface AccountProfileInit {
+  /**
+   * The name shown in the link. Only latin lower-cased letters allowed.
+   */
+  name: string;
+  /**
+   * The name shown on the profile card.
+   */
+  full_name?: string;
+  avatar_file?: string;
+}
+
+/**
  * The post of the blog.
  */
 export interface BlogPost {
@@ -333,6 +391,20 @@ export interface CommonLocalization {
  * Localization for the components.
  */
 export interface ComponentLocalization {
+  [k: string]: unknown;
+}
+
+/**
+ * Localization for the FM comments challenge.
+ */
+export interface FMCommentsLocalization {
+  [k: string]: unknown;
+}
+
+/**
+ * Localization for the frontend mentor pages.
+ */
+export interface FrontendMentorLocalization {
   [k: string]: unknown;
 }
 

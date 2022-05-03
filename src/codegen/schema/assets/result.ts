@@ -7,6 +7,9 @@ export { default as accountInitSchema } from "#schema/account/init.schema.json";
 export { default as inviteSchema } from "#schema/account/invite/base.schema.json";
 export { default as inviteClientSchema } from "#schema/account/invite/client.schema.json";
 export { default as inviteInitSchema } from "#schema/account/invite/init.schema.json";
+export { default as accountProfileSchema } from "#schema/account/profile/base.schema.json";
+export { default as accountProfileClientSchema } from "#schema/account/profile/client.schema.json";
+export { default as accountProfileInitSchema } from "#schema/account/profile/init.schema.json";
 export { default as blogPostSchema } from "#schema/blog-post.schema.json";
 export { default as calendarNoteSchema } from "#schema/calendar-note/base.schema.json";
 export { default as calendarNoteClientSchema } from "#schema/calendar-note/client.schema.json";
@@ -22,6 +25,7 @@ export { default as blogLocalizationSchema } from "#schema/localization/blog.sch
 export { default as commonLocalizationSchema } from "#schema/localization/common.schema.json";
 export { default as componentLocalizationSchema } from "#schema/localization/components.schema.json";
 export { default as fMCommentsLocalizationSchema } from "#schema/localization/fm-comments.schema.json";
+export { default as frontendMentorLocalizationSchema } from "#schema/localization/frontend-mentor.schema.json";
 export { default as layoutLocalizationSchema } from "#schema/localization/layout.schema.json";
 export { default as codeStringSchema } from "#schema/types/code.schema.json";
 export { default as iSODateSchema } from "#schema/types/dates/iso-date.schema.json";

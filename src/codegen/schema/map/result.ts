@@ -10,6 +10,9 @@ import {
   inviteSchema,
   inviteClientSchema,
   inviteInitSchema,
+  accountProfileSchema,
+  accountProfileClientSchema,
+  accountProfileInitSchema,
   blogPostSchema,
   calendarNoteSchema,
   calendarNoteClientSchema,
@@ -25,6 +28,7 @@ import {
   commonLocalizationSchema,
   componentLocalizationSchema,
   fMCommentsLocalizationSchema,
+  frontendMentorLocalizationSchema,
   layoutLocalizationSchema,
   codeStringSchema,
   iSODateSchema,
@@ -44,6 +48,11 @@ export const schemaMap: Record<string, SchemaObject> = {
   "http://schemas.com/account/invite/base.schema.json": inviteSchema,
   "http://schemas.com/account/invite/client.schema.json": inviteClientSchema,
   "http://schemas.com/account/invite/init.schema.json": inviteInitSchema,
+  "http://schemas.com/account/profile/base.schema.json": accountProfileSchema,
+  "http://schemas.com/account/profile/client.schema.json":
+    accountProfileClientSchema,
+  "http://schemas.com/account/profile/init.schema.json":
+    accountProfileInitSchema,
   "http://schemas.com/blog-post.schema.json": blogPostSchema,
   "http://schemas.com/calendar-note/base.schema.json": calendarNoteSchema,
   "http://schemas.com/calendar-note/client.schema.json":
@@ -64,6 +73,8 @@ export const schemaMap: Record<string, SchemaObject> = {
     componentLocalizationSchema,
   "http://schemas.com/localization/fm-comments.schema.json":
     fMCommentsLocalizationSchema,
+  "http://schemas.com/localization/frontend-mentor.schema.json":
+    frontendMentorLocalizationSchema,
   "http://schemas.com/localization/layout.schema.json":
     layoutLocalizationSchema,
   "http://schemas.com/types/code.schema.json": codeStringSchema,
