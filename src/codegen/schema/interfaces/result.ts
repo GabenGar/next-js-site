@@ -294,6 +294,7 @@ export interface ProjectDatabase {
 export interface Schemas {
   public: Schema;
   comments: Schema;
+  accounts: Schema;
 }
 /**
  * Database schema.

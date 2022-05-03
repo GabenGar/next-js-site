@@ -17,6 +17,13 @@
         "entries": "Comments made by accounts.",
         "blog": "Relations between blog entries and comments."
       }
+    },
+    "accounts": {
+      "description": "Account-related schema.",
+      "tables": {
+        "entries": "Base account info.",
+        "profiles": "Profiles of the accounts."
+      }
     }
   }
 }
