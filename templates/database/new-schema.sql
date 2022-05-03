@@ -7,7 +7,7 @@ CREATE SCHEMA templates;
 CREATE TABLE templates.templates (
   id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  -- updated_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  -- updated_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
   parent_id int REFERENCES templates.templates,
 );
 
