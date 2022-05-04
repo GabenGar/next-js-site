@@ -21,10 +21,10 @@
       "type": "string"
     },
     "created_at": {
-      "$ref": "/types/dates/iso-datetime.schema.json"
+      "$ref": "http://schemas.com/types/dates/iso-datetime.schema.json"
     },
     "edited_at": {
-      "$ref": "/types/dates/iso-datetime.schema.json"
+      "$ref": "http://schemas.com/types/dates/iso-datetime.schema.json"
     },
     "next_slug": {
       "type": "string",

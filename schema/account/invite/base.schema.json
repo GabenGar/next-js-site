@@ -6,19 +6,19 @@
   "required": ["id", "created_at", "account_id", "code", "is_active"],
   "properties": {
     "id": {
-      "$ref": "/types/serial.schema.json"
+      "$ref": "http://schemas.com/types/serial.schema.json"
     },
     "created_at": {
-      "$ref": "/types/dates/iso-datetime.schema.json"
+      "$ref": "http://schemas.com/types/dates/iso-datetime.schema.json"
     },
     "account_id": {
-      "$ref": "/types/serial.schema.json"
+      "$ref": "http://schemas.com/types/serial.schema.json"
     },
     "code": {
-      "$ref": "/types/code.schema.json"
+      "$ref": "http://schemas.com/types/code.schema.json"
     },
     "expires_at": {
-      "$ref": "/types/dates/iso-datetime.schema.json"
+      "$ref": "http://schemas.com/types/dates/iso-datetime.schema.json"
     },
     "max_uses": {
       "type": "integer",

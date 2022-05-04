@@ -29,12 +29,30 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 
   return (
     <ErrorBoundary>
-      <Script id="theme-setup" strategy="beforeInteractive" async>{`
-        const theme = document.cookie
-          .split("; ")
-          .find((row) => row.startsWith("theme="));
-        const value = theme ? theme.split("=")[1] : "light";
-        document.documentElement.dataset.theme = value;`}</Script>
+      {/* @TODO: proper use of `next/script` */}
+      <script
+        id="theme-setup"
+        async
+        dangerouslySetInnerHTML={{
+          __html: `const theme = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("theme="));
+      const value = theme ? theme.split("=")[1] : "light";
+      document.documentElement.dataset.theme = value;`,
+        }}
+      ></script>
+      {/* <Script
+        id="theme-setup"
+        strategy="beforeInteractive"
+        async
+        dangerouslySetInnerHTML={{
+          __html: `const theme = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("theme="));
+      const value = theme ? theme.split("=")[1] : "light";
+      document.documentElement.dataset.theme = value;`,
+        }}
+      ></Script> */}
       <ReduxProvider store={reduxStore}>
         <DefaultSeo
           openGraph={{ locale: localeInfo.locale }}

@@ -13,16 +13,16 @@
   "additionalProperties": false,
   "properties": {
     "id": {
-      "$ref": "/types/serial.schema.json"
+      "$ref": "http://schemas.com/types/serial.schema.json"
     },
     "created_at": {
-      "$ref": "/types/dates/iso-datetime.schema.json"
+      "$ref": "http://schemas.com/types/dates/iso-datetime.schema.json"
     },
     "account_id": {
-      "$ref": "/types/serial.schema.json"
+      "$ref": "http://schemas.com/types/serial.schema.json"
     },
     "parent_id": {
-      "$ref": "/types/serial.schema.json"
+      "$ref": "http://schemas.com/types/serial.schema.json"
     },
     "blog_slug": {
       "type": "string"

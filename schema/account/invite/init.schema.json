@@ -6,7 +6,7 @@
   "properties": {
     "expires_at": {
       "oneOf": [
-        { "$ref": "/types/dates/iso-datetime.schema.json" },
+        { "$ref": "http://schemas.com/types/dates/iso-datetime.schema.json" },
         { "type": "null" }
       ]
     },
