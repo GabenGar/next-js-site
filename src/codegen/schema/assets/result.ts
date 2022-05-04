@@ -22,6 +22,7 @@ export { default as blogLocalizationSchema } from "#schema/localization/blog.sch
 export { default as commonLocalizationSchema } from "#schema/localization/common.schema.json";
 export { default as componentLocalizationSchema } from "#schema/localization/components.schema.json";
 export { default as fMCommentsLocalizationSchema } from "#schema/localization/fm-comments.schema.json";
+export { default as frontendMentorLocalizationSchema } from "#schema/localization/frontend-mentor.schema.json";
 export { default as layoutLocalizationSchema } from "#schema/localization/layout.schema.json";
 export { default as codeStringSchema } from "#schema/types/code.schema.json";
 export { default as iSODateSchema } from "#schema/types/dates/iso-date.schema.json";

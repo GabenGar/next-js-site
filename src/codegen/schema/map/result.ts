@@ -25,6 +25,7 @@ import {
   commonLocalizationSchema,
   componentLocalizationSchema,
   fMCommentsLocalizationSchema,
+  frontendMentorLocalizationSchema,
   layoutLocalizationSchema,
   codeStringSchema,
   iSODateSchema,
@@ -64,6 +65,8 @@ export const schemaMap: Record<string, SchemaObject> = {
     componentLocalizationSchema,
   "http://schemas.com/localization/fm-comments.schema.json":
     fMCommentsLocalizationSchema,
+  "http://schemas.com/localization/frontend-mentor.schema.json":
+    frontendMentorLocalizationSchema,
   "http://schemas.com/localization/layout.schema.json":
     layoutLocalizationSchema,
   "http://schemas.com/types/code.schema.json": codeStringSchema,

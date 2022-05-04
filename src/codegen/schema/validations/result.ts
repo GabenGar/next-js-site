@@ -24,6 +24,7 @@ import {
   blogLocalizationSchema,
   commonLocalizationSchema,
   componentLocalizationSchema,
+  fMCommentsLocalizationSchema,
   layoutLocalizationSchema,
   codeStringSchema,
   iSODateSchema,
@@ -57,6 +58,7 @@ import type {
   IBlogLocalization,
   ICommonLocalization,
   IComponentLocalization,
+  IFMCommentsLocalization,
   ILayoutLocalization,
   ICodeString,
   IISODate,
@@ -110,6 +112,8 @@ export const validateCommonLocalizationFields =
   createValidator<ICommonLocalization>(commonLocalizationSchema);
 export const validateComponentLocalizationFields =
   createValidator<IComponentLocalization>(componentLocalizationSchema);
+export const validateFMCommentsLocalizationFields =
+  createValidator<IFMCommentsLocalization>(fMCommentsLocalizationSchema);
 export const validateLayoutLocalizationFields =
   createValidator<ILayoutLocalization>(layoutLocalizationSchema);
 export const validateCodeStringFields =

@@ -337,6 +337,13 @@ export interface ComponentLocalization {
 }
 
 /**
+ * Localization for the FM comments challenge.
+ */
+export interface FMCommentsLocalization {
+  [k: string]: unknown;
+}
+
+/**
  * Localization for the layout.
  */
 export interface LayoutLocalization {

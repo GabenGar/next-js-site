@@ -25,6 +25,7 @@ export type {
   BlogLocalization as IBlogLocalization,
   CommonLocalization as ICommonLocalization,
   ComponentLocalization as IComponentLocalization,
+  FMCommentsLocalization as IFMCommentsLocalization,
   LayoutLocalization as ILayoutLocalization,
   CodeString as ICodeString,
   ISODate as IISODate,

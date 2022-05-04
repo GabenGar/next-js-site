@@ -22,6 +22,7 @@ export {
   validateBlogLocalizationFields,
   validateCommonLocalizationFields,
   validateComponentLocalizationFields,
+  validateFMCommentsLocalizationFields,
   validateLayoutLocalizationFields,
   validateCodeStringFields,
   validateISODateFields,

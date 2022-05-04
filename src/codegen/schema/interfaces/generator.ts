@@ -1,10 +1,21 @@
+import { compile } from "json-schema-to-typescript";
+import $RefParser from "@apidevtools/json-schema-ref-parser";
 import { SCHEMA_FOLDER } from "#environment/constants";
 import { schemaMap } from "#codegen/schema/map";
-import { compile } from "json-schema-to-typescript";
 
 import type { JSONSchema, Options } from "json-schema-to-typescript";
 
 import type { SchemaObject } from "ajv";
+
+const parserOptions: Options["$refOptions"] = {
+  resolve: {
+    http: {
+      async read(file) {
+        return schemaMap[file.url];
+      },
+    },
+  },
+};
 
 async function generateInterfacesFromSchemas() {
   const interfaces: string[] = [];
@@ -19,8 +30,9 @@ async function generateInterfacesFromSchemas() {
         schema.title,
         {
           bannerComment: "",
-          cwd: SCHEMA_FOLDER,
+          format: false,
           declareExternallyReferenced: true,
+          $refOptions: parserOptions,
         }
       );
 
@@ -33,8 +45,9 @@ async function generateInterfacesFromSchemas() {
       schema.title,
       {
         bannerComment: "",
-        cwd: SCHEMA_FOLDER,
+        format: false,
         declareExternallyReferenced: false,
+        $refOptions: parserOptions,
       }
     );
     interfaces.push(interfaceString);
@@ -55,24 +68,6 @@ function transformSchema(schema: SchemaObject) {
   const newSchema: typeof schema = JSON.parse(JSON.stringify(schema));
   // changeRefs(newSchema);
   return newSchema;
-}
-
-/**
- * A ducttape for `ajv` and `json-schema-to-typescript`
- * parsing `$ref`s differently.
- */
-function changeRefs(obj: Record<string, unknown>) {
-  for (const [key, value] of Object.entries(obj)) {
-    if (value && typeof value === "object") {
-      changeRefs(value as Record<string, unknown>);
-    }
-
-    if (key === "$ref") {
-      if (typeof value === "string" && value.startsWith("/")) {
-        obj[key] = value.slice(1);
-      }
-    }
-  }
 }
 
 export async function fromSchemaToInterface(

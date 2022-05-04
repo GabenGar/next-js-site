@@ -23,6 +23,7 @@ export {
   commonLocalizationSchema,
   componentLocalizationSchema,
   fMCommentsLocalizationSchema,
+  frontendMentorLocalizationSchema,
   layoutLocalizationSchema,
   codeStringSchema,
   iSODateSchema,
