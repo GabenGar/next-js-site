@@ -5,6 +5,7 @@ import { getDB } from "#database";
 import type {
   IAccount,
   IAccountInit,
+  IAccountProfile,
   IEmailConfirmation,
 } from "#types/entities";
 
@@ -80,13 +81,31 @@ export async function findAccountByName({ name }: IAccountInit) {
 }
 
 export async function getAccount(id: number) {
-  const query = `
+  const account_query = `
     SELECT *
     FROM accounts.entries
     WHERE id = $(id)
   `;
 
-  const account = await db.oneOrNone<IAccount>(query, { id });
+  const profile_query = `
+    SELECT *
+    FROM accounts.profiles
+    WHERE account_id = $(account_id)
+  `;
+
+  const account = await db.tx(async (tx) => {
+    const account = await tx.one<IAccount>(account_query, { id });
+    const profile = await tx.oneOrNone<IAccountProfile>(profile_query, {
+      account_id: account.id,
+    });
+
+    if (profile) {
+      account.profile = profile;
+    }
+
+    return account;
+  });
+
   return account;
 }
 

@@ -9,5 +9,8 @@ export type {
   IComment,
   ICommentClient,
   ICommentInit,
-  ISerialInteger
+  ISerialInteger,
+  IAccountProfile,
+  IAccountProfileClient,
+  IAccountProfileInit,
 } from "#codegen/schema/interfaces";
