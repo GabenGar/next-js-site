@@ -6,10 +6,10 @@
   "required": ["id", "created_at"],
   "properties": {
     "id": {
-      "$ref": "/types/serial.schema.json"
+      "$ref": "http://schemas.com/types/serial.schema.json"
     },
     "created_at": {
-      "$ref": "/types/dates/iso-datetime.schema.json"
+      "$ref": "http://schemas.com/types/dates/iso-datetime.schema.json"
     }
   },
   "additionalProperties": false

@@ -16,7 +16,7 @@
       "maxLength": 1024
     },
     "parent_id": {
-      "$ref": "/types/serial.schema.json"
+      "$ref": "http://schemas.com/types/serial.schema.json"
     }
   }
 }

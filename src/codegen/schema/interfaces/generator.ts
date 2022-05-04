@@ -27,6 +27,7 @@ async function generateInterfacesFromSchemas() {
       interfaces.push(interfaceString);
       continue;
     }
+
     const interfaceString = await fromSchemaToInterface(
       schemaCopy,
       schema.title,
@@ -52,7 +53,7 @@ async function generateInterfacesFromSchemas() {
 function transformSchema(schema: SchemaObject) {
   // fixing some weird reference issue
   const newSchema: typeof schema = JSON.parse(JSON.stringify(schema));
-  changeRefs(newSchema);
+  // changeRefs(newSchema);
   return newSchema;
 }
 
