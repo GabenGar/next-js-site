@@ -17,6 +17,7 @@ export interface Account {
    */
   is_verified: boolean;
   invite_id?: SerialInteger;
+  profile?: AccountProfile;
 }
 
 /**
@@ -32,6 +33,7 @@ export interface AccountClient {
    * Is `true` after account confirms its email.
    */
   is_verified: boolean;
+  profile?: AccountProfileClient;
 }
 
 /**

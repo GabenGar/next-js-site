@@ -29,6 +29,9 @@
       "type": "boolean",
       "default": false,
       "description": "Is `true` after account confirms its email."
+    },
+    "profile": {
+      "$ref": "http://schemas.com/account/profile/client.schema.json"
     }
   },
   "additionalProperties": false

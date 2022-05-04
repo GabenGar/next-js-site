@@ -11,7 +11,8 @@ const parserOptions: Options["$refOptions"] = {
   resolve: {
     http: {
       async read(file) {
-        return schemaMap[file.url];
+        const schemaCopy = transformSchema(schemaMap[file.url]);
+        return schemaCopy;
       },
     },
   },
@@ -66,7 +67,6 @@ async function generateInterfacesFromSchemas() {
 function transformSchema(schema: SchemaObject) {
   // fixing some weird reference issue
   const newSchema: typeof schema = JSON.parse(JSON.stringify(schema));
-  // changeRefs(newSchema);
   return newSchema;
 }
 
