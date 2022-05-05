@@ -87,6 +87,7 @@ export const getServerSideProps = withSessionSSR<AccountPageProps>(
 
     if (!account) {
       req.session.destroy();
+      
       return {
         notFound: true,
       };
