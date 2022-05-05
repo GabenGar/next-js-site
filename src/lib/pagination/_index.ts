@@ -1,2 +1,2 @@
-export { calculatePaginationDB } from "./lib";
-export type { Pagination, PaginationDB, PaginationInit } from "./types";
+export { toPaginationDB, toPagination } from "./lib";
+export type { IPagination, IPaginationDB, IPaginationInit } from "./types";

@@ -1,12 +1,12 @@
 import { getDB } from "#database";
 
 import type { IAccount, IComment } from "#types/entities";
-import type { PaginationDB } from "#lib/pagination";
+import type { IPaginationDB } from "#lib/pagination";
 import type { IInvite } from "#codegen/schema/interfaces";
 
 const { db } = getDB();
 
-export async function getAccounts({ offset, limit }: PaginationDB) {
+export async function getAccounts({ offset, limit }: IPaginationDB) {
   const query = `
     SELECT *
     FROM accounts.entries

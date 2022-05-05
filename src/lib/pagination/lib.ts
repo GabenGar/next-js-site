@@ -1,12 +1,30 @@
-import type { PaginationInit, PaginationDB } from "./types";
+import type { IPaginationInit, IPaginationDB, IPagination } from "./types";
 
-export function calculatePaginationDB({
+export function toPaginationDB({
   currentPage,
-  limit = 50,
+  limit = 25,
   totalCount,
-}: PaginationInit): PaginationDB {
+}: IPaginationInit): IPaginationDB {
   return {
+    currentPage,
     limit,
     offset: (currentPage - 1) * limit,
   };
+}
+
+export function toPagination(
+  paginationDB: IPaginationDB,
+  totalCount: number
+): IPagination {
+  const { currentPage, limit } = paginationDB;
+  const totalPages = Math.ceil(totalCount / limit);
+
+  const pagination: IPagination = {
+    currentPage,
+    limit,
+    totalPages,
+    totalCount,
+  };
+
+  return pagination;
 }

@@ -4,7 +4,7 @@ import { FOUND } from "#environment/constants/http";
 import { DAY } from "#environment/constants/durations";
 import { createRange } from "#lib/util";
 import { createSEOTags } from "#lib/seo";
-import { getProfiles } from "#database/queries/account/profile";
+import { getProfiles } from "#lib/account";
 import { countTable } from "#database";
 import { Redirect } from "#server/requests";
 import { Page } from "#components/pages";
@@ -20,8 +20,10 @@ import type {
 } from "next";
 import type { IAccountProfileClient } from "#types/entities";
 import type { BasePageProps } from "#types/pages";
+import type { IPagination } from "#lib/pagination";
 
 interface IProps extends BasePageProps {
+  pagination: IPagination;
   profiles: IAccountProfileClient[];
 }
 
@@ -108,7 +110,10 @@ export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
     return new Redirect(localeInfo, lastPagePage, FOUND);
   }
 
-  const profiles = await getProfiles();
+  const { page } = params;
+  const { pagination, profiles } = await getProfiles({
+    currentPage: Number(page),
+  });
 
   const localization = await serverSideTranslations(locale!, [
     "layout",
@@ -120,6 +125,7 @@ export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
     props: {
       ...localization,
       localeInfo,
+      pagination,
       profiles,
     },
     revalidate: DAY / 1000,
