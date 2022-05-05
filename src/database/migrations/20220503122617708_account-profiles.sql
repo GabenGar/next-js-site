@@ -15,8 +15,8 @@ CREATE TABLE accounts.profiles (
   id int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  account_id int REFERENCES accounts.entries,
-  full_name text,
+  account_id int UNIQUE REFERENCES accounts.entries,
+  full_name text UNIQUE,
   avatar_url text
 );
 
