@@ -49,3 +49,12 @@ export function debounce<A extends any[], F extends (...args: A) => any>(
     fnc(...args);
   };
 }
+
+export function createRange(length: number, step = 1): number[] {
+  const rangeLength = Math.ceil(length / step);
+  const range = Array.from(new Array(rangeLength).keys()).map(
+    (value) => value + step
+  );
+
+  return range;
+}

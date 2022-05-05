@@ -1,11 +1,6 @@
 import { getAccount } from "#database/queries/account";
-import { addProfile } from "#database/queries/account/profile";
 
-import type {
-  IAccount,
-  IAccountClient,
-  IAccountProfileInit,
-} from "#types/entities";
+import type { IAccount, IAccountClient } from "#types/entities";
 
 export async function getAccountDetails(account_id: number) {
   const account = await getAccount(account_id);
@@ -22,13 +17,4 @@ export function toAccountClient(account: IAccount): IAccountClient {
   }
 
   return accountClient as IAccountClient;
-}
-
-export async function createProfile(
-  account: IAccount,
-  profileInit: IAccountProfileInit
-) {
-  const newProfile = await addProfile(profileInit, account.id);
-
-  return newProfile;
 }

@@ -46,10 +46,11 @@ export async function getProfile(id: ISerialInteger) {
   return accountProfile;
 }
 
-export async function getProfiles() {
+export async function getProfiles(page: number) {
   const query = `
     SELECT *
     FROM accounts.profiles
+    ORDER BY id
   `;
 
   const accountProfile = await db.manyOrNone<IAccountProfile>(query);

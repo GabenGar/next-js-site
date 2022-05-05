@@ -20,7 +20,9 @@ interface IProps extends BasePageProps {}
 
 interface IParams extends ParsedUrlQuery {}
 
-function TemplatePage({ localeInfo }: InferGetStaticPropsType<typeof getStaticProps>) {
+function TemplatePage({
+  localeInfo,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   const router = useRouter();
   const { t } = useTranslation("SET TRANSLATION FILE");
   const seoTags = createSEOTags({
@@ -41,8 +43,7 @@ TemplatePage.getLayout = function getLayout(page: NextPage) {
   return <Layout>{page}</Layout>;
 };
 
-export const getStaticPaths: GetStaticPaths<IParams> = async (context) => {
-  const { locales } = context;
+export const getStaticPaths: GetStaticPaths<IParams> = async ({ locales }) => {
   const paths = locales!.map((locale) => {
     return { params: {}, locale };
   });
