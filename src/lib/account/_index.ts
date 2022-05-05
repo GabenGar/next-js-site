@@ -4,7 +4,7 @@ export {
   validateAccountInitFields,
 } from "#codegen/schema/validations";
 export { registerAccount, loginAccount } from "./auth";
-export { getAccountDetails } from "./lib";
+export { getAccountDetails, toAccountClient } from "./lib";
 export {
   confirmNewEmail,
   sendEmailConfirmation,

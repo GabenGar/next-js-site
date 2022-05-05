@@ -17,14 +17,13 @@ export async function addProfile(
 ) {
   const query = `
     INSERT INTO accounts.profiles
-      (account_id, full_name, avatar_url)
-    VALUES ($(account_id), $(full_name), $(avatar_url))
+      (account_id, full_name)
+    VALUES ($(account_id), $(full_name))
     RETURNING *
   `;
   const queryArgs = {
     account_id: accountID,
     full_name: profileInit.full_name,
-    avatar_url: profileInit.avatar_file,
   };
 
   const newProfile = await db.one<IAccountProfile>(query, queryArgs);

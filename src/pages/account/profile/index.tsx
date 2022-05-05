@@ -1,16 +1,15 @@
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { FOUND } from "#environment/constants/http";
-import { IS_DEVELOPMENT } from "#environment/derived";
 import { getAccountDetails, toAccountClient } from "#lib/account";
 import { createSEOTags } from "#lib/seo";
 import { withSessionSSR, Redirect } from "#server/requests";
-import { LinkInternal } from "#components/links";
 import { Page } from "#components/pages";
-import { AccountCard } from "#components/cards";
-import { Nav, NavItem, NavList } from "#components/navigation";
-import { SVGIcon } from "#components/icons";
-import styles from "./index.module.scss";
+import { Form } from "#components/forms";
+import { Text } from "#components/forms/sections";
+import { Article, ArticleBody, ArticleHeader } from "#components/articles";
+import { Heading } from "#components/headings";
+import { DL, DS } from "#components/lists/d-list";
 
 import type { InferGetServerSidePropsType } from "next";
 import type { IAccountClient } from "#types/entities";
@@ -27,49 +26,39 @@ function AccountPage({
   const { t } = useTranslation("account");
   const seoTags = createSEOTags({
     localeInfo,
-    title: t("acc_title"),
-    description: t("acc_desc"),
-    canonicalPath: "/account",
+    title: t("profile_title"),
+    description: t("profile_desc"),
+    canonicalPath: "/account/profile",
   });
+  const { profile } = account;
 
   return (
     <Page seoTags={seoTags}>
-      <Nav>
-        <NavList>
-          {IS_DEVELOPMENT && (
-            <NavItem>
-              <LinkInternal href="/account/email">
-                {account.email ? t("change_email") : t("add_email")}
-              </LinkInternal>
-            </NavItem>
-          )}
-
-          <NavItem>
-            <LinkInternal href="/account/calendar">
-              <SVGIcon iconID="calendar" />
-              <span>{t("calendar")}</span>
-            </LinkInternal>
-          </NavItem>
-
-          {account.role === "administrator" && (
-            <NavItem>
-              <LinkInternal href="/account/admin">
-                <SVGIcon iconID="screwdriver-wrench" />
-                <span>{t("admin")}</span>
-              </LinkInternal>
-            </NavItem>
-          )}
-
-          <NavItem>
-            {/* @TODO: profile icon */}
-            <LinkInternal iconID="calendar" href="/account/profile">
-              {account.profile ? t("profile") : t("create_profile")}
-            </LinkInternal>
-          </NavItem>
-        </NavList>
-      </Nav>
-
-      <AccountCard className={styles.account} account={account} />
+      {!profile ? (
+        <Form
+          id="form-create-profile"
+          name="create-profile"
+          method="POST"
+          action="/account/profile"
+        >
+          <Heading level={2}>Create a profile</Heading>
+          <Text id="create-profile-full-name" name="full_name">
+            Full name
+          </Text>
+        </Form>
+      ) : (
+        <Article>
+          <ArticleHeader>
+            <Heading level={2}>{profile.full_name ?? "Anonymous"}</Heading>
+          </ArticleHeader>
+          <ArticleBody>
+            <DL>
+              <DS dKey={"Joined"} dValue={profile.created_at} />
+              <DS dKey={"Last activity"} dValue={profile.updated_at} />
+            </DL>
+          </ArticleBody>
+        </Article>
+      )}
     </Page>
   );
 }
@@ -87,11 +76,13 @@ export const getServerSideProps = withSessionSSR<AccountPageProps>(
 
     if (!account) {
       req.session.destroy();
+
       return {
         notFound: true,
       };
     }
 
+    const accountClient = toAccountClient(account);
     const localization = await serverSideTranslations(locale!, [
       "layout",
       "components",
@@ -102,7 +93,7 @@ export const getServerSideProps = withSessionSSR<AccountPageProps>(
       props: {
         ...localization,
         localeInfo,
-        account: toAccountClient(account),
+        account: accountClient,
       },
     };
   }

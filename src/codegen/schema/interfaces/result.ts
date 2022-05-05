@@ -152,7 +152,7 @@ export interface AccountProfileClient {
   /**
    * The name shown on the profile card.
    */
-  full_name: string;
+  full_name?: string;
   /**
    * URL of the avatar.
    */

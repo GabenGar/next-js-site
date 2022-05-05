@@ -11,7 +11,7 @@ import { Form } from "#components/forms";
 import { ErrorsView } from "#components/errors";
 import {
   FormSectionPassword,
-  FormSectionText,
+  Text,
 } from "#components/forms/sections";
 import { LinkInternal } from "#components/links";
 
@@ -45,23 +45,23 @@ function RegisterPage({
           <LinkInternal href="/auth/login">{t("log_in")}</LinkInternal>
         </p>
         {IS_INVITE_ONLY && (
-          <FormSectionText
+          <Text
             id="acc-invite"
             name="invite"
             required
             defaultValue={accCreds?.invite}
           >
             {t("invite_code")}
-          </FormSectionText>
+          </Text>
         )}
-        <FormSectionText
+        <Text
           id="acc-name"
           name="name"
           required
           defaultValue={accCreds?.name}
         >
           {t("acc_name")}
-        </FormSectionText>
+        </Text>
         <FormSectionPassword
           id="acc-password"
           name="password"

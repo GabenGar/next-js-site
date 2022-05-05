@@ -30,13 +30,14 @@ function TemplatePage({
 }
 
 export const getServerSideProps = withSessionSSR<IProps>(
-  async (context) => {
-    const { req, locale } = context;
+  async ({ req, locale, defaultLocale }) => {
     if (!IS_DEVELOPMENT) {
       return {
         notFound: true,
       };
     }
+
+    const localeInfo = { locale: locale!, defaultLocale: defaultLocale! };
 
     const { account_id } = req.session;
 
@@ -66,6 +67,7 @@ export const getServerSideProps = withSessionSSR<IProps>(
     return {
       props: {
         ...localization,
+        localeInfo,
         account: accountClient,
       },
     };

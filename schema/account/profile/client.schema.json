@@ -3,7 +3,7 @@
   "title": "AccountProfileClient",
   "description": "The profile of an account used by client.",
   "type": "object",
-  "required": ["id", "created_at", "updated_at", "full_name"],
+  "required": ["id", "created_at", "updated_at"],
   "additionalProperties": false,
   "properties": {
     "id": {

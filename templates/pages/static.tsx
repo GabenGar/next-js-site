@@ -20,7 +20,7 @@ interface IProps extends BasePageProps {}
 
 interface IParams extends ParsedUrlQuery {}
 
-function TemplatePage({}: InferGetStaticPropsType<typeof getStaticProps>) {
+function TemplatePage({ localeInfo }: InferGetStaticPropsType<typeof getStaticProps>) {
   const router = useRouter();
   const { t } = useTranslation("SET TRANSLATION FILE");
   const seoTags = createSEOTags({
@@ -63,6 +63,8 @@ export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
     };
   }
 
+  const localeInfo = { locale: locale!, defaultLocale: defaultLocale! };
+
   const localization = await serverSideTranslations(locale!, [
     "layout",
     "components",
@@ -71,10 +73,7 @@ export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
   return {
     props: {
       ...localization,
-      localeInfo: {
-        locale,
-        defaultLocale,
-      },
+      localeInfo,
     },
   };
 };

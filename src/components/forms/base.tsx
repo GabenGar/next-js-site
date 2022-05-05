@@ -7,6 +7,11 @@ import styles from "./_index.module.scss";
 import type { FormEvent, ReactNode } from "react";
 import type { HTMLFormProps } from "#components/html/form";
 
+const methods = ["GET", "POST", "PUT", "PATCH", "DELETE"] as const;
+const formMethods = ["GET", "POST"] as const;
+export type IMethod = typeof methods[number];
+export type IFormMethod = typeof formMethods[number];
+
 export interface IFormProps extends HTMLFormProps {
   /**
    * Submit button component.
@@ -15,6 +20,7 @@ export interface IFormProps extends HTMLFormProps {
    * otherwise it becomes the content of {@link ButtonSubmit submit button}.
    */
   submitButton?: ReactNode;
+  method?: IFormMethod;
 }
 
 /**

@@ -7,6 +7,8 @@
     "acc_title",
     "acc_desc",
     "change_email",
+    "create_profile",
+    "profile",
     "add_email",
     "calendar",
     "admin",
@@ -20,6 +22,8 @@
     "email_code_message",
     "calendar_title",
     "calendar_desc",
-    "current_date"
+    "current_date",
+    "profile_title",
+    "profile_desc"
   ]
 }
