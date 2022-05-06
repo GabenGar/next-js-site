@@ -32,7 +32,7 @@ function Component({
 }: IPaginationInternalProps) {
   const { t } = useTranslation("components");
   const { totalPages, currentPage, limit, totalCount } = pagination;
-  const currentSelectionMin = (totalPages - 1) * limit;
+  const currentSelectionMin = (currentPage - 1) * limit;
   const currentSelectionMax =
     currentSelectionMin + limit > totalCount
       ? totalCount
@@ -55,7 +55,7 @@ function Component({
         </Page>
 
         <Page>
-          {currentPage === 1 ? (
+          {currentPage === 1 || currentPage - 1 === 1 ? (
             "..."
           ) : (
             <LinkButton href={urlBuilder(currentPage - 1)}>
@@ -65,8 +65,9 @@ function Component({
         </Page>
 
         <Page>{currentPage}</Page>
+
         <Page>
-          {currentPage === totalPages ? (
+          {currentPage === totalPages || currentPage + 1 === totalPages ? (
             "..."
           ) : (
             <LinkButton href={urlBuilder(currentPage + 1)}>

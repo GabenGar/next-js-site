@@ -8,9 +8,40 @@
   justify-content: center;
   align-items: center;
   gap: $size-small;
-  border: $size-nano solid transparent;
+  background-color: var(--local-colour2-secondary);
+  border: $size-nano solid var(--local-colour1-secondary);
+  padding: 0;
+
+  & .content {
+    border: $size-nano solid transparent;
+  }
 
   &:hover {
+    background-color: var(--local-colour2-primary);
     border-color: var(--local-colour1-primary);
+
+    & .content {
+      border-bottom-color: var(--local-colour1-primary);
+    }
   }
+
+  &:focus {
+    & .content {
+      border-bottom-color: var(--local-colour1-primary);
+    }
+  }
+
+  &:active {
+    background-color: var(--local-colour1-primary);
+    border-color: var(--local-colour2-primary);
+
+    & .content {
+      border-bottom-color: var(--local-colour2-primary);
+    }
+  }
+}
+
+.content {
+  transition-duration: var(--duration-global);
+  transition-property: color, border-color;
 }

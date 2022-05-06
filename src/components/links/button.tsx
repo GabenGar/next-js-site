@@ -9,5 +9,9 @@ export interface ILinkButtonProps extends ILinkProps {}
 export const LinkButton = blockComponent(styles.block, Component);
 
 function Component({ children, ...blockProps }: ILinkButtonProps) {
-  return <Link { ...blockProps }>{children}</Link>;
+  return (
+    <Link {...blockProps}>
+      <span className={styles.content}>{children}</span>
+    </Link>
+  );
 }
