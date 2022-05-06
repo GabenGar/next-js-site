@@ -20,7 +20,7 @@ export const ImageLink = blockComponent<IImageLinkProps>(
       linkHref || (typeof imageSrc === "string" ? imageSrc : imageSrc.src);
 
     return (
-      <Link {...blockProps} target="_blank" url={href}>
+      <Link {...blockProps} target="_blank" href={href}>
         <Image className={styles.image} src={imageSrc} alt={imageAlt} imageHeight={imageHeight} />
       </Link>
     );

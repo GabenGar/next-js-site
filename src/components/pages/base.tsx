@@ -19,7 +19,7 @@ export function Page({ seoTags, heading, pageClassName, children }: PageProps) {
   const router = useRouter();
   const pageClass = clsx(
     styles.content,
-    !heading && styles.content_headless,
+    !heading && !seoTags.title && styles.content_headless,
     pageClassName
   );
 

@@ -33,6 +33,7 @@ function Component({
 
   return (
     <Link {...blockProps} passHref>
+      {/* @ts-expect-error `passHref` should pass the `href` value. */}
       <HTMLA
         className={linkClass}
         target={target}

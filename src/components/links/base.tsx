@@ -1,21 +1,19 @@
-import { blockComponent } from "#components/meta";
 import { guessLinkType } from "#lib/util";
+import { blockComponent } from "#components/meta";
 import { LinkExternal } from "./external";
 import { LinkInternal } from "./internal";
 import { LinkLocal } from "./local";
 import { LinkEmail } from "./email";
 import styles from "./_index.module.scss";
 
-import type { BlockProps } from "#types/props";
+import type { IHTMLAProps } from "#components/html/a";
 
-export interface ILinkProps extends BlockProps<"a"> {
-  url: string | URL;
-}
+export interface ILinkProps extends IHTMLAProps {}
 
 export const Link = blockComponent<ILinkProps>(
   styles.block,
-  ({ url, children, ...blockProps }) => {
-    const { type, parsedUrl } = guessLinkType(url);
+  ({ href, children, ...blockProps }) => {
+    const { type, parsedUrl } = guessLinkType(href);
 
     switch (type) {
       case "local": {

@@ -12,6 +12,7 @@ export interface ICountTableProps {
   table: string;
   /**
    * A `pg-promise` task/transaction context if the counting needs to be done within them.
+   * @default IDatabase<IMain>
    */
   ctx?: IDatabase<IMain> | ITask<IMain>;
 }
@@ -21,9 +22,9 @@ export interface ICountTableProps {
  * @param context
  */
 export async function countTable({
+  ctx = db,
   schema,
   table,
-  ctx = db,
 }: ICountTableProps): Promise<number> {
   const query = `
     SELECT count(*)

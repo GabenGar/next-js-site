@@ -5,7 +5,7 @@ import { createSEOTags } from "#lib/seo";
 import { allCountries } from "#lib/api/rest-countries";
 import { CardList } from "#components/lists/card-list";
 import { LoadingBar } from "#components/state";
-import { Pagination } from "#components/pagination";
+import { PaginationLocal } from "#components/pagination";
 import {
   Form,
   SubmitSection,
@@ -106,7 +106,7 @@ export default function RESTCountriesAllPage({
         <SubmitSection>Search</SubmitSection>
       </Form>
 
-      <Pagination
+      <PaginationLocal
         changeCurrentPage={changeCurrentPage}
         currentPage={currentPage}
         totalCount={filteredCountries.length}

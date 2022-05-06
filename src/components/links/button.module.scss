@@ -1,0 +1,16 @@
+@use "../../styles/variables/sass.scss" as *;
+@use "../../styles/mixins.scss" as mixins;
+
+.block {
+  @include mixins.form-input();
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: $size-small;
+  border: $size-nano solid transparent;
+
+  &:hover {
+    border-color: var(--local-colour1-primary);
+  }
+}

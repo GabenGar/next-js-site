@@ -50,7 +50,7 @@ function Component({
         <LinkInternal
           href={{
             pathname: "/profile/[id]",
-            query: { slug: id },
+            query: { id },
           }}
         >
           Details

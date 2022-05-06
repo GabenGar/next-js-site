@@ -64,9 +64,9 @@ export async function getProfiles(paginationDB: IPaginationDB) {
 
   const result = await db.task(async (tx) => {
     const profileCount = await countTable({
+      ctx: tx,
       schema: "accounts",
       table: "profiles",
-      ctx: tx,
     });
     const profiles = await tx.manyOrNone<IAccountProfile>(query, query_args);
     const pagination = toPagination(paginationDB, profileCount);

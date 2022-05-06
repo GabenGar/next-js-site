@@ -10,6 +10,7 @@ import { Redirect } from "#server/requests";
 import { Page } from "#components/pages";
 import { CardList } from "#components/lists";
 import { ProfileCard } from "#components/entities/profiles";
+import { PaginationInternal } from "#components/pagination";
 
 import type { ParsedUrlQuery } from "querystring";
 import type {
@@ -35,6 +36,7 @@ const limit = 25;
 
 function Profiles({
   localeInfo,
+  pagination,
   profiles,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const { t } = useTranslation("common");
@@ -47,7 +49,8 @@ function Profiles({
 
   return (
     <Page seoTags={seoTags}>
-      <CardList>
+      <PaginationInternal pagination={pagination} />
+      <CardList isLayoutShown={false}>
         {profiles.map((profile) => (
           <ProfileCard key={profile.id} profile={profile} />
         ))}
@@ -62,11 +65,6 @@ export const getStaticPaths: GetStaticPaths<IParams> = async ({ locales }) => {
     table: "profiles",
   });
   const pageCount = Math.ceil(profileCount / limit);
-  console.log(
-    `profileCount: ${typeof profileCount}\n`,
-    `pageCount: ${typeof pageCount}`
-  );
-
   const pagination = createRange(pageCount);
   const paths = pagination.reduce<GetStaticPathsResult<IParams>["paths"]>(
     (paths, page) => {

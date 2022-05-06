@@ -22,6 +22,6 @@ export interface IPaginationDB {
 export interface IPagination {
   currentPage: number;
   totalPages: number;
-  totalCount?: number;
+  totalCount: number;
   limit: number;
 }

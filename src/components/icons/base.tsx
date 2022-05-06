@@ -2,16 +2,20 @@ import { SVGSprite } from "#assets";
 import { blockComponent } from "#components/meta";
 import styles from "./_index.module.scss";
 
+import type { StaticImageData } from "next/image"
 import type { BlockProps } from "#types/props";
 
-export interface SVGIconProps extends BlockProps<"span"> {
+export interface ISVGIconProps extends BlockProps<"span"> {
+  /**
+   * Icon ID in the svg sprite sheet.
+   */
   iconID: string;
 }
 
-export const SVGIcon = blockComponent<SVGIconProps>(
+export const SVGIcon = blockComponent<ISVGIconProps>(
   styles.block,
   ({ iconID, children, ...blockProps }) => {
-    const iconPath = `${SVGSprite.src}#${iconID}`;
+    const iconPath = `${(SVGSprite as StaticImageData).src}#${iconID}`;
 
     return (
       <span {...blockProps}>

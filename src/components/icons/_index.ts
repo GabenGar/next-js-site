@@ -1,2 +1,2 @@
 export { SVGIcon } from "./base";
-export type { SVGIconProps} from "./base";
+export type { ISVGIconProps} from "./base";

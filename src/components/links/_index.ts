@@ -7,3 +7,5 @@ export type { ILinkInternalProps } from "./internal";
 export { LinkLocal } from "./local";
 export { LinkEmail } from "./email";
 export type { IEmailFields, ILinkEmailProps } from "./email";
+export { LinkButton } from "./button";
+export type { ILinkButtonProps } from "./button";
