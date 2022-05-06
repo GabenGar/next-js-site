@@ -5,6 +5,7 @@ import { DAY } from "#environment/constants/durations";
 import { createRange } from "#lib/util";
 import { createSEOTags } from "#lib/seo";
 import { getProfiles } from "#lib/account";
+import { ProjectURL } from "#lib/url";
 import { countTable } from "#database";
 import { Redirect } from "#server/requests";
 import { Page } from "#components/pages";
@@ -49,7 +50,13 @@ function Profiles({
 
   return (
     <Page seoTags={seoTags}>
-      <PaginationInternal pagination={pagination} />
+      <PaginationInternal
+        urlBuilder={(page) => {
+          const profilesURL = new ProjectURL(localeInfo, `/profiles/${page}`);
+          return profilesURL;
+        }}
+        pagination={pagination}
+      />
       <CardList isLayoutShown={false}>
         {profiles.map((profile) => (
           <ProfileCard key={profile.id} profile={profile} />

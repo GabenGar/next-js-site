@@ -1,4 +1,5 @@
 import { useTranslation } from "next-i18next";
+import { ProjectURL } from "#lib/url";
 import { blockComponent } from "#components/meta";
 import { LinkButton } from "#components/links";
 import { List, ListItem } from "#components/lists";
@@ -9,8 +10,14 @@ import type { BlockProps } from "#types/props";
 
 interface IPaginationClient extends IPagination {}
 
+type URLBuilder = (page: number) => ProjectURL;
+
 export interface IPaginationInternalProps extends BlockProps<"div"> {
   pagination: IPagination;
+  /**
+   * A function which accepts a `page` argument and returns the url for that page.
+   */
+  urlBuilder: URLBuilder;
 }
 
 /**
@@ -18,7 +25,11 @@ export interface IPaginationInternalProps extends BlockProps<"div"> {
  */
 export const PaginationInternal = blockComponent(styles.block, Component);
 
-function Component({ pagination, ...blockProps }: IPaginationInternalProps) {
+function Component({
+  pagination,
+  urlBuilder,
+  ...blockProps
+}: IPaginationInternalProps) {
   const { t } = useTranslation("components");
   const { totalPages, currentPage, limit, totalCount } = pagination;
   const currentSelectionMin = (totalPages - 1) * limit;
@@ -36,14 +47,20 @@ function Component({ pagination, ...blockProps }: IPaginationInternalProps) {
 
       <List className={styles.pages}>
         <Page>
-          {currentPage === 1 ? 1 : <LinkButton href="/">1</LinkButton>}
+          {currentPage === 1 ? (
+            1
+          ) : (
+            <LinkButton href={urlBuilder(1)}>1</LinkButton>
+          )}
         </Page>
 
         <Page>
           {currentPage === 1 ? (
             "..."
           ) : (
-            <LinkButton href="/">{currentPage - 1}</LinkButton>
+            <LinkButton href={urlBuilder(currentPage - 1)}>
+              {currentPage - 1}
+            </LinkButton>
           )}
         </Page>
 
@@ -52,7 +69,9 @@ function Component({ pagination, ...blockProps }: IPaginationInternalProps) {
           {currentPage === totalPages ? (
             "..."
           ) : (
-            <LinkButton href="/">{currentPage + 1}</LinkButton>
+            <LinkButton href={urlBuilder(currentPage + 1)}>
+              {currentPage + 1}
+            </LinkButton>
           )}
         </Page>
 
@@ -60,7 +79,7 @@ function Component({ pagination, ...blockProps }: IPaginationInternalProps) {
           {currentPage === totalPages ? (
             totalPages
           ) : (
-            <LinkButton href="/">{totalPages}</LinkButton>
+            <LinkButton href={urlBuilder(totalPages)}>{totalPages}</LinkButton>
           )}
         </Page>
       </List>

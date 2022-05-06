@@ -5,7 +5,7 @@ import type { ILocaleInfo } from "#lib/language";
 
 /**
  * A locale-aware `URL` with {@link SITE_ORIGIN `SITE_ORIGIN`} as `base` argument.
- * @TODO proepr locale handling
+ * @TODO proper locale handling
  */
 export class ProjectURL extends URL {
   locale: ILocaleInfo["locale"];

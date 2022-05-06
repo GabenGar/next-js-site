@@ -32,6 +32,7 @@
     "comment_reply",
     "profile_anonymous",
     "profile_joined",
-    "profile_last_activity"
+    "profile_last_activity",
+    "pagination_overview"
   ]
 }
