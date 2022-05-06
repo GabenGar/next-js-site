@@ -115,21 +115,22 @@ export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
       table: "profiles",
     });
     const pageCount = Math.ceil(profileCount / limit);
-    const lastPagePage = `/profiles/${pageCount}`;
+    const lastPage = `/profiles/${pageCount}`;
 
-    return new Redirect(localeInfo, lastPagePage, FOUND);
+    return new Redirect(localeInfo, lastPage, FOUND);
   }
-
-  const { page } = params;
-  const { pagination, profiles } = await getProfiles({
-    currentPage: Number(page),
-  });
 
   const localization = await serverSideTranslations(locale!, [
     "layout",
     "components",
     "common",
   ]);
+
+  const { page } = params;
+
+  const { pagination, profiles } = await getProfiles({
+    currentPage: Number(page),
+  });
 
   return {
     props: {
