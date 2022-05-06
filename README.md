@@ -90,7 +90,6 @@ git config core.sshCommand "ssh -i ~/.ssh/id_rsa_file -F /dev/null"
 
 - one-button validation interface
 - styled validation errors
-- fix `$ref` parsing inconsistencies between `json-schema-to-typescript` and `ajv`
 - scripts relying on `config.json.schema` to work with ref schemas
 - locale-specific date formatting
 - pre-deploy validation

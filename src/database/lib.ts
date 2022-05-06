@@ -20,6 +20,8 @@ const pgp = pgLib(initOptions);
 // http://github.com/brianc/node-pg-types/blob/master/lib/builtins.js
 // return date strings as strings
 pgp.pg.types.setTypeParser(1184, (dateString) => dateString);
+// return bigints as `BigInt` instead of string
+// pgp.pg.types.setTypeParser(20, BigInt);
 
 /**
  * @link https://stackoverflow.com/questions/34382796/where-should-i-initialize-pg-promise#answer-34427278

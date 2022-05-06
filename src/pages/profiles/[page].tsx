@@ -62,6 +62,11 @@ export const getStaticPaths: GetStaticPaths<IParams> = async ({ locales }) => {
     table: "profiles",
   });
   const pageCount = Math.ceil(profileCount / limit);
+  console.log(
+    `profileCount: ${typeof profileCount}\n`,
+    `pageCount: ${typeof pageCount}`
+  );
+
   const pagination = createRange(pageCount);
   const paths = pagination.reduce<GetStaticPathsResult<IParams>["paths"]>(
     (paths, page) => {

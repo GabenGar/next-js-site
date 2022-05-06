@@ -62,7 +62,7 @@ function AccountPage({
 
           <NavItem>
             {/* @TODO: profile icon */}
-            <LinkInternal iconID="calendar" href="/account/profile">
+            <LinkInternal iconID="id-badge" href="/account/profile">
               {account.profile ? t("profile") : t("create_profile")}
             </LinkInternal>
           </NavItem>

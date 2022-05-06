@@ -1,4 +1,4 @@
-import { getDB } from "#database";
+import { countTable, getDB } from "#database";
 import { toPagination } from "#lib/pagination";
 
 import type {
@@ -50,10 +50,6 @@ export async function getProfile(id: ISerialInteger) {
 
 export async function getProfiles(paginationDB: IPaginationDB) {
   const { offset, limit } = paginationDB;
-  const count_query = `
-    SELECT count(*)
-    FROM accounts.profiles
-  `;
   const query = `
     SELECT *
     FROM accounts.profiles
@@ -66,9 +62,13 @@ export async function getProfiles(paginationDB: IPaginationDB) {
     limit,
   };
 
-  const result = await db.task(async () => {
-    const profileCount = await db.one<number>(count_query);
-    const profiles = await db.manyOrNone<IAccountProfile>(query, query_args);
+  const result = await db.task(async (tx) => {
+    const profileCount = await countTable({
+      schema: "accounts",
+      table: "profiles",
+      ctx: tx,
+    });
+    const profiles = await tx.manyOrNone<IAccountProfile>(query, query_args);
     const pagination = toPagination(paginationDB, profileCount);
 
     return {

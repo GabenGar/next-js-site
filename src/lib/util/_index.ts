@@ -1,4 +1,5 @@
 import { SITE_NAME } from "#environment/vars";
+import { toJSON } from "#lib/json";
 
 export { buttonClicked } from "./dom";
 export { transformChildrenProps, getValidChildren } from "./react";
