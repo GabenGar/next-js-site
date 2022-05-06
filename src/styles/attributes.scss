@@ -6,7 +6,9 @@
 
 a {
   // internal links
-  // &[href^=#{$kemono-site}],
+  // TODO: env-dependent var
+  &[href^="https://gabengar.vercel.app"],
+  &[href^="http://localhost:3000"],
   &[href^="/"],
   &[href^="./"],
   &[href^="../"] {

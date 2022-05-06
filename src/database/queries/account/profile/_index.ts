@@ -70,7 +70,7 @@ export async function getProfiles(paginationDB: IPaginationDB) {
 
     return {
       pagination,
-      profiles,
+      profiles: profiles.slice(0, pagination.limit - 1),
     };
   }
 

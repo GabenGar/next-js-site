@@ -2,6 +2,8 @@
 const path = require("path");
 const { i18n } = require("./next-i18next.config");
 
+// const sassVars = `$site-origin: '${process.env.NEXT_PUBLIC_SITE_ORIGIN}';`
+
 /** @type {import('next').NextConfig} */
 const nextJSConfig = {
   i18n,
@@ -30,6 +32,7 @@ const nextJSConfig = {
       const reportFilename = path.join(dir, ".next", "analyze", filename)
 
       config && config.plugins && config.plugins.push(
+        // @ts-expect-error some typing issue stuff
         new BundleAnalyzerPlugin({
           analyzerMode: 'static',
           reportFilename,

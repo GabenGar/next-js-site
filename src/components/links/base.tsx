@@ -23,6 +23,7 @@ export const Link = blockComponent<ILinkProps>(
           </LinkLocal>
         );
       }
+
       case "email": {
         return (
           <LinkEmail email={parsedUrl} {...blockProps}>
@@ -30,6 +31,7 @@ export const Link = blockComponent<ILinkProps>(
           </LinkEmail>
         );
       }
+
       case "internal": {
         const { target, ...finalProps } = blockProps;
         return (
@@ -38,6 +40,7 @@ export const Link = blockComponent<ILinkProps>(
           </LinkInternal>
         );
       }
+
       case "external":
       default: {
         return (

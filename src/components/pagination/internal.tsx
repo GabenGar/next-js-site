@@ -1,8 +1,8 @@
 import { useTranslation } from "next-i18next";
 import { ProjectURL } from "#lib/url";
 import { blockComponent } from "#components/meta";
-import { LinkButton } from "#components/links";
 import { List, ListItem } from "#components/lists";
+import { LinkButton } from "#components/links";
 import styles from "./internal.module.scss";
 
 import type { IPagination } from "#lib/pagination";
@@ -10,14 +10,14 @@ import type { BlockProps } from "#types/props";
 
 interface IPaginationClient extends IPagination {}
 
-type URLBuilder = (page: number) => ProjectURL;
+type IURLBuilder = (page: number) => ProjectURL;
 
 export interface IPaginationInternalProps extends BlockProps<"div"> {
   pagination: IPagination;
   /**
    * A function which accepts a `page` argument and returns the url for that page.
    */
-  urlBuilder: URLBuilder;
+  urlBuilder: IURLBuilder;
 }
 
 /**
