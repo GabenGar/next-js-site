@@ -5,9 +5,9 @@ import { createSEOTags } from "#lib/seo";
 import { getTableIDs } from "#database";
 import { getProfile } from "#database/queries/account/profile";
 import { Page } from "#components/pages";
-import { JSONView } from "#components/json";
 import { Article, ArticleBody } from "#components/articles";
 import { DL, DS } from "#components/lists/d-list";
+import { DateTimeView } from "#components/dates";
 
 import type { ParsedUrlQuery } from "querystring";
 import type {
@@ -18,7 +18,6 @@ import type {
 } from "next";
 import type { IAccountProfileClient } from "#types/entities";
 import type { BasePageProps } from "#types/pages";
-import { DateTimeView } from "#components/dates";
 
 interface IProps extends BasePageProps {
   profile: IAccountProfileClient;
@@ -37,7 +36,7 @@ function Profile({
   const seoTags = createSEOTags({
     localeInfo,
     title: full_name ?? "Anonymous",
-    description: t("profile_desc"),
+    description: full_name ?? "Anonymous",
     canonicalPath: `/profile/${id}`,
   });
 
