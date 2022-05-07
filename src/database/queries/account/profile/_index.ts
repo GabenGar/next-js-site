@@ -1,6 +1,4 @@
-import { IS_DEVELOPMENT } from "#environment/derived";
 import { toPagination } from "#lib/pagination";
-import { randomProfiles } from "#lib/random";
 import { countTable, getDB } from "#database";
 
 import type {
@@ -63,16 +61,6 @@ export async function getProfiles(paginationDB: IPaginationDB) {
     offset,
     limit,
   };
-
-  if (IS_DEVELOPMENT) {
-    const profiles = randomProfiles();
-    const pagination = toPagination(paginationDB, profiles.length);
-
-    return {
-      pagination,
-      profiles: profiles.slice(0, pagination.limit - 1),
-    };
-  }
 
   const result = await db.task(async (tx) => {
     const profileCount = await countTable({
