@@ -17,5 +17,17 @@
   "blog_by": "Автор",
   "blog_published": "Опубликован",
   "blog_read_more": "Далее",
-  "blog_edited": "Отредактирован"
+  "blog_edited": "Отредактирован",
+  "comment_default_author": "Аноним",
+  "comment_blog": "Прокоментировал на",
+  "comment_parent": "Ответ к",
+  "comment_created_at": "Создан",
+  "comment_reject": "Отвергнуть",
+  "comment_approve": "Одобрить",
+  "comment_reply": "Ответить",
+  "profile_anonymous": "Аноним",
+  "profile_joined": "Присоединился",
+  "profile_last_activity": "Последняя активность",
+  "profile_details": "Детали",
+  "pagination_overview": "Показываем {{min}}-{{max}} из {{total}} сущностей."
 }

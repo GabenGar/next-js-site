@@ -45,7 +45,7 @@ function Profiles({
     localeInfo,
     title: t("profiles_title"),
     description: t("profiles_desc"),
-    canonicalPath: "/profiles",
+    canonicalPath: `/profiles/${pagination.currentPage}`,
   });
 
   return (

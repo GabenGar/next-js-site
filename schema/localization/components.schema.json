@@ -33,6 +33,7 @@
     "profile_anonymous",
     "profile_joined",
     "profile_last_activity",
+    "profile_details",
     "pagination_overview"
   ]
 }

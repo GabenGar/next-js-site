@@ -53,7 +53,7 @@ function Component({
             query: { id },
           }}
         >
-          Details
+          {t("profile_details")}
         </LinkInternal>
       </CardFooter>
     </Card>

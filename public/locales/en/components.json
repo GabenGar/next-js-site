@@ -27,5 +27,7 @@
   "comment_reply": "Reply",
   "profile_anonymous": "Anonymous",
   "profile_joined": "Joined",
-  "profile_last_activity": "Last activity"
+  "profile_last_activity": "Last activity",
+  "profile_details": "Details",
+  "pagination_overview": "Showing {{min}}-{{max}} out of {{total}} entries."
 }

@@ -58,8 +58,11 @@ function Component({
   return (
     <div {...blockProps}>
       <p>
-        Showing {currentSelectionMin}-{currentSelectionMax} out of {totalCount}{" "}
-        entries.
+        {t("pagination_overview", {
+          min: currentSelectionMin,
+          max: currentSelectionMax,
+          total: totalCount,
+        })}
       </p>
 
       <List className={styles.pages}>

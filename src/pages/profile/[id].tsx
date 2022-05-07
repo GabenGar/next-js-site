@@ -31,12 +31,12 @@ function Profile({
   localeInfo,
   profile,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("components");
   const { id, full_name, created_at, updated_at } = profile;
   const seoTags = createSEOTags({
     localeInfo,
-    title: full_name ?? "Anonymous",
-    description: full_name ?? "Anonymous",
+    title: full_name ?? t("profile_anonymous"),
+    description: full_name ?? t("profile_anonymous"),
     canonicalPath: `/profile/${id}`,
   });
 
@@ -46,11 +46,11 @@ function Profile({
         <ArticleBody>
           <DL>
             <DS
-              dKey={"Joined"}
+              dKey={t("profile_joined")}
               dValue={<DateTimeView dateTime={created_at} />}
             />
             <DS
-              dKey={"Last Activity"}
+              dKey={t("profile_last_activity")}
               dValue={<DateTimeView dateTime={updated_at} />}
             />
           </DL>
