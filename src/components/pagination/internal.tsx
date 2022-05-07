@@ -37,7 +37,7 @@ export interface IPaginationInternalProps extends BlockProps<"div"> {
 /**
  * For use in server-rendered collections. Page buttons are {@link LinkInternal internal links} styled as link buttons.
  *
- * @TODO fix selected page desync
+ * @TODO fix locale redirect
  */
 export const PaginationInternal = blockComponent(styles.block, Component);
 
