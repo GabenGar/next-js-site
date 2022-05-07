@@ -1,4 +1,5 @@
-import { useRef } from "react";
+import clsx from "clsx";
+import { useClient } from "#lib/hooks";
 import { blockComponent } from "#components/meta";
 import { HTMLLabel } from "#components/html/label";
 import { HTMLInput } from "#components/html/input";
@@ -16,41 +17,42 @@ export interface INumberProps extends FormSectionProps {
   minValue?: number;
   maxValue?: number;
   valueStep?: number;
-  inputRef?: Ref<HTMLInputElement>
+  inputRef?: Ref<HTMLInputElement>;
 }
 
-export const Number = blockComponent<INumberProps>(
-  styles.block,
-  ({
-    id,
-    name,
-    defaultValue,
-    isReadOnly,
-    required,
-    children,
-    minValue,
-    maxValue,
-    valueStep,
-    inputRef,
-    ...blockProps
-  }) => {
+export const Number = blockComponent(styles.block, Component);
 
-    return (
-      <FormSection {...blockProps}>
-        <HTMLLabel htmlFor={id}>{children}</HTMLLabel>
-        <HTMLInput
-          id={id}
-          name={name}
-          type="number"
-          required={required}
-          defaultValue={defaultValue}
-          readOnly={isReadOnly}
-          min={minValue}
-          max={maxValue}
-          step={valueStep}
-          ref={inputRef}
-        />
-      </FormSection>
-    );
-  }
-);
+function Component({
+  id,
+  name,
+  defaultValue,
+  isReadOnly,
+  required,
+  children,
+  minValue,
+  maxValue,
+  valueStep,
+  inputRef,
+  ...blockProps
+}: INumberProps) {
+  const { isClient } = useClient();
+
+  return (
+    <FormSection {...blockProps}>
+      <HTMLLabel htmlFor={id}>{children}</HTMLLabel>
+      <HTMLInput
+        id={id}
+        className={clsx(isClient && styles.input_client)}
+        name={name}
+        type="number"
+        required={required}
+        defaultValue={defaultValue}
+        readOnly={isReadOnly}
+        min={minValue}
+        max={maxValue}
+        step={valueStep}
+        ref={inputRef}
+      />
+    </FormSection>
+  );
+}

@@ -27,10 +27,13 @@
   position: relative;
 
   &:focus-within {
-    // .selector {
-    //   visibility: visible;
-    //   opacity: 1;
-    // }
+    // @TODO manipualte the whle form instead
+    & .increment,
+    & .decrement,
+    & .select {
+      visibility: visible;
+      opacity: 1;
+    }
   }
 }
 
@@ -39,10 +42,8 @@
   display: grid;
   grid-template:
     "reduce input add " auto
-    // "submit submit submit" auto
     / auto auto auto;
-  // visibility: hidden;
-  // opacity: 0;
+  background-color: transparent;
   padding: 0;
 
   transition-duration: var(--duration-global);
@@ -56,18 +57,33 @@
   width: var(--local-input-width, auto);
 }
 
-.incremenet {
+.increment {
   grid-area: add;
+  visibility: hidden;
+  opacity: 0;
+
+  transition-duration: var(--duration-global);
+  transition-property: visibility, opacity;
 }
 
 .decrement {
   grid-area: reduce;
+  visibility: hidden;
+  opacity: 0;
+
+  transition-duration: var(--duration-global);
+  transition-property: visibility, opacity;
 }
 
 .select {
   grid-area: submit;
   position: absolute;
-  top: 100%;
+  top: calc(100% + #{$size-normal});
   z-index: 1;
   justify-self: center;
+  visibility: hidden;
+  opacity: 0;
+
+  transition-duration: var(--duration-global);
+  transition-property: visibility, opacity;
 }

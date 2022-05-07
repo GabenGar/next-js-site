@@ -28,6 +28,8 @@ export interface IPaginationInternalProps extends BlockProps<"div"> {
 
 /**
  * For use in server-rendered collections. Page buttons are {@link LinkInternal internal links} styled as link buttons.
+ *
+ * @TODO
  */
 export const PaginationInternal = blockComponent(styles.block, Component);
 
@@ -104,19 +106,9 @@ function CurrentPage({ pagination }: { pagination: IPagination }) {
       <Form
         id="pagination"
         className={styles.selector}
+        method="GET"
         submitButton={<ButtonSubmit className={styles.select}>Go</ButtonSubmit>}
-        onSubmit={(event) => {
-          event.preventDefault();
-        }}
       >
-        <Button
-          className={styles.decrement}
-          onClick={() => {
-            inputRef.current?.stepDown();
-          }}
-        >
-          -1
-        </Button>
         <Number
           id="pagination-current"
           className={styles.selected}
@@ -128,6 +120,14 @@ function CurrentPage({ pagination }: { pagination: IPagination }) {
           inputRef={inputRef}
           style={{ "--local-input-width": `${inputWidth}em` } as CSSProperties}
         />
+        <Button
+          className={styles.decrement}
+          onClick={() => {
+            inputRef.current?.stepDown();
+          }}
+        >
+          -1
+        </Button>
         <Button
           className={styles.increment}
           onClick={() => {
