@@ -76,19 +76,16 @@ export const getStaticPaths: GetStaticPaths<IParams> = async ({ locales }) => {
   const pagination = createRange(pageCount);
   const paths = pagination.reduce<GetStaticPathsResult<IParams>["paths"]>(
     (paths, page) => {
-      const localePaths = locales!.map<{
-        locale: string;
-        params: {
-          page: string;
-        };
-      }>((locale) => {
-        return {
-          locale,
-          params: {
-            page: String(page),
-          },
-        };
-      });
+      const localePaths: GetStaticPathsResult<IParams>["paths"] = locales!.map(
+        (locale) => {
+          return {
+            locale,
+            params: {
+              page: String(page),
+            },
+          };
+        }
+      );
 
       paths.push(...localePaths);
 
