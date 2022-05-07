@@ -101,3 +101,4 @@ git config core.sshCommand "ssh -i ~/.ssh/id_rsa_file -F /dev/null"
 - abstract away per-page locale management
 - exclude `database.schema.json` from the main codegen
 - resolve the `BigInt` question
+- development mock generation
