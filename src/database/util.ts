@@ -1,6 +1,7 @@
 import { getDB } from "./lib";
 
 import type { IDatabase, ITask, IMain } from "pg-promise";
+import type { ISerialInteger } from "#types/entities";
 
 const { db } = getDB();
 
@@ -35,4 +36,20 @@ export async function countTable({
   const count = Number(result.count);
 
   return count;
+}
+
+export async function getTableIDs({
+  ctx = db,
+  schema,
+  table,
+}: ICountTableProps) {
+  const query = `
+    SELECT id
+    FROM ${schema}.${table}
+  `;
+
+  const result = await ctx.manyOrNone<{ id: ISerialInteger }>(query);
+  const ids = result.map(({ id }) => id);
+
+  return ids;
 }

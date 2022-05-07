@@ -1,2 +1,2 @@
 export { sqlQuery, getDB } from "./lib";
-export { countTable } from "./util";
+export { countTable, getTableIDs } from "./util";

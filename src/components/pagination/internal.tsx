@@ -118,43 +118,51 @@ function CurrentPage({
 
   return (
     <Page className={styles.current}>
-      <Form
-        id="pagination"
-        className={styles.selector}
-        method="GET"
-        action={baseURL}
-        submitButton={<ButtonSubmit className={styles.select}>Go</ButtonSubmit>}
-      >
-        <Number
-          // a hack to force input update
-          key={currentPage}
-          id="pagination-current"
-          className={styles.selected}
-          name="page"
-          defaultValue={currentPage}
-          minValue={1}
-          maxValue={totalPages}
-          valueStep={1}
-          inputRef={inputRef}
-          style={{ "--local-input-width": `${inputWidth}em` } as CSSProperties}
-        />
-        <Button
-          className={styles.decrement}
-          onClick={() => {
-            inputRef.current?.stepDown();
-          }}
+      {totalPages === 1 ? (
+        totalPages
+      ) : (
+        <Form
+          id="pagination"
+          className={styles.selector}
+          method="GET"
+          action={baseURL}
+          submitButton={
+            <ButtonSubmit className={styles.select}>Go</ButtonSubmit>
+          }
         >
-          -1
-        </Button>
-        <Button
-          className={styles.increment}
-          onClick={() => {
-            inputRef.current?.stepUp();
-          }}
-        >
-          +1
-        </Button>
-      </Form>
+          <Number
+            // a hack to force input update
+            key={currentPage}
+            id="pagination-current"
+            className={styles.selected}
+            name="page"
+            defaultValue={currentPage}
+            minValue={1}
+            maxValue={totalPages}
+            valueStep={1}
+            inputRef={inputRef}
+            style={
+              { "--local-input-width": `${inputWidth}em` } as CSSProperties
+            }
+          />
+          <Button
+            className={styles.decrement}
+            onClick={() => {
+              inputRef.current?.stepDown();
+            }}
+          >
+            -1
+          </Button>
+          <Button
+            className={styles.increment}
+            onClick={() => {
+              inputRef.current?.stepUp();
+            }}
+          >
+            +1
+          </Button>
+        </Form>
+      )}
     </Page>
   );
 }
