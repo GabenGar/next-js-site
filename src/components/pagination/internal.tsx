@@ -1,10 +1,16 @@
+import clsx from "clsx";
+import { useRef, useState } from "react";
 import { useTranslation } from "next-i18next";
 import { ProjectURL } from "#lib/url";
 import { blockComponent } from "#components/meta";
 import { List, ListItem } from "#components/lists";
 import { LinkButton } from "#components/links";
+import { Form } from "#components/forms";
+import { Number } from "#components/forms/sections";
+import { Button, ButtonSubmit } from "#components/buttons";
 import styles from "./internal.module.scss";
 
+import type { CSSProperties } from "react";
 import type { IPagination } from "#lib/pagination";
 import type { BlockProps } from "#types/props";
 
@@ -64,7 +70,7 @@ function Component({
           )}
         </Page>
 
-        <Page>{currentPage}</Page>
+        <CurrentPage pagination={pagination} />
 
         <Page>
           {currentPage === totalPages || currentPage + 1 === totalPages ? (
@@ -88,6 +94,61 @@ function Component({
   );
 }
 
-function Page({ children = undefined }: { children?: any }) {
-  return <ListItem className={styles.page}>{children}</ListItem>;
+function CurrentPage({ pagination }: { pagination: IPagination }) {
+  const { currentPage, totalPages } = pagination;
+  const [inputWidth, changeInputWidth] = useState(String(currentPage).length);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  return (
+    <Page className={styles.current}>
+      <Form
+        id="pagination"
+        className={styles.selector}
+        submitButton={<ButtonSubmit className={styles.select}>Go</ButtonSubmit>}
+        onSubmit={(event) => {
+          event.preventDefault();
+        }}
+      >
+        <Button
+          className={styles.decrement}
+          onClick={() => {
+            inputRef.current?.stepDown();
+          }}
+        >
+          -1
+        </Button>
+        <Number
+          id="pagination-current"
+          className={styles.selected}
+          name="page"
+          defaultValue={currentPage}
+          minValue={1}
+          maxValue={totalPages}
+          valueStep={1}
+          inputRef={inputRef}
+          style={{ "--local-input-width": `${inputWidth}em` } as CSSProperties}
+        />
+        <Button
+          className={styles.increment}
+          onClick={() => {
+            inputRef.current?.stepUp();
+          }}
+        >
+          +1
+        </Button>
+      </Form>
+    </Page>
+  );
+}
+
+function Page({
+  children = undefined,
+  className,
+}: {
+  children?: any;
+  className?: string;
+}) {
+  return (
+    <ListItem className={clsx(styles.page, className)}>{children}</ListItem>
+  );
 }

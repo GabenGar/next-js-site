@@ -6,7 +6,7 @@ import styles from "./image-link.module.scss";
 import type { ILinkProps } from "#components/links";
 import type { ImageArg } from "./types";
 
-export interface IImageLinkProps extends Omit<ILinkProps, "url"> {
+export interface IImageLinkProps extends Omit<ILinkProps, "href"> {
   imageSrc: ImageArg;
   imageAlt?: string;
   linkHref?: string | URL;

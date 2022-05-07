@@ -5,14 +5,14 @@ import { ButtonSubmit } from "#components/buttons";
 import styles from "./_index.module.scss";
 
 import type { FormEvent, ReactNode } from "react";
-import type { HTMLFormProps } from "#components/html/form";
+import type { IHTMLFormProps } from "#components/html/form";
 
 const methods = ["GET", "POST", "PUT", "PATCH", "DELETE"] as const;
 const formMethods = ["GET", "POST"] as const;
 export type IMethod = typeof methods[number];
 export type IFormMethod = typeof formMethods[number];
 
-export interface IFormProps extends HTMLFormProps {
+export interface IFormProps extends IHTMLFormProps {
   /**
    * Submit button component.
    * If a react component is passed,
@@ -35,7 +35,7 @@ export type IFormElements<U extends string> = HTMLFormControlsCollection &
  */
 export interface ISubmitEvent extends FormEvent<HTMLFormElement> {}
 
-export const Form = blockComponent<IFormProps>(styles.block, Component);
+export const Form = blockComponent(styles.block, Component);
 
 function Component({ submitButton, children, ...blockProps }: IFormProps) {
   const { t } = useTranslation("components");

@@ -1,0 +1,73 @@
+@use "../../styles/variables/sass.scss" as *;
+@use "../../styles/mixins.scss" as mixins;
+
+.block {
+  max-width: $width-mobile;
+  display: grid;
+  justify-items: center;
+  margin: 0 auto;
+}
+
+.pages {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  gap: $size-normal;
+}
+
+.page {
+  @include mixins.form-input();
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  padding: 0;
+}
+
+.current {
+  position: relative;
+
+  &:focus-within {
+    // .selector {
+    //   visibility: visible;
+    //   opacity: 1;
+    // }
+  }
+}
+
+.selector {
+  position: absolute;
+  display: grid;
+  grid-template:
+    "reduce input add " auto
+    // "submit submit submit" auto
+    / auto auto auto;
+  // visibility: hidden;
+  // opacity: 0;
+  padding: 0;
+
+  transition-duration: var(--duration-global);
+  transition-property: visibility, opacity;
+}
+
+.selected {
+  grid-area: input;
+  visibility: visible;
+  opacity: 1;
+  width: var(--local-input-width, auto);
+}
+
+.incremenet {
+  grid-area: add;
+}
+
+.decrement {
+  grid-area: reduce;
+}
+
+.select {
+  grid-area: submit;
+  position: absolute;
+  top: 100%;
+  z-index: 1;
+  justify-self: center;
+}

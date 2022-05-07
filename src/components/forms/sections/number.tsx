@@ -1,9 +1,11 @@
+import { useRef } from "react";
 import { blockComponent } from "#components/meta";
 import { HTMLLabel } from "#components/html/label";
 import { HTMLInput } from "#components/html/input";
 import { FormSection } from "./base";
 import styles from "./number.module.scss";
 
+import type { Ref } from "react";
 import type { FormSectionProps } from "./base";
 
 export interface INumberProps extends FormSectionProps {
@@ -14,6 +16,7 @@ export interface INumberProps extends FormSectionProps {
   minValue?: number;
   maxValue?: number;
   valueStep?: number;
+  inputRef?: Ref<HTMLInputElement>
 }
 
 export const Number = blockComponent<INumberProps>(
@@ -28,8 +31,10 @@ export const Number = blockComponent<INumberProps>(
     minValue,
     maxValue,
     valueStep,
+    inputRef,
     ...blockProps
   }) => {
+
     return (
       <FormSection {...blockProps}>
         <HTMLLabel htmlFor={id}>{children}</HTMLLabel>
@@ -43,6 +48,7 @@ export const Number = blockComponent<INumberProps>(
           min={minValue}
           max={maxValue}
           step={valueStep}
+          ref={inputRef}
         />
       </FormSection>
     );

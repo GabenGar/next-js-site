@@ -1,16 +1,25 @@
+import { forwardRef } from "react";
 import { blockComponent } from "#components/meta";
 import styles from "./_index.module.scss";
 
-import type { FormEvent } from "react";
+import type { FormEvent, LegacyRef } from "react";
 import type { BlockProps } from "#types/props";
 
-export interface SubmitArgs extends FormEvent<HTMLFormElement> {}
+export interface ISubmitArgs extends FormEvent<HTMLFormElement> {}
 
-export interface HTMLFormProps extends BlockProps<"form"> { }
+export interface IHTMLFormProps extends BlockProps<"form"> {}
 
-export const HTMLForm = blockComponent<HTMLFormProps>(
-  styles.block,
-  ({ children, ...blockProps }) => {
-    return (<form {...blockProps}>{children}</form>);
-  }
-)
+export const HTMLForm = forwardRef<HTMLFormElement, IHTMLFormProps>(
+  blockComponent<IHTMLFormProps>(styles.block, Component)
+);
+
+function Component(
+  { children, ...blockProps }: IHTMLFormProps,
+  ref?: LegacyRef<HTMLFormElement>
+) {
+  return (
+    <form {...blockProps} ref={ref}>
+      {children}
+    </form>
+  );
+}
