@@ -51,6 +51,7 @@ function Profiles({
   return (
     <Page seoTags={seoTags}>
       <PaginationInternal
+        baseURL="/profiles"
         urlBuilder={(page) => {
           const profilesURL = new ProjectURL(localeInfo, `/profiles/${page}`);
           return profilesURL;

@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "next-i18next";
 import { ProjectURL } from "#lib/url";
 import { blockComponent } from "#components/meta";
@@ -14,12 +14,20 @@ import type { CSSProperties } from "react";
 import type { IPagination } from "#lib/pagination";
 import type { BlockProps } from "#types/props";
 
-interface IPaginationClient extends IPagination {}
+interface IPaginationClient extends IPagination {
+  baseURL: string;
+  currentMin: number;
+  currentMax: number;
+}
 
 type IURLBuilder = (page: number) => ProjectURL;
 
 export interface IPaginationInternalProps extends BlockProps<"div"> {
   pagination: IPagination;
+  /**
+   * Base unpaged URL string to run vanilla form query against.
+   */
+  baseURL: string;
   /**
    * A function which accepts a `page` argument and returns the url for that page.
    */
@@ -29,12 +37,13 @@ export interface IPaginationInternalProps extends BlockProps<"div"> {
 /**
  * For use in server-rendered collections. Page buttons are {@link LinkInternal internal links} styled as link buttons.
  *
- * @TODO
+ * @TODO fix selected page desync
  */
 export const PaginationInternal = blockComponent(styles.block, Component);
 
 function Component({
   pagination,
+  baseURL,
   urlBuilder,
   ...blockProps
 }: IPaginationInternalProps) {
@@ -72,7 +81,7 @@ function Component({
           )}
         </Page>
 
-        <CurrentPage pagination={pagination} />
+        <CurrentPage pagination={pagination} baseURL={baseURL} />
 
         <Page>
           {currentPage === totalPages || currentPage + 1 === totalPages ? (
@@ -96,7 +105,13 @@ function Component({
   );
 }
 
-function CurrentPage({ pagination }: { pagination: IPagination }) {
+function CurrentPage({
+  pagination,
+  baseURL,
+}: {
+  pagination: IPagination;
+  baseURL: string;
+}) {
   const { currentPage, totalPages } = pagination;
   const [inputWidth, changeInputWidth] = useState(String(currentPage).length);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -107,9 +122,12 @@ function CurrentPage({ pagination }: { pagination: IPagination }) {
         id="pagination"
         className={styles.selector}
         method="GET"
+        action={baseURL}
         submitButton={<ButtonSubmit className={styles.select}>Go</ButtonSubmit>}
       >
         <Number
+          // a hack to force input update
+          key={currentPage}
           id="pagination-current"
           className={styles.selected}
           name="page"

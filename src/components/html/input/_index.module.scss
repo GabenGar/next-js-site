@@ -2,5 +2,5 @@
 @use "../../../styles/mixins" as mixins;
 
 .block {
-  @include mixins.form-input
+  @include mixins.form-input();
 }
