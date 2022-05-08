@@ -6,6 +6,7 @@ import { createRange } from "#lib/util";
 import { createSEOTags } from "#lib/seo";
 import { getProfiles } from "#lib/account";
 import { ProjectURL } from "#lib/url";
+import { toJSON } from "#lib/json";
 import { countTable } from "#database";
 import { Redirect } from "#server/requests";
 import { Page } from "#components/pages";
@@ -130,13 +131,18 @@ export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
     currentPage: Number(page),
   });
 
+  const props = {
+    ...localization,
+    localeInfo,
+    pagination,
+    profiles,
+  };
+
+  console.log(toJSON(props));
+  
+
   return {
-    props: {
-      ...localization,
-      localeInfo,
-      pagination,
-      profiles,
-    },
+    props,
     revalidate: DAY / 1000,
   };
 };
