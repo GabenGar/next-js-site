@@ -14,7 +14,11 @@ import {
 } from "date-fns";
 
 import type { Interval } from "date-fns";
-import type { IISODateTime } from "#codegen/schema/interfaces";
+import type {
+  IISODateTime,
+  IISODate,
+  IISOTime,
+} from "#codegen/schema/interfaces";
 import type { IWeekDay } from "./types";
 
 export function eachDayOfInterval(
@@ -76,14 +80,14 @@ export function fromISOString(dateString: IISODateTime): Date {
   return parseISO(dateString);
 }
 
-export function toISODateTime(date: Date): string {
+export function toISODateTime(date: Date): IISODateTime {
   return formatISO(date, { representation: "complete" });
 }
 
-export function toISOTime(date: Date): string {
+export function toISOTime(date: Date): IISOTime {
   return formatISO(date, { representation: "time" });
 }
 
-export function toISODate(date: Date): string {
+export function toISODate(date: Date): IISODate {
   return formatISO(date, { representation: "date" });
 }

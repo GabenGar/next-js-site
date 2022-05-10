@@ -6,7 +6,6 @@ import type { LinkExternalProps } from "#components/links";
 
 interface IImageLinkProps extends LinkExternalProps {
   src: string;
-  href?: string;
   alt?: string;
   srcSet?: string;
   isLazy?: boolean;

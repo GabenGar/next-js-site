@@ -5,9 +5,11 @@ import styles from "./base.module.scss";
 
 import type { LegacyRef } from "react";
 import type { BlockProps } from "#types/props";
+import type { ISVGIconProps} from "#components/icons";
 
-export interface IHTMLAProps extends BlockProps<"a"> {
-  iconID?: string;
+export interface IHTMLAProps extends Omit<BlockProps<"a">, "href"> {
+  iconID?: ISVGIconProps["iconID"];
+  href: string | URL;
 }
 
 export const HTMLA = forwardRef<HTMLAnchorElement, IHTMLAProps>(
@@ -19,7 +21,11 @@ function Component(
   ref?: LegacyRef<HTMLAnchorElement>
 ) {
   return (
-    <a href={href} {...htmlaProps} ref={ref}>
+    <a
+      href={href instanceof URL ? href.toString() : href}
+      {...htmlaProps}
+      ref={ref}
+    >
       {iconID ? (
         <>
           <SVGIcon iconID={iconID} /> <span>{children}</span>

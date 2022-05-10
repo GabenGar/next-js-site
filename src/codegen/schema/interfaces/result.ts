@@ -17,6 +17,7 @@ export interface Account {
    */
   is_verified: boolean;
   invite_id?: SerialInteger;
+  profile?: AccountProfile;
 }
 
 /**
@@ -32,6 +33,7 @@ export interface AccountClient {
    * Is `true` after account confirms its email.
    */
   is_verified: boolean;
+  profile?: AccountProfileClient;
 }
 
 /**
@@ -120,6 +122,52 @@ export interface InviteClient {
 export interface InviteInit {
   expires_at?: ISODateTime | null;
   max_uses?: number | null;
+}
+
+/**
+ * The profile of an account.
+ */
+export interface AccountProfile {
+  id: SerialInteger;
+  created_at: ISODateTime;
+  updated_at: ISODateTime;
+  account_id: SerialInteger;
+  /**
+   * The name shown on the profile card.
+   */
+  full_name?: string;
+  /**
+   * The file of the avatar.
+   */
+  avatar_url?: string;
+}
+
+/**
+ * The profile of an account used by client.
+ */
+export interface AccountProfileClient {
+  id: SerialInteger;
+  created_at: ISODateTime;
+  updated_at: ISODateTime;
+  /**
+   * The name shown on the profile card.
+   */
+  full_name?: string;
+  /**
+   * URL of the avatar.
+   */
+  avatar_url?: string;
+}
+
+/**
+ * Profile initializer.
+ */
+export interface AccountProfileInit {
+  /**
+   * The name shown on the profile card.
+   */
+  full_name?: string;
+  avatar_file?: string;
 }
 
 /**
@@ -248,6 +296,7 @@ export interface ProjectDatabase {
 export interface Schemas {
   public: Schema;
   comments: Schema;
+  accounts: Schema;
 }
 /**
  * Database schema.
@@ -333,6 +382,20 @@ export interface CommonLocalization {
  * Localization for the components.
  */
 export interface ComponentLocalization {
+  [k: string]: unknown;
+}
+
+/**
+ * Localization for the FM comments challenge.
+ */
+export interface FMCommentsLocalization {
+  [k: string]: unknown;
+}
+
+/**
+ * Localization for the frontend mentor pages.
+ */
+export interface FrontendMentorLocalization {
   [k: string]: unknown;
 }
 

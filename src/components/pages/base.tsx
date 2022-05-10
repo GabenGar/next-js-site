@@ -1,5 +1,7 @@
 import clsx from "clsx";
+import { useRouter } from "next/router";
 import { NextSeo } from "next-seo";
+import { LoadingBar } from "#components/state";
 import { Heading } from "#components/headings";
 import styles from "./_index.module.scss";
 
@@ -14,9 +16,10 @@ export interface PageProps extends RootlessProps {
 }
 
 export function Page({ seoTags, heading, pageClassName, children }: PageProps) {
+  const router = useRouter();
   const pageClass = clsx(
     styles.content,
-    !heading && styles.content_headless,
+    !heading && !seoTags.title && styles.content_headless,
     pageClassName
   );
 
@@ -27,7 +30,9 @@ export function Page({ seoTags, heading, pageClassName, children }: PageProps) {
         {heading ? heading : seoTags.title}
       </Heading>
 
-      <section className={pageClass}>{children}</section>
+      <section className={pageClass}>
+        {router.isFallback ? <LoadingBar /> : children}
+      </section>
     </>
   );
 }

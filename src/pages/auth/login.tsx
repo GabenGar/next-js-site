@@ -10,7 +10,7 @@ import { Form } from "#components/forms";
 import { ErrorsView } from "#components/errors";
 import {
   FormSectionPassword,
-  FormSectionText,
+  Text,
 } from "#components/forms/sections";
 import { LinkInternal } from "#components/links";
 
@@ -43,14 +43,14 @@ export function LoginPage({
           {t("not_registered")}?{" "}
           <LinkInternal href="/auth/register">{t("register")}</LinkInternal>
         </p>
-        <FormSectionText
+        <Text
           id="acc-name"
           name="name"
           required
           defaultValue={accCreds?.name}
         >
           {t("acc_name")}
-        </FormSectionText>
+        </Text>
         <FormSectionPassword
           id="acc-password"
           name="password"

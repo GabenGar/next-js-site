@@ -7,6 +7,7 @@ import {
   getAccountDetails,
   sendEmailConfirmation,
   validateEmailString,
+  toAccountClient
 } from "#lib/account";
 import { getReqBody, withSessionSSR, Redirect } from "#server/requests";
 import { Page } from "#components/pages";
@@ -97,7 +98,7 @@ export const getServerSideProps = withSessionSSR<AccountEmailProps>(
       };
     }
 
-    const { id, password, ...accountClient } = account;
+    const accountClient = toAccountClient(account);
     const localization = await serverSideTranslations(locale!, [
       "layout",
       "components",

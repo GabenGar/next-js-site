@@ -11,7 +11,7 @@ import type { ComponentPropsWithoutRef } from "react";
 interface Props extends ComponentPropsWithoutRef<"div"> {
   images: {
     src: string;
-    href?: string;
+    href: string;
     caption?: string;
   }[];
 }

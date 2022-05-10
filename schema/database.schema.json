@@ -18,13 +18,16 @@
     "schemas": {
       "type": "object",
       "description": "Database schemas.",
+      "required": ["public", "comments", "accounts"],
       "additionalProperties": false,
-      "required": ["public", "comments"],
       "properties": {
         "public": {
           "$ref": "#/definitions/schema"
         },
         "comments": {
+          "$ref": "#/definitions/schema"
+        },
+        "accounts": {
           "$ref": "#/definitions/schema"
         }
       }

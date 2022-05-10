@@ -1,4 +1,5 @@
 import { SITE_ORIGIN } from "#environment/vars";
+import { ProjectURL } from "#lib/url";
 
 const linkTypes = ["external", "internal", "local", "email"] as const;
 
@@ -49,7 +50,7 @@ function guessURLType(url: URL): ILinkTypes {
     return "email";
   }
 
-  if (url.origin === SITE_ORIGIN) {
+  if (url instanceof ProjectURL || url.origin === SITE_ORIGIN) {
     return "internal";
   }
 

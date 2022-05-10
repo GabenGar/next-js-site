@@ -1,14 +1,14 @@
 import { nanoid } from "nanoid";
 import { getAccounts } from "#database/queries/account/admin";
 import { addInvite } from "#database/queries/account/invites";
-import { calculatePaginationDB } from "#lib/pagination";
+import { toPaginationDB } from "#lib/pagination";
 
-import type { PaginationDB, PaginationInit } from "#lib/pagination";
+import type { IPaginationDB, IPaginationInit } from "#lib/pagination";
 import type { IInviteInit } from "#codegen/schema/interfaces";
 import type { IAccount } from "#types/entities";
 
-export async function getAccountList(pagination: PaginationInit) {
-  const paginationDB: PaginationDB = calculatePaginationDB(pagination);
+export async function getAccountList(pagination: IPaginationInit) {
+  const paginationDB: IPaginationDB = toPaginationDB(pagination);
   const accounts = await getAccounts(paginationDB);
   return accounts;
 }

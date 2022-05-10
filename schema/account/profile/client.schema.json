@@ -1,0 +1,30 @@
+{
+  "$id": "http://schemas.com/account/profile/client.schema.json",
+  "title": "AccountProfileClient",
+  "description": "The profile of an account used by client.",
+  "type": "object",
+  "required": ["id", "created_at", "updated_at"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "$ref": "http://schemas.com/types/serial.schema.json"
+    },
+    "created_at": {
+      "$ref": "http://schemas.com/types/dates/iso-datetime.schema.json"
+    },
+    "updated_at": {
+      "$ref": "http://schemas.com/types/dates/iso-datetime.schema.json"
+    },
+    "full_name": {
+      "description": "The name shown on the profile card.",
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 25
+    },
+    "avatar_url": {
+      "description": "URL of the avatar.",
+      "type": "string",
+      "format": "uri"
+    }
+  }
+}

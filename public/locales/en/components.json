@@ -24,5 +24,10 @@
   "comment_created_at": "Posted at",
   "comment_reject": "Reject",
   "comment_approve": "Approve",
-  "comment_reply": "Reply"
+  "comment_reply": "Reply",
+  "profile_anonymous": "Anonymous",
+  "profile_joined": "Joined",
+  "profile_last_activity": "Last activity",
+  "profile_details": "Details",
+  "pagination_overview": "Showing {{min}}-{{max}} out of {{total}} entries."
 }

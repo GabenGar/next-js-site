@@ -5,6 +5,9 @@ import { endOfMonth, startOfMonth } from "date-fns";
 
 const { db } = getDB();
 
+/**
+ * @TODO ISO date strings
+ */
 export async function getCalendarNotesForMonth(
   accountID: number,
   monthDate: Date
@@ -13,7 +16,7 @@ export async function getCalendarNotesForMonth(
   const monthEnd = toISODateTime(endOfMonth(monthDate));
   const query = `
     SELECT *
-    FROM calendar_notes
+    FROM accounts.calendar_notes
     WHERE
       account_id = $(account_id)
       AND date >= $(month_start)
@@ -35,7 +38,7 @@ export async function addCalendarNote(
   note: string
 ) {
   const query = `
-    INSERT INTO calendar_notes (account_id, date, note)
+    INSERT INTO accounts.calendar_notes (account_id, date, note)
     VALUES ($(account_id), $(date), $(note))
     RETURNING *
   `;
@@ -51,7 +54,7 @@ export async function addCalendarNote(
 
 export async function removeCalendarNote(accountID: number, noteID: number) {
   const query = `
-    DELETE FROM calendar_notes
+    DELETE FROM accounts.calendar_notes
     WHERE
       id = $(note_id)
       AND account_id = $(account_id)

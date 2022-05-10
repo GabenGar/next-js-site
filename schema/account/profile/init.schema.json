@@ -1,0 +1,19 @@
+{
+  "$id": "http://schemas.com/account/profile/init.schema.json",
+  "title": "AccountProfileInit",
+  "description": "Profile initializer.",
+  "type": "object",
+  "required": [],
+  "additionalProperties": false,
+  "properties": {
+    "full_name": {
+      "description": "The name shown on the profile card.",
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 25
+    },
+    "avatar_file": {
+      "type": "string"
+    }
+  }
+}

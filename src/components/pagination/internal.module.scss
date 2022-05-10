@@ -1,0 +1,93 @@
+@use "../../styles/variables/sass.scss" as *;
+@use "../../styles/mixins.scss" as mixins;
+
+.block {
+  max-width: $width-mobile;
+  display: grid;
+  justify-items: center;
+  margin: 0 auto;
+}
+
+.pages {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  gap: $size-normal;
+}
+
+.page {
+  @include mixins.form-input();
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  padding: 0;
+}
+
+.current {
+  position: relative;
+
+  &:focus-within {
+    // @TODO manipualte the whle form instead
+    & .increment,
+    & .decrement,
+    & .select {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+}
+
+.selector {
+  position: absolute;
+  display: grid;
+  grid-template:
+    "input" auto
+    / auto;
+  background-color: transparent;
+  padding: 0;
+
+  transition-duration: var(--duration-global);
+  transition-property: visibility, opacity;
+}
+
+.selected {
+  grid-area: input;
+  visibility: visible;
+  opacity: 1;
+  width: var(--local-input-width, auto);
+}
+
+.increment {
+  grid-area: add;
+  position: absolute;
+  left: calc(100% + #{$size-normal});
+  visibility: hidden;
+  opacity: 0;
+
+  transition-duration: var(--duration-global);
+  transition-property: visibility, opacity;
+}
+
+.decrement {
+  grid-area: reduce;
+  position: absolute;
+  right: calc(100% + #{$size-normal});
+  visibility: hidden;
+  opacity: 0;
+
+  transition-duration: var(--duration-global);
+  transition-property: visibility, opacity;
+}
+
+.select {
+  grid-area: submit;
+  position: absolute;
+  top: calc(100% + #{$size-normal});
+  z-index: 1;
+  justify-self: center;
+  visibility: hidden;
+  opacity: 0;
+
+  transition-duration: var(--duration-global);
+  transition-property: visibility, opacity;
+}

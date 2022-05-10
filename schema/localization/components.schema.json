@@ -29,6 +29,11 @@
     "comment_created_at",
     "comment_reject",
     "comment_approve",
-    "comment_reply"
+    "comment_reply",
+    "profile_anonymous",
+    "profile_joined",
+    "profile_last_activity",
+    "profile_details",
+    "pagination_overview"
   ]
 }

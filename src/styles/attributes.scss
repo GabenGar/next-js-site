@@ -6,7 +6,9 @@
 
 a {
   // internal links
-  // &[href^=#{$kemono-site}],
+  // TODO: env-dependent var
+  &[href^="https://gabengar.vercel.app"],
+  &[href^="http://localhost:3000"],
   &[href^="/"],
   &[href^="./"],
   &[href^="../"] {
@@ -54,7 +56,8 @@ input {
   &[type="text"],
   &[type="password"],
   &[type="number"] {
-    color: var(--colour0-primary);
+    // @TODO think it more through
+    color: hsl(0, 0%, 0%);
   }
 
   &[type="checkbox"],

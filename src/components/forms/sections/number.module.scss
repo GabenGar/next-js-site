@@ -1,1 +1,16 @@
-.block {}
+.block {
+}
+
+.input {
+  // hiding built-in buttons in client mode
+  &_client {
+    -moz-appearance: textfield;
+    text-align: center;
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+}

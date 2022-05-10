@@ -6,10 +6,10 @@
   "required": ["created_at", "name", "role", "is_verified"],
   "properties": {
     "created_at": {
-      "$ref": "/types/dates/iso-datetime.schema.json"
+      "$ref": "http://schemas.com/types/dates/iso-datetime.schema.json"
     },
     "updated_at": {
-      "$ref": "/types/dates/iso-datetime.schema.json"
+      "$ref": "http://schemas.com/types/dates/iso-datetime.schema.json"
     },
     "name": {
       "type": "string",
@@ -29,6 +29,9 @@
       "type": "boolean",
       "default": false,
       "description": "Is `true` after account confirms its email."
+    },
+    "profile": {
+      "$ref": "http://schemas.com/account/profile/client.schema.json"
     }
   },
   "additionalProperties": false

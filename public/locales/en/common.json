@@ -15,5 +15,7 @@
   "status_desc": "Status rundown.",
   "status_translation": "Translation",
   "translation_title": "Translation support",
-  "translation_desc": "Translation progress overview."
+  "translation_desc": "Translation progress overview.",
+  "profiles_title": "Profiles",
+  "profiles_desc": "The list of profiles"
 }

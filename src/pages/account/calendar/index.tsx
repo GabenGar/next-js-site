@@ -1,7 +1,7 @@
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { FOUND } from "#environment/constants/http";
-import { getAccountDetails } from "#lib/account";
+import { getAccountDetails, toAccountClient } from "#lib/account";
 import { nowISO } from "#lib/dates";
 import { createSEOTags } from "#lib/seo";
 import { withSessionSSR, Redirect } from "#server/requests";
@@ -69,7 +69,8 @@ export const getServerSideProps = withSessionSSR<ICalendarPageProps>(
         notFound: true,
       };
     }
-    const { id, password, ...accountClient } = account;
+
+    const accountClient = toAccountClient(account);
     const localization = await serverSideTranslations(locale!, [
       "layout",
       "components",

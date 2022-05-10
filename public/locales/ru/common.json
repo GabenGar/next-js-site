@@ -15,5 +15,7 @@
   "status_desc": "Изложение статуса.",
   "status_translation": "Переводы",
   "translation_title": "Поддержка языков",
-  "translation_desc": "Обзор поддержки языков."
+  "translation_desc": "Обзор поддержки языков.",
+  "profiles_title": "Профили",
+  "profiles_desc": "Список профилей."
 }

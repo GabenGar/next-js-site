@@ -1,9 +1,10 @@
 import "#styles/globals.scss";
-import Script from "next/script";
 import { appWithTranslation } from "next-i18next";
 import { Provider as ReduxProvider } from "react-redux";
 import { DefaultSeo } from "next-seo";
 import { defaultSEOProps } from "#lib/seo";
+import { ProjectError } from "#lib/errors";
+import { toJSON } from "#lib/json";
 import { reduxStore } from "#store/redux";
 import { BaseLayout } from "#components/layout";
 import { ErrorBoundary } from "#components/errors";
@@ -24,6 +25,17 @@ type AppPropsWithLayout = Omit<AppProps<BasePageProps>, "pageProps"> & {
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const { localeInfo } = pageProps;
+  if (!localeInfo?.locale) {
+    throw new ProjectError(
+      [
+        "The page did not provide a locale. Locale data:",
+        toJSON(localeInfo),
+        "Page props:",
+        toJSON(pageProps),
+      ].join("\n")
+    );
+  }
+
   const getLayout =
     Component.getLayout ?? ((page) => <BaseLayout>{page}</BaseLayout>);
 

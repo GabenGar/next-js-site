@@ -90,7 +90,6 @@ git config core.sshCommand "ssh -i ~/.ssh/id_rsa_file -F /dev/null"
 
 - one-button validation interface
 - styled validation errors
-- fix `$ref` parsing inconsistencies between `json-schema-to-typescript` and `ajv`
 - scripts relying on `config.json.schema` to work with ref schemas
 - locale-specific date formatting
 - pre-deploy validation
@@ -100,3 +99,8 @@ git config core.sshCommand "ssh -i ~/.ssh/id_rsa_file -F /dev/null"
 - comment threads
 - multilang error pages
 - abstract away per-page locale management
+- exclude `database.schema.json` from the main codegen
+- resolve the `BigInt` question
+- development mock generation
+- translation status per-file rundown
+- ISR for `/profiles` and `/profile` pages

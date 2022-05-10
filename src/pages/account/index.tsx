@@ -1,9 +1,10 @@
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { FOUND } from "#environment/constants/http";
 import { IS_DEVELOPMENT } from "#environment/derived";
-import { getAccountDetails } from "#lib/account";
+import { getAccountDetails, toAccountClient } from "#lib/account";
 import { createSEOTags } from "#lib/seo";
-import { withSessionSSR } from "#server/requests";
+import { withSessionSSR, Redirect } from "#server/requests";
 import { LinkInternal } from "#components/links";
 import { Page } from "#components/pages";
 import { AccountCard } from "#components/cards";
@@ -58,6 +59,13 @@ function AccountPage({
               </LinkInternal>
             </NavItem>
           )}
+
+          <NavItem>
+            {/* @TODO: profile icon */}
+            <LinkInternal iconID="id-badge" href="/account/profile">
+              {account.profile ? t("profile") : t("create_profile")}
+            </LinkInternal>
+          </NavItem>
         </NavList>
       </Nav>
 
@@ -69,26 +77,22 @@ function AccountPage({
 export const getServerSideProps = withSessionSSR<AccountPageProps>(
   async ({ req, locale, defaultLocale }) => {
     const { account_id } = req.session;
+    const localeInfo = { locale: locale!, defaultLocale: defaultLocale! };
 
     if (!account_id) {
-      return {
-        redirect: {
-          destination: "/auth/login",
-          permanent: false,
-        },
-      };
+      return new Redirect(localeInfo, "/auth/login", FOUND);
     }
 
     const account = await getAccountDetails(account_id);
 
     if (!account) {
       req.session.destroy();
+      
       return {
         notFound: true,
       };
     }
 
-    const { id, password, ...accountClient } = account;
     const localization = await serverSideTranslations(locale!, [
       "layout",
       "components",
@@ -98,11 +102,8 @@ export const getServerSideProps = withSessionSSR<AccountPageProps>(
     return {
       props: {
         ...localization,
-        localeInfo: {
-          locale: locale!,
-          defaultLocale: defaultLocale!,
-        },
-        account: accountClient,
+        localeInfo,
+        account: toAccountClient(account),
       },
     };
   }

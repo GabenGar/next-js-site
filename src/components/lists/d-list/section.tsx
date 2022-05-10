@@ -11,6 +11,9 @@ export interface IDSectionProps extends BlockProps<"div"> {
   dValue?: ReactNode;
 }
 
+/**
+ * A grouping component for description terms and details.
+ */
 export const DSection = blockComponent<IDSectionProps>(
   styles.section,
   ({ dKey, dValue, children, ...blockProps }) => {

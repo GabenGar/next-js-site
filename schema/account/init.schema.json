@@ -16,7 +16,7 @@
       "maxLength": 256
     },
     "invite": {
-      "$ref": "/types/code.schema.json"
+      "$ref": "http://schemas.com/types/code.schema.json"
     }
   },
   "additionalProperties": false

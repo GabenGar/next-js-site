@@ -4,11 +4,7 @@
     "public": {
       "description": "Base schema.",
       "tables": {
-        "pgmigrations": "Migrations.",
-        "accounts": "Accounts.",
-        "email_confirmations": "Pending email confirmations for accounts.",
-        "invites": "Account invites.",
-        "calendar_notes": "Account notes for calendar."
+        "pgmigrations": "Migrations."
       }
     },
     "comments": {
@@ -16,6 +12,16 @@
       "tables": {
         "entries": "Comments made by accounts.",
         "blog": "Relations between blog entries and comments."
+      }
+    },
+    "accounts": {
+      "description": "Account-related schema.",
+      "tables": {
+        "entries": "Base account info.",
+        "profiles": "Profiles of the accounts.",
+        "email_confirmations": "Pending email confirmations for accounts.",
+        "invites": "Account invites.",
+        "calendar_notes": "Account notes for calendar."
       }
     }
   }

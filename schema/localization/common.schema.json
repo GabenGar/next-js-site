@@ -20,6 +20,8 @@
     "status_desc",
     "status_translation",
     "translation_title",
-    "translation_desc"
+    "translation_desc",
+    "profiles_title",
+    "profiles_desc"
   ]
 }

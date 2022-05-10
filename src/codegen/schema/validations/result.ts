@@ -10,6 +10,9 @@ import {
   inviteSchema,
   inviteClientSchema,
   inviteInitSchema,
+  accountProfileSchema,
+  accountProfileClientSchema,
+  accountProfileInitSchema,
   blogPostSchema,
   calendarNoteSchema,
   calendarNoteClientSchema,
@@ -24,6 +27,8 @@ import {
   blogLocalizationSchema,
   commonLocalizationSchema,
   componentLocalizationSchema,
+  fMCommentsLocalizationSchema,
+  frontendMentorLocalizationSchema,
   layoutLocalizationSchema,
   codeStringSchema,
   iSODateSchema,
@@ -43,6 +48,9 @@ import type {
   IInvite,
   IInviteClient,
   IInviteInit,
+  IAccountProfile,
+  IAccountProfileClient,
+  IAccountProfileInit,
   IBlogPost,
   ICalendarNote,
   ICalendarNoteClient,
@@ -57,6 +65,8 @@ import type {
   IBlogLocalization,
   ICommonLocalization,
   IComponentLocalization,
+  IFMCommentsLocalization,
+  IFrontendMentorLocalization,
   ILayoutLocalization,
   ICodeString,
   IISODate,
@@ -81,6 +91,12 @@ export const validateInviteClientFields =
   createValidator<IInviteClient>(inviteClientSchema);
 export const validateInviteInitFields =
   createValidator<IInviteInit>(inviteInitSchema);
+export const validateAccountProfileFields =
+  createValidator<IAccountProfile>(accountProfileSchema);
+export const validateAccountProfileClientFields =
+  createValidator<IAccountProfileClient>(accountProfileClientSchema);
+export const validateAccountProfileInitFields =
+  createValidator<IAccountProfileInit>(accountProfileInitSchema);
 export const validateBlogPostFields =
   createValidator<IBlogPost>(blogPostSchema);
 export const validateCalendarNoteFields =
@@ -110,6 +126,12 @@ export const validateCommonLocalizationFields =
   createValidator<ICommonLocalization>(commonLocalizationSchema);
 export const validateComponentLocalizationFields =
   createValidator<IComponentLocalization>(componentLocalizationSchema);
+export const validateFMCommentsLocalizationFields =
+  createValidator<IFMCommentsLocalization>(fMCommentsLocalizationSchema);
+export const validateFrontendMentorLocalizationFields =
+  createValidator<IFrontendMentorLocalization>(
+    frontendMentorLocalizationSchema
+  );
 export const validateLayoutLocalizationFields =
   createValidator<ILayoutLocalization>(layoutLocalizationSchema);
 export const validateCodeStringFields =

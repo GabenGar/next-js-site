@@ -1,6 +1,6 @@
+// @ts-check
 const path = require("path")
 
-// @ts-check
 const IS_DEVELOPMENT = process.env.NODE_ENV === "development"
 
 /**

@@ -14,7 +14,7 @@ export async function addInvite(
   { expires_at, max_uses }: IInviteInit
 ) {
   const query = `
-    INSERT INTO invites
+    INSERT INTO accounts.invites
       (account_id, code, expires_at, max_uses)
     VALUES ($(account_id), $(code), $(expires_at), $(max_uses))
     RETURNING *
@@ -32,7 +32,7 @@ export async function addInvite(
 export async function findInvite(code: string) {
   const query = `
     SELECT *
-    FROM invites
+    FROM accounts.invites
     WHERE code = $(code)
   `;
   const invite = db.oneOrNone<IInvite>(query, { code: code });
@@ -42,7 +42,7 @@ export async function findInvite(code: string) {
 export async function countInviteUse(inviteID: number) {
   const query = `
     SELECT COUNT(*) as invite_count
-    FROM accounts
+    FROM accounts.entries
     WHERE invite_id = $(invite_id)
   `;
 
@@ -54,7 +54,7 @@ export async function countInviteUse(inviteID: number) {
 
 export async function deactivateInvite(inviteID: number) {
   const query = `
-    UPDATE invites
+    UPDATE accounts.invites
     SET is_active = false
     WHERE
       id = $(invite_id)
@@ -69,7 +69,7 @@ export async function deactivateInvite(inviteID: number) {
 
 export async function addInviteToAccount(accountID: number, inviteID: number) {
   const query = `
-    UPDATE accounts
+    UPDATE accounts.entries
     SET invite_id = $(invite_id)
     WHERE id = $(account_id)
     RETURNING *

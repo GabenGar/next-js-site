@@ -1,4 +1,5 @@
 import { SITE_NAME } from "#environment/vars";
+import { toJSON } from "#lib/json";
 
 export { buttonClicked } from "./dom";
 export { transformChildrenProps, getValidChildren } from "./react";
@@ -48,4 +49,13 @@ export function debounce<A extends any[], F extends (...args: A) => any>(
     isOnCooldown = true;
     fnc(...args);
   };
+}
+
+export function createRange(length: number, step = 1): number[] {
+  const rangeLength = Math.ceil(length / step);
+  const range = Array.from(new Array(rangeLength).keys()).map(
+    (value) => value + step
+  );
+
+  return range;
 }

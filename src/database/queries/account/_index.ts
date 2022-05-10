@@ -5,6 +5,7 @@ import { getDB } from "#database";
 import type {
   IAccount,
   IAccountInit,
+  IAccountProfile,
   IEmailConfirmation,
 } from "#types/entities";
 
@@ -12,7 +13,7 @@ const { db } = getDB();
 
 export async function addAdminAccount({ name, password }: IAccountInit) {
   const query = `
-    INSERT INTO accounts (name, password, role)
+    INSERT INTO accounts.entries (name, password, role)
     VALUES ($(name), $(password), 'administrator')
     RETURNING *
   `;
@@ -23,7 +24,7 @@ export async function addAdminAccount({ name, password }: IAccountInit) {
 
 export async function addAccount(name: string, password: string) {
   const query = `
-    INSERT INTO accounts (name, password)
+    INSERT INTO accounts.entries (name, password)
     VALUES ($(name), $(password))
     RETURNING *
   `;
@@ -33,13 +34,13 @@ export async function addAccount(name: string, password: string) {
 
 export async function addAccountEmail(account_id: number, email: string) {
   const emailQuery = `
-    UPDATE accounts
+    UPDATE accounts.entries
     SET email = $(email), is_verified = true
     WHERE id = $(account_id)
     RETURNING *
   `;
   const confirmationQuery = `
-    DELETE FROM email_confirmations
+    DELETE FROM accounts.email_confirmations
     WHERE account_id = $(account_id)
     RETURNING *
   `;
@@ -57,7 +58,7 @@ export async function addAccountEmail(account_id: number, email: string) {
 export async function findAccount({ name, password }: IAccountInit) {
   const query = `
     SELECT *
-    FROM accounts
+    FROM accounts.entries
     WHERE
       name = $(name)
       AND password = $(password)
@@ -70,7 +71,7 @@ export async function findAccount({ name, password }: IAccountInit) {
 export async function findAccountByName({ name }: IAccountInit) {
   const query = `
     SELECT *
-    FROM accounts
+    FROM accounts.entries
     WHERE
       name = $(name)
   `;
@@ -80,13 +81,31 @@ export async function findAccountByName({ name }: IAccountInit) {
 }
 
 export async function getAccount(id: number) {
-  const query = `
+  const account_query = `
     SELECT *
-    FROM accounts
+    FROM accounts.entries
     WHERE id = $(id)
   `;
 
-  const account = await db.oneOrNone<IAccount>(query, { id });
+  const profile_query = `
+    SELECT *
+    FROM accounts.profiles
+    WHERE account_id = $(account_id)
+  `;
+
+  const account = await db.tx(async (tx) => {
+    const account = await tx.one<IAccount>(account_query, { id });
+    const profile = await tx.oneOrNone<IAccountProfile>(profile_query, {
+      account_id: account.id,
+    });
+
+    if (profile) {
+      account.profile = profile;
+    }
+
+    return account;
+  });
+
   return account;
 }
 
@@ -98,7 +117,7 @@ export async function createEmailConfirmation(
   const expirationDate = new Date(Date.now() + DAY);
   const expires_at = toISODateTime(expirationDate);
   const query = `
-    INSERT INTO email_confirmations
+    INSERT INTO accounts.email_confirmations
       (account_id, confirmation_key, email, expires_at)
     VALUES ($(account_id), $(confirmation_key), $(email), $(expires_at))
     RETURNING *
@@ -119,7 +138,7 @@ export async function findEmailConfirmationByKey(
 ) {
   const query = `
     SELECT *
-    FROM email_confirmations
+    FROM accounts.email_confirmations
     WHERE
       confirmation_key = $(confirmation_key)
       AND account_id = $(account_id)

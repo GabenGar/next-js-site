@@ -6,17 +6,17 @@
   "required": ["id", "created_at", "date", "note"],
   "properties": {
     "id": {
-      "$ref": "/types/serial.schema.json"
+      "$ref": "http://schemas.com/types/serial.schema.json"
     },
     "created_at": {
-      "$ref": "/types/dates/iso-datetime.schema.json"
+      "$ref": "http://schemas.com/types/dates/iso-datetime.schema.json"
     },
     "account_id": {
       "type": "integer",
       "description": "ID of the account making the note."
     },
     "date": {
-      "$ref": "/types/dates/iso-datetime.schema.json"
+      "$ref": "http://schemas.com/types/dates/iso-datetime.schema.json"
     },
     "note": {
       "type": "string",

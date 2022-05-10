@@ -19,7 +19,7 @@ interface Props extends BlockProps<"div"> {
   changeCurrentPage: Dispatch<SetStateAction<number>>;
 }
 
-export const Pagination = blockComponent<Props>(
+export const PaginationLocal = blockComponent<Props>(
   styles.block,
   ({
     currentPage = 1,

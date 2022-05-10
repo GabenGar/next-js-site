@@ -67,6 +67,7 @@ export function BaseLayout({ children }: Props) {
                 {t("home")}
               </LinkInternal>
             </NavItem>
+
             <NavItem>
               <LinkInternal
                 className={styles.navLink}
@@ -76,6 +77,17 @@ export function BaseLayout({ children }: Props) {
                 {t("blog")}
               </LinkInternal>
             </NavItem>
+
+            <NavItem>
+              <LinkInternal
+                className={styles.navLink}
+                iconID="id-badge"
+                href="/profiles"
+              >
+                {t("profiles")}
+              </LinkInternal>
+            </NavItem>
+
             <NavItem>
               <LinkInternal
                 className={styles.navLink}
@@ -85,6 +97,7 @@ export function BaseLayout({ children }: Props) {
                 {t("about")}
               </LinkInternal>
             </NavItem>
+
             <NavItem>
               <LinkInternal
                 className={styles.navLink}

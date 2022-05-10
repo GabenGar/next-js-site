@@ -1,0 +1,32 @@
+{
+  "$id": "http://schemas.com/account/profile/base.schema.json",
+  "title": "AccountProfile",
+  "description": "The profile of an account.",
+  "type": "object",
+  "required": ["id", "created_at", "updated_at", "account_id"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "$ref": "http://schemas.com/types/serial.schema.json"
+    },
+    "created_at": {
+      "$ref": "http://schemas.com/types/dates/iso-datetime.schema.json"
+    },
+    "updated_at": {
+      "$ref": "http://schemas.com/types/dates/iso-datetime.schema.json"
+    },
+    "account_id": {
+      "$ref": "http://schemas.com/types/serial.schema.json"
+    },
+    "full_name": {
+      "description": "The name shown on the profile card.",
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 25
+    },
+    "avatar_url": {
+      "description": "The file of the avatar.",
+      "type": "string"
+    }
+  }
+}
