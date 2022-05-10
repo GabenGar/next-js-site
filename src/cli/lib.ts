@@ -1,5 +1,6 @@
 import { Command } from "commander";
 import { startCodegen } from "./commands/codegen";
+import { mockDB } from "./commands/mock-db";
 import { resetDB } from "./commands/reset-db";
 import { wipeDB } from "./commands/wipe-db";
 
@@ -17,6 +18,8 @@ codegenCommand.description("Everything codegen-related.").action(startCodegen);
 const dbCommand = program.command("database");
 
 dbCommand.description("Database management.");
+
+dbCommand.command("mock").description("Creates mocks.").action(mockDB);
 
 dbCommand
   .command("reset")
