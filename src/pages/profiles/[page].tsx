@@ -20,6 +20,8 @@ import type {
   InferGetStaticPropsType,
   GetStaticPaths,
   GetStaticPathsResult,
+  GetServerSideProps,
+  InferGetServerSidePropsType,
 } from "next";
 import type { IAccountProfileClient } from "#types/entities";
 import type { BasePageProps } from "#types/pages";
@@ -40,7 +42,7 @@ function Profiles({
   localeInfo,
   pagination,
   profiles,
-}: InferGetStaticPropsType<typeof getStaticProps>) {
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { t } = useTranslation("common");
   const seoTags = createSEOTags({
     localeInfo,
@@ -68,40 +70,40 @@ function Profiles({
   );
 }
 
-export const getStaticPaths: GetStaticPaths<IParams> = async ({ locales }) => {
-  const profileCount = await countTable({
-    schema: "accounts",
-    table: "profiles",
-  });
-  const pageCount = Math.ceil(profileCount / limit);
-  const pagination = createRange(pageCount);
-  const paths = pagination.reduce<GetStaticPathsResult<IParams>["paths"]>(
-    (paths, page) => {
-      const localePaths: GetStaticPathsResult<IParams>["paths"] = locales!.map(
-        (locale) => {
-          return {
-            locale,
-            params: {
-              page: String(page),
-            },
-          };
-        }
-      );
+// export const getStaticPaths: GetStaticPaths<IParams> = async ({ locales }) => {
+//   const profileCount = await countTable({
+//     schema: "accounts",
+//     table: "profiles",
+//   });
+//   const pageCount = Math.ceil(profileCount / limit);
+//   const pagination = createRange(pageCount);
+//   const paths = pagination.reduce<GetStaticPathsResult<IParams>["paths"]>(
+//     (paths, page) => {
+//       const localePaths: GetStaticPathsResult<IParams>["paths"] = locales!.map(
+//         (locale) => {
+//           return {
+//             locale,
+//             params: {
+//               page: String(page),
+//             },
+//           };
+//         }
+//       );
 
-      paths.push(...localePaths);
+//       paths.push(...localePaths);
 
-      return paths;
-    },
-    []
-  );
+//       return paths;
+//     },
+//     []
+//   );
 
-  return {
-    paths,
-    fallback: true,
-  };
-};
+//   return {
+//     paths,
+//     fallback: true,
+//   };
+// };
 
-export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
+export const getServerSideProps: GetServerSideProps<IProps, IParams> = async ({
   locale,
   defaultLocale,
   params,
@@ -138,12 +140,10 @@ export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
     profiles,
   };
 
-  console.log(toJSON(props));
-  
+  // console.log(toJSON(props));
 
   return {
     props,
-    revalidate: DAY / 1000,
   };
 };
 

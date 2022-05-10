@@ -15,6 +15,8 @@ import type {
   InferGetStaticPropsType,
   GetStaticPaths,
   GetStaticPathsResult,
+  GetServerSideProps,
+  InferGetServerSidePropsType,
 } from "next";
 import type { IAccountProfileClient } from "#types/entities";
 import type { BasePageProps } from "#types/pages";
@@ -30,7 +32,7 @@ interface IParams extends ParsedUrlQuery {
 function Profile({
   localeInfo,
   profile,
-}: InferGetStaticPropsType<typeof getStaticProps>) {
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { t } = useTranslation("components");
   const { id, full_name, created_at, updated_at } = profile;
   const seoTags = createSEOTags({
@@ -60,37 +62,37 @@ function Profile({
   );
 }
 
-export const getStaticPaths: GetStaticPaths<IParams> = async ({ locales }) => {
-  const ids = await getTableIDs({
-    schema: "accounts",
-    table: "profiles",
-  });
+// export const getStaticPaths: GetStaticPaths<IParams> = async ({ locales }) => {
+//   const ids = await getTableIDs({
+//     schema: "accounts",
+//     table: "profiles",
+//   });
 
-  const paths = ids.reduce<GetStaticPathsResult<IParams>["paths"]>(
-    (paths, id) => {
-      const localedIDs: GetStaticPathsResult<IParams>["paths"] = locales!.map(
-        (locale) => {
-          return {
-            params: { id: String(id) },
-            locale,
-          };
-        }
-      );
+//   const paths = ids.reduce<GetStaticPathsResult<IParams>["paths"]>(
+//     (paths, id) => {
+//       const localedIDs: GetStaticPathsResult<IParams>["paths"] = locales!.map(
+//         (locale) => {
+//           return {
+//             params: { id: String(id) },
+//             locale,
+//           };
+//         }
+//       );
 
-      paths.push(...localedIDs);
+//       paths.push(...localedIDs);
 
-      return paths;
-    },
-    []
-  );
+//       return paths;
+//     },
+//     []
+//   );
 
-  return {
-    paths,
-    fallback: true,
-  };
-};
+//   return {
+//     paths,
+//     fallback: true,
+//   };
+// };
 
-export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
+export const getServerSideProps: GetServerSideProps<IProps, IParams> = async ({
   locale,
   defaultLocale,
   params,
@@ -100,7 +102,7 @@ export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
   if (!params?.id) {
     return {
       notFound: true,
-      revalidate: DAY / 1000,
+      // revalidate: DAY / 1000,
     };
   }
 
@@ -120,7 +122,7 @@ export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
       localeInfo,
       profile,
     },
-    revalidate: DAY / 1000,
+    // revalidate: DAY / 1000,
   };
 };
 

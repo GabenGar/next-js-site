@@ -103,3 +103,4 @@ git config core.sshCommand "ssh -i ~/.ssh/id_rsa_file -F /dev/null"
 - resolve the `BigInt` question
 - development mock generation
 - translation status per-file rundown
+- ISR for `/profiles` and `/profile` pages
