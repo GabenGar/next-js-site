@@ -2,7 +2,7 @@
 import { createRequire } from "module";
 import path from "path";
 import dotenv from "dotenv";
-// @ts-expect-error ts cannot into node ESM
+
 const require = createRequire(import.meta.url);
 const { default: pgMigrate } = require("node-pg-migrate");
 
