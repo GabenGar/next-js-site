@@ -3,14 +3,14 @@ import { reduceFolder } from "#server/fs";
 import { generateTypescriptCode } from "./typescript/_index";
 import { excludedFolders, generatorFilename } from "./types";
 
-(async () => {
+export async function startCodegen() {
   try {
     await analyzeCodegen(CODEGEN_FOLDER);
     await runCodegen(CODEGEN_FOLDER);
   } catch (error) {
     console.error(error);
   }
-})();
+}
 
 /**
  * Analyzes the codegen folder.

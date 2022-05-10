@@ -14,9 +14,7 @@
     "start": "next start",
     "lint": "next lint",
     "migrate": "node scripts/migrate-up.js",
-    "wipe": "ts-node --require tsconfig-paths/register --require environment/dotenv src/cli/wipe-db.ts",
-    "reset": "ts-node --require tsconfig-paths/register --require environment/dotenv src/cli/reset-db.ts",
-    "codegen": "ts-node --require tsconfig-paths/register --require environment/dotenv src/lib/codegen/_index.ts"
+    "cli": "ts-node --require tsconfig-paths/register --require environment/dotenv src/cli/_index.ts"
   },
   "dependencies": {
     "@apidevtools/json-schema-ref-parser": "^9.0.9",
