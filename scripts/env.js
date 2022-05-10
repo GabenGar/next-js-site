@@ -31,10 +31,11 @@ const envTypes = {
 
 if (process.env.NODE_ENV !== "production") {
   const envFilePath = path.join(rootPath, ".env.local");
+  const envDevFilePath = path.join(rootPath, ".env.development.local");
   const envProdFilePath = path.join(rootPath, ".env.production.local");
   setupEnvFile(envFilePath);
-
-  setupProdEnvFile(envProdFilePath)
+  setupDevEnvFile(envDevFilePath);
+  setupProdEnvFile(envProdFilePath);
 }
 
 /**
@@ -43,8 +44,6 @@ if (process.env.NODE_ENV !== "production") {
  */
 function setupEnvFile(envFilePath) {
   const envSchemaPath = path.join(rootPath, "schema", "config.schema.json");
-
-
 
   /**
    * @type {ConfigSchema}
@@ -56,6 +55,10 @@ function setupEnvFile(envFilePath) {
    */
   const envMap = Object.entries(schemaJSON.properties).reduce(
     (envMap, [key, props]) => {
+      // `NODE_ENV` is handled by separate function
+      if (key === "NODE_ENV") {
+        return envMap;
+      }
 
       const value = props.default ? envTypes[props.type](props.default) : "";
       envMap.set(key, value);
@@ -110,6 +113,23 @@ function setupEnvFile(envFilePath) {
 }
 
 /**
+ * @param {string} envDevFilePath
+ */
+function setupDevEnvFile(envDevFilePath) {
+  const devEnv = {
+    NODE_ENV: "development",
+  };
+
+  const envString = Object.entries(devEnv)
+    .map(([key, value]) => {
+      return `${key}=${value}`;
+    })
+    .join("\n");
+
+  fse.writeFileSync(envDevFilePath, envString);
+}
+
+/**
  * Create a local production env file
  * to run bundle analyzer on build,
  * but not on deploy.
@@ -118,9 +138,13 @@ function setupEnvFile(envFilePath) {
 function setupProdEnvFile(envProdFilePath) {
   const prodEnv = {
     NODE_ENV: "production",
-    ANALYZE: true
-  }
-  const envString = Object.entries(prodEnv).map(([key, value]) => { return `${key}=${value}` }).join("\n")
+    ANALYZE: true,
+  };
+  const envString = Object.entries(prodEnv)
+    .map(([key, value]) => {
+      return `${key}=${value}`;
+    })
+    .join("\n");
 
   fse.writeFileSync(envProdFilePath, envString);
 }

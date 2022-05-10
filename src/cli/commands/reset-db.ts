@@ -1,29 +1,23 @@
 import fse from "fs-extra";
 import path from "path";
 import { CONFIGS_FOLDER } from "#environment/constants";
-import { IS_DEVELOPMENT } from "#environment/derived";
 import { getDB } from "#database";
 
 import type { IProjectDatabase, ISchema } from "#codegen/schema/interfaces";
-import type { DatabaseTable } from "./types";
+import type { DatabaseTable } from "../types";
 
-(async () => {
+export async function resetDB() {
   try {
     await cleanDatabase();
   } catch (error) {
     console.error("Aborting database reset due to error:\n", error);
   }
-})();
+}
 
 /**
- * Resets the database and the state of the tables without dropping them.
+ * 
  */
 async function cleanDatabase() {
-  if (!IS_DEVELOPMENT) {
-    console.log("Reset is started in production mode, aborting.");
-    return;
-  }
-
   const { db } = getDB();
 
   console.log("Starting database reset.");

@@ -5,21 +5,17 @@ import { IS_DEVELOPMENT } from "#environment/derived";
 import { getDB } from "#database";
 
 import type { IProjectDatabase, ISchema } from "#codegen/schema/interfaces";
-import type { DatabaseTable } from "./types";
+import type { DatabaseTable } from "../types";
 
-(async () => {
+export async function wipeDB() {
   try {
     await cleanDatabase();
   } catch (error) {
     console.error("Aborting database cleanup due to error:\n", error);
   }
-})();
+}
 
 async function cleanDatabase() {
-  if (!IS_DEVELOPMENT) {
-    console.log("Cleanup isn't started in dev mode, aborting.");
-    return;
-  }
   const { db } = getDB();
   console.log("Starting database cleanup.\n");
 

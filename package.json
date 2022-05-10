@@ -14,9 +14,7 @@
     "start": "next start",
     "lint": "next lint",
     "migrate": "node scripts/migrate-up.js",
-    "wipe": "ts-node --require tsconfig-paths/register --require environment/dotenv src/cli/wipe-db.ts",
-    "reset": "ts-node --require tsconfig-paths/register --require environment/dotenv src/cli/reset-db.ts",
-    "codegen": "ts-node --require tsconfig-paths/register --require environment/dotenv src/lib/codegen/_index.ts"
+    "cli": "ts-node --require tsconfig-paths/register --require environment/dotenv src/cli/_index.ts"
   },
   "dependencies": {
     "@apidevtools/json-schema-ref-parser": "^9.0.9",
@@ -65,6 +63,7 @@
     "@types/stringify-object": "^4.0.1",
     "@typescript-eslint/eslint-plugin": "^5.20.0",
     "@typescript-eslint/parser": "^5.20.0",
+    "commander": "^9.2.0",
     "dotenv": "^16.0.0",
     "eslint": "8.14.0",
     "eslint-config-next": "12.1.6",

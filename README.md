@@ -6,8 +6,9 @@
 2. [Installation](#installation)
 3. [Develop](#develop)
 4. [Build](#build)
-5. [Database](#database)
-6. [TODOs](#todos)
+5. [CLI](#cli)
+6. [Database](#database)
+7. [TODOs](#todos)
 
 ## Requirements
 
@@ -24,7 +25,7 @@ cd next-js-site
 npm install
 ```
 
-Create .env file and set the values:
+Create .env files and set the values in `.env.local`:
 
 ```sh
 npm run env
@@ -52,6 +53,16 @@ npm run build
 
 The result will be inside `.next` folder.
 
+## CLI
+
+CLI can be run with this base command:
+
+```sh
+npm run cli -- --help
+```
+
+Everything after `--` is passed to the CLI as arguments, so the command above will show the help command.
+
 ## Database
 
 Dont's: https://wiki.postgresql.org/wiki/Don't_Do_This
@@ -61,22 +72,6 @@ Dont's: https://wiki.postgresql.org/wiki/Don't_Do_This
 ```sh
 npx node-pg-migrate create {migration_name} --migrations-dir src/database/migrations --migration-filename-format utc --migration-file-language sql
 ```
-
-### Clean database:
-
-```sh
-npm run wipe
-```
-
-Drops all project tables and non-default schema including migrations ones.
-
-### Reset database:
-
-```sh
-npm run reset
-```
-
-Truncates all non-migration project tables.
 
 ## MISC
 
