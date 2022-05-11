@@ -1,8 +1,13 @@
-const nextJest = require("next/jest").default;
+const nextJest = require("next/jest");
 
 const createJestConfig = nextJest({
   // Provide the path to your Next.js app to load next.config.js and .env files in your test environment
   dir: "./",
+});
+
+/** @type {import('@jest/types').Config.InitialOptions} */
+const customJestConfig = {
+  setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
   moduleNameMapper: {
     "^#scripts$": "<rootDir>/scripts/_index.js",
     "^#environment/(.*)$": "<rootDir>/environment/$1",
@@ -16,19 +21,12 @@ const createJestConfig = nextJest({
     "^#assets$": "<rootDir>/src/assets/_index.ts",
     "^#assets/(.*)$": "<rootDir>/src/assets/$1",
     "^#lib/(.*)$": "<rootDir>/src/lib/$1/_index.ts",
+    "^#pages/(.*)$": "<rootDir>/src/pages/$1",
     "^#store/(.*)$": "<rootDir>/src/store/$1/_index.ts",
     "^#components/(.*)$": "<rootDir>/src/components/$1/_index.ts",
     "^#styles/(.*)$": "<rootDir>/src/styles/$1",
     "^#types/(.*)$": "<rootDir>/src/types/$1",
   },
-});
-
-// Add any custom config to be passed to Jest
-const customJestConfig = {
-  // Add more setup options before each test is run
-  // setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
-  // if using TypeScript with a baseUrl set to the root directory then you need the below for alias' to work
-  moduleDirectories: ["node_modules", "<rootDir>/"],
   testEnvironment: "jsdom",
 };
 
