@@ -6,11 +6,11 @@ import { createSEOTags } from "#lib/seo";
 import { getAccountDetails } from "#lib/account";
 import { ProjectURL } from "#lib/url";
 import { withSessionSSR } from "#server/requests";
-import { useAppDispatch, useAppSelector } from "#store/redux";
+import { useAppDispatch, useAppSelector } from "#browser/store/redux";
 import {
   getPendingCommentsAsync,
   selectPendingComments,
-} from "#store/redux/reducers";
+} from "#browser/store/redux/reducers";
 import { Page } from "#components/pages";
 import { Heading } from "#components/headings";
 import { CardList } from "#components/lists";

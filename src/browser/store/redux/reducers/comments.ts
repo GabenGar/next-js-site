@@ -8,7 +8,7 @@ import {
 } from "#lib/api/public";
 
 import type { ICommentClient, ICommentInit, IComment } from "#types/entities";
-import type { AppState, AppThunk, Status } from "#store/redux";
+import type { AppState, AppThunk, Status } from "#browser/store/redux";
 
 interface CommentsState {
   currentBlog?: string;

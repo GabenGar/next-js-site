@@ -5,7 +5,7 @@ import { DefaultSeo } from "next-seo";
 import { defaultSEOProps } from "#lib/seo";
 import { ProjectError } from "#lib/errors";
 import { toJSON } from "#lib/json";
-import { reduxStore } from "#store/redux";
+import { reduxStore } from "#browser/store/redux";
 import { BaseLayout } from "#components/layout";
 import { ErrorBoundary } from "#components/errors";
 

@@ -13,7 +13,7 @@ import type {
   ISerialInteger,
 } from "#types/entities";
 import type { IFMComment } from "#types/frontend-mentor";
-import type { AppState, AppThunk, Status } from "#store/redux";
+import type { AppState, AppThunk, Status } from "#browser/store/redux";
 
 interface IFMCommentInfo {
   isVisible: boolean;

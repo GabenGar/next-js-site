@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { useState } from "react";
 import { useTranslation } from "next-i18next";
-import { useAppDispatch, useAppSelector } from "#store/redux";
+import { useAppDispatch, useAppSelector } from "#browser/store/redux";
 import {
   hideFMComment,
   selectFMCommentInfo,
@@ -10,7 +10,7 @@ import {
   dislikeFMComment,
   deleteFMComment,
   updateFMComment,
-} from "#store/redux/reducers";
+} from "#browser/store/redux/reducers";
 import { blockComponent } from "#components/meta";
 import { FormClient } from "#components/forms";
 import { TextArea } from "#components/forms/sections";

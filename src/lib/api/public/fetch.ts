@@ -3,7 +3,7 @@ import { SITE_ORIGIN } from "#environment/vars";
 import { createFetch } from "#browser";
 import { FetchError } from "#lib/errors";
 import { toJSON } from "#lib/json";
-import { setLocalStoreItem } from "#store/local";
+import { setLocalStoreItem } from "#browser/store/local";
 
 import type { APIRequest } from "#types/api";
 

@@ -1,6 +1,6 @@
 import { useTranslation } from "next-i18next";
-import { useAppDispatch, useAppSelector } from "#store/redux";
-import { addNoteAsync, selectNotesForDay } from "#store/redux/reducers";
+import { useAppDispatch, useAppSelector } from "#browser/store/redux";
+import { addNoteAsync, selectNotesForDay } from "#browser/store/redux/reducers";
 import {
   fromISOString,
   toISODateTime,

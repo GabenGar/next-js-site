@@ -1,7 +1,7 @@
 import { validateCommentInitFields } from "#codegen/schema/validations";
 import { FieldsValidationError } from "#lib/errors";
-import { useAppDispatch } from "#store/redux";
-import { addCommentAsync } from "#store/redux/reducers";
+import { useAppDispatch } from "#browser/store/redux";
+import { addCommentAsync } from "#browser/store/redux/reducers";
 import { blockComponent } from "#components/meta";
 import { Form } from "#components/forms";
 import { TextArea } from "#components/forms/sections";

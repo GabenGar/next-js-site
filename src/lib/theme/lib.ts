@@ -1,4 +1,4 @@
-import { getCookie, setCookie } from "#store/cookie-store";
+import { getCookie, setCookie } from "#browser/store/cookie-store";
 
 export const AVAILABLE_THEMES = {
   DARK: "dark",

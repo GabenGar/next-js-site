@@ -7,8 +7,8 @@ import {
   subtractMonths,
   subtractYears,
 } from "#lib/dates";
-import { useAppDispatch, useAppSelector } from "#store/redux";
-import { changeSelectedDate, selectCalendar } from "#store/redux/reducers";
+import { useAppDispatch, useAppSelector } from "#browser/store/redux";
+import { changeSelectedDate, selectCalendar } from "#browser/store/redux/reducers";
 import { blockComponent } from "#components/meta";
 import { Button } from "#components/buttons";
 import { MonthOverview } from "./month-overview";

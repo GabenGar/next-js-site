@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { createSEOTags } from "#lib/seo";
-import { useAppDispatch, useAppSelector } from "#store/redux";
-import { getFMCommentsAsync, selectFMSlice } from "#store/redux/reducers";
+import { useAppDispatch, useAppSelector } from "#browser/store/redux";
+import { getFMCommentsAsync, selectFMSlice } from "#browser/store/redux/reducers";
 import { Page } from "#components/pages";
 import {
   Article,
