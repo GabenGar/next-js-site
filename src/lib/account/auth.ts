@@ -29,7 +29,7 @@ export async function registerAccount(accCreds: IAccountInit) {
   const existingAccount = await findAccountByName(encryptedAccCreds);
 
   if (existingAccount) {
-    return new AuthError("Account with this name already exists.");
+    throw new AuthError("Account with this name already exists.");
   }
 
   if (encryptedAccCreds.invite === ADMIN_INVITE_CODE) {
@@ -52,21 +52,23 @@ export async function registerAccount(accCreds: IAccountInit) {
   return account;
 }
 
+/**
+ * The invite is assumed to be present.
+ */
 export async function inviteAccount(encryptedAccCreds: IAccountInit) {
-  // the presense of invite is checked before
   const invite = await findInvite(encryptedAccCreds.invite!);
 
   if (!invite) {
-    return new AuthError("Invite with this code doesn't exist.");
+    throw new AuthError("Invite with this code doesn't exist.");
   }
 
   if (!invite.is_active) {
-    return new AuthError("Invite with this code is disabled.");
+    throw new AuthError("Invite with this code is disabled.");
   }
 
   if (invite.expires_at && isAfter(nowISO(), invite.expires_at)) {
     await deactivateInvite(invite.id);
-    return new AuthError("Invite with this code has expired.");
+    throw new AuthError("Invite with this code has expired.");
   }
 
   if (invite.max_uses) {
@@ -74,7 +76,7 @@ export async function inviteAccount(encryptedAccCreds: IAccountInit) {
 
     if (inviteCount >= invite.max_uses) {
       await deactivateInvite(invite.id);
-      return new AuthError("Invite with this code is out of uses.");
+      throw new AuthError("Invite with this code is out of uses.");
     }
   }
 

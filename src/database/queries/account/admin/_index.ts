@@ -1,10 +1,24 @@
 import { getDB } from "#database";
 
-import type { IAccount, IComment } from "#types/entities";
+import type { IAccount, IComment, ISerialInteger } from "#types/entities";
 import type { IPaginationDB } from "#lib/pagination";
 import type { IInvite } from "#codegen/schema/interfaces";
 
 const { db } = getDB();
+
+export async function getAdmins() {
+  const query = `
+    SELECT *
+    FROM accounts.entries
+    WHERE role = 'administrator'
+    ORDER BY
+      id ASC
+  `;
+
+  const admins = await db.manyOrNone<IAccount>(query);
+
+  return admins;
+}
 
 export async function getAccounts({ offset, limit }: IPaginationDB) {
   const query = `
