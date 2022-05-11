@@ -16,5 +16,9 @@
   "email_code_message_acc": "account page",
   "calendar_title": "Calendar",
   "calendar_desc": "Calendar info",
-  "current_date": "Current date"
+  "current_date": "Current date",
+  "create_profile": "Create Profile",
+  "profile": "Profile",
+  "profile_title": "Profile",
+  "profile_desc": "Account profile details"
 }

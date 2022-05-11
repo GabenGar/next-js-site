@@ -10,7 +10,15 @@
   "current_email": "Нынешний электронный ящик",
   "new_email": "Новый электронный ящик",
   "confirmation_sent": "Ссылка с подтверждением отправлена на новый почтовый ящик.",
+  "email_code_title": "Подтверждение ящика",
+  "email_code_desc": "Код подтверждения ящика.",
+  "email_code_message": "Ваш ящик \"{{email}}\" подтверждён. Можно возвращаться на",
+  "email_code_message_acc": "страницу аккаунта",
   "calendar_title": "Календарь",
-  "calendar_desc": "Календарная информация",
-  "current_date": "Нынешняя дата"
+  "calendar_desc": "Календарная информация.",
+  "current_date": "Нынешняя дата",
+  "create_profile": "Создать профиль",
+  "profile": "Профиль",
+  "profile_title": "Профиль",
+  "profile_desc": "Информация о профиле аккаунта"
 }
