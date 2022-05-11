@@ -32,7 +32,6 @@ const nextJSConfig = {
       const reportFilename = path.join(dir, ".next", "analyze", filename)
 
       config && config.plugins && config.plugins.push(
-        // @ts-expect-error some typing issue stuff
         new BundleAnalyzerPlugin({
           analyzerMode: 'static',
           reportFilename,
