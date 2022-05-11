@@ -3,7 +3,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { FOUND } from "#environment/constants/http";
 import { FieldsValidationError } from "#lib/errors";
 import {
-  createProfile,
+  registerProfile,
   getAccountDetails,
   toAccountClient,
   validateAccountProfileInitFields,
@@ -138,7 +138,7 @@ export const getServerSideProps = withSessionSSR<AccountPageProps>(
         };
       }
 
-      const { account_id, ...newProfile } = await createProfile(
+      const { account_id, ...newProfile } = await registerProfile(
         account,
         profileInit
       );

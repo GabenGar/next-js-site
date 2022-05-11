@@ -8,7 +8,7 @@ import { toPaginationDB } from "#lib/pagination";
 import type { IAccount, IAccountProfileInit } from "#types/entities";
 import type { IPaginationInit } from "#lib/pagination";
 
-export async function createProfile(
+export async function registerProfile(
   account: IAccount,
   profileInit: IAccountProfileInit
 ) {

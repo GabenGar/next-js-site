@@ -6,7 +6,7 @@ export {
 } from "#codegen/schema/validations";
 export { registerAccount, loginAccount } from "./auth";
 export { getAccountDetails, toAccountClient } from "./lib";
-export { createProfile, getProfiles } from "./profile";
+export { registerProfile, getProfiles } from "./profile";
 export {
   confirmNewEmail,
   sendEmailConfirmation,
