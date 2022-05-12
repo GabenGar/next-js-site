@@ -1,0 +1,21 @@
+{
+  "$id": "http://schemas.com/api/ya-disk/error.schema.json",
+  "title": "YaDiskError",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["message", "description", "error"],
+  "properties": {
+    "message": {
+      "type": "string",
+      "description": "Человекочитаемое описание ошибки"
+    },
+    "description": {
+      "type": "string",
+      "description": "Техническое описание ошибки"
+    },
+    "error": {
+      "type": "string",
+      "description": "Уникальный код ошибки"
+    }
+  }
+}

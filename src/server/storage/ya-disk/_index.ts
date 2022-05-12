@@ -1,1 +1,1 @@
-export {}
+export { fetchDisk } from "./lib";

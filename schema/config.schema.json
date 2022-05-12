@@ -92,6 +92,10 @@
     "ADMIN_INVITE_CODE": {
       "type": "string",
       "description": "Admin-exclusive invite."
+    },
+    "YANDEX_DISK_KEY": {
+      "type": "string",
+      "description": "Auth key for Yandex.Disk"
     }
   }
 

@@ -13,6 +13,11 @@ import {
   accountProfileSchema,
   accountProfileClientSchema,
   accountProfileInitSchema,
+  yaDiskDiskSchema,
+  yaDiskErrorSchema,
+  yaDiskSystemFoldersSchema,
+  yaDiskUserSchema,
+  aPISchemaSchema,
   blogPostSchema,
   calendarNoteSchema,
   calendarNoteClientSchema,
@@ -53,6 +58,12 @@ export const schemaMap: Record<string, SchemaObject> = {
     accountProfileClientSchema,
   "http://schemas.com/account/profile/init.schema.json":
     accountProfileInitSchema,
+  "http://schemas.com/api/ya-disk/disk.schema.json": yaDiskDiskSchema,
+  "http://schemas.com/api/ya-disk/error.schema.json": yaDiskErrorSchema,
+  "http://schemas.com/api/ya-disk/system-folders.schema.json":
+    yaDiskSystemFoldersSchema,
+  "http://schemas.com/api/ya-disk/user.schema.json": yaDiskUserSchema,
+  "http://schemas.com/api.schema.json": aPISchemaSchema,
   "http://schemas.com/blog-post.schema.json": blogPostSchema,
   "http://schemas.com/calendar-note/base.schema.json": calendarNoteSchema,
   "http://schemas.com/calendar-note/client.schema.json":

@@ -1,0 +1,43 @@
+{
+  "$id": "http://schemas.com/api/ya-disk/disk.schema.json",
+  "title": "YaDiskDisk",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [],
+  "properties": {
+    "unlimited_autoupload_enabled": {
+      "type": "boolean",
+      "description": "Признак включенной безлимитной автозагрузки с мобильных устройств."
+    },
+    "max_file_size": {
+      "type": "integer",
+      "description": "Максимальный поддерживаемый размер файла."
+    },
+    "total_space": {
+      "type": "integer",
+      "description": "Общий объем диска (байт)"
+    },
+    "trash_size": {
+      "type": "integer",
+      "description": "Общий размер файлов в Корзине (байт). Входит в `used_space`."
+    },
+    "is_paid": {
+      "type": "boolean",
+      "description": "Признак наличия купленного места."
+    },
+    "used_space": {
+      "type": "integer",
+      "description": "Используемый объем диска (байт)"
+    },
+    "system_folders": {
+      "$ref": "http://schemas.com/api/ya-disk/system-folders.schema.json"
+    },
+    "user": {
+      "$ref": "http://schemas.com/api/ya-disk/user.schema.json"
+    },
+    "revision": {
+      "type": "integer",
+      "description": "Текущая ревизия Диска"
+    }
+  }
+}

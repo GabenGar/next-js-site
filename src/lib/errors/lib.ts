@@ -57,7 +57,22 @@ export class FieldsValidationError extends ProjectError {
   }
 }
 
-export class FetchError extends ProjectError {}
+export class FetchError extends ProjectError {
+  res: Response;
+
+  name = "FetchError";
+
+  constructor(res: Response, options?: ErrorOptions, ...params: any[]) {
+    const message = [
+      `Request: ${res.url}`,
+      `Status: ${res.status}`,
+      `Message: ${res.statusText}`,
+      res.body && `Body: ${toJSON(res.body)}`,
+    ].join("\n");
+    super(message, options, ...params);
+    this.res = res;
+  }
+}
 
 /**
  * @TODO: crash when created in client environment

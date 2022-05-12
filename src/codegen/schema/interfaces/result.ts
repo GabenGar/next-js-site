@@ -170,6 +170,124 @@ export interface AccountProfileInit {
   avatar_file?: string;
 }
 
+export interface YaDiskDisk {
+  /**
+   * Признак включенной безлимитной автозагрузки с мобильных устройств.
+   */
+  unlimited_autoupload_enabled?: boolean;
+  /**
+   * Максимальный поддерживаемый размер файла.
+   */
+  max_file_size?: number;
+  /**
+   * Общий объем диска (байт)
+   */
+  total_space?: number;
+  /**
+   * Общий размер файлов в Корзине (байт). Входит в `used_space`.
+   */
+  trash_size?: number;
+  /**
+   * Признак наличия купленного места.
+   */
+  is_paid?: boolean;
+  /**
+   * Используемый объем диска (байт)
+   */
+  used_space?: number;
+  system_folders?: YaDiskSystemFolders;
+  user?: YaDiskUser;
+  /**
+   * Текущая ревизия Диска
+   */
+  revision?: number;
+}
+
+export interface YaDiskError {
+  /**
+   * Человекочитаемое описание ошибки
+   */
+  message: string;
+  /**
+   * Техническое описание ошибки
+   */
+  description: string;
+  /**
+   * Уникальный код ошибки
+   */
+  error: string;
+}
+
+export interface YaDiskSystemFolders {
+  /**
+   * Путь к папке "Социальные сети/Одноклассники".
+   */
+  odnoklassniki?: string;
+  /**
+   * Путь к папке "Социальные сети/Google+".
+   */
+  google?: string;
+  /**
+   * Путь к папке "Социальные сети/Instagram".
+   */
+  instagram?: string;
+  /**
+   * Путь к папке "Социальные сети/ВКонтакте".
+   */
+  vkontakte?: string;
+  /**
+   * Путь к папке "Социальные сети/Мой Мир".
+   */
+  mailru?: string;
+  /**
+   * Путь к папке "Загрузки".
+   */
+  downloads?: string;
+  /**
+   * Путь к папке "Приложения".
+   */
+  applications?: string;
+  /**
+   * Путь к папке "Социальные сети/Facebook".
+   */
+  facebook?: string;
+  /**
+   * Путь к папке "Социальные сети".
+   */
+  social?: string;
+  /**
+   * Путь к папке "Фотокамера".
+   */
+  photostream?: string;
+  /**
+   * Путь к папке "Скриншоты".
+   */
+  screenshots?: string;
+  /**
+   * Путь к папке "Сканы".
+   */
+  scans?: string;
+}
+
+export interface YaDiskUser {
+  /**
+   * Страна
+   */
+  country?: string;
+  /**
+   * Логин
+   */
+  login?: string;
+  /**
+   * Отображаемое имя
+   */
+  display_name?: string;
+  /**
+   * Идентификатор пользователя
+   */
+  uid?: string;
+}
+
 /**
  * The post of the blog.
  */
@@ -273,6 +391,10 @@ export interface ProjectConfig {
    * Admin-exclusive invite.
    */
   ADMIN_INVITE_CODE?: string;
+  /**
+   * Auth key for Yandex.Disk
+   */
+  YANDEX_DISK_KEY?: string;
 }
 
 /**

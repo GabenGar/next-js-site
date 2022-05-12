@@ -32,7 +32,7 @@
       "type": "object",
       "description": "Endpoint of the API.",
       "additionalProperties": false,
-      "required": ["path", "method"],
+      "required": ["path", "methods"],
       "properties": {
         "path": {
           "type": "string",
@@ -43,7 +43,7 @@
           "type": "string",
           "description": "Human-readable description of an endpoint."
         },
-        "method": {
+        "methods": {
           "type": "object",
           "description": "Method of an API endpoint.",
           "additionalProperties": false,
@@ -60,7 +60,12 @@
     },
     "request": {
       "type": "object",
-      "description": "Request of an API endpoint.",
+      "description": "Request to an API endpoint.",
+      "additionalProperties": false
+    },
+    "response": {
+      "type": "object",
+      "description": "Response from an API endpoint.",
       "additionalProperties": false
     }
   }

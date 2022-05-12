@@ -13,6 +13,10 @@ import {
   accountProfileSchema,
   accountProfileClientSchema,
   accountProfileInitSchema,
+  yaDiskDiskSchema,
+  yaDiskErrorSchema,
+  yaDiskSystemFoldersSchema,
+  yaDiskUserSchema,
   blogPostSchema,
   calendarNoteSchema,
   calendarNoteClientSchema,
@@ -51,6 +55,10 @@ import type {
   IAccountProfile,
   IAccountProfileClient,
   IAccountProfileInit,
+  IYaDiskDisk,
+  IYaDiskError,
+  IYaDiskSystemFolders,
+  IYaDiskUser,
   IBlogPost,
   ICalendarNote,
   ICalendarNoteClient,
@@ -97,6 +105,14 @@ export const validateAccountProfileClientFields =
   createValidator<IAccountProfileClient>(accountProfileClientSchema);
 export const validateAccountProfileInitFields =
   createValidator<IAccountProfileInit>(accountProfileInitSchema);
+export const validateYaDiskDiskFields =
+  createValidator<IYaDiskDisk>(yaDiskDiskSchema);
+export const validateYaDiskErrorFields =
+  createValidator<IYaDiskError>(yaDiskErrorSchema);
+export const validateYaDiskSystemFoldersFields =
+  createValidator<IYaDiskSystemFolders>(yaDiskSystemFoldersSchema);
+export const validateYaDiskUserFields =
+  createValidator<IYaDiskUser>(yaDiskUserSchema);
 export const validateBlogPostFields =
   createValidator<IBlogPost>(blogPostSchema);
 export const validateCalendarNoteFields =
