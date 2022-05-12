@@ -31,6 +31,10 @@
       "url": "./schema/meta.schema.json"
     },
     {
+      "fileMatch": ["schema/api/*schema.json"],
+      "url": "./schema/api.schema.json"
+    },
+    {
       "fileMatch": ["config.json"],
       "url": "./schema/config.schema.json"
     },

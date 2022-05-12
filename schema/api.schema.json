@@ -1,0 +1,67 @@
+{
+  "$id": "http://schemas.com/api.schema.json",
+  "title": "APISchema",
+  "description": "The base schema for describing APIs.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["title", "description", "origin", "endpoints"],
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "The title of the API."
+    },
+    "description": {
+      "type": "string",
+      "description": "The description of the API."
+    },
+    "origin": {
+      "type": "string",
+      "format": "uri",
+      "description": "Origin of the API."
+    },
+    "endpoints": {
+      "type": "object",
+      "description": "Endpoints of the API.",
+      "additionalProperties": {
+        "$ref": "#/definitions/endpoint"
+      }
+    }
+  },
+  "definitions": {
+    "endpoint": {
+      "type": "object",
+      "description": "Endpoint of the API.",
+      "additionalProperties": false,
+      "required": ["path", "method"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "format": "uri-reference",
+          "description": "Pathname of an endpoint"
+        },
+        "description": {
+          "type": "string",
+          "description": "Human-readable description of an endpoint."
+        },
+        "method": {
+          "type": "object",
+          "description": "Method of an API endpoint.",
+          "additionalProperties": false,
+          "propertyNames": {
+            "enum": ["GET", "POST", "PATCH", "PUT", "DELETE"]
+          },
+          "patternProperties": {
+            "": {
+              "$ref": "#/definitions/request"
+            }
+          }
+        }
+      }
+    },
+    "request": {
+      "type": "object",
+      "description": "Request of an API endpoint.",
+      "additionalProperties": false
+    }
+  }
+}
