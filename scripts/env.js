@@ -32,14 +32,15 @@ const envTypes = {
 if (process.env.NODE_ENV !== "production") {
   const envFilePath = path.join(rootPath, ".env.local");
   const envDevFilePath = path.join(rootPath, ".env.development.local");
+  const envTestFilePath = path.join(rootPath, ".env.test.local");
   const envProdFilePath = path.join(rootPath, ".env.production.local");
   setupEnvFile(envFilePath);
   setupDevEnvFile(envDevFilePath);
   setupProdEnvFile(envProdFilePath);
+  setupTestEnvFile(envTestFilePath, envFilePath);
 }
 
 /**
- *
  * @param {string} envFilePath
  */
 function setupEnvFile(envFilePath) {
@@ -147,4 +148,13 @@ function setupProdEnvFile(envProdFilePath) {
     .join("\n");
 
   fse.writeFileSync(envProdFilePath, envString);
+}
+
+/**
+ * For now it'just a copy of `.env.local`.
+ * @param {string} envTestFilePath
+ * @param {string} envFilePath
+ */
+function setupTestEnvFile(envTestFilePath, envFilePath) {
+  fse.copyFileSync(envFilePath, envTestFilePath)
 }
