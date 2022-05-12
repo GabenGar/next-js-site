@@ -31,7 +31,7 @@ export function Page({ seoTags, heading, pageClassName, children }: PageProps) {
       </Heading>
 
       <section className={pageClass}>
-        {router.isFallback ? <LoadingBar /> : children}
+        {router?.isFallback ? <LoadingBar /> : children}
       </section>
     </>
   );
