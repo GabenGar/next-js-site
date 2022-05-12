@@ -392,9 +392,13 @@ export interface ProjectConfig {
    */
   ADMIN_INVITE_CODE?: string;
   /**
-   * Auth key for Yandex.Disk
+   * Yandex ID username.
    */
-  YANDEX_DISK_KEY?: string;
+  YANDEX_USER_NAME?: string;
+  /**
+   * YandexID password.
+   */
+  YANDEX_USER_PASSWORD?: string;
 }
 
 /**

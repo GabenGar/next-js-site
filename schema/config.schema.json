@@ -93,10 +93,13 @@
       "type": "string",
       "description": "Admin-exclusive invite."
     },
-    "YANDEX_DISK_KEY": {
+    "YANDEX_DISK_ACCESS_TOKEN": {
       "type": "string",
-      "description": "Auth key for Yandex.Disk"
+      "description": "Access token for Yandex.Disk."
+    },
+    "YANDEX_DISK_APP_ID": {
+      "type": "string",
+      "description": "ID of the Yandex app with Yandex.Disk permissions."
     }
   }
-
 }

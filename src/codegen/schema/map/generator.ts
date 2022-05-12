@@ -28,7 +28,8 @@ async function generateSchemaTable() {
       if (
         !isJSONSchema(folderItem) ||
         // meta schema is excluded because it gets fed separately
-        folderItem.entity.name === "meta.schema"
+        folderItem.entity.name === "meta.schema" ||
+        folderItem.entity.name === "api.schema"
       ) {
         return result;
       }

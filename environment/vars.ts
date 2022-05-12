@@ -18,4 +18,6 @@ export const EMAIL_PORT = process.env.EMAIL_PORT!;
 export const EMAIL_USERNAME = process.env.EMAIL_USERNAME!;
 export const EMAIL_PASSWORD = process.env.EMAIL_PASSWORD!;
 export const ADMIN_INVITE_CODE = process.env.ADMIN_INVITE_CODE!;
-export const YANDEX_DISK_KEY = process.env.YANDEX_DISK_KEY!;
+
+export const YANDEX_DISK_ACCESS_TOKEN = process.env.YANDEX_DISK_ACCESS_TOKEN!;
+export const YANDEX_DISK_APP_ID = process.env.YANDEX_DISK_APP_ID!;

@@ -17,7 +17,6 @@ import {
   yaDiskErrorSchema,
   yaDiskSystemFoldersSchema,
   yaDiskUserSchema,
-  aPISchemaSchema,
   blogPostSchema,
   calendarNoteSchema,
   calendarNoteClientSchema,
@@ -63,7 +62,6 @@ export const schemaMap: Record<string, SchemaObject> = {
   "http://schemas.com/api/ya-disk/system-folders.schema.json":
     yaDiskSystemFoldersSchema,
   "http://schemas.com/api/ya-disk/user.schema.json": yaDiskUserSchema,
-  "http://schemas.com/api.schema.json": aPISchemaSchema,
   "http://schemas.com/blog-post.schema.json": blogPostSchema,
   "http://schemas.com/calendar-note/base.schema.json": calendarNoteSchema,
   "http://schemas.com/calendar-note/client.schema.json":

@@ -62,12 +62,32 @@ export class FetchError extends ProjectError {
 
   name = "FetchError";
 
-  constructor(res: Response, options?: ErrorOptions, ...params: any[]) {
+  /**
+   * Alternative async  constructor.
+   */
+  static async async(res: Response, options?: ErrorOptions, ...params: any[]) {
+    let resBody;
+    try {
+      resBody = await res.text();
+    } catch (error) {
+      resBody = undefined;
+    }
+
+    return new this(res, resBody, options, ...params);
+  }
+
+  constructor(
+    res: Response,
+    body?: string,
+    options?: ErrorOptions,
+    ...params: any[]
+  ) {
     const message = [
       `Request: ${res.url}`,
       `Status: ${res.status}`,
       `Message: ${res.statusText}`,
-      res.body && `Body: ${toJSON(res.body)}`,
+      `Headers: ${toJSON(Array.from(res.headers.entries()))}`,
+      body && `Body: ${body}`,
     ].join("\n");
     super(message, options, ...params);
     this.res = res;

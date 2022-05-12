@@ -22,6 +22,8 @@ export interface ValidationFailure extends OperationResult<false> {
 const ajv = initAJV();
 
 function initAJV() {
+  // console.log("Schema map length: ", Object.keys(schemaMap).length);
+  
   try {
     const ajv = new Ajv({
       meta: metaSchema,

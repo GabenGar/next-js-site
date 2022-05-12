@@ -40,7 +40,8 @@ export function createFetch(
     const response = await fetch(url.toString(), { ...init, headers });
 
     if (!response.ok) {
-      throw new FetchError(response)
+      const error = await FetchError.async(response);
+      throw error;
     }
 
     return response;
