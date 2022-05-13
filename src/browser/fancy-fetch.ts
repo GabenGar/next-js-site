@@ -9,10 +9,10 @@ type IFetchFunction = (
 
 const defaultSettings = {
   // Assume JSON fetches as baseline
-  headers: new Headers({
-    "Content-Type": "application/json",
-    Accept: "application/json",
-  }),
+  headers: new Headers([
+    ["Content-Type", "application/json"],
+    ["Accept", "application/json"],
+  ]),
 } as const;
 
 /**
@@ -24,7 +24,9 @@ export function createFetch(
   defaults = defaultSettings
 ): IFetchFunction {
   return async (path, init?, searchParams?, fragment?) => {
-    const headers = mergeHeaders(defaults.headers, init?.headers);
+    const headers = init?.headers
+      ? mergeHeaders(defaults.headers, init.headers)
+      : defaults.headers;
     const url = new URL(path, origin);
 
     if (searchParams) {
@@ -48,14 +50,12 @@ export function createFetch(
   };
 }
 
-function mergeHeaders(defaultHeaders: Headers, extraHeaders?: HeadersInit) {
+function mergeHeaders(defaultHeaders: Headers, extraHeaders: HeadersInit) {
   const resultHeaders = new Headers(defaultHeaders);
 
-  if (extraHeaders) {
-    const newHeaders = new Headers(extraHeaders);
-    for (const [key, value] of Array.from(newHeaders)) {
-      resultHeaders.append(key, value);
-    }
+  const newHeaders = new Headers(extraHeaders);
+  for (const [key, value] of Array.from(newHeaders)) {
+    resultHeaders.append(key, value);
   }
 
   return resultHeaders;

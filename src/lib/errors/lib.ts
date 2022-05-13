@@ -50,9 +50,16 @@ export class FieldsValidationError extends ProjectError {
 
   name = "FieldsValidationError";
 
-  constructor(validationErrors: ErrorObject[], ...params: any[]) {
-    super(...params);
-    this.message = toJSON<ErrorObject[]>(validationErrors);
+  constructor(
+    validationErrors: ErrorObject[],
+    inputData?: unknown,
+    ...params: any[]
+  ) {
+    const message = [
+      toJSON<ErrorObject[]>(validationErrors),
+      inputData && `Input Data: ${toJSON(inputData)}`,
+    ].join("\n");
+    super(message, ...params);
     this.validationErrors = validationErrors;
   }
 }
@@ -86,7 +93,7 @@ export class FetchError extends ProjectError {
       `Request: ${res.url}`,
       `Status: ${res.status}`,
       `Message: ${res.statusText}`,
-      `Headers: ${toJSON(Array.from(res.headers.entries()))}`,
+      `Headers: ${toJSON(Object.fromEntries(res.headers))}`,
       body && `Body: ${body}`,
     ].join("\n");
     super(message, options, ...params);

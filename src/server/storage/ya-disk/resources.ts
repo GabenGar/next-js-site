@@ -1,4 +1,5 @@
 import { yaDiskfetch } from "./fetch";
+import type { IYaDiskResource } from "./types";
 
 /**
  * Получить метаинформацию о файле или каталоге.
@@ -8,7 +9,7 @@ import { yaDiskfetch } from "./fetch";
 export async function getPathInfo(path: string) {
   const searchParams = new URLSearchParams([["path", path]]);
 
-  const pathInfo = await yaDiskfetch(
+  const pathInfo = await yaDiskfetch<IYaDiskResource>(
     "/v1/disk/resources",
     { method: "GET" },
     searchParams

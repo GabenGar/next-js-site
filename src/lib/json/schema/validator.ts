@@ -75,7 +75,7 @@ export function createValidator<Schema = unknown>(schema: SchemaObject) {
 
     if (!result) {
       // doing a copy as per ajv instructions
-      throw new FieldsValidationError([...validate.errors!]);
+      throw new FieldsValidationError([...validate.errors!], inputData);
     }
 
     return {

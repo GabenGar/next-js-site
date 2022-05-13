@@ -1,8 +1,17 @@
 import { YANDEX_DISK_ACCESS_TOKEN } from "#environment/vars";
 import { createFetch } from "#browser";
 
+interface OAuthResponse {
+  access_token: string;
+  token_type: string;
+  expires_in: string;
+}
+
 const baseURL = "https://cloud-api.yandex.net";
-const customFetch = createFetch(baseURL);
+const authHeader = new Headers([
+  ["Authorization", `OAuth ${YANDEX_DISK_ACCESS_TOKEN}`],
+]);
+const customFetch = createFetch(baseURL, { headers: authHeader });
 
 export async function yaDiskfetch<BodyData>(
   path: string,
@@ -10,18 +19,7 @@ export async function yaDiskfetch<BodyData>(
   searchParams?: URLSearchParams | undefined,
   fragment?: string | undefined
 ) {
-  const headers = new Headers(init?.headers);
-  headers.set("Authorization", `OAuth ${YANDEX_DISK_ACCESS_TOKEN}`);
-
-  const response = await customFetch(
-    path,
-    {
-      ...init,
-      headers,
-    },
-    searchParams,
-    fragment
-  );
+  const response = await customFetch(path, init, searchParams, fragment);
 
   const data: BodyData = await response.json();
   return data;
@@ -39,4 +37,11 @@ function authURL(appID: string) {
   url.search = searchParams.toString();
 
   return url;
+}
+
+function parseAuthResponse(responseURL: string) {
+  const url = new URL(responseURL);
+  const res = new URLSearchParams(url.hash.slice(1));
+  const result = Object.fromEntries(res) as unknown as OAuthResponse;
+  return result;
 }
