@@ -7,6 +7,17 @@ interface OAuthResponse {
   expires_in: string;
 }
 
+interface IOptions {
+  init?: RequestInit;
+  searchParams?: URLSearchParams;
+  fragment?: string;
+  /**
+   * Return the body as JSON if `true`, otherwise return {@link Response Response}.
+   * @default true
+   */
+  isJSON?: boolean;
+}
+
 const baseURL = "https://cloud-api.yandex.net";
 const authHeader = new Headers([
   ["Authorization", `OAuth ${YANDEX_DISK_ACCESS_TOKEN}`],
@@ -15,11 +26,13 @@ const customFetch = createFetch(baseURL, { headers: authHeader });
 
 export async function yaDiskfetch<BodyData>(
   path: string,
-  init?: RequestInit | undefined,
-  searchParams?: URLSearchParams | undefined,
-  fragment?: string | undefined
+  { init, searchParams, fragment, isJSON = true }: IOptions
 ) {
   const response = await customFetch(path, init, searchParams, fragment);
+
+  if (!isJSON) {
+    return response;
+  }
 
   const data: BodyData = await response.json();
   return data;
