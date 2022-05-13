@@ -6,7 +6,7 @@
   "required": ["type", "path", "name", "created", "modified"],
   "properties": {
     "antivirus_status": {
-      "type": ["object", "string"],
+      "oneOf": [{ "type": "string" }, { "type": "object" }],
       "description": "Статус проверки антивирусом"
     },
     "resource_id": {

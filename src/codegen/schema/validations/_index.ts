@@ -15,6 +15,7 @@ export {
   validateYaDiskDiskFields,
   validateYaDiskErrorFields,
   validateYaDiskExifFields,
+  validateYaDiskLinkFields,
   validateYaDiskResourceListFields,
   validateYaDiskResourceFields,
   validateYaDiskShareInfoFields,

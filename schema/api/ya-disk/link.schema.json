@@ -1,0 +1,21 @@
+{
+  "$id": "http://schemas.com/api/ya-disk/link.schema.json",
+  "title": "YaDiskLink",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["href", "method"],
+  "properties": {
+    "href": {
+      "type": "string",
+      "description": "URL"
+    },
+    "method": {
+      "type": "string",
+      "description": "HTTP-метод"
+    },
+    "templated": {
+      "type": "boolean",
+      "description": "Признак шаблонизированного URL"
+    }
+  }
+}

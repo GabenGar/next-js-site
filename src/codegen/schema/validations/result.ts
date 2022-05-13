@@ -17,6 +17,7 @@ import {
   yaDiskDiskSchema,
   yaDiskErrorSchema,
   yaDiskExifSchema,
+  yaDiskLinkSchema,
   yaDiskResourceListSchema,
   yaDiskResourceSchema,
   yaDiskShareInfoSchema,
@@ -64,6 +65,7 @@ import type {
   IYaDiskDisk,
   IYaDiskError,
   IYaDiskExif,
+  IYaDiskLink,
   IYaDiskResourceList,
   IYaDiskResource,
   IYaDiskShareInfo,
@@ -123,6 +125,8 @@ export const validateYaDiskErrorFields =
   createValidator<IYaDiskError>(yaDiskErrorSchema);
 export const validateYaDiskExifFields =
   createValidator<IYaDiskExif>(yaDiskExifSchema);
+export const validateYaDiskLinkFields =
+  createValidator<IYaDiskLink>(yaDiskLinkSchema);
 export const validateYaDiskResourceListFields =
   createValidator<IYaDiskResourceList>(yaDiskResourceListSchema);
 export const validateYaDiskResourceFields =

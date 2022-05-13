@@ -248,6 +248,21 @@ export interface YaDiskExif {
   };
 }
 
+export interface YaDiskLink {
+  /**
+   * URL
+   */
+  href: string;
+  /**
+   * HTTP-метод
+   */
+  method: string;
+  /**
+   * Признак шаблонизированного URL
+   */
+  templated?: boolean;
+}
+
 export interface YaDiskResourceList {
   /**
    * Поле, по которому отсортирован список
@@ -279,9 +294,11 @@ export interface YaDiskResource {
   /**
    * Статус проверки антивирусом
    */
-  antivirus_status?: {
-    [k: string]: unknown;
-  };
+  antivirus_status?:
+    | string
+    | {
+        [k: string]: unknown;
+      };
   /**
    * Идентификатор ресурса
    */

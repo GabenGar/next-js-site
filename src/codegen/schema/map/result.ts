@@ -17,6 +17,7 @@ import {
   yaDiskDiskSchema,
   yaDiskErrorSchema,
   yaDiskExifSchema,
+  yaDiskLinkSchema,
   yaDiskResourceListSchema,
   yaDiskResourceSchema,
   yaDiskShareInfoSchema,
@@ -67,6 +68,7 @@ export const schemaMap: Record<string, SchemaObject> = {
   "http://schemas.com/api/ya-disk/disk.schema.json": yaDiskDiskSchema,
   "http://schemas.com/api/ya-disk/error.schema.json": yaDiskErrorSchema,
   "http://schemas.com/api/ya-disk/exif.schema.json": yaDiskExifSchema,
+  "http://schemas.com/api/ya-disk/link.schema.json": yaDiskLinkSchema,
   "http://schemas.com/api/ya-disk/resource-list.schema.json":
     yaDiskResourceListSchema,
   "http://schemas.com/api/ya-disk/resource.schema.json": yaDiskResourceSchema,

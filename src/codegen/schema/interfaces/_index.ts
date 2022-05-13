@@ -15,6 +15,7 @@ export type {
   YaDiskDisk as IYaDiskDisk,
   YaDiskError as IYaDiskError,
   YaDiskExif as IYaDiskExif,
+  YaDiskLink as IYaDiskLink,
   YaDiskResourceList as IYaDiskResourceList,
   YaDiskResource as IYaDiskResource,
   YaDiskShareInfo as IYaDiskShareInfo,
