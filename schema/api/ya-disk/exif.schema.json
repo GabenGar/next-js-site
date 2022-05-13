@@ -1,0 +1,21 @@
+{
+  "$id": "http://schemas.com/api/ya-disk/exif.schema.json",
+  "title": "YaDiskExif",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [],
+  "properties": {
+    "date_time": {
+      "type": "string",
+      "description": "Дата съёмки."
+    },
+    "gps_longitude": {
+      "type": "object",
+      "description": "Координата съемки (долгота)."
+    },
+    "gps_latitude": {
+      "type": "object",
+      "description": "Координата съемки (широта)."
+    }
+  }
+}

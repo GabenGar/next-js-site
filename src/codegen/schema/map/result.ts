@@ -13,8 +13,13 @@ import {
   accountProfileSchema,
   accountProfileClientSchema,
   accountProfileInitSchema,
+  yaDiskCommentIDsSchema,
   yaDiskDiskSchema,
   yaDiskErrorSchema,
+  yaDiskExifSchema,
+  yaDiskResourceListSchema,
+  yaDiskResourceSchema,
+  yaDiskShareInfoSchema,
   yaDiskSystemFoldersSchema,
   yaDiskUserSchema,
   blogPostSchema,
@@ -57,8 +62,16 @@ export const schemaMap: Record<string, SchemaObject> = {
     accountProfileClientSchema,
   "http://schemas.com/account/profile/init.schema.json":
     accountProfileInitSchema,
+  "http://schemas.com/api/ya-disk/comment-ids.schema.json":
+    yaDiskCommentIDsSchema,
   "http://schemas.com/api/ya-disk/disk.schema.json": yaDiskDiskSchema,
   "http://schemas.com/api/ya-disk/error.schema.json": yaDiskErrorSchema,
+  "http://schemas.com/api/ya-disk/exif.schema.json": yaDiskExifSchema,
+  "http://schemas.com/api/ya-disk/resource-list.schema.json":
+    yaDiskResourceListSchema,
+  "http://schemas.com/api/ya-disk/resource.schema.json": yaDiskResourceSchema,
+  "http://schemas.com/api/ya-disk/share-info.schema.json":
+    yaDiskShareInfoSchema,
   "http://schemas.com/api/ya-disk/system-folders.schema.json":
     yaDiskSystemFoldersSchema,
   "http://schemas.com/api/ya-disk/user.schema.json": yaDiskUserSchema,

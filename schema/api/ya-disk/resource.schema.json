@@ -1,0 +1,97 @@
+{
+  "$id": "http://schemas.com/api/ya-disk/resource.schema.json",
+  "title": "YaDiskResource",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["type", "path", "name", "created", "modified"],
+  "properties": {
+    "antivirus_status": {
+      "type": "object",
+      "description": "Статус проверки антивирусом"
+    },
+    "resource_id": {
+      "type": "string",
+      "description": "Идентификатор ресурса"
+    },
+    "share": {
+      "$ref": "http://schemas.com/api/ya-disk/share-info.schema.json"
+    },
+    "file": {
+      "type": "string",
+      "description": "URL для скачивания файла"
+    },
+    "size": {
+      "type": "integer",
+      "description": "Размер файла"
+    },
+    "photoslice_time": {
+      "type": "string",
+      "description": "Дата создания фото или видео файла"
+    },
+    "_embedded": {
+      "$ref": "http://schemas.com/api/ya-disk/resource-list.schema.json"
+    },
+    "exif": {
+      "$ref": "http://schemas.com/api/ya-disk/exif.schema.json"
+    },
+    "custom_properties": {
+      "type": "object",
+      "description": "Пользовательские атрибуты ресурса"
+    },
+    "media_type": {
+      "type": "string",
+      "description": "Определённый Диском тип файла"
+    },
+    "preview": {
+      "type": "string",
+      "description": "URL превью файла"
+    },
+    "type": {
+      "type": "string",
+      "description": "Тип"
+    },
+    "mime_type": {
+      "type": "string",
+      "description": "MIME-тип файла"
+    },
+    "revision": {
+      "type": "integer",
+      "description": "Ревизия Диска в которой этот ресурс был изменён последний раз"
+    },
+    "public_url": {
+      "type": "string",
+      "description": "Публичный URL"
+    },
+    "path": {
+      "type": "string",
+      "description": "Путь к ресурсу"
+    },
+    "md5": {
+      "type": "string",
+      "description": "MD5-хэш"
+    },
+    "public_key": {
+      "type": "string",
+      "description": "Ключ опубликованного ресурса"
+    },
+    "sha256": {
+      "type": "string",
+      "description": "SHA256-хэш"
+    },
+    "name": {
+      "type": "string",
+      "description": "Имя"
+    },
+    "created": {
+      "type": "string",
+      "description": "Дата создания"
+    },
+    "modified": {
+      "type": "string",
+      "description": "Дата изменения"
+    },
+    "comment_ids": {
+      "$ref": "http://schemas.com/api/ya-disk/comment-ids.schema.json"
+    }
+  }
+}

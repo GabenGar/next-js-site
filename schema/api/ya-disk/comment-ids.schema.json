@@ -1,0 +1,17 @@
+{
+  "$id": "http://schemas.com/api/ya-disk/comment-ids.schema.json",
+  "title": "YaDiskCommentIDs",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [],
+  "properties": {
+    "private_resource": {
+      "type": "string",
+      "description": "Идентификатор комментариев для приватных ресурсов."
+    },
+    "public_resource": {
+      "type": "string",
+      "description": "Идентификатор комментариев для публичных ресурсов."
+    }
+  }
+}
