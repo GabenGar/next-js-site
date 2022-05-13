@@ -1,5 +1,5 @@
 import { yaDiskfetch } from "./fetch";
-import type { IYaDiskResource } from "./types";
+import type { IYaDiskResource, IYaDiskLink } from "./types";
 
 /**
  * Получить метаинформацию о файле или каталоге.
@@ -16,4 +16,16 @@ export async function getPathInfo(path: string) {
   );
 
   return pathInfo;
+}
+
+export async function createFolder(path: string) {
+  const searchParams = new URLSearchParams([["path", path]]);
+
+  const link = await yaDiskfetch<IYaDiskLink>(
+    "/v1/disk/resources",
+    { method: "PUT" },
+    searchParams
+  );
+
+  return link;
 }

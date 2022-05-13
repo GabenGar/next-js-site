@@ -1,2 +1,2 @@
 export { fetchDisk } from "./lib";
-export { getPathInfo } from "./resources";
+export { getPathInfo, createFolder } from "./resources";

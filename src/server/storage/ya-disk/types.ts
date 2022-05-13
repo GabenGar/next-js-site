@@ -8,4 +8,5 @@ export type {
   IYaDiskShareInfo,
   IYaDiskSystemFolders,
   IYaDiskUser,
+  IYaDiskLink
 } from "#codegen/schema/interfaces";

@@ -1,8 +1,9 @@
 import {
   validateYaDiskDiskFields,
   validateYaDiskResourceFields,
+  validateYaDiskLinkFields,
 } from "#codegen/schema/validations";
-import { fetchDisk, getPathInfo } from "#server/storage/ya-disk";
+import { fetchDisk, getPathInfo, createFolder } from "#server/storage/ya-disk";
 
 describe("Yandex.Disk API", () => {
   it("fetches disk", async () => {
@@ -16,6 +17,15 @@ describe("Yandex.Disk API", () => {
     const path = "/";
     const pathData = await getPathInfo(path);
     const validationResult = await validateYaDiskResourceFields(pathData);
+
+    expect(validationResult.is_successful).toBe(true);
+  });
+
+  const testFolderPath = "/test";
+
+  it.only("creates a folder at path", async () => {
+    const link = await createFolder(testFolderPath);
+    const validationResult = await validateYaDiskLinkFields(link);
 
     expect(validationResult.is_successful).toBe(true);
   });
