@@ -15,6 +15,7 @@ export { default as yaDiskDiskSchema } from "#schema/api/ya-disk/disk.schema.jso
 export { default as yaDiskErrorSchema } from "#schema/api/ya-disk/error.schema.json";
 export { default as yaDiskExifSchema } from "#schema/api/ya-disk/exif.schema.json";
 export { default as yaDiskLinkSchema } from "#schema/api/ya-disk/link.schema.json";
+export { default as yaDiskOperationStatusSchema } from "#schema/api/ya-disk/operation-status.schema.json";
 export { default as yaDiskResourceListSchema } from "#schema/api/ya-disk/resource-list.schema.json";
 export { default as yaDiskResourceSchema } from "#schema/api/ya-disk/resource.schema.json";
 export { default as yaDiskShareInfoSchema } from "#schema/api/ya-disk/share-info.schema.json";

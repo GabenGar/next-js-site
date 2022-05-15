@@ -263,6 +263,13 @@ export interface YaDiskLink {
   templated?: boolean;
 }
 
+export interface YaDiskOperationStatus {
+  /**
+   * The status of the operation.
+   */
+  status: "success" | "failure" | "in-progress";
+}
+
 export interface YaDiskResourceList {
   /**
    * Поле, по которому отсортирован список

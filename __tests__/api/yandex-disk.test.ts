@@ -1,3 +1,4 @@
+import path from "path";
 import {
   validateYaDiskDiskFields,
   validateYaDiskResourceFields,
@@ -8,6 +9,7 @@ import {
   getPathInfo,
   createFolder,
   deletePath,
+  uploadFile,
 } from "#server/storage/ya-disk";
 
 describe("Yandex.Disk API", () => {
@@ -26,27 +28,29 @@ describe("Yandex.Disk API", () => {
     expect(validationResult.is_successful).toBe(true);
   });
 
-  const testFolderPath = "/test";
+  describe("Manipulate files", () => {
+    const testFolderPath = "/test";
+    const testFileName = `test-file.md`;
+    const testFileContent = `# Test`;
 
-  it("creates a folder at the path", async () => {
-    const link = await createFolder(testFolderPath);
-    const validationResult = await validateYaDiskLinkFields(link);
+    it("creates a folder at the path", async () => {
+      expect(async () => {
+        await createFolder(testFolderPath);
+      }).not.toThrow();
+    });
 
-    expect(validationResult.is_successful).toBe(true);
-  });
+    it("uploads the file", async () => {
+      const filePath = path.join(testFolderPath, testFileName);
 
-  it("deletes the folder at the path", async () => {
-    const result = await deletePath(testFolderPath);
+      expect(async () => {
+        await uploadFile(filePath, testFileContent);
+      }).not.toThrow();
+    });
 
-    let validationResult;
+    it("deletes the folder/file at the path", async () => {
+      const result = await deletePath(testFolderPath);
 
-    if (result === true) {
-      validationResult = true;
-    } else {
-      const linkValidation = await validateYaDiskLinkFields(result);
-      validationResult = linkValidation.is_successful;
-    }
-
-    expect(validationResult).toBe(true);
+      expect(result).toBe(true);
+    });
   });
 });

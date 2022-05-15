@@ -16,6 +16,7 @@ export {
   yaDiskErrorSchema,
   yaDiskExifSchema,
   yaDiskLinkSchema,
+  yaDiskOperationStatusSchema,
   yaDiskResourceListSchema,
   yaDiskResourceSchema,
   yaDiskShareInfoSchema,

@@ -5,6 +5,7 @@ export { buttonClicked } from "./dom";
 export { transformChildrenProps, getValidChildren } from "./react";
 export { createSingleton } from "./create-singleton";
 export { guessLinkType } from "./guess-link-type";
+export { sleep } from "./sleep";
 
 export type { ILinkTypes } from "./guess-link-type";
 

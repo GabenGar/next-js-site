@@ -27,10 +27,11 @@ const customFetch = createFetch(baseURL, { headers: authHeader });
 export async function yaDiskfetch<BodyData>(
   path: string,
   { init, searchParams, fragment, isJSON = true }: IOptions
-) {
+): Promise<BodyData> {
   const response = await customFetch(path, init, searchParams, fragment);
 
   if (!isJSON) {
+    // @ts-expect-error response type is set as generic by the caller
     return response;
   }
 
