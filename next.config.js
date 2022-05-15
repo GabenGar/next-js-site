@@ -32,6 +32,7 @@ const nextJSConfig = {
       const reportFilename = path.join(dir, ".next", "analyze", filename)
 
       config && config.plugins && config.plugins.push(
+        // @ts-expect-error webpack error
         new BundleAnalyzerPlugin({
           analyzerMode: 'static',
           reportFilename,

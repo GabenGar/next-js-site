@@ -14,7 +14,7 @@
       "#assets": ["src/assets/_index.ts"],
       "#assets/*": ["src/assets/*"],
       "#lib/*": ["src/lib/*/_index.ts"],
-      "#store/*": ["src/store/*/_index.ts"],
+      "#store/*": ["src/browser/store/*/_index.ts"],
       "#pages/*": ["src/pages/*"],
       "#components/*": ["src/components/*/_index.ts"],
       "#styles/*": ["src/styles/*"],

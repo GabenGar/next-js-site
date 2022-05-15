@@ -21,7 +21,9 @@ async function createSchemaImports() {
       if (
         !isJSONSchema(folderItem) ||
         // meta schema is excluded because it gets fed separately
-        folderItem.entity.name === "meta.schema"
+        folderItem.entity.name === "meta.schema" ||
+        // exclude `api` schema too for a time being
+        folderItem.entity.name === "api.schema"
       ) {
         return result;
       }

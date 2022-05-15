@@ -92,7 +92,14 @@
     "ADMIN_INVITE_CODE": {
       "type": "string",
       "description": "Admin-exclusive invite."
+    },
+    "YANDEX_DISK_ACCESS_TOKEN": {
+      "type": "string",
+      "description": "Access token for Yandex.Disk."
+    },
+    "YANDEX_DISK_APP_ID": {
+      "type": "string",
+      "description": "ID of the Yandex app with Yandex.Disk permissions."
     }
   }
-
 }

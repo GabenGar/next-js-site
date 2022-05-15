@@ -3,7 +3,7 @@ import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { createSEOTags } from "#lib/seo";
 import { ProjectURL } from "#lib/url";
-import { setLocalStoreItem } from "#store/local";
+import { setLocalStoreItem } from "#browser/store/local";
 import { Page } from "#components/pages";
 
 import type { InferGetStaticPropsType, GetStaticProps } from "next";

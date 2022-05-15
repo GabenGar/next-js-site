@@ -170,6 +170,307 @@ export interface AccountProfileInit {
   avatar_file?: string;
 }
 
+export interface YaDiskCommentIDs {
+  /**
+   * Идентификатор комментариев для приватных ресурсов.
+   */
+  private_resource?: string;
+  /**
+   * Идентификатор комментариев для публичных ресурсов.
+   */
+  public_resource?: string;
+}
+
+export interface YaDiskDisk {
+  /**
+   * Признак включенной безлимитной автозагрузки с мобильных устройств.
+   */
+  unlimited_autoupload_enabled?: boolean;
+  /**
+   * Максимальный поддерживаемый размер файла.
+   */
+  max_file_size?: number;
+  /**
+   * Общий объем диска (байт)
+   */
+  total_space?: number;
+  /**
+   * Общий размер файлов в Корзине (байт). Входит в `used_space`.
+   */
+  trash_size?: number;
+  /**
+   * Признак наличия купленного места.
+   */
+  is_paid?: boolean;
+  /**
+   * Используемый объем диска (байт)
+   */
+  used_space?: number;
+  system_folders?: YaDiskSystemFolders;
+  user?: YaDiskUser;
+  /**
+   * Текущая ревизия Диска
+   */
+  revision?: number;
+}
+
+export interface YaDiskError {
+  /**
+   * Человекочитаемое описание ошибки
+   */
+  message: string;
+  /**
+   * Техническое описание ошибки
+   */
+  description: string;
+  /**
+   * Уникальный код ошибки
+   */
+  error: string;
+}
+
+export interface YaDiskExif {
+  /**
+   * Дата съёмки.
+   */
+  date_time?: string;
+  /**
+   * Координата съемки (долгота).
+   */
+  gps_longitude?: {
+    [k: string]: unknown;
+  };
+  /**
+   * Координата съемки (широта).
+   */
+  gps_latitude?: {
+    [k: string]: unknown;
+  };
+}
+
+export interface YaDiskLink {
+  /**
+   * URL
+   */
+  href: string;
+  /**
+   * HTTP-метод
+   */
+  method: string;
+  /**
+   * Признак шаблонизированного URL
+   */
+  templated?: boolean;
+}
+
+export interface YaDiskOperationStatus {
+  /**
+   * The status of the operation.
+   */
+  status: "success" | "failure" | "in-progress";
+}
+
+export interface YaDiskResourceList {
+  /**
+   * Поле, по которому отсортирован список
+   */
+  sort?: string;
+  /**
+   * Элементы списка
+   */
+  items: YaDiskResource[];
+  /**
+   * Количество элементов на странице
+   */
+  limit?: number;
+  /**
+   * Смещение от начала списка
+   */
+  offset?: number;
+  /**
+   * Путь к ресурсу, для которого построен список
+   */
+  path: string;
+  /**
+   * Общее количество элементов в списке
+   */
+  total?: number;
+}
+
+export interface YaDiskResource {
+  /**
+   * Статус проверки антивирусом
+   */
+  antivirus_status?:
+    | string
+    | {
+        [k: string]: unknown;
+      };
+  /**
+   * Идентификатор ресурса
+   */
+  resource_id?: string;
+  share?: YaDiskShareInfo;
+  /**
+   * URL для скачивания файла
+   */
+  file?: string;
+  /**
+   * Размер файла
+   */
+  size?: number;
+  /**
+   * Дата создания фото или видео файла
+   */
+  photoslice_time?: string;
+  _embedded?: YaDiskResourceList;
+  exif?: YaDiskExif;
+  /**
+   * Пользовательские атрибуты ресурса
+   */
+  custom_properties?: {
+    [k: string]: unknown;
+  };
+  /**
+   * Определённый Диском тип файла
+   */
+  media_type?: string;
+  /**
+   * URL превью файла
+   */
+  preview?: string;
+  /**
+   * Тип
+   */
+  type: string;
+  /**
+   * MIME-тип файла
+   */
+  mime_type?: string;
+  /**
+   * Ревизия Диска в которой этот ресурс был изменён последний раз
+   */
+  revision?: number;
+  /**
+   * Публичный URL
+   */
+  public_url?: string;
+  /**
+   * Путь к ресурсу
+   */
+  path: string;
+  /**
+   * MD5-хэш
+   */
+  md5?: string;
+  /**
+   * Ключ опубликованного ресурса
+   */
+  public_key?: string;
+  /**
+   * SHA256-хэш
+   */
+  sha256?: string;
+  /**
+   * Имя
+   */
+  name: string;
+  /**
+   * Дата создания
+   */
+  created: string;
+  /**
+   * Дата изменения
+   */
+  modified: string;
+  comment_ids?: YaDiskCommentIDs;
+}
+
+export interface YaDiskShareInfo {
+  /**
+   * Признак того, что папка является корневой в группе
+   */
+  is_root?: boolean;
+  /**
+   * Признак, что текущий пользователь является владельцем общей папки
+   */
+  is_owned?: boolean;
+  /**
+   * Права доступа
+   */
+  rights: string;
+}
+
+export interface YaDiskSystemFolders {
+  /**
+   * Путь к папке "Социальные сети/Одноклассники".
+   */
+  odnoklassniki?: string;
+  /**
+   * Путь к папке "Социальные сети/Google+".
+   */
+  google?: string;
+  /**
+   * Путь к папке "Социальные сети/Instagram".
+   */
+  instagram?: string;
+  /**
+   * Путь к папке "Социальные сети/ВКонтакте".
+   */
+  vkontakte?: string;
+  /**
+   * Путь к папке "Социальные сети/Мой Мир".
+   */
+  mailru?: string;
+  /**
+   * Путь к папке "Загрузки".
+   */
+  downloads?: string;
+  /**
+   * Путь к папке "Приложения".
+   */
+  applications?: string;
+  /**
+   * Путь к папке "Социальные сети/Facebook".
+   */
+  facebook?: string;
+  /**
+   * Путь к папке "Социальные сети".
+   */
+  social?: string;
+  /**
+   * Путь к папке "Фотокамера".
+   */
+  photostream?: string;
+  /**
+   * Путь к папке "Скриншоты".
+   */
+  screenshots?: string;
+  /**
+   * Путь к папке "Сканы".
+   */
+  scans?: string;
+}
+
+export interface YaDiskUser {
+  /**
+   * Страна
+   */
+  country?: string;
+  /**
+   * Логин
+   */
+  login?: string;
+  /**
+   * Отображаемое имя
+   */
+  display_name?: string;
+  /**
+   * Идентификатор пользователя
+   */
+  uid?: string;
+}
+
 /**
  * The post of the blog.
  */
@@ -273,6 +574,14 @@ export interface ProjectConfig {
    * Admin-exclusive invite.
    */
   ADMIN_INVITE_CODE?: string;
+  /**
+   * Access token for Yandex.Disk.
+   */
+  YANDEX_DISK_ACCESS_TOKEN?: string;
+  /**
+   * ID of the Yandex app with Yandex.Disk permissions.
+   */
+  YANDEX_DISK_APP_ID?: string;
 }
 
 /**

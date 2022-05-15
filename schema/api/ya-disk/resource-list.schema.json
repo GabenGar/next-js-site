@@ -1,0 +1,36 @@
+{
+  "$id": "http://schemas.com/api/ya-disk/resource-list.schema.json",
+  "title": "YaDiskResourceList",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["path", "items"],
+  "properties": {
+    "sort": {
+      "type": "string",
+      "description": "Поле, по которому отсортирован список"
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "$ref": "http://schemas.com/api/ya-disk/resource.schema.json"
+      },
+      "description": "Элементы списка"
+    },
+    "limit": {
+      "type": "integer",
+      "description": "Количество элементов на странице"
+    },
+    "offset": {
+      "type": "integer",
+      "description": "Смещение от начала списка"
+    },
+    "path": {
+      "type": "string",
+      "description": "Путь к ресурсу, для которого построен список"
+    },
+    "total": {
+      "type": "integer",
+      "description": "Общее количество элементов в списке"
+    }
+  }
+}

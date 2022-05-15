@@ -1,6 +1,6 @@
 import { useTranslation } from "next-i18next";
-import { useAppDispatch } from "#store/redux";
-import { removeNoteAsync } from "#store/redux/reducers";
+import { useAppDispatch } from "#browser/store/redux";
+import { removeNoteAsync } from "#browser/store/redux/reducers";
 import { HTMLUl } from "#components/html/ul";
 import { HTMLLi } from "#components/html/li";
 import { Button } from "#components/buttons";

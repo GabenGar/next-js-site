@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { validateCommentInitFields } from "#codegen/schema/validations";
 import { FieldsValidationError } from "#lib/errors";
-import { useAppDispatch } from "#store/redux";
-import { createFMComment } from "#store/redux/reducers";
+import { useAppDispatch } from "#browser/store/redux";
+import { createFMComment } from "#browser/store/redux/reducers";
 import { blockComponent } from "#components/meta";
 import { JSONView } from "#components/json";
 import { Button, ButtonList, ButtonSubmit } from "#components/buttons";

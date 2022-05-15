@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import clsx from "clsx";
-import { setCookie } from "#store/cookie-store";
+import { setCookie } from "#browser/store/cookie-store";
 import { blockComponent } from "#components/meta";
 import { List, ListItem } from "#components/lists";
 import { Button } from "#components/buttons";

@@ -1,0 +1,21 @@
+{
+  "$id": "http://schemas.com/api/ya-disk/share-info.schema.json",
+  "title": "YaDiskShareInfo",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["rights"],
+  "properties": {
+    "is_root": {
+      "type": "boolean",
+      "description": "Признак того, что папка является корневой в группе"
+    },
+    "is_owned": {
+      "type": "boolean",
+      "description": "Признак, что текущий пользователь является владельцем общей папки"
+    },
+    "rights": {
+      "type": "string",
+      "description": "Права доступа"
+    }
+  }
+}

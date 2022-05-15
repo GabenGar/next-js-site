@@ -1,0 +1,25 @@
+{
+  "$id": "http://schemas.com/api/ya-disk/user.schema.json",
+  "title": "YaDiskUser",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [],
+  "properties": {
+    "country": {
+      "type": "string",
+      "description": "Страна"
+    },
+    "login": {
+      "type": "string",
+      "description": "Логин"
+    },
+    "display_name": {
+      "type": "string",
+      "description": "Отображаемое имя"
+    },
+    "uid": {
+      "type": "string",
+      "description": "Идентификатор пользователя"
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "$id": "http://schemas.com/api/ya-disk/operation-status.schema.json",
+  "title": "YaDiskOperationStatus",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["status"],
+  "properties": {
+    "status": {
+      "description": "The status of the operation.",
+      "enum": ["success", "failure", "in-progress"]
+    }
+  }
+}

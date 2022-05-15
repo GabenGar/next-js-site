@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import useSWRImmutable from "swr/immutable";
 import { getAccount } from "#lib/api/public";
-import { getLocalStoreItem } from "#store/local";
+import { getLocalStoreItem } from "#browser/store/local";
 
 export function useAccount() {
   const [isRegistered, changeRegisteredStatus] = useState(false);

@@ -13,6 +13,17 @@ import {
   accountProfileSchema,
   accountProfileClientSchema,
   accountProfileInitSchema,
+  yaDiskCommentIDsSchema,
+  yaDiskDiskSchema,
+  yaDiskErrorSchema,
+  yaDiskExifSchema,
+  yaDiskLinkSchema,
+  yaDiskOperationStatusSchema,
+  yaDiskResourceListSchema,
+  yaDiskResourceSchema,
+  yaDiskShareInfoSchema,
+  yaDiskSystemFoldersSchema,
+  yaDiskUserSchema,
   blogPostSchema,
   calendarNoteSchema,
   calendarNoteClientSchema,
@@ -51,6 +62,17 @@ import type {
   IAccountProfile,
   IAccountProfileClient,
   IAccountProfileInit,
+  IYaDiskCommentIDs,
+  IYaDiskDisk,
+  IYaDiskError,
+  IYaDiskExif,
+  IYaDiskLink,
+  IYaDiskOperationStatus,
+  IYaDiskResourceList,
+  IYaDiskResource,
+  IYaDiskShareInfo,
+  IYaDiskSystemFolders,
+  IYaDiskUser,
   IBlogPost,
   ICalendarNote,
   ICalendarNoteClient,
@@ -97,6 +119,29 @@ export const validateAccountProfileClientFields =
   createValidator<IAccountProfileClient>(accountProfileClientSchema);
 export const validateAccountProfileInitFields =
   createValidator<IAccountProfileInit>(accountProfileInitSchema);
+export const validateYaDiskCommentIDsFields =
+  createValidator<IYaDiskCommentIDs>(yaDiskCommentIDsSchema);
+export const validateYaDiskDiskFields =
+  createValidator<IYaDiskDisk>(yaDiskDiskSchema);
+export const validateYaDiskErrorFields =
+  createValidator<IYaDiskError>(yaDiskErrorSchema);
+export const validateYaDiskExifFields =
+  createValidator<IYaDiskExif>(yaDiskExifSchema);
+export const validateYaDiskLinkFields =
+  createValidator<IYaDiskLink>(yaDiskLinkSchema);
+export const validateYaDiskOperationStatusFields =
+  createValidator<IYaDiskOperationStatus>(yaDiskOperationStatusSchema);
+export const validateYaDiskResourceListFields =
+  createValidator<IYaDiskResourceList>(yaDiskResourceListSchema);
+export const validateYaDiskResourceFields =
+  createValidator<IYaDiskResource>(yaDiskResourceSchema);
+export const validateYaDiskShareInfoFields = createValidator<IYaDiskShareInfo>(
+  yaDiskShareInfoSchema
+);
+export const validateYaDiskSystemFoldersFields =
+  createValidator<IYaDiskSystemFolders>(yaDiskSystemFoldersSchema);
+export const validateYaDiskUserFields =
+  createValidator<IYaDiskUser>(yaDiskUserSchema);
 export const validateBlogPostFields =
   createValidator<IBlogPost>(blogPostSchema);
 export const validateCalendarNoteFields =

@@ -10,6 +10,17 @@ export { default as inviteInitSchema } from "#schema/account/invite/init.schema.
 export { default as accountProfileSchema } from "#schema/account/profile/base.schema.json";
 export { default as accountProfileClientSchema } from "#schema/account/profile/client.schema.json";
 export { default as accountProfileInitSchema } from "#schema/account/profile/init.schema.json";
+export { default as yaDiskCommentIDsSchema } from "#schema/api/ya-disk/comment-ids.schema.json";
+export { default as yaDiskDiskSchema } from "#schema/api/ya-disk/disk.schema.json";
+export { default as yaDiskErrorSchema } from "#schema/api/ya-disk/error.schema.json";
+export { default as yaDiskExifSchema } from "#schema/api/ya-disk/exif.schema.json";
+export { default as yaDiskLinkSchema } from "#schema/api/ya-disk/link.schema.json";
+export { default as yaDiskOperationStatusSchema } from "#schema/api/ya-disk/operation-status.schema.json";
+export { default as yaDiskResourceListSchema } from "#schema/api/ya-disk/resource-list.schema.json";
+export { default as yaDiskResourceSchema } from "#schema/api/ya-disk/resource.schema.json";
+export { default as yaDiskShareInfoSchema } from "#schema/api/ya-disk/share-info.schema.json";
+export { default as yaDiskSystemFoldersSchema } from "#schema/api/ya-disk/system-folders.schema.json";
+export { default as yaDiskUserSchema } from "#schema/api/ya-disk/user.schema.json";
 export { default as blogPostSchema } from "#schema/blog-post.schema.json";
 export { default as calendarNoteSchema } from "#schema/calendar-note/base.schema.json";
 export { default as calendarNoteClientSchema } from "#schema/calendar-note/client.schema.json";

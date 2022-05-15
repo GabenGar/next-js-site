@@ -1,0 +1,57 @@
+{
+  "$id": "http://schemas.com/api/ya-disk/system-folders.schema.json",
+  "title": "YaDiskSystemFolders",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [],
+  "properties": {
+    "odnoklassniki": {
+      "type": "string",
+      "description": "Путь к папке \"Социальные сети/Одноклассники\"."
+    },
+    "google": {
+      "type": "string",
+      "description": "Путь к папке \"Социальные сети/Google+\"."
+    },
+    "instagram": {
+      "type": "string",
+      "description": "Путь к папке \"Социальные сети/Instagram\"."
+    },
+    "vkontakte": {
+      "type": "string",
+      "description": "Путь к папке \"Социальные сети/ВКонтакте\"."
+    },
+    "mailru": {
+      "type": "string",
+      "description": "Путь к папке \"Социальные сети/Мой Мир\"."
+    },
+    "downloads": {
+      "type": "string",
+      "description": "Путь к папке \"Загрузки\"."
+    },
+    "applications": {
+      "type": "string",
+      "description": "Путь к папке \"Приложения\"."
+    },
+    "facebook": {
+      "type": "string",
+      "description": "Путь к папке \"Социальные сети/Facebook\"."
+    },
+    "social": {
+      "type": "string",
+      "description": "Путь к папке \"Социальные сети\"."
+    },
+    "photostream": {
+      "type": "string",
+      "description": "Путь к папке \"Фотокамера\"."
+    },
+    "screenshots": {
+      "type": "string",
+      "description": "Путь к папке \"Скриншоты\"."
+    },
+    "scans": {
+      "type": "string",
+      "description": "Путь к папке \"Сканы\"."
+    }
+  }
+}

@@ -12,8 +12,8 @@ import {
   getDayOfMonth,
   daysInWeek,
 } from "#lib/dates";
-import { useAppDispatch, useAppSelector } from "#store/redux";
-import { selectCalendar, getMonthNotes } from "#store/redux/reducers";
+import { useAppDispatch, useAppSelector } from "#browser/store/redux";
+import { selectCalendar, getMonthNotes } from "#browser/store/redux/reducers";
 import { WeekDays } from "#components/dates"
 import { DayOverview } from "./day-overview";
 import styles from "./_index.module.scss";

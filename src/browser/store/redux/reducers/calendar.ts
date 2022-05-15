@@ -7,7 +7,7 @@ import {
 import { nowISO, compareAscending, isSameDay } from "#lib/dates";
 
 import type { ICalendarNoteClient, ICalendarNoteInit } from "#types/entities";
-import type { AppState, AppThunk, Status } from "#store/redux";
+import type { AppState, AppThunk, Status } from "#browser/store/redux";
 import type { IISODateTime } from "#codegen/schema/interfaces";
 
 export interface CalendarState {

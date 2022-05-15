@@ -41,7 +41,8 @@ export async function getAccount(key: string = "/account") {
   const result: APIResponse<IAccountClient> = await response.json();
 
   if (!result.is_successful) {
-    throw new FetchError(String(result));
+    const fetchError = await FetchError.async(response);
+    throw fetchError;
   }
 
   return result.data;

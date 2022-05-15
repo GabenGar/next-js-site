@@ -22,6 +22,8 @@ export interface ValidationFailure extends OperationResult<false> {
 const ajv = initAJV();
 
 function initAJV() {
+  // console.log("Schema map length: ", Object.keys(schemaMap).length);
+  
   try {
     const ajv = new Ajv({
       meta: metaSchema,
@@ -73,7 +75,7 @@ export function createValidator<Schema = unknown>(schema: SchemaObject) {
 
     if (!result) {
       // doing a copy as per ajv instructions
-      throw new FieldsValidationError([...validate.errors!]);
+      throw new FieldsValidationError([...validate.errors!], inputData);
     }
 
     return {

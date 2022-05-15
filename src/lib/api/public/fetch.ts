@@ -3,7 +3,7 @@ import { SITE_ORIGIN } from "#environment/vars";
 import { createFetch } from "#browser";
 import { FetchError } from "#lib/errors";
 import { toJSON } from "#lib/json";
-import { setLocalStoreItem } from "#store/local";
+import { setLocalStoreItem } from "#browser/store/local";
 
 import type { APIRequest } from "#types/api";
 
@@ -15,7 +15,8 @@ export async function apiV1Fetch(path: string, reqInit?: RequestInit) {
 
   if (response.status === UNAUTHORIZED) {
     setLocalStoreItem<boolean>("is_registered", false);
-    throw new FetchError("Not authorized.");
+    const error = await FetchError.async(response);
+    throw error;
   }
 
   return response;
