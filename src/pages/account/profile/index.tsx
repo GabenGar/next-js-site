@@ -12,7 +12,7 @@ import { createSEOTags } from "#lib/seo";
 import { withSessionSSR, Redirect, getReqBody } from "#server/requests";
 import { Page } from "#components/pages";
 import { Form } from "#components/forms";
-import { Text } from "#components/forms/sections";
+import { File, Text } from "#components/forms/sections";
 import { ErrorsView } from "#components/errors";
 import { Article, ArticleBody, ArticleHeader } from "#components/articles";
 import { Heading } from "#components/headings";
@@ -52,6 +52,7 @@ function AccountPage({
           name="create-profile"
           method="POST"
           action="/account/profile"
+          encType="multipart/form-data"
         >
           <Heading level={2}>Create a profile</Heading>
           <Text
@@ -61,6 +62,13 @@ function AccountPage({
           >
             Full name:
           </Text>
+          <File
+            id="create-profile-avatar-file"
+            name="avatar_file"
+            accept="image/*"
+          >
+            Avatar:
+          </File>
           {errors ? (
             <ErrorsView errors={errors} />
           ) : (

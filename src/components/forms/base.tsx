@@ -6,11 +6,7 @@ import styles from "./_index.module.scss";
 
 import type { FormEvent, ReactNode } from "react";
 import type { IHTMLFormProps } from "#components/html/form";
-
-const methods = ["GET", "POST", "PUT", "PATCH", "DELETE"] as const;
-const formMethods = ["GET", "POST"] as const;
-export type IMethod = typeof methods[number];
-export type IFormMethod = typeof formMethods[number];
+import type { IFormMethod, IFormEncType } from "./types";
 
 export interface IFormProps extends IHTMLFormProps {
   /**
@@ -21,6 +17,7 @@ export interface IFormProps extends IHTMLFormProps {
    */
   submitButton?: ReactNode;
   method?: IFormMethod;
+  encType?: IFormEncType;
 }
 
 /**

@@ -1,31 +1,34 @@
 import { blockComponent } from "#components/meta";
 import { HTMLInput } from "#components/html/input";
 import { FormSection } from "./base";
-import styles from "./_index.module.scss";
+import styles from "./file.module.scss";
 
 import type { FormSectionProps } from "./base";
 
-export interface IHiddenProps extends FormSectionProps {
+export interface IFileProps extends FormSectionProps {
   id?: string;
   name: string;
   required?: boolean;
+  accept?: string;
 }
 
-export const Hidden = blockComponent(styles.hidden, Component);
+export const File = blockComponent(styles.block, Component);
 
 function Component({
   id,
   name,
+  accept,
   defaultValue,
   required,
   ...blockProps
-}: IHiddenProps) {
+}: IFileProps) {
   return (
     <FormSection {...blockProps}>
       <HTMLInput
         id={id}
         name={name}
-        type="hidden"
+        type="file"
+        accept={accept}
         required={required}
         defaultValue={defaultValue}
       />

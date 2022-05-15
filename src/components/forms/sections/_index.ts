@@ -18,3 +18,5 @@ export { Select } from "./select";
 export type { ISelectProps, IOptionProps } from "./select";
 export { Hidden } from "./hidden";
 export type { IHiddenProps } from "./hidden";
+export { File } from "./file";
+export type { IFileProps } from "./file";
