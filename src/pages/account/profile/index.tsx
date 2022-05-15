@@ -12,7 +12,7 @@ import { createSEOTags } from "#lib/seo";
 import { withSessionSSR, Redirect, getReqBody } from "#server/requests";
 import { Page } from "#components/pages";
 import { Form } from "#components/forms";
-import { File, Text } from "#components/forms/sections";
+import { FileInput, Text } from "#components/forms/sections";
 import { ErrorsView } from "#components/errors";
 import { Article, ArticleBody, ArticleHeader } from "#components/articles";
 import { Heading } from "#components/headings";
@@ -62,13 +62,13 @@ function AccountPage({
           >
             Full name:
           </Text>
-          <File
+          <FileInput
             id="create-profile-avatar-file"
             name="avatar_file"
             accept="image/*"
           >
             Avatar:
-          </File>
+          </FileInput>
           {errors ? (
             <ErrorsView errors={errors} />
           ) : (
