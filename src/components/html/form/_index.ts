@@ -1,2 +1,2 @@
 export { HTMLForm } from "./base";
-export type { IHTMLFormProps, ISubmitArgs } from "./base";
+export type { IHTMLFormProps, ISubmitEvent } from "./base";

@@ -72,7 +72,7 @@ function Component({
     <FormSection {...blockProps}>
       <HTMLLabel htmlFor={id}>{children}</HTMLLabel>
       <HTMLLabel htmlFor={id} className={styles.label}>
-        Click to select files
+        Click to select a file
       </HTMLLabel>
       <HTMLInput
         id={id}

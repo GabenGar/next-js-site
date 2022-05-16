@@ -9,7 +9,7 @@ import {
   validateAccountProfileInitFields,
 } from "#lib/account";
 import { createSEOTags } from "#lib/seo";
-import { withSessionSSR, Redirect, getReqBody } from "#server/requests";
+import { withSessionSSR, Redirect, getMultipartReqBody } from "#server/requests";
 import { Page } from "#components/pages";
 import { Form } from "#components/forms";
 import { FileInput, Text } from "#components/forms/sections";
@@ -126,33 +126,11 @@ export const getServerSideProps = withSessionSSR<AccountPageProps>(
       "account",
     ]);
 
-    if (req.method === "POST") {
-      const profileInit = await getReqBody<IAccountProfileInit>(req);
+    const isFormSubmission =
+      req.method === "POST" &&
+      req.headers["content-type"]?.includes("multipart/form-data");
 
-      try {
-        await validateAccountProfileInitFields(profileInit);
-      } catch (error) {
-        if (!(error instanceof FieldsValidationError)) {
-          throw error;
-        }
-
-        return {
-          props: {
-            ...localization,
-            localeInfo,
-            account: accountClient,
-            schemaValidationErrors: error.validationErrors,
-          },
-        };
-      }
-
-      const { account_id, ...newProfile } = await registerProfile(
-        account,
-        profileInit
-      );
-
-      accountClient.profile = newProfile;
-
+    if (!isFormSubmission) {
       return {
         props: {
           ...localization,
@@ -161,6 +139,34 @@ export const getServerSideProps = withSessionSSR<AccountPageProps>(
         },
       };
     }
+
+    const profileInit = await getMultipartReqBody<IAccountProfileInit>(req);
+
+    console.log(profileInit);
+
+    try {
+      await validateAccountProfileInitFields(profileInit);
+    } catch (error) {
+      if (!(error instanceof FieldsValidationError)) {
+        throw error;
+      }
+
+      return {
+        props: {
+          ...localization,
+          localeInfo,
+          account: accountClient,
+          schemaValidationErrors: error.validationErrors,
+        },
+      };
+    }
+
+    const { account_id: _, ...newProfile } = await registerProfile(
+      account,
+      profileInit
+    );
+
+    accountClient.profile = newProfile;
 
     return {
       props: {

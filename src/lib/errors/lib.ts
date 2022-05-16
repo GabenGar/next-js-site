@@ -35,12 +35,24 @@ export class ConfigurationError extends ProjectError {
   }
 }
 
-export class NotImplementedError extends ProjectError {}
+export class NotImplementedError extends ProjectError {
+  featureName: string;
+
+  name = "NotImplementedError";
+
+  constructor(featureName: string, options?: ErrorOptions, ...params: any[]) {
+    const message = `Feature "${featureName}" is not implemented.`;
+    super(message, options, ...params);
+    this.featureName = featureName;
+  }
+}
 
 /**
  * Account authentification errors.
  */
-export class AuthError extends ProjectError {}
+export class AuthError extends ProjectError {
+  name = "AuthError";
+}
 
 /**
  * JSON schema validation errors.
