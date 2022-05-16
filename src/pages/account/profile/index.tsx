@@ -60,7 +60,7 @@ function AccountPage({
             name="full_name"
             defaultValue={newProfile?.full_name}
           >
-            Full name:
+            Name:
           </Text>
           <FileInput
             id="create-profile-avatar-file"
