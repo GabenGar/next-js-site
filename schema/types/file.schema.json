@@ -11,8 +11,7 @@
     },
     "filepath": {
       "type": "string",
-      "description": "The path this file is being written to.",
-      "format": "uri"
+      "description": "The path this file is being written to."
     },
     "originalFilename": {
       "type": "string",

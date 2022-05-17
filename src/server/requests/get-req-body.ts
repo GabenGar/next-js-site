@@ -42,7 +42,23 @@ export async function getMultipartReqBody<T = Record<string, unknown>>(
 ) {
   const uploadDir = await getTempFolder();
   const { fields, files } = await parseForm(req, { uploadDir });
-  const result = { ...fields, ...files } as unknown as T;
+  const normalizedFields = Object.entries(fields).reduce<
+    Record<string, unknown>
+  >((normalizedFields, [key, value]) => {
+    normalizedFields[key] = typeof value === "string" ? value : value[0];
+
+    return normalizedFields;
+  }, {});
+  const normalizedFiles = Object.entries(files).reduce<Record<string, unknown>>(
+    (normalizedFiles, [key, value]) => {
+      normalizedFiles[key] = Array.isArray(value) ? value[0] : value;
+
+      return normalizedFiles;
+    },
+    {}
+  );
+  const result = { ...normalizedFields, ...normalizedFiles } as unknown as T;
+  console.log(toJSON(result));
 
   return result;
 }

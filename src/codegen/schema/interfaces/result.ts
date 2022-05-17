@@ -166,11 +166,11 @@ export interface AccountProfileInit {
   /**
    * The name shown on the profile card.
    */
-  full_name?: string;
+  full_name?: string | null;
   /**
    * Different type for client and server init.
    */
-  avatar_file?: string | FormFileObject;
+  avatar_file?: string | FormFileObject | null;
 }
 
 export interface YaDiskCommentIDs {
