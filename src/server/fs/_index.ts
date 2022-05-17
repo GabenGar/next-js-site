@@ -1,4 +1,4 @@
-export { readFile, readFolder, saveToFile } from "./lib";
+export { readFile, readFolder, saveToFile, getTempFolder } from "./lib";
 export { startPathReduce as reduceFolder } from "./reduce-folder";
 export { readJSON, saveToJSON } from "./json";
 export type { ReduceOptions, ReducerCallback } from "./reduce-folder";

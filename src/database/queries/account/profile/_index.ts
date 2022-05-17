@@ -79,3 +79,8 @@ export async function getProfiles(paginationDB: IPaginationDB) {
 
   return result;
 }
+
+export async function addProfileAvatar(
+  account_id: ISerialInteger,
+  avatarURL: string
+) {}

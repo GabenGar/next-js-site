@@ -167,7 +167,10 @@ export interface AccountProfileInit {
    * The name shown on the profile card.
    */
   full_name?: string;
-  avatar_file?: string;
+  /**
+   * Different type for client and server init.
+   */
+  avatar_file?: string | FormFileObject;
 }
 
 export interface YaDiskCommentIDs {
@@ -739,6 +742,48 @@ export type ISOTime = string;
  * A type to validate email strings separately.
  */
 export type EmailString = string;
+
+/**
+ * The content of `<input type="file">` as parsed by `formidable`.
+ */
+export interface FormFileObject {
+  /**
+   * The size of the uploaded file in bytes. This property says how many bytes of the file have been written to disk yet
+   */
+  size: number;
+  /**
+   * The path this file is being written to.
+   */
+  filepath: string;
+  /**
+   * The name this file had according to the uploading client.
+   */
+  originalFilename?: string;
+  /**
+   * Calculated based on options provided.
+   */
+  newFilename?: string;
+  /**
+   * The mime type of this file, according to the uploading client.
+   */
+  mimetype?: string;
+  /**
+   * A `Date` object (or `null`) containing the time this file was last written to.  Mostly here for compatibility with the [W3C File API Draft](http://dev.w3.org/2006/webapi/FileAPI/).
+   */
+  mtime?: {
+    [k: string]: unknown;
+  };
+  hashAlgorithm?: false | ("sha1" | "md5" | "sha256");
+  /**
+   * If `options.hashAlgorithm` calculation was set, you can read the hex digest out of this var (at the end it will be a string).
+   */
+  hash?:
+    | string
+    | {
+        [k: string]: unknown;
+      };
+  [k: string]: unknown;
+}
 
 /**
  * Integer equivalent of `SERIAL` type

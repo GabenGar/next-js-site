@@ -47,5 +47,6 @@ export type {
   ISODateTime as IISODateTime,
   ISOTime as IISOTime,
   EmailString as IEmailString,
+  FormFileObject as IFormFileObject,
   SerialInteger as ISerialInteger,
 } from "./result";

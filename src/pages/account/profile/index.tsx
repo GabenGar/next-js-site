@@ -140,9 +140,7 @@ export const getServerSideProps = withSessionSSR<AccountPageProps>(
       };
     }
 
-    const profileInit = await getMultipartReqBody<IAccountProfileInit>(req);
-
-    console.log(profileInit);
+    const profileInit = await getMultipartReqBody<IAccountProfileInit>(req, "5mb");
 
     try {
       await validateAccountProfileInitFields(profileInit);

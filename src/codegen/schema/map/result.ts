@@ -46,6 +46,7 @@ import {
   iSODateTimeSchema,
   iSOTimeSchema,
   emailStringSchema,
+  formFileObjectSchema,
   serialIntegerSchema,
 } from "#codegen/schema/assets";
 
@@ -109,5 +110,6 @@ export const schemaMap: Record<string, SchemaObject> = {
   "http://schemas.com/types/dates/iso-datetime.schema.json": iSODateTimeSchema,
   "http://schemas.com/types/dates/iso-time.schema.json": iSOTimeSchema,
   "http://schemas.com/types/email.schema.json": emailStringSchema,
+  "http://schemas.com/types/file.schema.json": formFileObjectSchema,
   "http://schemas.com/types/serial.schema.json": serialIntegerSchema,
 };

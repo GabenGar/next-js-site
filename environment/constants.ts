@@ -4,6 +4,8 @@ export const ERROR_MESSAGE = "FLYING POLAR BUFFALO ERROR";
 
 export const IS_BROWSER = typeof window !== "undefined";
 export const PROJECT_ROOT = process.cwd();
+export const TEMP_FOLDER = path.join(PROJECT_ROOT, "tmp")
+
 export const SCHEMA_FOLDER = path.join(PROJECT_ROOT, "schema");
 export const CONFIGS_FOLDER = path.join(PROJECT_ROOT, "configs");
 export const SOURCE_FOLDER = path.join(PROJECT_ROOT, "src");

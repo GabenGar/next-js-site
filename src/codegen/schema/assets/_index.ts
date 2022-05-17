@@ -44,5 +44,6 @@ export {
   iSODateTimeSchema,
   iSOTimeSchema,
   emailStringSchema,
+  formFileObjectSchema,
   serialIntegerSchema,
 } from "./result";

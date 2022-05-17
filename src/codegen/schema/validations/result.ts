@@ -46,6 +46,7 @@ import {
   iSODateTimeSchema,
   iSOTimeSchema,
   emailStringSchema,
+  formFileObjectSchema,
   serialIntegerSchema,
 } from "#codegen/schema/assets";
 
@@ -95,6 +96,7 @@ import type {
   IISODateTime,
   IISOTime,
   IEmailString,
+  IFormFileObject,
   ISerialInteger,
 } from "#codegen/schema/interfaces";
 
@@ -187,5 +189,7 @@ export const validateISODateTimeFields =
 export const validateISOTimeFields = createValidator<IISOTime>(iSOTimeSchema);
 export const validateEmailStringFields =
   createValidator<IEmailString>(emailStringSchema);
+export const validateFormFileObjectFields =
+  createValidator<IFormFileObject>(formFileObjectSchema);
 export const validateSerialIntegerFields =
   createValidator<ISerialInteger>(serialIntegerSchema);

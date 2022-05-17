@@ -13,7 +13,13 @@
       "maxLength": 25
     },
     "avatar_file": {
-      "type": "string"
+      "description": "Different type for client and server init.",
+      "oneOf": [
+        { "type": "string" },
+        {
+          "$ref": "http://schemas.com/types/file.schema.json"
+        }
+      ]
     }
   }
 }

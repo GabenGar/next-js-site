@@ -43,4 +43,5 @@ export { default as iSODateSchema } from "#schema/types/dates/iso-date.schema.js
 export { default as iSODateTimeSchema } from "#schema/types/dates/iso-datetime.schema.json";
 export { default as iSOTimeSchema } from "#schema/types/dates/iso-time.schema.json";
 export { default as emailStringSchema } from "#schema/types/email.schema.json";
+export { default as formFileObjectSchema } from "#schema/types/file.schema.json";
 export { default as serialIntegerSchema } from "#schema/types/serial.schema.json";

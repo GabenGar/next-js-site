@@ -44,5 +44,6 @@ export {
   validateISODateTimeFields,
   validateISOTimeFields,
   validateEmailStringFields,
+  validateFormFileObjectFields,
   validateSerialIntegerFields,
 } from "./result";

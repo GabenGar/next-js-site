@@ -1,3 +1,6 @@
+# temp files
+/tmp
+
 # codegen
 /src/codegen/one-off/**/result.ts
 
