@@ -16,7 +16,6 @@
     "avatar_file": {
       "description": "Different type for client and server init.",
       "oneOf": [
-        { "type": "string" },
         {
           "$ref": "http://schemas.com/types/file.schema.json"
         },

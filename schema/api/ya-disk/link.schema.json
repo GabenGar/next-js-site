@@ -3,19 +3,19 @@
   "title": "YaDiskLink",
   "type": "object",
   "additionalProperties": false,
-  "required": ["href", "method"],
+  "required": ["href", "method", "templated"],
   "properties": {
     "href": {
       "type": "string",
-      "description": "URL"
+      "description": "URL. It may be a URL template; see the `templated` key."
     },
     "method": {
       "type": "string",
-      "description": "HTTP-метод"
+      "description": "The HTTP method for requesting the URL from the `href` key."
     },
     "templated": {
       "type": "boolean",
-      "description": "Признак шаблонизированного URL"
+      "description": "Indicates a URL template according to [RFC 6570](http://tools.ietf.org/html/rfc6570). Possible values:\n- \"true\" — URL template. Before sending a request to this address, put the desired parameter values in place of the values in curly brackets.\n- \"false\" — The URL can be requested without changes."
     }
   }
 }

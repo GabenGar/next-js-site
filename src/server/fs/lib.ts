@@ -25,6 +25,10 @@ export async function readFolder(folderPath: string): Promise<FolderItem[]> {
   return folderItems;
 }
 
+export async function deleteFile(filePath: string) {
+  await fse.remove(filePath);
+}
+
 export async function readFile(filePath: string) {
   const content = await fse.readFile(filePath, { encoding: "utf-8" });
   return content;

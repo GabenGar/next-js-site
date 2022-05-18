@@ -1,4 +1,13 @@
-import { NO_CONTENT, ACCEPTED, CREATED } from "#environment/constants/http";
+import {
+  NO_CONTENT,
+  ACCEPTED,
+  CREATED,
+  PRECONDITION_FAILED,
+  PAYLOAD_TOO_LARGE,
+  INTERNAL_SERVER_ERROR,
+  SERVICE_UNAVAILABLE,
+  INSUFFICIENT_STORAGE,
+} from "#environment/constants/http";
 import { FetchError, ProjectError } from "#lib/errors";
 import { toJSON } from "#lib/json";
 import { sleep } from "#lib/util";
@@ -71,9 +80,9 @@ export async function deletePath(path: string, isPermanent: boolean = true) {
   while (status === "in-progress") {
     const operationStatus = await getOperationStatus(operationID);
     status = operationStatus.status;
-    
+
     if (status === "in-progress") {
-      await sleep(5000);
+      await sleep(2000);
     }
   }
 
@@ -88,7 +97,7 @@ export async function deletePath(path: string, isPermanent: boolean = true) {
 
 export async function uploadFile(
   path: string,
-  file: string,
+  file: Blob,
   isOverwriting: boolean = false
 ) {
   const searchParams = new URLSearchParams([["path", path]]);
@@ -98,6 +107,8 @@ export async function uploadFile(
   }
 
   try {
+    // When you have given the Yandex.Disk API the desired path to the uploaded file,
+    // you receive a URL for accessing the file uploader.
     const uploadLink = await yaDiskfetch<ILink>("/v1/disk/resources/upload", {
       init: {
         method: "GET",
@@ -105,15 +116,53 @@ export async function uploadFile(
       searchParams,
     });
 
+    // The file should be sent using the PUT method to the upload URL,
+    // within 30 minutes of getting this URL
+    // (after 30 minutes, the link stops working
+    // and it will have to be requested again).
+    // The OAuth token isn't necessary for uploading to the storage.
     const response = await fetch(uploadLink.href, {
       method: uploadLink.method,
-      body: toJSON(file),
+      body: file,
     });
 
-    // The API responds with the 201 Created code if the file was uploaded without errors.
-    if (response.status !== CREATED) {
-      const fetchError = await FetchError.async(response);
-      throw fetchError;
+    switch (response.status) {
+      // the file was uploaded without errors.
+      case CREATED:
+        await publishResource(path);
+        const resource = await getPathInfo(path);
+
+        // the url should be present after publishing
+        if (!resource.public_url) {
+          const message = [
+            `YandexError: no public URL available after publishing a path at \"${path}\".`,
+          ].join("\n");
+          throw new ProjectError(message);
+        }
+
+        return resource.public_url;
+
+      // The file was received by the server
+      // but hasn't been transferred to the Yandex.Disk yet.
+      case ACCEPTED:
+
+      // Wrong range was passed in the `Content-Range` header
+      // when uploading the file.
+      case PRECONDITION_FAILED:
+
+      // The file size exceeds 10 GB.
+      case PAYLOAD_TOO_LARGE:
+
+      // Server error. Try to repeat the upload.
+      case INTERNAL_SERVER_ERROR:
+      case SERVICE_UNAVAILABLE:
+
+      // There's not enough free space on the user's Disk for the uploaded file.
+      case INSUFFICIENT_STORAGE:
+
+      default:
+        const fetchError = await FetchError.async(response);
+        throw fetchError;
     }
   } catch (error) {
     if (!(error instanceof Error)) {
@@ -123,4 +172,34 @@ export async function uploadFile(
     const message = ["Failed to upload a file. Reason:", error].join("\n");
     throw new ProjectError(message, { cause: error });
   }
+}
+
+function isResourcePublished(resource: IResource) {
+  return Boolean(resource.public_url && resource.public_key);
+}
+
+/**
+ * A resource becomes accessible by a direct link. You can only publish a resource using the file owner's OAuth token.
+ */
+async function publishResource(path: string) {
+  const searchParams = new URLSearchParams([["path", path]]);
+  const link = await yaDiskfetch<ILink>("/v1/disk/resources/publish", {
+    init: { method: "PUT" },
+    searchParams,
+  });
+
+  return link;
+}
+
+/**
+ * The resource loses the `public_key` and `public_url` attributes, and the public links to it stop working. To close access to the resource, you need the resource owner's OAuth token.
+ */
+async function closeResource(path: string) {
+  const searchParams = new URLSearchParams([["path", path]]);
+  const link = await yaDiskfetch<ILink>("/v1/disk/resources/unpublish", {
+    init: { method: "PUT" },
+    searchParams,
+  });
+
+  return link;
 }

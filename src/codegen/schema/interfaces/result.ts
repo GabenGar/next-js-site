@@ -170,7 +170,7 @@ export interface AccountProfileInit {
   /**
    * Different type for client and server init.
    */
-  avatar_file?: string | FormFileObject | null;
+  avatar_file?: FormFileObject | null;
 }
 
 export interface YaDiskCommentIDs {
