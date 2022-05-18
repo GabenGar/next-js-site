@@ -1,6 +1,7 @@
 import contentType from "content-type";
 import getRawBody from "raw-body";
 import { IncomingForm } from "formidable";
+import { REQUEST_PAYLOAD_LIMIT } from "#environment/constants/vercel";
 import { toJSON } from "#lib/json";
 import { NotImplementedError } from "#lib/errors";
 import { getTempFolder } from "#server/fs";
@@ -38,10 +39,14 @@ export async function getReqBody<T = Record<string, unknown>>(
  */
 export async function getMultipartReqBody<T = Record<string, unknown>>(
   req: GetServerSidePropsContext["req"],
-  limit: string = "1mb"
+
+  limit: number = REQUEST_PAYLOAD_LIMIT
 ) {
   const uploadDir = await getTempFolder();
-  const { fields, files } = await parseForm(req, { uploadDir });
+  const { fields, files } = await parseForm(req, {
+    uploadDir,
+    maxTotalFileSize: limit,
+  });
   const normalizedFields = Object.entries(fields).reduce<
     Record<string, unknown>
   >((normalizedFields, [key, value]) => {

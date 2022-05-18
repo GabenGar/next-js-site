@@ -4,7 +4,7 @@ export const ERROR_MESSAGE = "FLYING POLAR BUFFALO ERROR";
 
 export const IS_BROWSER = typeof window !== "undefined";
 export const PROJECT_ROOT = process.cwd();
-export const TEMP_FOLDER = path.join(PROJECT_ROOT, "tmp")
+export const TEMP_FOLDER = path.join(PROJECT_ROOT, "tmp");
 
 export const SCHEMA_FOLDER = path.join(PROJECT_ROOT, "schema");
 export const CONFIGS_FOLDER = path.join(PROJECT_ROOT, "configs");
@@ -15,7 +15,7 @@ export const BLOGS_FOLDER = path.join(SOURCE_FOLDER, "assets", "blog");
 /**
  * @link https://tc39.es/proposal-unified-intl-numberformat/section6/locales-currencies-tz_proposed_out.html#sec-issanctionedsimpleunitidentifier
  */
-export enum ES_UNITS {
+export const enum ES_UNITS {
   ACRE = "acre",
   BIT = "bit",
   BYTE = "byte",
@@ -23,14 +23,14 @@ export enum ES_UNITS {
   CENTIMETER = "centimeter",
   DAY = "day",
   DEGREE = "degree",
-  fahrenheit = "fahrenheit",
+  FAHRENHEIT = "fahrenheit",
   FLUID_OUNCE = "fluid-ounce",
-  foot = "foot",
-  gallon = "gallon",
+  FOOT = "foot",
+  GALLON = "gallon",
   GIGABIT = "gigabit",
   GIGABYTE = "gigabyte",
   GRAM = "gram",
-  hectare = "hectare",
+  HECTARE = "hectare",
   HOUR = "hour",
   INCH = "inch",
   KILOBIT = "kilobit",
@@ -43,22 +43,22 @@ export enum ES_UNITS {
   METER = "meter",
   MILE = "mile",
   MILE_SCANDINAVIAN = "mile-scandinavian",
-  milliliter = "milliliter",
-  millimeter = "millimeter",
-  millisecond = "millisecond",
-  minute = "minute",
-  month = "month",
-  ounce = "ounce",
-  percent = "percent",
-  petabyte = "petabyte",
-  pound = "pound",
-  second = "second",
-  stone = "stone",
-  terabit = "terabit",
-  terabyte = "terabyte",
-  week = "week",
-  yard = "yard",
-  year = "year",
+  MILLILITER = "milliliter",
+  MILLIMETER = "millimeter",
+  MILLISECOND = "millisecond",
+  MINUTE = "minute",
+  MONTH = "month",
+  OUNCE = "ounce",
+  PERCENT = "percent",
+  PETABYTE = "petabyte",
+  POUND = "pound",
+  SECOND = "second",
+  STONE = "stone",
+  TERABIT = "terabit",
+  TERABYTE = "terabyte",
+  WEEK = "week",
+  YARD = "yard",
+  YEAR = "year",
 }
 
 export const urlProtocols = [
@@ -285,3 +285,11 @@ export const urlProtocols = [
  * @link https://en.wikipedia.org/wiki/List_of_URI_schemes
  */
 export type IURLProtocols = typeof urlProtocols[number];
+
+export const enum SIZES {
+  BYTE = 1,
+  KILOBYTE = 1024 * BYTE,
+  MEGABYTE = 1024 * KILOBYTE,
+  GIGABYTE = 1024 * MEGABYTE,
+  TERABYTE = 1024 * GIGABYTE,
+}
