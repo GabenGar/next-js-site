@@ -63,7 +63,7 @@ export async function getMultipartReqBody<T = Record<string, unknown>>(
     {}
   );
   const result = { ...normalizedFields, ...normalizedFiles } as unknown as T;
-  console.log(toJSON(result));
+  // console.log(toJSON(result));
 
   return result;
 }

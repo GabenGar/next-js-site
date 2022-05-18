@@ -109,6 +109,7 @@ export async function removeProfile(
     WHERE 
       id = $(profile_id) 
       AND account_id = $(account_id)
+    RETURNING *
   `;
   const queryArgs = {
     profile_id: profileID,

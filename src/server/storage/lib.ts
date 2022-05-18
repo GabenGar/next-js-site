@@ -1,3 +1,4 @@
+import { Blob } from "fetch-blob";
 import { deleteFile, readFile } from "#server/fs";
 import { uploadFile as uploadFileToYaDisk } from "#server/storage/ya-disk";
 
@@ -9,6 +10,7 @@ export async function uploadFile(path: string, fileInfo: IFormFileObject) {
     const file = new Blob([fileContent], {
       type: fileInfo.mimetype,
     });
+
     const publicURL = await uploadFileToYaDisk(path, file);
 
     return publicURL;

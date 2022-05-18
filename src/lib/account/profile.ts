@@ -32,16 +32,6 @@ export async function registerProfile(
   return freshProfile;
 }
 
-export async function uploadAvatar(
-  profile: IAccountProfile,
-  avatar_file: IFormFileObject
-) {
-  const uploadPath = `/profile/${profile.id}/avatar`;
-  const avatar_url = await uploadFile(uploadPath, avatar_file);
-
-  return avatar_url;
-}
-
 /**
  * @TODO: file deletion also
  */
@@ -56,4 +46,14 @@ export async function getProfiles(paginationInit: IPaginationInit) {
   const profiles = await queryProfiles(paginationDB);
 
   return profiles;
+}
+
+async function uploadAvatar(
+  profile: IAccountProfile,
+  avatar_file: IFormFileObject
+) {
+  const uploadPath = `/profile/${profile.id}/avatar`;
+  const avatar_url = await uploadFile(uploadPath, avatar_file);
+
+  return avatar_url;
 }

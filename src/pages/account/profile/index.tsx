@@ -9,15 +9,25 @@ import {
   validateAccountProfileInitFields,
 } from "#lib/account";
 import { createSEOTags } from "#lib/seo";
-import { withSessionSSR, Redirect, getMultipartReqBody } from "#server/requests";
+import {
+  withSessionSSR,
+  Redirect,
+  getMultipartReqBody,
+} from "#server/requests";
 import { Page } from "#components/pages";
 import { Form } from "#components/forms";
 import { FileInput, Text } from "#components/forms/sections";
 import { ErrorsView } from "#components/errors";
-import { Article, ArticleBody, ArticleHeader } from "#components/articles";
+import {
+  Article,
+  ArticleBody,
+  ArticleFooter,
+  ArticleHeader,
+} from "#components/articles";
 import { Heading } from "#components/headings";
 import { DL, DS } from "#components/lists/d-list";
 import { DateTimeView } from "#components/dates";
+import { LinkInternal } from "#components/links";
 
 import type { InferGetServerSidePropsType } from "next";
 import type { IAccountClient, IAccountProfileInit } from "#types/entities";
@@ -58,7 +68,9 @@ function AccountPage({
           <Text
             id="create-profile-full-name"
             name="full_name"
-            defaultValue={newProfile?.full_name}
+            defaultValue={
+              newProfile?.full_name === null ? undefined : newProfile?.full_name
+            }
           >
             Name:
           </Text>
@@ -94,6 +106,11 @@ function AccountPage({
               />
             </DL>
           </ArticleBody>
+          <ArticleFooter>
+            <LinkInternal href="/account/profile/delete">
+              {t("profile_delete")}
+            </LinkInternal>
+          </ArticleFooter>
         </Article>
       )}
     </Page>
@@ -140,7 +157,7 @@ export const getServerSideProps = withSessionSSR<AccountPageProps>(
       };
     }
 
-    const profileInit = await getMultipartReqBody<IAccountProfileInit>(req, "5mb");
+    const profileInit = await getMultipartReqBody<IAccountProfileInit>(req);
 
     try {
       await validateAccountProfileInitFields(profileInit);

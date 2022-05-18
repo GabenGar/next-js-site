@@ -1,3 +1,4 @@
+import path from "path";
 import {
   NO_CONTENT,
   ACCEPTED,
@@ -7,6 +8,8 @@ import {
   INTERNAL_SERVER_ERROR,
   SERVICE_UNAVAILABLE,
   INSUFFICIENT_STORAGE,
+  CONFLICT,
+  NOT_FOUND,
 } from "#environment/constants/http";
 import { FetchError, ProjectError } from "#lib/errors";
 import { toJSON } from "#lib/json";
@@ -19,10 +22,10 @@ import type { IResource, ILink, IOperationStatus, IStatus } from "./types";
 /**
  * Получить метаинформацию о файле или каталоге.
  *
- * @param path Если путь указывает на каталог, в ответе также описываются ресурсы этого каталога.
+ * @param yadiskPath Если путь указывает на каталог, в ответе также описываются ресурсы этого каталога.
  */
-export async function getPathInfo(path: string) {
-  const searchParams = new URLSearchParams([["path", path]]);
+export async function getPathInfo(yadiskPath: string) {
+  const searchParams = new URLSearchParams([["path", yadiskPath]]);
 
   const pathInfo = await yaDiskfetch<IResource>("/v1/disk/resources", {
     init: { method: "GET" },
@@ -32,8 +35,8 @@ export async function getPathInfo(path: string) {
   return pathInfo;
 }
 
-export async function createFolder(path: string) {
-  const searchParams = new URLSearchParams([["path", path]]);
+export async function createFolder(yadiskPath: string) {
+  const searchParams = new URLSearchParams([["path", yadiskPath]]);
 
   const link = await yaDiskfetch<ILink>("/v1/disk/resources", {
     init: { method: "PUT" },
@@ -100,6 +103,8 @@ export async function uploadFile(
   file: Blob,
   isOverwriting: boolean = false
 ) {
+  await ensurePath(path);
+
   const searchParams = new URLSearchParams([["path", path]]);
 
   if (isOverwriting) {
@@ -181,8 +186,8 @@ function isResourcePublished(resource: IResource) {
 /**
  * A resource becomes accessible by a direct link. You can only publish a resource using the file owner's OAuth token.
  */
-async function publishResource(path: string) {
-  const searchParams = new URLSearchParams([["path", path]]);
+async function publishResource(yadiskPath: string) {
+  const searchParams = new URLSearchParams([["path", yadiskPath]]);
   const link = await yaDiskfetch<ILink>("/v1/disk/resources/publish", {
     init: { method: "PUT" },
     searchParams,
@@ -194,12 +199,33 @@ async function publishResource(path: string) {
 /**
  * The resource loses the `public_key` and `public_url` attributes, and the public links to it stop working. To close access to the resource, you need the resource owner's OAuth token.
  */
-async function closeResource(path: string) {
-  const searchParams = new URLSearchParams([["path", path]]);
+async function closeResource(yadiskPath: string) {
+  const searchParams = new URLSearchParams([["path", yadiskPath]]);
   const link = await yaDiskfetch<ILink>("/v1/disk/resources/unpublish", {
     init: { method: "PUT" },
     searchParams,
   });
 
   return link;
+}
+
+/**
+ * Check for the existence of the path and creates it if it doesn't exist.
+ */
+async function ensurePath(yadiskPath: string) {
+  try {
+    await getPathInfo(yadiskPath);
+  } catch (error) {
+    const isEmptyPathError =
+      error instanceof FetchError &&
+      (error.res.status === NOT_FOUND || error.res.status === CONFLICT);
+
+    if (!isEmptyPathError) {
+      throw error;
+    }
+
+    console.log("Unknown Error: ", error);
+
+    await createFolder(yadiskPath);
+  }
 }
