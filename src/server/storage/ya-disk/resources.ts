@@ -16,8 +16,15 @@ import { toJSON } from "#lib/json";
 import { sleep } from "#lib/util";
 import { yaDiskfetch } from "./fetch";
 import { getOperationStatus } from "./lib";
+import { YandexDiskError } from "./errors";
 
-import type { IResource, ILink, IOperationStatus, IStatus } from "./types";
+import type {
+  IResource,
+  ILink,
+  IOperationStatus,
+  IStatus,
+  YaDiskPath,
+} from "./types";
 
 /**
  * Получить метаинформацию о файле или каталоге.
@@ -36,13 +43,39 @@ export async function getPathInfo(yadiskPath: string) {
 }
 
 export async function createFolder(yadiskPath: string) {
-  const searchParams = new URLSearchParams([["path", yadiskPath]]);
+  let currentPath: string = "";
 
-  const link = await yaDiskfetch<ILink>("/v1/disk/resources", {
-    init: { method: "PUT" },
-    searchParams,
-  });
+  while (yadiskPath !== currentPath) {
+    try {
+      const searchParams = new URLSearchParams([["path", yadiskPath]]);
 
+      const link = await yaDiskfetch<ILink>("/v1/disk/resources", {
+        init: { method: "PUT" },
+        searchParams,
+      });
+      currentPath = yadiskPath;
+      return link;
+    } catch (error) {
+      // rethrow non-conflict errors
+      if (!(error instanceof FetchError && error.res.status !== CONFLICT)) {
+        throw error;
+      }
+
+      currentPath = path.dirname(yadiskPath);
+    }
+  }
+}
+
+async function createFolderRecursiveLy(yadiskPath: string) {
+  const closestLink = await getClosestAvailablePath(yadiskPath);
+  // @ts-expect-error
+  const link: ILink = {};
+  return link;
+}
+
+async function getClosestAvailablePath(yadiskPath: string) {
+  // @ts-expect-error
+  const link: ILink = {};
   return link;
 }
 
@@ -75,7 +108,9 @@ export async function deletePath(path: string, isPermanent: boolean = true) {
   const operationID = url.searchParams.get("id");
 
   if (!operationID) {
-    throw new ProjectError(`Parameter "id" is absent from "${link.href}" url.`);
+    throw new YandexDiskError(
+      `Parameter "id" is absent from "${link.href}" url.`
+    );
   }
 
   let status: IStatus = "in-progress";
@@ -85,12 +120,12 @@ export async function deletePath(path: string, isPermanent: boolean = true) {
     status = operationStatus.status;
 
     if (status === "in-progress") {
-      await sleep(2000);
+      await sleep(1000);
     }
   }
 
   if (status === "failure") {
-    throw new ProjectError(
+    throw new YandexDiskError(
       `Failed to delete the  \`yandex.disk\` resource at path "${path}".`
     );
   }
@@ -223,8 +258,6 @@ async function ensurePath(yadiskPath: string) {
     if (!isEmptyPathError) {
       throw error;
     }
-
-    console.log("Unknown Error: ", error);
 
     await createFolder(yadiskPath);
   }

@@ -14,3 +14,4 @@ export type {
 import type { IYaDiskOperationStatus } from "#codegen/schema/interfaces";
 
 export type IStatus = IYaDiskOperationStatus["status"];
+export type YaDiskPath = string;
