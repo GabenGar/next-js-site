@@ -1,4 +1,5 @@
 import { SIZES } from "#environment/constants";
+import { SECOND } from "./durations";
 
 /**
  * @link https://vercel.com/docs/concepts/limits/overview#reserved-variables
@@ -26,3 +27,11 @@ export const RESERVED_VARIABLES = new Set([
  * @link https://vercel.com/docs/concepts/limits/overview#serverless-function-payload-size-limit
  */
 export const REQUEST_PAYLOAD_LIMIT = 5 * SIZES.MEGABYTE;
+
+/**
+ * The maximum execution timeout is 10 seconds when deployed on a Personal Account (Hobby plan). 
+ * 
+ * For Teams, the execution timeout is 60 seconds (Pro plan) or 900 seconds (Enterprise plan).
+ * @link https://vercel.com/docs/concepts/limits/overview#serverless-function-execution-timeout
+ */
+export const MAX_REQUEST_DURATION = 10 * SECOND;

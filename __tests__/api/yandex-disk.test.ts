@@ -2,7 +2,6 @@ import path from "path";
 import {
   validateYaDiskDiskFields,
   validateYaDiskResourceFields,
-  validateYaDiskLinkFields,
 } from "#codegen/schema/validations";
 import {
   fetchDisk,
@@ -12,7 +11,7 @@ import {
   uploadFile,
 } from "#server/storage/ya-disk";
 
-describe("Yandex.Disk API", () => {
+describe.only("Yandex.Disk API", () => {
   it("fetches disk", async () => {
     const yaDiskData = await fetchDisk();
     const validationResult = await validateYaDiskDiskFields(yaDiskData);
@@ -29,11 +28,11 @@ describe("Yandex.Disk API", () => {
   });
 
   describe("Manipulate files", () => {
-    const testFolderPath = "/test";
+    const testFolderPath = "/test/test";
     const testFileName = `test-file.md`;
     const testFileContent = `# Test`;
 
-    it("creates a folder at the path", async () => {
+    it("creates a nested folder at the path", async () => {
       expect(async () => {
         await createFolder(testFolderPath);
       }).not.toThrow();
@@ -43,12 +42,17 @@ describe("Yandex.Disk API", () => {
       const filePath = path.join(testFolderPath, testFileName);
 
       expect(async () => {
-        await uploadFile(filePath, testFileContent);
+        await uploadFile(
+          filePath,
+          new Blob([testFileContent], {
+            type: "text/plain",
+          })
+        );
       }).not.toThrow();
     });
 
     it("deletes the folder/file at the path", async () => {
-      const result = await deletePath(testFolderPath);
+      const result = await deletePath(path.dirname(testFolderPath));
 
       expect(result).toBe(true);
     });
