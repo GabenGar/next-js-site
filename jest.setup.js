@@ -6,7 +6,7 @@
 import "@testing-library/jest-dom/extend-expect";
 
 // add fetch polyfill for node
-import fetch, { Headers, Request, Response, Blob } from "node-fetch";
+import fetch, { Headers, Request, Response } from "node-fetch";
 // import { Blob } from "fetch-blob";
 
 if (!globalThis.fetch) {
@@ -18,5 +18,4 @@ if (!globalThis.fetch) {
   globalThis.Request = Request;
   // @ts-expect-error
   globalThis.Response = Response;
-  globalThis.Blob = Blob;
 }

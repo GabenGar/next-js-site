@@ -2,6 +2,7 @@ import path from "path";
 import {
   validateYaDiskDiskFields,
   validateYaDiskResourceFields,
+  validateYaDiskLinkFields,
 } from "#codegen/schema/validations";
 import {
   fetchDisk,
@@ -33,9 +34,9 @@ describe.only("Yandex.Disk API", () => {
     const testFileContent = `# Test`;
 
     it("creates a nested folder at the path", async () => {
-      expect(async () => {
-        await createFolder(testFolderPath);
-      }).not.toThrow();
+      const link = await createFolder(testFolderPath);
+      const validationResult = await validateYaDiskLinkFields(link);
+      expect(validationResult.is_successful).toBe(true);
     });
 
     it("uploads the file", async () => {

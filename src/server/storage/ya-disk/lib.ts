@@ -41,13 +41,15 @@ export function diskPathFromURL(incomingURL: string | URL) {
 
 export async function createFolder(yadiskPath: string) {
   try {
-    await createFolderAPI(yadiskPath);
+    const link = await createFolderAPI(yadiskPath);
+    return link;
   } catch (error) {
     // rethrow non-conflict errors
     if (!(error instanceof FetchError && error.res.status !== CONFLICT)) {
       throw error;
     }
-    await createFolderRecursiveLy(yadiskPath);
+    const link = await createFolderRecursiveLy(yadiskPath);
+    return link;
   }
 }
 
@@ -69,10 +71,13 @@ async function createFolderRecursiveLy(yadiskPath: string) {
     )
     // removing the first path because it exists already
     .splice(0, 1);
-
+  // @ts-expect-error type stuff
+  let link: ILink = undefined;
   for await (const currentPath of pathsToCreate) {
-    await createFolder(currentPath);
+    link = await createFolderAPI(currentPath);
   }
+
+  return link;
 }
 
 /**

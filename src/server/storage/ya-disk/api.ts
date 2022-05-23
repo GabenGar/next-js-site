@@ -124,7 +124,7 @@ export async function deletePath(
 }
 
 /**
- * A resource becomes accessible by a direct link. 
+ * A resource becomes accessible by a direct link.
  * You can only publish a resource using the file owner's OAuth token.
  */
 export async function publishResource(yadiskPath: string) {
@@ -138,8 +138,8 @@ export async function publishResource(yadiskPath: string) {
 }
 
 /**
- * The resource loses the `public_key` and `public_url` attributes, and the public links to it stop working. 
- * 
+ * The resource loses the `public_key` and `public_url` attributes, and the public links to it stop working.
+ *
  * To close access to the resource, you need the resource owner's OAuth token.
  */
 export async function closeResource(yadiskPath: string) {
