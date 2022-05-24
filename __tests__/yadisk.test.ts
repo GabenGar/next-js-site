@@ -18,7 +18,23 @@ import {
 
 const apiTestFolder = "/api-test";
 const nestedAPIFolder = unixPath.join(apiTestFolder, "nested");
-describe.only("Basic API interactions", () => {
+
+describe("Basic API interactions", () => {
+  it("gets disk info", async () => {
+    const yaDiskData = await fetchDisk();
+    const validationResult = await validateYaDiskDiskFields(yaDiskData);
+
+    expect(validationResult.is_successful).toBe(true);
+  });
+
+  it("gets the root info", async () => {
+    const path = "/";
+    const pathData = await getPathInfo(path);
+    const validationResult = await validateYaDiskResourceFields(pathData);
+
+    expect(validationResult.is_successful).toBe(true);
+  });
+
   it("creates folder", async () => {
     const link = await createFolderAPI(apiTestFolder);
     const validationResult = await validateYaDiskLinkFields(link);
@@ -40,49 +56,32 @@ describe.only("Basic API interactions", () => {
 });
 
 describe("Yandex.Disk API", () => {
-  it("fetches disk", async () => {
-    const yaDiskData = await fetchDisk();
-    const validationResult = await validateYaDiskDiskFields(yaDiskData);
+  const testFolderPath = "/test/test";
+  const testFileName = `test-file.md`;
+  const testFileContent = `# Test`;
 
+  it.only("creates a nested folder", async () => {
+    const link = await createFolder(testFolderPath);
+    const validationResult = await validateYaDiskLinkFields(link);
     expect(validationResult.is_successful).toBe(true);
   });
 
-  it("fetches the path info", async () => {
-    const path = "/";
-    const pathData = await getPathInfo(path);
-    const validationResult = await validateYaDiskResourceFields(pathData);
+  it("uploads the file", async () => {
+    const filePath = unixPath.join(testFolderPath, testFileName);
 
-    expect(validationResult.is_successful).toBe(true);
+    expect(async () => {
+      await uploadFile(
+        filePath,
+        new Blob([testFileContent], {
+          type: "text/plain",
+        })
+      );
+    }).not.toThrow();
   });
 
-  describe("File manipulations", () => {
-    const testFolderPath = "/test/test";
-    const testFileName = `test-file.md`;
-    const testFileContent = `# Test`;
+  it("deletes the folder", async () => {
+    const result = await deletePath(unixPath.dirname(testFolderPath));
 
-    it("creates a nested folder", async () => {
-      const link = await createFolder(testFolderPath);
-      const validationResult = await validateYaDiskLinkFields(link);
-      expect(validationResult.is_successful).toBe(true);
-    });
-
-    it("uploads the file", async () => {
-      const filePath = unixPath.join(testFolderPath, testFileName);
-
-      expect(async () => {
-        await uploadFile(
-          filePath,
-          new Blob([testFileContent], {
-            type: "text/plain",
-          })
-        );
-      }).not.toThrow();
-    });
-
-    it("deletes the folder", async () => {
-      const result = await deletePath(unixPath.dirname(testFolderPath));
-
-      expect(result).toBe(true);
-    });
+    expect(result).toBe(true);
   });
 });

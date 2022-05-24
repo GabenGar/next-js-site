@@ -1,4 +1,4 @@
-import path from "path";
+import { posix as unixPath } from "path";
 import {
   NO_CONTENT,
   ACCEPTED,
@@ -45,7 +45,7 @@ export async function createFolder(yadiskPath: string) {
     return link;
   } catch (error) {
     // rethrow non-conflict errors
-    if (!(error instanceof FetchError && error.res.status !== CONFLICT)) {
+    if (!(error instanceof FetchError && error.res.status === CONFLICT)) {
       throw error;
     }
     const link = await createFolderRecursiveLy(yadiskPath);
@@ -55,13 +55,13 @@ export async function createFolder(yadiskPath: string) {
 
 async function createFolderRecursiveLy(yadiskPath: string) {
   const closestPath = await getClosestAvailablePath(yadiskPath);
-  const pathDifference = path.relative(closestPath, yadiskPath);
+  const pathDifference = unixPath.relative(closestPath, yadiskPath);
   const pathsToCreate = pathDifference
     .split("/")
     .reduce<string[]>(
       (paths, currentSegment) => {
         const lastPath = paths[paths.length - 1];
-        const currentPath = path.join(lastPath, currentSegment);
+        const currentPath = unixPath.join(lastPath, currentSegment);
 
         paths.push(currentPath);
 
@@ -91,10 +91,10 @@ async function getClosestAvailablePath(yadiskPath: string) {
       await getPathInfo(currentPath);
       break;
     } catch (error) {
-      if (!(error instanceof FetchError && error.res.status !== CONFLICT)) {
+      if (!(error instanceof FetchError && error.res.status === NOT_FOUND)) {
         throw error;
       }
-      currentPath = path.dirname(currentPath);
+      currentPath = unixPath.dirname(currentPath);
     }
   }
 

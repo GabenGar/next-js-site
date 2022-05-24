@@ -42,7 +42,7 @@ export function createFetch(
     const response = await fetch(url.toString(), { ...init, headers });
 
     if (!response.ok) {
-      const error = await FetchError.async(response);
+      const error = await FetchError.async({ req: init, res: response });
       throw error;
     }
 
