@@ -11,7 +11,7 @@ import {
   CONFLICT,
   NOT_FOUND,
 } from "#environment/constants/http";
-import { FetchError, ProjectError } from "#lib/errors";
+import { FetchError } from "#lib/errors";
 import { sleep } from "#lib/util";
 import {
   createFolder as createFolderAPI,
@@ -57,7 +57,7 @@ export async function createFolder(yadiskPath: string) {
 async function createFolderRecursiveLy(yadiskPath: string) {
   const closestPath = await getClosestAvailablePath(yadiskPath);
   const pathDifference = unixPath.relative(closestPath, yadiskPath);
-  
+
   const pathsToCreate = pathDifference.split("/").reduce<string[]>(
     (paths, currentSegment) => {
       const lastPath = paths[paths.length - 1];
@@ -67,6 +67,7 @@ async function createFolderRecursiveLy(yadiskPath: string) {
 
       return paths;
     },
+    // `closestPath` is excluded from `pathDifference`
     [closestPath]
   );
 
@@ -110,13 +111,17 @@ function isResourcePublished(resource: IResource) {
   return Boolean(resource.public_url && resource.public_key);
 }
 
+/**
+ *
+ * @returns Public url of the uploaded file.
+ */
 export async function uploadFile(
   yaDiskPath: string,
   file: Blob,
   isOverwriting: boolean = false
 ) {
   try {
-    await ensurePath(yaDiskPath);
+    await ensurePath(unixPath.dirname(yaDiskPath));
     const uploadLink = await getUploadLink(yaDiskPath, isOverwriting);
     const response = await uploadFileAPI(uploadLink, file);
 
@@ -126,19 +131,18 @@ export async function uploadFile(
         await publishResource(yaDiskPath);
         const resource = await getPathInfo(yaDiskPath);
 
-        // the url should be present after publishing
-        if (!resource.public_url) {
-          const message = [
-            `YandexError: no public URL available after publishing a path at \"${yaDiskPath}\".`,
-          ].join("\n");
-          throw new ProjectError(message);
-        }
-
         return resource.public_url;
 
       // The file was received by the server
       // but hasn't been transferred to the Yandex.Disk yet.
       case ACCEPTED:
+        await sleep(1000);
+        try {
+          const resource = await getPathInfo(yaDiskPath);
+          return resource.public_url;
+        } catch (error) {
+          await sleep(1000);
+        }
 
       // Wrong range was passed in the `Content-Range` header
       // when uploading the file.
@@ -164,7 +168,7 @@ export async function uploadFile(
     }
 
     const message = ["Failed to upload a file. Reason:", error].join("\n");
-    throw new ProjectError(message, { cause: error });
+    throw new YandexDiskError(message, { cause: error });
   }
 }
 
@@ -183,7 +187,7 @@ export async function deletePath(
   const link: ILink = await response.json();
   const url = new URL(link.href);
   // in this response id is sent as search param
-  const operationID = url.searchParams.get("id");
+  const operationID = url.pathname.split("/").pop()
 
   if (!operationID) {
     throw new YandexDiskError(

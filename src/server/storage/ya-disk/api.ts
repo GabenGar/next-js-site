@@ -1,3 +1,5 @@
+import { CONFLICT } from "#environment/constants/http";
+import { FetchError } from "#lib/errors";
 import { yaDiskfetch } from "./fetch";
 
 import type {
@@ -49,7 +51,7 @@ export async function getPathInfo(yadiskPath: string) {
 
 export async function createFolder(yadiskPath: string) {
   const searchParams = new URLSearchParams([["path", yadiskPath]]);
-
+  
   const link = await yaDiskfetch<ILink>("/v1/disk/resources", {
     init: { method: "PUT" },
     searchParams,
