@@ -1,3 +1,4 @@
+import { fileTypeFromBuffer } from "file-type";
 import { CONFLICT } from "#environment/constants/http";
 import { FetchError } from "#lib/errors";
 import { yaDiskfetch } from "./fetch";
@@ -51,7 +52,7 @@ export async function getPathInfo(yadiskPath: string) {
 
 export async function createFolder(yadiskPath: string) {
   const searchParams = new URLSearchParams([["path", yadiskPath]]);
-  
+
   const link = await yaDiskfetch<ILink>("/v1/disk/resources", {
     init: { method: "PUT" },
     searchParams,
@@ -93,9 +94,17 @@ export async function getUploadLink(
  *
  * The OAuth token isn't necessary for uploading to the storage.
  */
-export async function uploadFile(uploadLink: ILink, file: Blob) {
+export async function uploadFile(uploadLink: ILink, file: Buffer) {
+  const headers = new Headers();
+  const fileData = await fileTypeFromBuffer(file);
+
+  if (fileData) {
+    headers.append("Content-Type", fileData.mime);
+  }
+
   const response = await fetch(uploadLink.href, {
     method: uploadLink.method,
+    headers,
     body: file,
   });
 

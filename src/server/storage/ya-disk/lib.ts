@@ -81,7 +81,7 @@ async function createFolderRecursiveLy(yadiskPath: string) {
 }
 
 /**
- * Finds th closest available path relative to the one provided.
+ * Finds the closest available path relative to the one provided.
  */
 async function getClosestAvailablePath(yadiskPath: string) {
   let currentPath = yadiskPath;
@@ -117,7 +117,7 @@ function isResourcePublished(resource: IResource) {
  */
 export async function uploadFile(
   yaDiskPath: string,
-  file: Blob,
+  file: Buffer,
   isOverwriting: boolean = false
 ) {
   try {
@@ -131,7 +131,7 @@ export async function uploadFile(
         await publishResource(yaDiskPath);
         const resource = await getPathInfo(yaDiskPath);
 
-        return resource.public_url;
+        return resource.public_url!;
 
       // The file was received by the server
       // but hasn't been transferred to the Yandex.Disk yet.
@@ -139,9 +139,11 @@ export async function uploadFile(
         await sleep(1000);
         try {
           const resource = await getPathInfo(yaDiskPath);
-          return resource.public_url;
+          return resource.public_url!;
         } catch (error) {
           await sleep(1000);
+          const resource = await getPathInfo(yaDiskPath);
+          return resource.public_url!;
         }
 
       // Wrong range was passed in the `Content-Range` header
@@ -208,7 +210,7 @@ export async function deletePath(
 
   if (status === "failure") {
     throw new YandexDiskError(
-      `Failed to delete the  \`yandex.disk\` resource at path "${yaDiskPath}".`
+      `Failed to delete the resource at path "${yaDiskPath}".`
     );
   }
 

@@ -1,3 +1,4 @@
+import path from "path";
 import {
   addProfile,
   addProfileAvatar,
@@ -52,7 +53,7 @@ async function uploadAvatar(
   profile: IAccountProfile,
   avatar_file: IFormFileObject
 ) {
-  const uploadPath = `/profile/${profile.id}/avatar`;
+  const uploadPath = `/profile/${profile.id}/avatar/${avatar_file.originalFilename}`;
   const avatar_url = await uploadFile(uploadPath, avatar_file);
 
   return avatar_url;
