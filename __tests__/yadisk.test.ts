@@ -14,6 +14,7 @@ import {
   uploadFile,
   createFolderAPI,
   deletePathAPI,
+  diskPathFromURL,
 } from "#server/storage/ya-disk";
 
 const apiTestFolder = "/api-test";
@@ -56,14 +57,17 @@ describe("Basic API interactions", () => {
 });
 
 describe("Yandex.Disk API", () => {
-  const testFolderPath = "/test/test";
+  const testFolderPath = "/test/nested-test";
   const testFileName = `test-file.md`;
   const testFileContent = `# Test`;
 
-  it.only("creates a nested folder", async () => {
+  it("creates a nested folder", async () => {
     const link = await createFolder(testFolderPath);
     const validationResult = await validateYaDiskLinkFields(link);
-    expect(validationResult.is_successful).toBe(true);
+    expect(
+      validationResult.is_successful &&
+        diskPathFromURL(validationResult.data.href)
+    ).toBe(testFolderPath);
   });
 
   it("uploads the file", async () => {

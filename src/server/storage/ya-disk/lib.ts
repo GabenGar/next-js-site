@@ -35,8 +35,9 @@ import type {
 export function diskPathFromURL(incomingURL: string | URL) {
   const url = incomingURL instanceof URL ? incomingURL : new URL(incomingURL);
 
-  const path = url.searchParams.get("path");
-  return path;
+  const path = url.searchParams.get("path")!;
+  const pathURL = new URL(path);
+  return pathURL.pathname;
 }
 
 export async function createFolder(yadiskPath: string) {
@@ -56,21 +57,19 @@ export async function createFolder(yadiskPath: string) {
 async function createFolderRecursiveLy(yadiskPath: string) {
   const closestPath = await getClosestAvailablePath(yadiskPath);
   const pathDifference = unixPath.relative(closestPath, yadiskPath);
-  const pathsToCreate = pathDifference
-    .split("/")
-    .reduce<string[]>(
-      (paths, currentSegment) => {
-        const lastPath = paths[paths.length - 1];
-        const currentPath = unixPath.join(lastPath, currentSegment);
+  
+  const pathsToCreate = pathDifference.split("/").reduce<string[]>(
+    (paths, currentSegment) => {
+      const lastPath = paths[paths.length - 1];
+      const currentPath = unixPath.join(lastPath, currentSegment);
 
-        paths.push(currentPath);
+      paths.push(currentPath);
 
-        return paths;
-      },
-      [closestPath]
-    )
-    // removing the first path because it exists already
-    .splice(0, 1);
+      return paths;
+    },
+    [closestPath]
+  );
+
   // @ts-expect-error type stuff
   let link: ILink = undefined;
   for await (const currentPath of pathsToCreate) {
@@ -94,7 +93,13 @@ async function getClosestAvailablePath(yadiskPath: string) {
       if (!(error instanceof FetchError && error.res.status === NOT_FOUND)) {
         throw error;
       }
-      currentPath = unixPath.dirname(currentPath);
+      const dirname = unixPath.dirname(currentPath);
+      // exclude root path from closest path
+      if (dirname === "/") {
+        break;
+      }
+
+      currentPath = dirname;
     }
   }
 
@@ -150,7 +155,7 @@ export async function uploadFile(
       case INSUFFICIENT_STORAGE:
 
       default:
-        const fetchError = await FetchError.async(response);
+        const fetchError = await FetchError.async({ res: response });
         throw fetchError;
     }
   } catch (error) {
