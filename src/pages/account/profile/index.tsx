@@ -32,6 +32,7 @@ import { LinkInternal } from "#components/links";
 import type { InferGetServerSidePropsType } from "next";
 import type { IAccountClient, IAccountProfileInit } from "#types/entities";
 import type { BasePageProps } from "#types/pages";
+import { Image } from "#components/images";
 
 interface AccountPageProps extends BasePageProps {
   account: IAccountClient;
@@ -93,6 +94,7 @@ function AccountPage({
         <Article>
           <ArticleHeader>
             <Heading level={2}>{profile.full_name ?? "Anonymous"}</Heading>
+            {profile.avatar_url && <Image src={profile.avatar_url} />}
           </ArticleHeader>
           <ArticleBody>
             <DL>

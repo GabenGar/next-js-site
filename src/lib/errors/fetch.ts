@@ -22,9 +22,9 @@ export class FetchError extends ProjectError {
   ) {
     let resBody;
     try {
-      resBody = await fetchData.res.text();
+      resBody = await fetchData.res.json();
     } catch (error) {
-      resBody = undefined;
+      resBody = await fetchData.res.text();
     }
 
     return new this(fetchData, resBody, options, ...params);

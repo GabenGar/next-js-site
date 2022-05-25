@@ -13,6 +13,7 @@ import {
 } from "#environment/constants/http";
 import { FetchError } from "#lib/errors";
 import { sleep } from "#lib/util";
+import { toJSON } from "#lib/json";
 import {
   createFolder as createFolderAPI,
   getPathInfo,
@@ -41,21 +42,27 @@ export function diskPathFromURL(incomingURL: string | URL) {
 }
 
 export async function createFolder(yadiskPath: string) {
+  // console.log(`YandexDisk: creating path "${yadiskPath}".`);
+
   try {
-    const link = await createFolderAPI(yadiskPath);
-    return link;
+    await createFolderAPI(yadiskPath);
   } catch (error) {
-    // rethrow non-conflict errors
-    if (!(error instanceof FetchError && error.res.status === CONFLICT)) {
+    // folder already exists
+    const isConflictError =
+      error instanceof FetchError && error.res.status === CONFLICT;
+
+    if (!isConflictError) {
       throw error;
     }
-    const link = await createFolderRecursiveLy(yadiskPath);
-    return link;
+
+    await createFolderRecursiveLy(unixPath.dirname(yadiskPath));
   }
 }
 
 async function createFolderRecursiveLy(yadiskPath: string) {
   const closestPath = await getClosestAvailablePath(yadiskPath);
+  // console.log(`YandexDisk: closest path "${closestPath}"`);
+
   const pathDifference = unixPath.relative(closestPath, yadiskPath);
 
   const pathsToCreate = pathDifference.split("/").reduce<string[]>(
@@ -70,14 +77,23 @@ async function createFolderRecursiveLy(yadiskPath: string) {
     // `closestPath` is excluded from `pathDifference`
     [closestPath]
   );
+  // console.log(`Paths to create:\n${toJSON(pathsToCreate)}`);
 
-  // @ts-expect-error type stuff
-  let link: ILink = undefined;
   for await (const currentPath of pathsToCreate) {
-    link = await createFolderAPI(currentPath);
-  }
+    try {
+      await createFolderAPI(currentPath);
+    } catch (error) {
+      // folder already exists
+      const isConflictError =
+        error instanceof FetchError && error.res.status === CONFLICT;
 
-  return link;
+      if (!isConflictError) {
+        throw error;
+      }
+
+      continue;
+    }
+  }
 }
 
 /**
@@ -94,12 +110,12 @@ async function getClosestAvailablePath(yadiskPath: string) {
       if (!(error instanceof FetchError && error.res.status === NOT_FOUND)) {
         throw error;
       }
+
       const dirname = unixPath.dirname(currentPath);
       // exclude root path from closest path
       if (dirname === "/") {
         break;
       }
-
       currentPath = dirname;
     }
   }
@@ -121,7 +137,8 @@ export async function uploadFile(
   isOverwriting: boolean = false
 ) {
   try {
-    await ensurePath(unixPath.dirname(yaDiskPath));
+    // ensure the file has the folder
+    await ensurePath(yaDiskPath);
     const uploadLink = await getUploadLink(yaDiskPath, isOverwriting);
     const response = await uploadFileAPI(uploadLink, file);
 
@@ -189,7 +206,7 @@ export async function deletePath(
   const link: ILink = await response.json();
   const url = new URL(link.href);
   // in this response id is sent as search param
-  const operationID = url.pathname.split("/").pop()
+  const operationID = url.pathname.split("/").pop();
 
   if (!operationID) {
     throw new YandexDiskError(
@@ -221,6 +238,8 @@ export async function deletePath(
  * Check for the existence of the path and creates it if it doesn't exist.
  */
 async function ensurePath(yadiskPath: string) {
+  // console.log(`YandexDisk: Ensuring path ${yadiskPath}`);
+
   try {
     await getPathInfo(yadiskPath);
   } catch (error) {
