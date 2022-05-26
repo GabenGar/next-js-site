@@ -94,7 +94,7 @@ function AccountPage({
         <Article>
           <ArticleHeader>
             <Heading level={2}>{profile.full_name ?? "Anonymous"}</Heading>
-            {profile.avatar_url && <Image src={profile.avatar_url} />}
+            {profile.avatar_url && <Image src={"https://downloader.disk.yandex.ru/disk/7d95d501ac9e6c27a0a305ea7057bfee9aebe025bcfae89d4707e4d21679a272/628f9194/D-iq9lQjX_Zr993IEYjzkmycE3C0fjH29HfwRtDDKVyWBJtVQkKaAY6WQLsBCfaX_5jVH_I_j0M2ihrTxEBGRg%3D%3D?uid=0&filename=%D0%97%D0%B8%D0%BC%D0%B0.jpg&disposition=attachment&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=0&fsize=1394575&hid=db0ae88c49a4428517b857606969996b&media_type=image&tknv=v2&etag=a64146fee5e15b3b94c204e544426d43"} />}
           </ArticleHeader>
           <ArticleBody>
             <DL>

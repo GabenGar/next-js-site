@@ -19,10 +19,13 @@ import {
   yaDiskExifSchema,
   yaDiskLinkSchema,
   yaDiskOperationStatusSchema,
+  yaDiskPublicResourceListSchema,
+  yaDiskPublicResourceSchema,
   yaDiskResourceListSchema,
   yaDiskResourceSchema,
   yaDiskShareInfoSchema,
   yaDiskSystemFoldersSchema,
+  yaDiskUserPublicInformationSchema,
   yaDiskUserSchema,
   blogPostSchema,
   calendarNoteSchema,
@@ -69,10 +72,13 @@ import type {
   IYaDiskExif,
   IYaDiskLink,
   IYaDiskOperationStatus,
+  IYaDiskPublicResourceList,
+  IYaDiskPublicResource,
   IYaDiskResourceList,
   IYaDiskResource,
   IYaDiskShareInfo,
   IYaDiskSystemFolders,
+  IYaDiskUserPublicInformation,
   IYaDiskUser,
   IBlogPost,
   ICalendarNote,
@@ -133,6 +139,10 @@ export const validateYaDiskLinkFields =
   createValidator<IYaDiskLink>(yaDiskLinkSchema);
 export const validateYaDiskOperationStatusFields =
   createValidator<IYaDiskOperationStatus>(yaDiskOperationStatusSchema);
+export const validateYaDiskPublicResourceListFields =
+  createValidator<IYaDiskPublicResourceList>(yaDiskPublicResourceListSchema);
+export const validateYaDiskPublicResourceFields =
+  createValidator<IYaDiskPublicResource>(yaDiskPublicResourceSchema);
 export const validateYaDiskResourceListFields =
   createValidator<IYaDiskResourceList>(yaDiskResourceListSchema);
 export const validateYaDiskResourceFields =
@@ -142,6 +152,10 @@ export const validateYaDiskShareInfoFields = createValidator<IYaDiskShareInfo>(
 );
 export const validateYaDiskSystemFoldersFields =
   createValidator<IYaDiskSystemFolders>(yaDiskSystemFoldersSchema);
+export const validateYaDiskUserPublicInformationFields =
+  createValidator<IYaDiskUserPublicInformation>(
+    yaDiskUserPublicInformationSchema
+  );
 export const validateYaDiskUserFields =
   createValidator<IYaDiskUser>(yaDiskUserSchema);
 export const validateBlogPostFields =

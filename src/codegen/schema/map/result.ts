@@ -19,10 +19,13 @@ import {
   yaDiskExifSchema,
   yaDiskLinkSchema,
   yaDiskOperationStatusSchema,
+  yaDiskPublicResourceListSchema,
+  yaDiskPublicResourceSchema,
   yaDiskResourceListSchema,
   yaDiskResourceSchema,
   yaDiskShareInfoSchema,
   yaDiskSystemFoldersSchema,
+  yaDiskUserPublicInformationSchema,
   yaDiskUserSchema,
   blogPostSchema,
   calendarNoteSchema,
@@ -73,6 +76,10 @@ export const schemaMap: Record<string, SchemaObject> = {
   "http://schemas.com/api/ya-disk/link.schema.json": yaDiskLinkSchema,
   "http://schemas.com/api/ya-disk/operation-status.schema.json":
     yaDiskOperationStatusSchema,
+  "http://schemas.com/api/ya-disk/public-resource-list.schema.json":
+    yaDiskPublicResourceListSchema,
+  "http://schemas.com/api/ya-disk/public-resource.schema.json":
+    yaDiskPublicResourceSchema,
   "http://schemas.com/api/ya-disk/resource-list.schema.json":
     yaDiskResourceListSchema,
   "http://schemas.com/api/ya-disk/resource.schema.json": yaDiskResourceSchema,
@@ -80,6 +87,8 @@ export const schemaMap: Record<string, SchemaObject> = {
     yaDiskShareInfoSchema,
   "http://schemas.com/api/ya-disk/system-folders.schema.json":
     yaDiskSystemFoldersSchema,
+  "http://schemas.com/api/ya-disk/user-public-information.schema.json":
+    yaDiskUserPublicInformationSchema,
   "http://schemas.com/api/ya-disk/user.schema.json": yaDiskUserSchema,
   "http://schemas.com/blog-post.schema.json": blogPostSchema,
   "http://schemas.com/calendar-note/base.schema.json": calendarNoteSchema,

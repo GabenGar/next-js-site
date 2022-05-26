@@ -1,7 +1,11 @@
 import { fileTypeFromBuffer } from "file-type";
+import { Headers } from "node-fetch";
 import { CONFLICT } from "#environment/constants/http";
 import { FetchError } from "#lib/errors";
 import { yaDiskfetch } from "./fetch";
+
+import { Headers as NodeHeaders } from "node-fetch";
+import { IS_BROWSER } from "#environment/constants";
 
 import type {
   IDisk,
@@ -102,6 +106,7 @@ export async function uploadFile(uploadLink: ILink, file: Buffer) {
 
   const response = await fetch(uploadLink.href, {
     method: uploadLink.method,
+    // @ts-expect-error type stuff
     headers,
     body: file,
   });
@@ -159,4 +164,29 @@ export async function closeResource(yadiskPath: string) {
   });
 
   return link;
+}
+
+/**
+ * Metainformation about a public resource.
+ * @param public_key Key to a public resource, or the public link to a resource.
+ * @param yadiskPath
+ */
+export async function accessPublicResource(
+  publicKey: string,
+  yadiskPath?: string
+) {
+  const searchParams = new URLSearchParams([["public_key", publicKey]]);
+
+  if (yadiskPath) {
+
+  }
+
+  const resource = await yaDiskfetch<IResource>("/v1/disk/public/resources", {
+    searchParams,
+    init: {
+      method: "GET",
+    },
+  });
+
+  return resource;
 }

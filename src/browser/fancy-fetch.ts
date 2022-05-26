@@ -1,4 +1,8 @@
+import { Headers as NodeHeaders } from "node-fetch";
+import { IS_BROWSER } from "#environment/constants";
 import { FetchError } from "#lib/errors";
+
+const Headers = IS_BROWSER ? window.Headers : NodeHeaders;
 
 type IFetchFunction = (
   path: string,
@@ -25,6 +29,7 @@ export function createFetch(
 ): IFetchFunction {
   return async (path, init?, searchParams?, fragment?) => {
     const headers = init?.headers
+    // @ts-expect-error headers type
       ? mergeHeaders(defaults.headers, init.headers)
       : defaults.headers;
     const url = new URL(path, origin);
@@ -38,7 +43,7 @@ export function createFetch(
     }
 
     url.searchParams.sort();
-
+    // @ts-expect-error headers type
     const response = await fetch(url.toString(), { ...init, headers });
 
     if (!response.ok) {
@@ -51,8 +56,9 @@ export function createFetch(
 }
 
 function mergeHeaders(defaultHeaders: Headers, extraHeaders: HeadersInit) {
+  // @ts-expect-error headers type
   const resultHeaders = new Headers(defaultHeaders);
-
+  // @ts-expect-error headers type
   const newHeaders = new Headers(extraHeaders);
   for (const [key, value] of Array.from(newHeaders)) {
     resultHeaders.append(key, value);

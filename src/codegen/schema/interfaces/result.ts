@@ -253,17 +253,19 @@ export interface YaDiskExif {
 
 export interface YaDiskLink {
   /**
-   * URL
+   * URL. It may be a URL template; see the `templated` key.
    */
   href: string;
   /**
-   * HTTP-метод
+   * The HTTP method for requesting the URL from the `href` key.
    */
   method: string;
   /**
-   * Признак шаблонизированного URL
+   * Indicates a URL template according to [RFC 6570](http://tools.ietf.org/html/rfc6570). Possible values:
+   * - "true" — URL template. Before sending a request to this address, put the desired parameter values in place of the values in curly brackets.
+   * - "false" — The URL can be requested without changes.
    */
-  templated?: boolean;
+  templated: boolean;
 }
 
 export interface YaDiskOperationStatus {
@@ -271,6 +273,123 @@ export interface YaDiskOperationStatus {
    * The status of the operation.
    */
   status: "success" | "failure" | "in-progress";
+}
+
+export interface YaDiskPublicResourceList {
+  /**
+   * Ключ опубликованного ресурса
+   */
+  public_key: string;
+  /**
+   * Путь опубликованного ресурса
+   */
+  path: string;
+  /**
+   * Элементы списка
+   */
+  items: YaDiskPublicResource[];
+  /**
+   * Поле, по которому отсортирован список
+   */
+  sort?: string;
+  /**
+   * Количество элементов на странице
+   */
+  limit?: number;
+  /**
+   * Смещение от начала списка
+   */
+  offset?: number;
+  /**
+   * Общее количество элементов в списке
+   */
+  total?: number;
+}
+
+export interface YaDiskPublicResource {
+  /**
+   * Тип
+   */
+  type: string;
+  /**
+   * Путь опубликованного ресурса
+   */
+  path: string;
+  /**
+   * Имя
+   */
+  name: string;
+  /**
+   * Дата создания
+   */
+  created: string;
+  /**
+   * Дата изменения
+   */
+  modified: string;
+  /**
+   * Ключ опубликованного ресурса
+   */
+  public_key: string;
+  /**
+   * Статус проверки антивирусом
+   */
+  antivirus_status?: {
+    [k: string]: unknown;
+  };
+  /**
+   * Счетчик просмотров публичного ресурса
+   */
+  views_count?: number;
+  /**
+   * Идентификатор ресурса
+   */
+  resource_id?: string;
+  share?: YaDiskShareInfo;
+  /**
+   * URL для скачивания файла
+   */
+  file?: string;
+  owner?: YaDiskUserPublicInformation;
+  /**
+   * Размер файла
+   */
+  size?: number;
+  /**
+   * Дата создания фото или видео файла
+   */
+  photoslice_time?: string;
+  _embedded?: YaDiskPublicResourceList;
+  exif?: YaDiskExif;
+  /**
+   * Определённый Диском тип файла
+   */
+  media_type?: string;
+  /**
+   * SHA256-хэш
+   */
+  sha256?: string;
+  /**
+   * MIME-тип файла
+   */
+  mime_type?: string;
+  /**
+   * Ревизия Диска в которой этот ресурс был изменён последний раз
+   */
+  revision?: number;
+  /**
+   * Публичный URL
+   */
+  public_url?: string;
+  /**
+   * MD5-хэш
+   */
+  md5?: string;
+  /**
+   * URL превью файла
+   */
+  preview?: string;
+  comment_ids?: YaDiskCommentIDs;
 }
 
 export interface YaDiskResourceList {
@@ -343,9 +462,9 @@ export interface YaDiskResource {
    */
   preview?: string;
   /**
-   * Тип
+   * Resource type.
    */
-  type: string;
+  type: ("dir" | "file") & string;
   /**
    * MIME-тип файла
    */
@@ -453,6 +572,21 @@ export interface YaDiskSystemFolders {
    * Путь к папке "Сканы".
    */
   scans?: string;
+}
+
+export interface YaDiskUserPublicInformation {
+  /**
+   * Логин.
+   */
+  login?: string;
+  /**
+   * Отображаемое имя пользователя.
+   */
+  display_name?: string;
+  /**
+   * Идентификатор пользователя.
+   */
+  uid?: string;
 }
 
 export interface YaDiskUser {
