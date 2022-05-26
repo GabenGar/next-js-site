@@ -28,6 +28,6 @@
     "profile_delete",
     "profile_delete_title",
     "profile_delete_desc",
-    "profile_delete__confirm"
+    "profile_delete_confirm"
   ]
 }
