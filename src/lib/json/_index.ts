@@ -9,6 +9,10 @@ const defaultJSONOptions: IJSONOptions = {
   isPretty: true,
 };
 
+export function toSerializedObject(value: unknown) {
+  return fromJSON(toJSON(value)) 
+}
+
 export function toJSON<InputType = unknown>(
   value: InputType,
   options = defaultJSONOptions

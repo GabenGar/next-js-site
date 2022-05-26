@@ -4,6 +4,7 @@ export {
   saveToFile,
   getTempFolder,
   deleteFile,
+  readFileToBuffer,
 } from "./lib";
 export { startPathReduce as reduceFolder } from "./reduce-folder";
 export { readJSON, saveToJSON } from "./json";

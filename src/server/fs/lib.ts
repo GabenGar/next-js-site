@@ -34,6 +34,11 @@ export async function readFile(filePath: string) {
   return content;
 }
 
+export async function readFileToBuffer(filePath: string) {
+  const content = await fse.readFile(filePath);
+  return content;
+}
+
 export async function saveToFile(filePath: string, content: string) {
   await fse.writeFile(filePath, content, { encoding: "utf-8" });
 }

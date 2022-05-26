@@ -9,6 +9,7 @@ import styles from "./card.module.scss";
 
 import type { IAccountProfileClient } from "#types/entities";
 import type { ICardProps } from "#components/cards";
+import { Image } from "#components/images";
 
 export interface IProfileCardProps extends ICardProps {
   profile: IAccountProfileClient;
@@ -25,7 +26,7 @@ function Component({
   ...blockProps
 }: IProfileCardProps) {
   const { t } = useTranslation("components");
-  const { id, created_at, updated_at, full_name } = profile;
+  const { id, created_at, updated_at, full_name, avatar_url } = profile;
 
   return (
     <Card {...blockProps}>
@@ -33,6 +34,7 @@ function Component({
         <Heading level={headingLevel}>
           {full_name ?? t("profile_anonymous")}
         </Heading>
+        {avatar_url && <Image src={avatar_url} imageHeight="10em" />}
       </CardHeader>
       <CardBody>
         <DL>

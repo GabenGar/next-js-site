@@ -96,11 +96,6 @@ export async function getUploadLink(
  */
 export async function uploadFile(uploadLink: ILink, file: Buffer) {
   const headers = new Headers();
-  const fileData = await fromBuffer(file);
-
-  if (fileData) {
-    headers.append("Content-Type", fileData.mime);
-  }
 
   const response = await fetch(uploadLink.href, {
     method: uploadLink.method,

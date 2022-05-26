@@ -5,9 +5,10 @@ import { createSEOTags } from "#lib/seo";
 import { getTableIDs } from "#database";
 import { getProfile } from "#database/queries/account/profile";
 import { Page } from "#components/pages";
-import { Article, ArticleBody } from "#components/articles";
+import { Article, ArticleBody, ArticleHeader } from "#components/articles";
 import { DL, DS } from "#components/lists/d-list";
 import { DateTimeView } from "#components/dates";
+import { Image } from "#components/images";
 
 import type { ParsedUrlQuery } from "querystring";
 import type {
@@ -34,7 +35,7 @@ function Profile({
   profile,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { t } = useTranslation("components");
-  const { id, full_name, created_at, updated_at } = profile;
+  const { id, full_name, created_at, updated_at, avatar_url } = profile;
   const seoTags = createSEOTags({
     localeInfo,
     title: full_name ?? t("profile_anonymous"),
@@ -45,6 +46,11 @@ function Profile({
   return (
     <Page seoTags={seoTags}>
       <Article>
+        {avatar_url && (
+          <ArticleHeader>
+            <Image src={avatar_url} />
+          </ArticleHeader>
+        )}
         <ArticleBody>
           <DL>
             <DS
