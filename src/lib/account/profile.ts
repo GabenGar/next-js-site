@@ -54,7 +54,7 @@ async function uploadAvatar(
   avatar_file: IFormFileObject
 ) {
   const uploadPath = `/profile/${profile.id}/avatar/${avatar_file.originalFilename}`;
-  const avatar_url = await uploadFile(uploadPath, avatar_file);
-
-  return avatar_url;
+  const avatarURL = await uploadFile(uploadPath, avatar_file);
+  const urlString = avatarURL.toStorageURL().toString();
+  return urlString;
 }

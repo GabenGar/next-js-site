@@ -22,6 +22,7 @@ import {
   publishResource,
   deletePath as deletePathAPI,
   getOperationStatus,
+  accessPublicResource,
 } from "./api";
 import { YandexDiskError } from "./errors";
 
@@ -32,6 +33,7 @@ import type {
   IStatus,
   YaDiskPath,
 } from "./types";
+import { YandexDiskUrl } from "#lib/url";
 
 export function diskPathFromURL(incomingURL: string | URL) {
   const url = incomingURL instanceof URL ? incomingURL : new URL(incomingURL);
@@ -147,21 +149,21 @@ export async function uploadFile(
       case CREATED:
         await publishResource(yaDiskPath);
         const resource = await getPathInfo(yaDiskPath);
+        const publicResource = await accessPublicResource(resource.public_key!);
+        const storageURL = new YandexDiskUrl(publicResource.file!);
 
-        return resource.public_url!;
+        return storageURL;
 
       // The file was received by the server
       // but hasn't been transferred to the Yandex.Disk yet.
-      case ACCEPTED:
+      case ACCEPTED: {
         await sleep(1000);
-        try {
-          const resource = await getPathInfo(yaDiskPath);
-          return resource.public_url!;
-        } catch (error) {
-          await sleep(1000);
-          const resource = await getPathInfo(yaDiskPath);
-          return resource.public_url!;
-        }
+        const resource = await getPathInfo(yaDiskPath);
+        const publicResource = await accessPublicResource(resource.public_key!);
+        const storageURL = new YandexDiskUrl(publicResource.file!);
+
+        return storageURL;
+      }
 
       // Wrong range was passed in the `Content-Range` header
       // when uploading the file.

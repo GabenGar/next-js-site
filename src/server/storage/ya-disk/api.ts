@@ -1,11 +1,8 @@
-import { fileTypeFromBuffer } from "file-type";
+import { fromBuffer } from "file-type";
 import { Headers } from "node-fetch";
 import { CONFLICT } from "#environment/constants/http";
 import { FetchError } from "#lib/errors";
 import { yaDiskfetch } from "./fetch";
-
-import { Headers as NodeHeaders } from "node-fetch";
-import { IS_BROWSER } from "#environment/constants";
 
 import type {
   IDisk,
@@ -13,6 +10,7 @@ import type {
   IResource,
   ILink,
   IStatus,
+  IPublicResource,
 } from "./types";
 
 export async function fetchDisk() {
@@ -98,7 +96,7 @@ export async function getUploadLink(
  */
 export async function uploadFile(uploadLink: ILink, file: Buffer) {
   const headers = new Headers();
-  const fileData = await fileTypeFromBuffer(file);
+  const fileData = await fromBuffer(file);
 
   if (fileData) {
     headers.append("Content-Type", fileData.mime);
@@ -168,7 +166,7 @@ export async function closeResource(yadiskPath: string) {
 
 /**
  * Metainformation about a public resource.
- * @param public_key Key to a public resource, or the public link to a resource.
+ * @param publicKey Key to a public resource, or the public link to a resource.
  * @param yadiskPath
  */
 export async function accessPublicResource(
@@ -178,15 +176,18 @@ export async function accessPublicResource(
   const searchParams = new URLSearchParams([["public_key", publicKey]]);
 
   if (yadiskPath) {
-
+    searchParams.set("path", yadiskPath);
   }
 
-  const resource = await yaDiskfetch<IResource>("/v1/disk/public/resources", {
-    searchParams,
-    init: {
-      method: "GET",
-    },
-  });
+  const resource = await yaDiskfetch<IPublicResource>(
+    "/v1/disk/public/resources",
+    {
+      searchParams,
+      init: {
+        method: "GET",
+      },
+    }
+  );
 
   return resource;
 }
