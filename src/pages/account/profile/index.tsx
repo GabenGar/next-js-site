@@ -9,19 +9,30 @@ import {
   validateAccountProfileInitFields,
 } from "#lib/account";
 import { createSEOTags } from "#lib/seo";
-import { withSessionSSR, Redirect, getReqBody } from "#server/requests";
+import {
+  withSessionSSR,
+  Redirect,
+  getMultipartReqBody,
+} from "#server/requests";
 import { Page } from "#components/pages";
 import { Form } from "#components/forms";
-import { Text } from "#components/forms/sections";
+import { FileInput, Text } from "#components/forms/sections";
 import { ErrorsView } from "#components/errors";
-import { Article, ArticleBody, ArticleHeader } from "#components/articles";
+import {
+  Article,
+  ArticleBody,
+  ArticleFooter,
+  ArticleHeader,
+} from "#components/articles";
 import { Heading } from "#components/headings";
 import { DL, DS } from "#components/lists/d-list";
 import { DateTimeView } from "#components/dates";
+import { LinkInternal } from "#components/links";
 
 import type { InferGetServerSidePropsType } from "next";
 import type { IAccountClient, IAccountProfileInit } from "#types/entities";
 import type { BasePageProps } from "#types/pages";
+import { Image } from "#components/images";
 
 interface AccountPageProps extends BasePageProps {
   account: IAccountClient;
@@ -52,15 +63,25 @@ function AccountPage({
           name="create-profile"
           method="POST"
           action="/account/profile"
+          encType="multipart/form-data"
         >
           <Heading level={2}>Create a profile</Heading>
           <Text
             id="create-profile-full-name"
             name="full_name"
-            defaultValue={newProfile?.full_name}
+            defaultValue={
+              newProfile?.full_name === null ? undefined : newProfile?.full_name
+            }
           >
-            Full name:
+            Name:
           </Text>
+          <FileInput
+            id="create-profile-avatar-file"
+            name="avatar_file"
+            accept="image/*"
+          >
+            Avatar:
+          </FileInput>
           {errors ? (
             <ErrorsView errors={errors} />
           ) : (
@@ -71,8 +92,9 @@ function AccountPage({
         </Form>
       ) : (
         <Article>
-          <ArticleHeader>
+          <ArticleHeader style={{ textAlign: "center" }}>
             <Heading level={2}>{profile.full_name ?? "Anonymous"}</Heading>
+            {profile.avatar_url && <Image src={profile.avatar_url} />}
           </ArticleHeader>
           <ArticleBody>
             <DL>
@@ -86,6 +108,11 @@ function AccountPage({
               />
             </DL>
           </ArticleBody>
+          <ArticleFooter>
+            <LinkInternal href="/account/profile/delete">
+              {t("profile_delete")}
+            </LinkInternal>
+          </ArticleFooter>
         </Article>
       )}
     </Page>
@@ -118,33 +145,11 @@ export const getServerSideProps = withSessionSSR<AccountPageProps>(
       "account",
     ]);
 
-    if (req.method === "POST") {
-      const profileInit = await getReqBody<IAccountProfileInit>(req);
+    const isFormSubmission =
+      req.method === "POST" &&
+      req.headers["content-type"]?.includes("multipart/form-data");
 
-      try {
-        await validateAccountProfileInitFields(profileInit);
-      } catch (error) {
-        if (!(error instanceof FieldsValidationError)) {
-          throw error;
-        }
-
-        return {
-          props: {
-            ...localization,
-            localeInfo,
-            account: accountClient,
-            schemaValidationErrors: error.validationErrors,
-          },
-        };
-      }
-
-      const { account_id, ...newProfile } = await registerProfile(
-        account,
-        profileInit
-      );
-
-      accountClient.profile = newProfile;
-
+    if (!isFormSubmission) {
       return {
         props: {
           ...localization,
@@ -153,6 +158,32 @@ export const getServerSideProps = withSessionSSR<AccountPageProps>(
         },
       };
     }
+
+    const profileInit = await getMultipartReqBody<IAccountProfileInit>(req);
+
+    try {
+      await validateAccountProfileInitFields(profileInit);
+    } catch (error) {
+      if (!(error instanceof FieldsValidationError)) {
+        throw error;
+      }
+
+      return {
+        props: {
+          ...localization,
+          localeInfo,
+          account: accountClient,
+          schemaValidationErrors: error.validationErrors,
+        },
+      };
+    }
+
+    const { account_id: _, ...newProfile } = await registerProfile(
+      account,
+      profileInit
+    );
+
+    accountClient.profile = newProfile;
 
     return {
       props: {

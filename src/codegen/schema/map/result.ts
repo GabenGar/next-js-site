@@ -19,10 +19,13 @@ import {
   yaDiskExifSchema,
   yaDiskLinkSchema,
   yaDiskOperationStatusSchema,
+  yaDiskPublicResourceListSchema,
+  yaDiskPublicResourceSchema,
   yaDiskResourceListSchema,
   yaDiskResourceSchema,
   yaDiskShareInfoSchema,
   yaDiskSystemFoldersSchema,
+  yaDiskUserPublicInformationSchema,
   yaDiskUserSchema,
   blogPostSchema,
   calendarNoteSchema,
@@ -46,6 +49,7 @@ import {
   iSODateTimeSchema,
   iSOTimeSchema,
   emailStringSchema,
+  formFileObjectSchema,
   serialIntegerSchema,
 } from "#codegen/schema/assets";
 
@@ -72,6 +76,10 @@ export const schemaMap: Record<string, SchemaObject> = {
   "http://schemas.com/api/ya-disk/link.schema.json": yaDiskLinkSchema,
   "http://schemas.com/api/ya-disk/operation-status.schema.json":
     yaDiskOperationStatusSchema,
+  "http://schemas.com/api/ya-disk/public-resource-list.schema.json":
+    yaDiskPublicResourceListSchema,
+  "http://schemas.com/api/ya-disk/public-resource.schema.json":
+    yaDiskPublicResourceSchema,
   "http://schemas.com/api/ya-disk/resource-list.schema.json":
     yaDiskResourceListSchema,
   "http://schemas.com/api/ya-disk/resource.schema.json": yaDiskResourceSchema,
@@ -79,6 +87,8 @@ export const schemaMap: Record<string, SchemaObject> = {
     yaDiskShareInfoSchema,
   "http://schemas.com/api/ya-disk/system-folders.schema.json":
     yaDiskSystemFoldersSchema,
+  "http://schemas.com/api/ya-disk/user-public-information.schema.json":
+    yaDiskUserPublicInformationSchema,
   "http://schemas.com/api/ya-disk/user.schema.json": yaDiskUserSchema,
   "http://schemas.com/blog-post.schema.json": blogPostSchema,
   "http://schemas.com/calendar-note/base.schema.json": calendarNoteSchema,
@@ -109,5 +119,6 @@ export const schemaMap: Record<string, SchemaObject> = {
   "http://schemas.com/types/dates/iso-datetime.schema.json": iSODateTimeSchema,
   "http://schemas.com/types/dates/iso-time.schema.json": iSOTimeSchema,
   "http://schemas.com/types/email.schema.json": emailStringSchema,
+  "http://schemas.com/types/file.schema.json": formFileObjectSchema,
   "http://schemas.com/types/serial.schema.json": serialIntegerSchema,
 };

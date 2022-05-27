@@ -1,2 +1,7 @@
-export { fetchDisk } from "./lib";
-export { getPathInfo, createFolder, deletePath, uploadFile } from "./resources";
+export {
+  fetchDisk,
+  getPathInfo,
+  createFolder as createFolderAPI,
+  deletePath as deletePathAPI,
+} from "./api";
+export { createFolder, uploadFile, deletePath, diskPathFromURL } from "./lib";

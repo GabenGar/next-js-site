@@ -1,9 +1,9 @@
 import { blockComponent } from "#components/meta";
+import { HTMLInput } from "#components/html/input";
 import { FormSection } from "./base";
 import styles from "./_index.module.scss";
 
 import type { FormSectionProps } from "./base";
-import { HTMLInput } from "#components/html/input";
 
 export interface IHiddenProps extends FormSectionProps {
   id?: string;

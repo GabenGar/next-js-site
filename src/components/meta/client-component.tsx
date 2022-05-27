@@ -8,7 +8,7 @@ export interface IClientComponentProps {
 }
 
 /**
- * Renders the children on client-only.
+ * Renders the children only on client.
  */
 export function ClientComponent({ children }: IClientComponentProps) {
   const [isEnabled, enableComponent] = useState(false);

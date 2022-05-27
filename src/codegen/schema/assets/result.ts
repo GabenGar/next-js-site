@@ -16,10 +16,13 @@ export { default as yaDiskErrorSchema } from "#schema/api/ya-disk/error.schema.j
 export { default as yaDiskExifSchema } from "#schema/api/ya-disk/exif.schema.json";
 export { default as yaDiskLinkSchema } from "#schema/api/ya-disk/link.schema.json";
 export { default as yaDiskOperationStatusSchema } from "#schema/api/ya-disk/operation-status.schema.json";
+export { default as yaDiskPublicResourceListSchema } from "#schema/api/ya-disk/public-resource-list.schema.json";
+export { default as yaDiskPublicResourceSchema } from "#schema/api/ya-disk/public-resource.schema.json";
 export { default as yaDiskResourceListSchema } from "#schema/api/ya-disk/resource-list.schema.json";
 export { default as yaDiskResourceSchema } from "#schema/api/ya-disk/resource.schema.json";
 export { default as yaDiskShareInfoSchema } from "#schema/api/ya-disk/share-info.schema.json";
 export { default as yaDiskSystemFoldersSchema } from "#schema/api/ya-disk/system-folders.schema.json";
+export { default as yaDiskUserPublicInformationSchema } from "#schema/api/ya-disk/user-public-information.schema.json";
 export { default as yaDiskUserSchema } from "#schema/api/ya-disk/user.schema.json";
 export { default as blogPostSchema } from "#schema/blog-post.schema.json";
 export { default as calendarNoteSchema } from "#schema/calendar-note/base.schema.json";
@@ -43,4 +46,5 @@ export { default as iSODateSchema } from "#schema/types/dates/iso-date.schema.js
 export { default as iSODateTimeSchema } from "#schema/types/dates/iso-datetime.schema.json";
 export { default as iSOTimeSchema } from "#schema/types/dates/iso-time.schema.json";
 export { default as emailStringSchema } from "#schema/types/email.schema.json";
+export { default as formFileObjectSchema } from "#schema/types/file.schema.json";
 export { default as serialIntegerSchema } from "#schema/types/serial.schema.json";

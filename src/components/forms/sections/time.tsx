@@ -1,3 +1,4 @@
+import { getHours, getMinutes, getSeconds } from "date-fns";
 import { blockComponent } from "#components/meta";
 import { HTMLLabel } from "#components/html/label";
 import { HTMLInput } from "#components/html/input";
@@ -5,7 +6,6 @@ import { FormSection } from "./base";
 import styles from "./_index.module.scss";
 
 import type { FormSectionProps } from "./base";
-import { getHours, getMinutes, getSeconds } from "date-fns";
 
 export interface IFormSectionTimeProps
   extends Omit<FormSectionProps, "defaultValue"> {

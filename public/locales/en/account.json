@@ -20,5 +20,9 @@
   "create_profile": "Create Profile",
   "profile": "Profile",
   "profile_title": "Profile",
-  "profile_desc": "Account profile details"
+  "profile_desc": "Account profile details",
+  "profile_delete": "Delete profile",
+  "profile_delete_title": "Profile deletion",
+  "profile_delete_desc": "Profile deletion.",
+  "profile_delete_confirm": "Confirm"
 }

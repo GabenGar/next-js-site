@@ -10,7 +10,11 @@ export type {
   IYaDiskUser as IUser,
   IYaDiskLink as ILink,
   IYaDiskOperationStatus as IOperationStatus,
+  IYaDiskPublicResource as IPublicResource,
+  IYaDiskPublicResourceList as IPublicResourceList,
+  IYaDiskUserPublicInformation as IUserPublicInformation,
 } from "#codegen/schema/interfaces";
 import type { IYaDiskOperationStatus } from "#codegen/schema/interfaces";
 
 export type IStatus = IYaDiskOperationStatus["status"];
+export type YaDiskPath = string;

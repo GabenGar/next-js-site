@@ -13,6 +13,7 @@ export interface IFormClientProps extends IFormProps {
  * The form for use by the client-only code.
  * Is not rendered on server.
  * `onSubmit` is prevented by default and is a required prop.
+ * @TODO block various form attributes
  */
 export const FormClient = blockComponent(styles.block, Component);
 

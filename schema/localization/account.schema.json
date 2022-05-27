@@ -24,6 +24,10 @@
     "calendar_desc",
     "current_date",
     "profile_title",
-    "profile_desc"
+    "profile_desc",
+    "profile_delete",
+    "profile_delete_title",
+    "profile_delete_desc",
+    "profile_delete_confirm"
   ]
 }

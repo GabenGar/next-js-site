@@ -8,12 +8,19 @@
   "properties": {
     "full_name": {
       "description": "The name shown on the profile card.",
-      "type": "string",
-      "minLength": 5,
-      "maxLength": 25
+      "oneOf": [
+        { "type": "string", "minLength": 5, "maxLength": 25 },
+        { "type": "null" }
+      ]
     },
     "avatar_file": {
-      "type": "string"
+      "description": "Different type for client and server init.",
+      "oneOf": [
+        {
+          "$ref": "http://schemas.com/types/file.schema.json"
+        },
+        { "type": "null" }
+      ]
     }
   }
 }

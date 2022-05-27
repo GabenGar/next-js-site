@@ -1,0 +1,41 @@
+{
+  "$id": "http://schemas.com/api/ya-disk/public-resource-list.schema.json",
+  "title": "YaDiskPublicResourceList",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["public_key", "path", "items"],
+  "properties": {
+    "public_key": {
+      "type": "string",
+      "description": "Ключ опубликованного ресурса"
+    },
+    "path": {
+      "type": "string",
+      "description": "Путь опубликованного ресурса"
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "$ref": "http://schemas.com/api/ya-disk/public-resource.schema.json"
+      },
+      "description": "Элементы списка"
+    },
+    "sort": {
+      "type": "string",
+      "description": "Поле, по которому отсортирован список"
+    },
+    "limit": {
+      "type": "integer",
+      "description": "Количество элементов на странице"
+    },
+    "offset": {
+      "type": "integer",
+      "description": "Смещение от начала списка"
+    },
+
+    "total": {
+      "type": "integer",
+      "description": "Общее количество элементов в списке"
+    }
+  }
+}

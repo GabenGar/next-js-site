@@ -35,12 +35,24 @@ export class ConfigurationError extends ProjectError {
   }
 }
 
-export class NotImplementedError extends ProjectError {}
+export class NotImplementedError extends ProjectError {
+  featureName: string;
+
+  name = "NotImplementedError";
+
+  constructor(featureName: string, options?: ErrorOptions, ...params: any[]) {
+    const message = `Feature "${featureName}" is not implemented.`;
+    super(message, options, ...params);
+    this.featureName = featureName;
+  }
+}
 
 /**
  * Account authentification errors.
  */
-export class AuthError extends ProjectError {}
+export class AuthError extends ProjectError {
+  name = "AuthError";
+}
 
 /**
  * JSON schema validation errors.
@@ -61,43 +73,6 @@ export class FieldsValidationError extends ProjectError {
     ].join("\n");
     super(message, ...params);
     this.validationErrors = validationErrors;
-  }
-}
-
-export class FetchError extends ProjectError {
-  res: Response;
-
-  name = "FetchError";
-
-  /**
-   * Alternative async  constructor.
-   */
-  static async async(res: Response, options?: ErrorOptions, ...params: any[]) {
-    let resBody;
-    try {
-      resBody = await res.text();
-    } catch (error) {
-      resBody = undefined;
-    }
-
-    return new this(res, resBody, options, ...params);
-  }
-
-  constructor(
-    res: Response,
-    body?: string,
-    options?: ErrorOptions,
-    ...params: any[]
-  ) {
-    const message = [
-      `Request: ${res.url}`,
-      `Status: ${res.status}`,
-      `Message: ${res.statusText}`,
-      `Headers: ${toJSON(Object.fromEntries(res.headers))}`,
-      body && `Body: ${body}`,
-    ].join("\n");
-    super(message, options, ...params);
-    this.res = res;
   }
 }
 

@@ -14,8 +14,8 @@ const { db } = getDB();
  * @TODO create avatar url after profile creation
  */
 export async function addProfile(
-  profileInit: IAccountProfileInit,
-  accountID: ISerialInteger
+  accountID: ISerialInteger,
+  profileInit: IAccountProfileInit
 ) {
   const query = `
     INSERT INTO accounts.profiles
@@ -57,7 +57,7 @@ export async function getProfiles(paginationDB: IPaginationDB) {
     OFFSET $(offset)
     LIMIT $(limit)
   `;
-  const query_args = {
+  const queryArgs = {
     offset,
     limit,
   };
@@ -68,7 +68,7 @@ export async function getProfiles(paginationDB: IPaginationDB) {
       schema: "accounts",
       table: "profiles",
     });
-    const profiles = await tx.manyOrNone<IAccountProfile>(query, query_args);
+    const profiles = await tx.manyOrNone<IAccountProfile>(query, queryArgs);
     const pagination = toPagination(paginationDB, profileCount);
 
     return {
@@ -78,4 +78,45 @@ export async function getProfiles(paginationDB: IPaginationDB) {
   });
 
   return result;
+}
+
+export async function addProfileAvatar(
+  profileID: ISerialInteger,
+  avatarURL: string
+) {
+  const query = `
+    UPDATE accounts.profiles
+    SET avatar_url = $(avatar_url)
+    WHERE id = $(profile_id)
+    RETURNING *
+  `;
+  const queryArgs = {
+    avatar_url: avatarURL,
+    profile_id: profileID,
+  };
+
+  const profile = await db.one<IAccountProfile>(query, queryArgs);
+
+  return profile;
+}
+
+export async function removeProfile(
+  accountID: ISerialInteger,
+  profileID: ISerialInteger
+) {
+  const query = `
+    DELETE FROM accounts.profiles
+    WHERE 
+      id = $(profile_id) 
+      AND account_id = $(account_id)
+    RETURNING *
+  `;
+  const queryArgs = {
+    profile_id: profileID,
+    account_id: accountID,
+  };
+
+  const profile = await db.one<IAccountProfile>(query, queryArgs);
+
+  return profile;
 }

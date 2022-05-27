@@ -20,5 +20,9 @@
   "create_profile": "Создать профиль",
   "profile": "Профиль",
   "profile_title": "Профиль",
-  "profile_desc": "Информация о профиле аккаунта"
+  "profile_desc": "Информация о профиле аккаунта",
+  "profile_delete": "Удалить профиль",
+  "profile_delete_title": "Удаление профиля",
+  "profile_delete_desc": "Удаление профиля.",
+  "profile_delete_confirm": "Подтвердить"
 }

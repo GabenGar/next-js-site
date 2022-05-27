@@ -1,1 +1,2 @@
-export { ProjectURL } from "./project-url"
+export { ProjectURL } from "./project-url";
+export { YandexDiskUrl } from "./yandex-disk";

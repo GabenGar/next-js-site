@@ -166,8 +166,11 @@ export interface AccountProfileInit {
   /**
    * The name shown on the profile card.
    */
-  full_name?: string;
-  avatar_file?: string;
+  full_name?: string | null;
+  /**
+   * Different type for client and server init.
+   */
+  avatar_file?: FormFileObject | null;
 }
 
 export interface YaDiskCommentIDs {
@@ -250,17 +253,19 @@ export interface YaDiskExif {
 
 export interface YaDiskLink {
   /**
-   * URL
+   * URL. It may be a URL template; see the `templated` key.
    */
   href: string;
   /**
-   * HTTP-метод
+   * The HTTP method for requesting the URL from the `href` key.
    */
   method: string;
   /**
-   * Признак шаблонизированного URL
+   * Indicates a URL template according to [RFC 6570](http://tools.ietf.org/html/rfc6570). Possible values:
+   * - "true" — URL template. Before sending a request to this address, put the desired parameter values in place of the values in curly brackets.
+   * - "false" — The URL can be requested without changes.
    */
-  templated?: boolean;
+  templated: boolean;
 }
 
 export interface YaDiskOperationStatus {
@@ -268,6 +273,123 @@ export interface YaDiskOperationStatus {
    * The status of the operation.
    */
   status: "success" | "failure" | "in-progress";
+}
+
+export interface YaDiskPublicResourceList {
+  /**
+   * Ключ опубликованного ресурса
+   */
+  public_key: string;
+  /**
+   * Путь опубликованного ресурса
+   */
+  path: string;
+  /**
+   * Элементы списка
+   */
+  items: YaDiskPublicResource[];
+  /**
+   * Поле, по которому отсортирован список
+   */
+  sort?: string;
+  /**
+   * Количество элементов на странице
+   */
+  limit?: number;
+  /**
+   * Смещение от начала списка
+   */
+  offset?: number;
+  /**
+   * Общее количество элементов в списке
+   */
+  total?: number;
+}
+
+export interface YaDiskPublicResource {
+  /**
+   * Тип
+   */
+  type: string;
+  /**
+   * Путь опубликованного ресурса
+   */
+  path: string;
+  /**
+   * Имя
+   */
+  name: string;
+  /**
+   * Дата создания
+   */
+  created: string;
+  /**
+   * Дата изменения
+   */
+  modified: string;
+  /**
+   * Ключ опубликованного ресурса
+   */
+  public_key: string;
+  /**
+   * Статус проверки антивирусом
+   */
+  antivirus_status?: {
+    [k: string]: unknown;
+  };
+  /**
+   * Счетчик просмотров публичного ресурса
+   */
+  views_count?: number;
+  /**
+   * Идентификатор ресурса
+   */
+  resource_id?: string;
+  share?: YaDiskShareInfo;
+  /**
+   * URL для скачивания файла
+   */
+  file?: string;
+  owner?: YaDiskUserPublicInformation;
+  /**
+   * Размер файла
+   */
+  size?: number;
+  /**
+   * Дата создания фото или видео файла
+   */
+  photoslice_time?: string;
+  _embedded?: YaDiskPublicResourceList;
+  exif?: YaDiskExif;
+  /**
+   * Определённый Диском тип файла
+   */
+  media_type?: string;
+  /**
+   * SHA256-хэш
+   */
+  sha256?: string;
+  /**
+   * MIME-тип файла
+   */
+  mime_type?: string;
+  /**
+   * Ревизия Диска в которой этот ресурс был изменён последний раз
+   */
+  revision?: number;
+  /**
+   * Публичный URL
+   */
+  public_url?: string;
+  /**
+   * MD5-хэш
+   */
+  md5?: string;
+  /**
+   * URL превью файла
+   */
+  preview?: string;
+  comment_ids?: YaDiskCommentIDs;
 }
 
 export interface YaDiskResourceList {
@@ -340,9 +462,9 @@ export interface YaDiskResource {
    */
   preview?: string;
   /**
-   * Тип
+   * Resource type.
    */
-  type: string;
+  type: ("dir" | "file") & string;
   /**
    * MIME-тип файла
    */
@@ -450,6 +572,21 @@ export interface YaDiskSystemFolders {
    * Путь к папке "Сканы".
    */
   scans?: string;
+}
+
+export interface YaDiskUserPublicInformation {
+  /**
+   * Логин.
+   */
+  login?: string;
+  /**
+   * Отображаемое имя пользователя.
+   */
+  display_name?: string;
+  /**
+   * Идентификатор пользователя.
+   */
+  uid?: string;
 }
 
 export interface YaDiskUser {
@@ -739,6 +876,48 @@ export type ISOTime = string;
  * A type to validate email strings separately.
  */
 export type EmailString = string;
+
+/**
+ * The content of `<input type="file">` as parsed by `formidable`.
+ */
+export interface FormFileObject {
+  /**
+   * The size of the uploaded file in bytes. This property says how many bytes of the file have been written to disk yet
+   */
+  size: number;
+  /**
+   * The path this file is being written to.
+   */
+  filepath: string;
+  /**
+   * The name this file had according to the uploading client.
+   */
+  originalFilename?: string;
+  /**
+   * Calculated based on options provided.
+   */
+  newFilename?: string;
+  /**
+   * The mime type of this file, according to the uploading client.
+   */
+  mimetype?: string;
+  /**
+   * A `Date` object (or `null`) containing the time this file was last written to.  Mostly here for compatibility with the [W3C File API Draft](http://dev.w3.org/2006/webapi/FileAPI/).
+   */
+  mtime?: {
+    [k: string]: unknown;
+  };
+  hashAlgorithm?: false | ("sha1" | "md5" | "sha256");
+  /**
+   * If `options.hashAlgorithm` calculation was set, you can read the hex digest out of this var (at the end it will be a string).
+   */
+  hash?:
+    | string
+    | {
+        [k: string]: unknown;
+      };
+  [k: string]: unknown;
+}
 
 /**
  * Integer equivalent of `SERIAL` type
