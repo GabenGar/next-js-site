@@ -16,7 +16,7 @@ export async function fetchComments() {
   const result: APIResponse<ICommentClient[]> = await response.json();
 
   if (!result.is_successful) {
-    const error = await FetchError.async(response);
+    const error = await FetchError.async({ res: response });
     throw error;
   }
   return result;
@@ -29,7 +29,7 @@ export async function fetchPendingComments() {
   const result: APIResponse<IComment[]> = await response.json();
 
   if (!result.is_successful) {
-    const error = await FetchError.async(response);
+    const error = await FetchError.async({ res: response });
     throw error;
   }
 
@@ -44,7 +44,7 @@ export async function createComment(commentInit: ICommentInit) {
   const result: APIResponse<ICommentClient> = await response.json();
 
   if (!result.is_successful) {
-    const error = await FetchError.async(response);
+    const error = await FetchError.async({ res: response });
     throw error;
   }
   return result;
@@ -58,7 +58,7 @@ export async function deleteComment(commentID: number) {
   const result: APIResponse<ICommentClient> = await response.json();
 
   if (!result.is_successful) {
-    const error = await FetchError.async(response);
+    const error = await FetchError.async({ res: response });
     throw error;
   }
   return result;
@@ -72,7 +72,7 @@ export async function approveComment(commentID: number) {
   const result: APIResponse<ICommentClient> = await response.json();
 
   if (!result.is_successful) {
-    const error = await FetchError.async(response);
+    const error = await FetchError.async({ res: response });
     throw error;
   }
 

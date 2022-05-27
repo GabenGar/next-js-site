@@ -15,7 +15,7 @@ export async function apiV1Fetch(path: string, reqInit?: RequestInit) {
 
   if (response.status === UNAUTHORIZED) {
     setLocalStoreItem<boolean>("is_registered", false);
-    const error = await FetchError.async(response);
+    const error = await FetchError.async({ res: response, req: reqInit });
     throw error;
   }
 
