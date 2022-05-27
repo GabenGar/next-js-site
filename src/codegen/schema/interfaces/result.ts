@@ -171,6 +171,9 @@ export interface AccountProfileInit {
    * Different type for client and server init.
    */
   avatar_file?: FormFileObject | null;
+  content?: {
+    [k: string]: unknown;
+  };
 }
 
 export interface YaDiskCommentIDs {

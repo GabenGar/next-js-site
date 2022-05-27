@@ -26,7 +26,11 @@ export async function registerProfile(
     return newProfile;
   }
 
-  const avatar_url = await uploadAvatar(newProfile, profileInit.avatar_file);
+  const avatar_url = await uploadAvatar(
+    newProfile,
+    profileInit.avatar_file,
+    profileInit.content as unknown as Buffer
+  );
 
   const freshProfile = await addProfileAvatar(newProfile.id, avatar_url);
 
@@ -51,10 +55,12 @@ export async function getProfiles(paginationInit: IPaginationInit) {
 
 async function uploadAvatar(
   profile: IAccountProfile,
-  avatar_file: IFormFileObject
+  avatar_file: IFormFileObject,
+  fileContent: Buffer
 ) {
   const uploadPath = `/profile/${profile.id}/avatar/${avatar_file.originalFilename}`;
-  const avatarURL = await uploadFile(uploadPath, avatar_file);
+  const avatarURL = await uploadFile(uploadPath, avatar_file, fileContent);
   const urlString = avatarURL.toStorageURL().toString();
+  
   return urlString;
 }

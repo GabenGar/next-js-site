@@ -1,18 +1,19 @@
+import { Writable } from "stream";
+import { Buffer } from "buffer";
 import contentType from "content-type";
 import getRawBody from "raw-body";
 import { IncomingForm } from "formidable";
 import { REQUEST_PAYLOAD_LIMIT } from "#environment/constants/vercel";
-import { toJSON } from "#lib/json";
-import { NotImplementedError } from "#lib/errors";
-import { getTempFolder } from "#server/fs";
 
 import type { GetServerSidePropsContext } from "next";
 import type { RawBodyError } from "raw-body";
 import type { Fields, Files, Options } from "formidable";
+import { toSerializedObject } from "#lib/json";
 
-interface MultipartResult {
+interface IMultipartResult {
   fields: Fields;
   files: Files;
+  content: Buffer;
 }
 
 /**
@@ -37,16 +38,71 @@ export async function getReqBody<T = Record<string, unknown>>(
  * For parsing file uploads.
  * @TODO size limit
  */
-export async function getMultipartReqBody<T = Record<string, unknown>>(
+export async function getMultipartReqBody<FormType = Record<string, unknown>>(
   req: GetServerSidePropsContext["req"],
 
   limit: number = REQUEST_PAYLOAD_LIMIT
 ) {
-  const uploadDir = await getTempFolder();
-  const { fields, files } = await parseForm(req, {
-    uploadDir,
+  const parsedForm = await parseForm(req, {
     maxTotalFileSize: limit,
   });
+  const result = normalizeForm<FormType>(parsedForm);
+
+  return result;
+}
+
+function parseForm(
+  req: GetServerSidePropsContext["req"],
+  options?: Omit<Options, "keepExtensions">
+) {
+  const result = new Promise<IMultipartResult>((resolve, reject) => {
+    const chunks: never[] = [];
+    const form = new IncomingForm({
+      ...options,
+      keepExtensions: true,
+      fileWriteStreamHandler: () => fileConsumer(chunks),
+    });
+
+    form.parse(req, (err, fields, files) => {
+      if (err) {
+        reject(err);
+      }
+
+      const content = Buffer.from(chunks);
+      console.log("BufferContent: ", content);
+
+      resolve({ fields, files, content });
+    });
+  });
+
+  return result;
+}
+
+function fileConsumer<AccumulatorType = unknown>(
+  accumulator: AccumulatorType[]
+) {
+  const writable = new Writable({
+    write: (chunk, _enc, next) => {
+      // console.log("Chunk: ", chunk);
+
+      accumulator.push(chunk);
+      next();
+    },
+  });
+
+  return writable;
+}
+
+/**
+ * The parsing result from `formidable` returns a dictionary
+ * with values as arrays even if there is only a single element.
+ * So the values have to be normalized
+ */
+function normalizeForm<SchemaType>({
+  fields,
+  files,
+  content,
+}: IMultipartResult) {
   const normalizedFields = Object.entries(fields).reduce<
     Record<string, unknown>
   >((normalizedFields, [key, value]) => {
@@ -62,27 +118,14 @@ export async function getMultipartReqBody<T = Record<string, unknown>>(
     },
     {}
   );
-  const result = { ...normalizedFields, ...normalizedFiles } as unknown as T;
-  // console.log(toJSON(result));
 
-  return result;
-}
+  const result = {
+    ...normalizedFields,
+    ...normalizedFiles,
+    content,
+  } as unknown as SchemaType;
 
-function parseForm(
-  req: GetServerSidePropsContext["req"],
-  options?: Omit<Options, "keepExtensions">
-) {
-  const result = new Promise<MultipartResult>(async (resolve, reject) => {
-    const form = new IncomingForm({ ...options, keepExtensions: true });
-
-    form.parse(req, (err, fields, files) => {
-      if (err) {
-        reject(err);
-      }
-
-      resolve({ fields, files });
-    });
-  });
+  console.log(toSerializedObject(result));
 
   return result;
 }
