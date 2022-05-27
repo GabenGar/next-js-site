@@ -100,3 +100,4 @@ git config core.sshCommand "ssh -i ~/.ssh/id_rsa_file -F /dev/null"
 - translation status per-file rundown
 - ISR for `/profiles` and `/profile` pages
 - node 16 migration
+- storage management for admins
