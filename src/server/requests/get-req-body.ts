@@ -69,7 +69,7 @@ function parseForm(
       }
 
       const content = Buffer.from(chunks);
-      console.log("BufferContent: ", content);
+      // console.log("BufferContent: ", content);
 
       resolve({ fields, files, content });
     });
@@ -125,7 +125,7 @@ function normalizeForm<SchemaType>({
     content,
   } as unknown as SchemaType;
 
-  console.log(toSerializedObject(result));
+  // console.log(toSerializedObject(result));
 
   return result;
 }
