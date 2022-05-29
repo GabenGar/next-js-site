@@ -8,7 +8,6 @@ import { REQUEST_PAYLOAD_LIMIT } from "#environment/constants/vercel";
 import type { GetServerSidePropsContext } from "next";
 import type { RawBodyError } from "raw-body";
 import type { Fields, Files, Options } from "formidable";
-import { toSerializedObject } from "#lib/json";
 
 interface IMultipartResult {
   fields: Fields;
@@ -56,11 +55,11 @@ function parseForm(
   options?: Omit<Options, "keepExtensions">
 ) {
   const result = new Promise<IMultipartResult>((resolve, reject) => {
-    const chunks: never[] = [];
+    const chunks: Buffer[] = [];
     const form = new IncomingForm({
       ...options,
       keepExtensions: true,
-      fileWriteStreamHandler: () => fileConsumer(chunks),
+      fileWriteStreamHandler: () => fileConsumer<Buffer>(chunks),
     });
 
     form.parse(req, (err, fields, files) => {
@@ -68,7 +67,7 @@ function parseForm(
         reject(err);
       }
 
-      const content = Buffer.from(chunks);
+      const content = Buffer.concat(chunks);
       // console.log("BufferContent: ", content);
 
       resolve({ fields, files, content });
@@ -82,10 +81,10 @@ function fileConsumer<AccumulatorType = unknown>(
   accumulator: AccumulatorType[]
 ) {
   const writable = new Writable({
-    write: (chunk, _enc, next) => {
+    write: (chunk: AccumulatorType, _enc, next) => {
       // console.log("Chunk: ", chunk);
 
-      accumulator.push(...chunk);
+      accumulator.push(chunk);
       next();
     },
   });
