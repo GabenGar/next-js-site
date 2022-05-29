@@ -85,7 +85,7 @@ function fileConsumer<AccumulatorType = unknown>(
     write: (chunk, _enc, next) => {
       // console.log("Chunk: ", chunk);
 
-      accumulator.push(chunk);
+      accumulator.push(...chunk);
       next();
     },
   });
