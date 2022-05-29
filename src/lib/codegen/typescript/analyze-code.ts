@@ -97,7 +97,7 @@ function getKindInfo(node: Node) {
     parentKind: `Parent kind: ${parentKind}`,
     kind: `Kind: ${kind} (${SyntaxKind[kind]})`,
   };
-  console.log(kinds);
+  // console.log(kinds);
   // modifiers && console.log(modifiers)
   // console.log(nodeInfo);
 }
