@@ -1,14 +1,23 @@
-import { deleteFile } from "#server/fs";
+import { StorageError } from "#server/errors";
 import { uploadFile as uploadFileToYaDisk } from "#server/storage/ya-disk";
 
-import type { IFormFileObject } from "./types";
-
-export async function uploadFile(path: string, fileInfo: IFormFileObject, fileContent: Buffer) {
+export async function uploadFile(path: string, fileContent: Buffer) {
   try {
     const publicURL = await uploadFileToYaDisk(path, fileContent);
 
     return publicURL;
-  } finally {
-    await deleteFile(fileInfo.filepath);
+  } catch (error) {
+    const isStorageError = error instanceof StorageError;
+
+    if (!isStorageError) {
+      throw error;
+    }
+
+    const message = [
+      `Failed to upload file at path "${path}"`,
+      error.cause && `Reason:\n${error.cause}`,
+    ].join("\n");
+
+    throw new StorageError(message, { cause: error });
   }
 }

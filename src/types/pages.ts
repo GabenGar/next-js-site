@@ -1,6 +1,7 @@
 import type { SSRConfig } from "next-i18next";
 import type { ErrorObject } from "ajv";
 import type { ISOLangString } from "#lib/language";
+import type { ILocaleInfo } from "#lib/language";
 
 export interface ISchemaValidationError extends ErrorObject {}
 
@@ -10,10 +11,8 @@ export type IValidationResult<T> =
 
 /**
  * Props shared across all pages.
- * @TODOs
- * - Implement cookie-based theme.
  */
-export interface BasePageProps extends Record<string, unknown>, SSRConfig {
+export interface BasePageProps extends SSRConfig, Record<string, unknown> {
   /**
    * This info has to be passed to generate links server-side.
    */
@@ -23,4 +22,11 @@ export interface BasePageProps extends Record<string, unknown>, SSRConfig {
   };
   errors?: Array<string>;
   schemaValidationErrors?: ISchemaValidationError[];
+}
+
+/**
+ * Locale info is handled by the decorator.
+ */
+export interface ILocalizedProps extends Omit<BasePageProps, "localeInfo"> {
+  localeInfo?: ILocaleInfo;
 }
