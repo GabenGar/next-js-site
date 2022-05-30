@@ -5,33 +5,7 @@ import { ProjectError } from "#lib/errors";
 
 import type { ParsedUrlQuery } from "querystring";
 import type { GetServerSideProps } from "next";
-import type { SSRConfig } from "next-i18next";
-import type { IAccount } from "#types/entities";
-import type { BasePageProps } from "#types/pages";
-import type { ILocaleInfo } from "#lib/language";
-
-export type SlimProps<Props extends BasePageProps> = Omit<
-  Props,
-  "localeInfo" | "_nextI18Next"
-> & {
-  localeInfo?: ILocaleInfo;
-  _nextI18Next?: SSRConfig[keyof SSRConfig];
-};
-
-interface IGetServerSidePropsOptions {
-  /**
-   * Extra translation namespaces to be used by the page.
-   */
-  extraLangNames: string[];
-}
-
-export function createServerSideProps<
-  Props extends BasePageProps = BasePageProps,
-  Params extends ParsedUrlQuery = ParsedUrlQuery
->(
-  options: IGetServerSidePropsOptions,
-  callback: GetServerSideProps<SlimProps<Props>, Params>
-): GetServerSideProps<Props, Params>;
+import type { BasePageProps, SlimProps, IPageOptions } from "#types/pages";
 
 /**
  * An error handling decorator for {@link GetServerSideProps} function.
@@ -41,17 +15,17 @@ export function createServerSideProps<
   Props extends BasePageProps,
   Params extends ParsedUrlQuery = ParsedUrlQuery
 >(
-  options: IGetServerSidePropsOptions,
+  options: IPageOptions,
   callback: GetServerSideProps<SlimProps<Props>, Params>
 ): GetServerSideProps<Props, Params> {
-  const { extraLangNames } = options;
+  const { extraLangNamespaces } = options;
 
   async function decorated(...args: Parameters<typeof callback>) {
     const [context] = args;
     const { locale, defaultLocale } = context;
     const localization = await serverSideTranslations(
       locale!,
-      ["layout", "components"].concat(extraLangNames)
+      ["layout", "components"].concat(extraLangNamespaces)
     );
     const localeInfo = {
       defaultLocale: defaultLocale!,
@@ -96,5 +70,6 @@ export function createServerSideProps<
     }
   }
 
+  // @ts-expect-error some typing stuff
   return decorated;
 }

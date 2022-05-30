@@ -9,6 +9,13 @@ export type IValidationResult<T> =
   | { isValid: true; formattedResult: T }
   | { isValid: false; schemaValidationErrors: ISchemaValidationError[] };
 
+export interface IPageOptions {
+  /**
+   * Extra translation namespaces to be used by the page.
+   */
+  extraLangNamespaces: string[];
+}
+
 /**
  * Props shared across all pages.
  */
@@ -23,3 +30,11 @@ export interface BasePageProps extends SSRConfig, Record<string, unknown> {
   errors?: Array<string>;
   schemaValidationErrors?: ISchemaValidationError[];
 }
+
+export type SlimProps<Props extends BasePageProps> = Omit<
+  Props,
+  "localeInfo" | "_nextI18Next"
+> & {
+  localeInfo?: ILocaleInfo;
+  _nextI18Next?: SSRConfig[keyof SSRConfig];
+};
