@@ -5,7 +5,9 @@ export type {
   IBlogLocalization,
   ICommonLocalization,
   IComponentLocalization,
-  ILayoutLocalization
+  ILayoutLocalization,
 } from "#codegen/schema/interfaces";
 
 export interface LanguagesOverview extends Record<string, number> {}
+
+export const defaultNamespaces = ["layout", "components"] as const;

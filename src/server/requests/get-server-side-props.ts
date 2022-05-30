@@ -4,17 +4,16 @@ import { Redirect } from "#server/requests";
 import { ProjectError } from "#lib/errors";
 
 import type { ParsedUrlQuery } from "querystring";
-import type {
-  GetServerSideProps,
-  GetServerSidePropsContext,
-  GetServerSidePropsResult,
-} from "next";
+import type { GetServerSideProps } from "next";
 import type { SSRConfig } from "next-i18next";
 import type { IAccount } from "#types/entities";
 import type { BasePageProps } from "#types/pages";
 import type { ILocaleInfo } from "#lib/language";
 
-export type SlimProps<Props> = Omit<Props, "localeInfo" | "_nextI18Next"> & {
+export type SlimProps<Props extends BasePageProps> = Omit<
+  Props,
+  "localeInfo" | "_nextI18Next"
+> & {
   localeInfo?: ILocaleInfo;
   _nextI18Next?: SSRConfig[keyof SSRConfig];
 };
@@ -25,6 +24,14 @@ interface IGetServerSidePropsOptions {
    */
   extraLangNames: string[];
 }
+
+export function createServerSideProps<
+  Props extends BasePageProps = BasePageProps,
+  Params extends ParsedUrlQuery = ParsedUrlQuery
+>(
+  options: IGetServerSidePropsOptions,
+  callback: GetServerSideProps<SlimProps<Props>, Params>
+): GetServerSideProps<Props, Params>;
 
 /**
  * An error handling decorator for {@link GetServerSideProps} function.
@@ -52,22 +59,23 @@ export function createServerSideProps<
     };
 
     try {
-      const result = await Promise.resolve(callback(context));
+      const result = await callback(context);
 
       // return non-props results
       if (!("props" in result)) {
         return result;
       }
 
-      const newResult = {
-        props: {
-          ...localization,
-          localeInfo,
-          ...result.props,
-        },
+      const slimProps = await result.props;
+      const newProps = {
+        ...localization,
+        localeInfo,
+        ...slimProps,
       };
 
-      return newResult;
+      return {
+        props: newProps,
+      };
     } catch (error) {
       const isProperError = error instanceof Error;
 

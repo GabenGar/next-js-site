@@ -1,5 +1,4 @@
 import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useEffect, useState } from "react";
 import { createServerSideProps } from "#server/requests";
 import { createSEOTags } from "#lib/seo";
@@ -19,11 +18,7 @@ import { Page } from "#components/pages";
 import { CountryCard } from "#components/frontend-mentor";
 import styles from "./all.module.scss";
 
-import type {
-  NextPage,
-  GetServerSideProps,
-  InferGetServerSidePropsType,
-} from "next";
+import type { NextPage, InferGetServerSidePropsType } from "next";
 import type { FormEvent } from "react";
 import type { Country } from "#lib/api/rest-countries";
 import type { BasePageProps } from "#types/pages";
