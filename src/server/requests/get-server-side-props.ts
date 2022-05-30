@@ -5,7 +5,7 @@ import { ProjectError } from "#lib/errors";
 
 import type { ParsedUrlQuery } from "querystring";
 import type { GetServerSideProps } from "next";
-import type { BasePageProps, SlimProps, IPageOptions } from "#types/pages";
+import type { BasePageProps, ISlimProps, IPageOptions } from "#types/pages";
 
 /**
  * An error handling decorator for {@link GetServerSideProps} function.
@@ -13,10 +13,10 @@ import type { BasePageProps, SlimProps, IPageOptions } from "#types/pages";
  */
 export function createServerSideProps<
   Props extends BasePageProps,
-  Params extends ParsedUrlQuery = ParsedUrlQuery
+  Params extends ParsedUrlQuery
 >(
   options: IPageOptions,
-  callback: GetServerSideProps<SlimProps<Props>, Params>
+  callback: GetServerSideProps<ISlimProps<Props>, Params>
 ): GetServerSideProps<Props, Params> {
   const { extraLangNamespaces } = options;
 
@@ -41,7 +41,8 @@ export function createServerSideProps<
       }
 
       const slimProps = await result.props;
-      const newProps = {
+      // @ts-expect-error prop typing
+      const newProps: Props = {
         ...localization,
         localeInfo,
         ...slimProps,
@@ -70,6 +71,5 @@ export function createServerSideProps<
     }
   }
 
-  // @ts-expect-error some typing stuff
   return decorated;
 }

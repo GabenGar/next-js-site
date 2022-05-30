@@ -19,7 +19,7 @@ export interface IPageOptions {
 /**
  * Props shared across all pages.
  */
-export interface BasePageProps extends SSRConfig, Record<string, unknown> {
+export interface BasePageProps extends SSRConfig {
   /**
    * This info has to be passed to generate links server-side.
    */
@@ -31,7 +31,7 @@ export interface BasePageProps extends SSRConfig, Record<string, unknown> {
   schemaValidationErrors?: ISchemaValidationError[];
 }
 
-export type SlimProps<Props extends BasePageProps> = Omit<
+export type ISlimProps<Props extends BasePageProps> = Omit<
   Props,
   "localeInfo" | "_nextI18Next"
 > & {

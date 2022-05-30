@@ -7,7 +7,7 @@ import { LinkInternal } from "#components/links";
 import { FELogo } from "#components/icons/logos";
 
 import type { ParsedUrlQuery } from "querystring";
-import type { GetStaticProps, InferGetStaticPropsType } from "next";
+import type { InferGetStaticPropsType } from "next";
 import type { BasePageProps } from "#types/pages";
 
 interface IHomePageProps extends BasePageProps {}

@@ -2,6 +2,7 @@ import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { createSEOTags } from "#lib/seo";
 import { getAllSlugs, getBlogPost } from "#lib/blog";
+import { createStaticProps } from "#server/requests";
 import { Page } from "#components/pages";
 import { BlogPostArticle } from "#components/entities/blog";
 
@@ -65,29 +66,24 @@ export const getStaticPaths: GetStaticPaths<BlogPostPageParams> = async ({
   };
 };
 
-export const getStaticProps: GetStaticProps<
-  BlogPostPageProps,
-  BlogPostPageParams
-> = async ({ locale, defaultLocale, params }) => {
-  const { slug } = params!;
+export const getStaticProps = createStaticProps<
+BlogPostPageProps,
+BlogPostPageParams
+>(
+  {
+    extraLangNamespaces: ["blog"],
+  },
+  async ({ params }) => {
+    const { slug } = params!;
 
   const post = await getBlogPost(slug);
-  const localization = await serverSideTranslations(locale!, [
-    "layout",
-    "components",
-    "blog",
-  ]);
 
-  return {
-    props: {
-      ...localization,
-      localeInfo: {
-        locale: locale!,
-        defaultLocale: defaultLocale!,
+    return {
+      props: {
+        post,
       },
-      post,
-    },
-  };
-};
+    };
+  }
+);
 
 export default BlogPostPage;

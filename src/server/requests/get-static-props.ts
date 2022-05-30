@@ -2,19 +2,19 @@ import { getServerSideTranslations } from "#lib/translation";
 
 import type { ParsedUrlQuery } from "querystring";
 import type { GetStaticProps } from "next";
-import type { BasePageProps, SlimProps, IPageOptions } from "#types/pages";
+import type { BasePageProps, ISlimProps, IPageOptions } from "#types/pages";
 
 export function createStaticProps<
   Props extends BasePageProps,
   Params extends ParsedUrlQuery = ParsedUrlQuery
 >(
   options: IPageOptions,
-  callback?: GetStaticProps<SlimProps<Props>, Params>
+  callback?: GetStaticProps<ISlimProps<Props>, Params>
 ): GetStaticProps<Props, Params> {
   const { extraLangNamespaces } = options;
 
   async function getStaticProps(
-    ...args: Parameters<GetStaticProps<SlimProps<Props>, Params>>
+    ...args: Parameters<GetStaticProps<ISlimProps<Props>, Params>>
   ) {
     const [context] = args;
     const { locale, defaultLocale } = context;

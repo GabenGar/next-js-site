@@ -4,7 +4,9 @@
   "description": "Localization for errors.",
   "type": "object",
   "required": [
-    "error_404",
-    "error_500"
+    "http_404_title",
+    "http_404_description",
+    "http_500_title",
+    "http_500_description"
   ]
 }
