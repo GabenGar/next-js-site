@@ -11,6 +11,7 @@ import type {
 } from "next";
 import type { IAccount } from "#types/entities";
 import type { ILocalizedProps, BasePageProps } from "#types/pages";
+import type { ILocaleInfo } from "#lib/language";
 
 /**
  * Helper type for the callback.
@@ -36,15 +37,15 @@ interface IGetServerSidePropsOptions {
  * @TODO stricter callback typing
  */
 export function createServerSideProps<
-  Props extends ILocalizedProps,
+  Props extends BasePageProps,
   Params extends ParsedUrlQuery = ParsedUrlQuery
 >(
   options: IGetServerSidePropsOptions,
-  callback: GetServerSideProps<Props, Params>
-): typeof callback {
+  callback: ILocalizedCallback<Props, Params>
+): GetServerSideProps<Props | { localeInfo: ILocaleInfo }, Params> {
   const { extraLangNames } = options;
 
-  return async (...args: Parameters<typeof callback>) => {
+  async function decorated(...args: Parameters<typeof callback>) {
     const [context] = args;
     const { locale, defaultLocale } = context;
     const localization = await serverSideTranslations(
@@ -60,19 +61,17 @@ export function createServerSideProps<
       const result = await Promise.resolve(callback(context));
 
       // exclude non-props results
-      // @ts-expect-error next type error
-      if (!result.props) {
+      if (!("props" in result)) {
         return result;
       }
 
-      const newResult: { props: Props } = {
+      const newResult = {
         props: {
           ...localization,
-        localeInfo,
-        // @ts-expect-error next type error
-        ...result.props,
-        }
-      };
+          localeInfo,
+          ...result.props,
+        },
+      } as { props: Props };
 
       return newResult;
     } catch (error) {
@@ -93,5 +92,7 @@ export function createServerSideProps<
 
       return new Redirect(localeInfo, "/500", FOUND);
     }
-  };
+  }
+
+  return decorated;
 }
