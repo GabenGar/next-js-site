@@ -9,25 +9,19 @@ import type {
   GetServerSidePropsContext,
   GetServerSidePropsResult,
 } from "next";
+import type { SSRConfig } from "next-i18next";
 import type { IAccount } from "#types/entities";
-import type { ILocalizedProps, BasePageProps } from "#types/pages";
+import type { BasePageProps } from "#types/pages";
 import type { ILocaleInfo } from "#lib/language";
 
-/**
- * Helper type for the callback.
- * Does not need to return localization info
- * because it's handled by the decorator.
- */
-type ILocalizedCallback<
-  Props extends ILocalizedProps,
-  Params extends ParsedUrlQuery = ParsedUrlQuery
-> = (
-  context: GetServerSidePropsContext<Params>
-) => GetServerSidePropsResult<Props>;
+export type SlimProps<Props> = Omit<Props, "localeInfo" | "_nextI18Next"> & {
+  localeInfo?: ILocaleInfo;
+  _nextI18Next?: SSRConfig[keyof SSRConfig];
+};
 
 interface IGetServerSidePropsOptions {
   /**
-   * extra translation namespaces to be used by the page
+   * Extra translation namespaces to be used by the page.
    */
   extraLangNames: string[];
 }
@@ -41,8 +35,8 @@ export function createServerSideProps<
   Params extends ParsedUrlQuery = ParsedUrlQuery
 >(
   options: IGetServerSidePropsOptions,
-  callback: ILocalizedCallback<Props, Params>
-): GetServerSideProps<Props | { localeInfo: ILocaleInfo }, Params> {
+  callback: GetServerSideProps<SlimProps<Props>, Params>
+): GetServerSideProps<Props, Params> {
   const { extraLangNames } = options;
 
   async function decorated(...args: Parameters<typeof callback>) {
@@ -60,19 +54,18 @@ export function createServerSideProps<
     try {
       const result = await Promise.resolve(callback(context));
 
-      // exclude non-props results
+      // return non-props results
       if (!("props" in result)) {
         return result;
       }
 
-      const newResult: { props: Props} = {
-        // @ts-expect-error some type stuff
+      const newResult = {
         props: {
           ...localization,
           localeInfo,
           ...result.props,
         },
-      }
+      };
 
       return newResult;
     } catch (error) {

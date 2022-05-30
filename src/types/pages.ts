@@ -23,10 +23,3 @@ export interface BasePageProps extends SSRConfig, Record<string, unknown> {
   errors?: Array<string>;
   schemaValidationErrors?: ISchemaValidationError[];
 }
-
-/**
- * Locale info is handled by the decorator.
- */
-export interface ILocalizedProps extends Omit<BasePageProps, "localeInfo" | "_nextI18Next"> {
-  localeInfo?: ILocaleInfo;
-}
