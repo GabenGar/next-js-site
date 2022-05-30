@@ -65,13 +65,14 @@ export function createServerSideProps<
         return result;
       }
 
-      const newResult = {
+      const newResult: { props: Props} = {
+        // @ts-expect-error some type stuff
         props: {
           ...localization,
           localeInfo,
           ...result.props,
         },
-      } as { props: Props };
+      }
 
       return newResult;
     } catch (error) {
