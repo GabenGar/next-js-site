@@ -1,5 +1,5 @@
 import { getDB } from "#database";
-import { DatabaseError } from "#lib/errors";
+import { DatabaseError } from "#server/errors";
 import { IComment, ICommentInit } from "#types/entities";
 
 const { db } = getDB();

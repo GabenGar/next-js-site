@@ -1,6 +1,6 @@
 import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useEffect, useState } from "react";
+import { createServerSideProps } from "#server/requests";
 import { createSEOTags } from "#lib/seo";
 import { allCountries } from "#lib/api/rest-countries";
 import { CardList } from "#components/lists/card-list";
@@ -18,18 +18,16 @@ import { Page } from "#components/pages";
 import { CountryCard } from "#components/frontend-mentor";
 import styles from "./all.module.scss";
 
-import type {
-  NextPage,
-  GetServerSideProps,
-  InferGetServerSidePropsType,
-} from "next";
+import type { ParsedUrlQuery } from "querystring";
+import type { NextPage, InferGetServerSidePropsType } from "next";
 import type { FormEvent } from "react";
 import type { Country } from "#lib/api/rest-countries";
-import type { BasePageProps } from "#types/pages";
 
-interface IProps extends BasePageProps {
+interface IProps {
   countries: Country[];
 }
+
+interface IParams extends ParsedUrlQuery {}
 
 const limit = 25;
 
@@ -42,7 +40,7 @@ export default function RESTCountriesAllPage({
   const [filteredCountries, filterCountries] = useState(countries);
   const [currentCountries, changeCurrentCountries] = useState<Country[]>([]);
   const seoTags = createSEOTags({
-    localeInfo,
+    localeInfo: localeInfo!,
     title: "All Countries",
     description: "All Countries",
     canonicalPath: "/frontend-mentor/rest-countries/all",
@@ -125,32 +123,21 @@ RESTCountriesAllPage.getLayout = function getLayout(page: NextPage) {
   return <Layout>{page}</Layout>;
 };
 
-export const getServerSideProps: GetServerSideProps<IProps> = async ({
-  locale,
-  defaultLocale,
-}) => {
-  const countries = await allCountries();
+export const getServerSideProps = createServerSideProps<IProps, IParams>(
+  { extraLangNamespaces: ["frontend-mentor"] },
+  async () => {
+    const countries = await allCountries();
 
-  if (!countries) {
+    if (!countries) {
+      return {
+        notFound: true,
+      };
+    }
+
     return {
-      notFound: true,
+      props: {
+        countries,
+      },
     };
   }
-
-  const localization = await serverSideTranslations(locale!, [
-    "layout",
-    "components",
-    "frontend-mentor",
-  ]);
-
-  return {
-    props: {
-      ...localization,
-      localeInfo: {
-        locale: locale!,
-        defaultLocale: defaultLocale!,
-      },
-      countries,
-    },
-  };
-};
+);

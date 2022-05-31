@@ -1,16 +1,15 @@
 import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { createSEOTags } from "#lib/seo";
+import { createStaticProps } from "#server/requests";
 import { Page } from "#components/pages";
 import { Nav, NavItem, NavList } from "#components/navigation";
 import { LinkInternal } from "#components/links";
 import { FELogo } from "#components/icons/logos";
 
 import type { ParsedUrlQuery } from "querystring";
-import type { GetStaticProps, InferGetStaticPropsType } from "next";
-import type { BasePageProps } from "#types/pages";
+import type { InferGetStaticPropsType } from "next";
 
-interface IHomePageProps extends BasePageProps {}
+interface IHomePageProps {}
 
 interface IHomePageParams extends ParsedUrlQuery {}
 
@@ -39,25 +38,9 @@ function Home({ localeInfo }: InferGetStaticPropsType<typeof getStaticProps>) {
   );
 }
 
-export const getStaticProps: GetStaticProps<
+export const getStaticProps = createStaticProps<
   IHomePageProps,
   IHomePageParams
-> = async ({ locale, defaultLocale }) => {
-  const localization = await serverSideTranslations(locale!, [
-    "layout",
-    "components",
-    "common",
-  ]);
-
-  return {
-    props: {
-      ...localization,
-      localeInfo: {
-        locale: locale!,
-        defaultLocale: defaultLocale!,
-      },
-    },
-  };
-};
+>({ extraLangNamespaces: ["common"] });
 
 export default Home;

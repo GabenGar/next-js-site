@@ -2,6 +2,7 @@ import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { createSEOTags } from "#lib/seo";
 import { countriesByRegion } from "#lib/api/rest-countries";
+import { createServerSideProps } from "#server/requests";
 import { CardList } from "#components/lists";
 import { RESTCountries as Layout } from "#components/layout/frontend-mentor";
 import { Page } from "#components/pages";
@@ -16,7 +17,7 @@ import type { ParsedUrlQuery } from "querystring";
 import type { Country } from "#lib/api/rest-countries";
 import type { BasePageProps } from "#types/pages";
 
-interface IProps extends BasePageProps{
+interface IProps {
   region: string;
   countries: Country[];
 }
@@ -54,37 +55,25 @@ RegionDetails.getLayout = function getLayout(page: NextPage) {
   return <Layout>{page}</Layout>;
 };
 
-export const getServerSideProps: GetServerSideProps<IProps, IParams> = async ({
-  params,
-  locale,
-  defaultLocale
-}) => {
-  const { region } = params!;
-  const countries = await countriesByRegion(region);
+export const getServerSideProps = createServerSideProps<IProps, IParams>(
+  { extraLangNamespaces: ["frontend-mentor"] },
+  async ({ params }) => {
+    const { region } = params!;
+    const countries = await countriesByRegion(region);
 
-  if (!countries) {
+    if (!countries) {
+      return {
+        notFound: true,
+      };
+    }
+
     return {
-      notFound: true,
+      props: {
+        region,
+        countries,
+      },
     };
   }
-
-  const localization = await serverSideTranslations(locale!, [
-    "layout",
-    "components",
-    "frontend-mentor",
-  ]);
-
-  return {
-    props: {
-      ...localization,
-      localeInfo: {
-        locale: locale!,
-        defaultLocale: defaultLocale!,
-      },
-      region,
-      countries,
-    },
-  };
-};
+);
 
 export default RegionDetails;

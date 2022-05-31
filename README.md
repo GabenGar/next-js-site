@@ -101,3 +101,4 @@ git config core.sshCommand "ssh -i ~/.ssh/id_rsa_file -F /dev/null"
 - ISR for `/profiles` and `/profile` pages
 - node 16 migration
 - storage management for admins
+- proper logging

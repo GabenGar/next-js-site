@@ -1,5 +1,5 @@
 import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { createStaticProps } from "#server/requests";
 import { AdminPhoto } from "#assets";
 import { createSEOTags } from "#lib/seo";
 import { Page } from "#components/pages";
@@ -16,10 +16,9 @@ import { SVGIcon } from "#components/icons";
 import styles from "./about.module.scss";
 
 import type { ParsedUrlQuery } from "querystring";
-import type { GetStaticProps, InferGetStaticPropsType } from "next";
-import type { BasePageProps } from "#types/pages";
+import type { InferGetStaticPropsType } from "next";
 
-interface IAboutPageProps extends BasePageProps {}
+interface IAboutPageProps {}
 
 interface IAboutPageParams extends ParsedUrlQuery {}
 
@@ -131,25 +130,9 @@ function AboutPage({
   );
 }
 
-export const getStaticProps: GetStaticProps<
+export const getStaticProps = createStaticProps<
   IAboutPageProps,
   IAboutPageParams
-> = async ({ locale, defaultLocale }) => {
-  const localization = await serverSideTranslations(locale!, [
-    "layout",
-    "components",
-    "common",
-  ]);
-
-  return {
-    props: {
-      ...localization,
-      localeInfo: {
-        locale: locale!,
-        defaultLocale: defaultLocale!,
-      },
-    },
-  };
-};
+>({ extraLangNamespaces: ["common"] });
 
 export default AboutPage;

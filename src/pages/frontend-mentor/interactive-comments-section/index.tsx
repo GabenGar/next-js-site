@@ -1,9 +1,12 @@
 import { useEffect } from "react";
 import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { createSEOTags } from "#lib/seo";
+import { createStaticProps } from "#server/requests";
 import { useAppDispatch, useAppSelector } from "#browser/store/redux";
-import { getFMCommentsAsync, selectFMSlice } from "#browser/store/redux/reducers";
+import {
+  getFMCommentsAsync,
+  selectFMSlice,
+} from "#browser/store/redux/reducers";
 import { Page } from "#components/pages";
 import {
   Article,
@@ -21,13 +24,12 @@ import { JSONView } from "#components/json";
 import { LoadingBar } from "#components/state";
 import styles from "./index.module.scss";
 
-import type { GetStaticProps, InferGetStaticPropsType } from "next";
+import type { InferGetStaticPropsType } from "next";
 import type { ParsedUrlQuery } from "querystring";
-import type { BasePageProps } from "#types/pages";
 
-interface FMCommentsPageProps extends BasePageProps {}
+interface IProps {}
 
-interface FMCommentsPageParams extends ParsedUrlQuery {}
+interface IParams extends ParsedUrlQuery {}
 
 function FMCommentsPage({
   localeInfo,
@@ -78,26 +80,8 @@ function FMCommentsPage({
   );
 }
 
-export const getStaticProps: GetStaticProps<
-  FMCommentsPageProps,
-  FMCommentsPageParams
-> = async ({ locale, defaultLocale }) => {
-  const localization = await serverSideTranslations(locale!, [
-    "layout",
-    "components",
-    "frontend-mentor",
-    "fm-comments",
-  ]);
-
-  return {
-    props: {
-      ...localization,
-      localeInfo: {
-        locale: locale!,
-        defaultLocale: defaultLocale!,
-      },
-    },
-  };
-};
+export const getStaticProps = createStaticProps<IProps, IParams>({
+  extraLangNamespaces: ["frontend-mentor", "fm-comments"],
+});
 
 export default FMCommentsPage;

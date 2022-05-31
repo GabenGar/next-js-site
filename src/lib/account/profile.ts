@@ -59,8 +59,8 @@ async function uploadAvatar(
   fileContent: Buffer
 ) {
   const uploadPath = `/profile/${profile.id}/avatar/${avatar_file.originalFilename}`;
-  const avatarURL = await uploadFile(uploadPath, avatar_file, fileContent);
+  const avatarURL = await uploadFile(uploadPath, fileContent);
   const urlString = avatarURL.toStorageURL().toString();
-  
+
   return urlString;
 }

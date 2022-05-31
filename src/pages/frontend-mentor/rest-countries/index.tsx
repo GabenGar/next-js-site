@@ -1,15 +1,14 @@
 import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { createSEOTags } from "#lib/seo";
+import { createStaticProps } from "#server/requests";
 import { RESTCountries as Layout } from "#components/layout/frontend-mentor";
 import { Page } from "#components/pages";
 import { LinkInternal } from "#components/links";
 
-import type { NextPage, GetStaticProps, InferGetStaticPropsType } from "next";
+import type { NextPage, InferGetStaticPropsType } from "next";
 import type { ParsedUrlQuery } from "querystring";
-import type { BasePageProps } from "#types/pages";
 
-interface IProps extends BasePageProps {}
+interface IProps {}
 
 interface IParams extends ParsedUrlQuery {}
 
@@ -66,23 +65,6 @@ RESTCountriesPage.getLayout = function getLayout(page: NextPage) {
   return <Layout>{page}</Layout>;
 };
 
-export const getStaticProps: GetStaticProps<IProps, IParams> = async ({
-  locale,
-  defaultLocale,
-}) => {
-  const localization = await serverSideTranslations(locale!, [
-    "layout",
-    "components",
-    "frontend-mentor",
-  ]);
-
-  return {
-    props: {
-      ...localization,
-      localeInfo: {
-        locale: locale!,
-        defaultLocale: defaultLocale!,
-      },
-    },
-  };
-};
+export const getStaticProps = createStaticProps<IProps, IParams>({
+  extraLangNamespaces: ["frontend-mentor"],
+});

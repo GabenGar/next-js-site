@@ -1,0 +1,12 @@
+{
+  "$id": "http://schemas.com/localization/errors.schema.json",
+  "title": "ErrorsLocalization",
+  "description": "Localization for errors.",
+  "type": "object",
+  "required": [
+    "http_404_title",
+    "http_404_description",
+    "http_500_title",
+    "http_500_description"
+  ]
+}

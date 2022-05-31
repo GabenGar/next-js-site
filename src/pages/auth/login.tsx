@@ -1,24 +1,24 @@
 import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { FOUND, SEE_OTHER } from "#environment/constants/http";
 import { AuthError } from "#lib/errors";
 import { createSEOTags } from "#lib/seo";
 import { loginAccount, validateAccountInitFields } from "#lib/account";
-import { withSessionSSR, getReqBody, Redirect } from "#server/requests";
+import {
+  withSessionSSR,
+  getReqBody,
+  Redirect,
+  createServerSideProps,
+} from "#server/requests";
 import { Page } from "#components/pages";
 import { Form } from "#components/forms";
 import { ErrorsView } from "#components/errors";
-import {
-  FormSectionPassword,
-  Text,
-} from "#components/forms/sections";
+import { FormSectionPassword, Text } from "#components/forms/sections";
 import { LinkInternal } from "#components/links";
 
-import type { BasePageProps } from "#types/pages";
 import type { IAccountInit } from "#types/entities";
 import type { InferGetServerSidePropsType } from "next";
 
-interface LoginPageProps extends BasePageProps {
+interface IProps {
   accCreds?: IAccountInit;
 }
 
@@ -43,12 +43,7 @@ export function LoginPage({
           {t("not_registered")}?{" "}
           <LinkInternal href="/auth/register">{t("register")}</LinkInternal>
         </p>
-        <Text
-          id="acc-name"
-          name="name"
-          required
-          defaultValue={accCreds?.name}
-        >
+        <Text id="acc-name" name="name" required defaultValue={accCreds?.name}>
           {t("acc_name")}
         </Text>
         <FormSectionPassword
@@ -72,20 +67,16 @@ export function LoginPage({
   );
 }
 
-export const getServerSideProps = withSessionSSR<LoginPageProps>(
-  async ({ req, locale, defaultLocale }) => {
+export const getServerSideProps = createServerSideProps<IProps>(
+  { extraLangNamespaces: ["auth"] },
+  // @ts-expect-error session typing
+  withSessionSSR<IProps>(async (context) => {
+    const { req } = context;
     const { account_id } = req.session;
-    const localeInfo = { locale: locale!, defaultLocale: defaultLocale! };
 
     if (account_id) {
-      return new Redirect(localeInfo, "/account", FOUND);
+      return Redirect.fromContext(context, "/account", FOUND);
     }
-
-    const localization = await serverSideTranslations(locale!, [
-      "layout",
-      "components",
-      "auth",
-    ]);
 
     if (req.method === "POST") {
       const accCreds = await getReqBody<IAccountInit>(req);
@@ -94,8 +85,6 @@ export const getServerSideProps = withSessionSSR<LoginPageProps>(
       if (!validationResult.is_successful) {
         return {
           props: {
-            ...localization,
-            localeInfo,
             schemaValidationErrors: [...validationResult.errors],
             accCreds,
           },
@@ -107,8 +96,6 @@ export const getServerSideProps = withSessionSSR<LoginPageProps>(
       if (loginResult instanceof AuthError) {
         return {
           props: {
-            ...localization,
-            localeInfo,
             errors: [loginResult.message],
             accCreds,
           },
@@ -118,16 +105,13 @@ export const getServerSideProps = withSessionSSR<LoginPageProps>(
       req.session.account_id = loginResult.id;
       await req.session.save();
 
-      return new Redirect(localeInfo, "/auth/success", SEE_OTHER);
+      return Redirect.fromContext(context, "/auth/success", SEE_OTHER);
     }
 
     return {
-      props: {
-        ...localization,
-        localeInfo,
-      },
+      props: {},
     };
-  }
+  })
 );
 
 export default LoginPage;

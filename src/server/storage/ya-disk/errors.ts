@@ -1,5 +1,4 @@
-import { ProjectError } from "#lib/errors";
+import { StorageError } from "#server/errors";
 
-export class YandexDiskError extends ProjectError {
-  name = "YandexDiskError";
+export class YandexDiskError extends StorageError {
 }

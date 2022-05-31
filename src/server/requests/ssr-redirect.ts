@@ -8,7 +8,11 @@ import {
 import { ILocaleInfo } from "#lib/language";
 import { ProjectURL } from "#lib/url";
 
-import type { Redirect as NextRedirect } from "next"
+import type {
+  GetServerSidePropsContext,
+  GetStaticPropsContext,
+  Redirect as NextRedirect,
+} from "next";
 
 const redirectStatuses = [
   MOVED_PERMANENTLY,
@@ -42,6 +46,24 @@ export class Redirect implements IRedirect {
     statusCode: IRedirectStatus;
     basePath?: false;
   };
+
+  /**
+   * An alt constructor to get the locale straight from the request context.
+   */
+  static fromContext(
+    context: GetServerSidePropsContext | GetStaticPropsContext,
+    destination: string,
+    statusCode: IRedirectStatus = FOUND,
+    basePath: false = false
+  ) {
+    const { locale, defaultLocale } = context;
+    const localeInfo = {
+      defaultLocale: defaultLocale!,
+      locale: locale!,
+    };
+
+    return new this(localeInfo, destination, statusCode, basePath);
+  }
 
   constructor(
     localeInfo: ILocaleInfo,

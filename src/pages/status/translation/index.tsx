@@ -1,24 +1,23 @@
 import clsx from "clsx";
 import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { getLanguagesOverview, getMaxLineCount } from "#lib/translation";
 import { createSEOTags } from "#lib/seo";
+import { createStaticProps } from "#server/requests";
 import { Page } from "#components/pages";
 import { DL, DS, DT, DD } from "#components/lists/d-list";
 import { LanguageView } from "#components/language";
 import styles from "./index.module.scss";
 
-import type { GetStaticProps, InferGetStaticPropsType } from "next";
+import type { InferGetStaticPropsType } from "next";
 import type { ParsedUrlQuery } from "querystring";
-import type { BasePageProps } from "#types/pages";
 import type { LanguagesOverview } from "#lib/translation";
 
-interface ITemplatePageProps extends BasePageProps {
+interface IProps {
   totalCount: number;
   languagesOverview: LanguagesOverview;
 }
 
-interface ITranslationPageParams extends ParsedUrlQuery {}
+interface IParams extends ParsedUrlQuery {}
 
 /**
  * @TODO Per language details
@@ -68,30 +67,19 @@ function TranslationPage({
   );
 }
 
-export const getStaticProps: GetStaticProps<
-  ITemplatePageProps,
-  ITranslationPageParams
-> = async ({ locale, defaultLocale }) => {
-  const localization = await serverSideTranslations(locale!, [
-    "layout",
-    "components",
-    "common",
-  ]);
+export const getStaticProps = createStaticProps<IProps, IParams>({
+  extraLangNamespaces: ["common"],
+}, async () => {
 
   const totalLineCount = await getMaxLineCount();
   const languagesOverview = await getLanguagesOverview();
 
   return {
     props: {
-      ...localization,
-      localeInfo: {
-        locale: locale!,
-        defaultLocale: defaultLocale!,
-      },
       totalCount: totalLineCount,
       languagesOverview: languagesOverview,
     },
   };
-};
+});
 
 export default TranslationPage;

@@ -1,5 +1,5 @@
 import { withIronSessionApiRoute, withIronSessionSsr } from "iron-session/next";
-import { SITE_NAME, SECRET_KEY } from "#environment/vars";
+import { SECRET_KEY } from "#environment/vars";
 import { IS_DEVELOPMENT, SESSION_COOKIE } from "#environment/derived";
 
 import type { IronSessionOptions } from "iron-session";

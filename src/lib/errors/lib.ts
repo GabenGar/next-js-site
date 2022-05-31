@@ -13,13 +13,14 @@ interface ErrorOptions {
  * @link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error#custom_error_types
  */
 export class ProjectError extends Error {
-  name = "ProjectError";
+  // name = "ProjectError";
 
   // not using `ErrorOptions` because it crashes on build
   constructor(message?: string, options?: ErrorOptions, ...params: any[]) {
     // @ts-expect-error some params thing
     super(message, options, ...params);
-
+    // assign the name of the class
+    this.name = this.constructor.name;
     // Maintains proper stack trace for where our error was thrown (only available on V8)
     if (Error.captureStackTrace) {
       Error.captureStackTrace(this, this.constructor);
@@ -28,7 +29,7 @@ export class ProjectError extends Error {
 }
 
 export class ConfigurationError extends ProjectError {
-  name = "ConfigurationError";
+  // name = "ConfigurationError";
 
   constructor(message?: string, options?: ErrorOptions, ...params: any[]) {
     super(message, options, ...params);
@@ -38,7 +39,7 @@ export class ConfigurationError extends ProjectError {
 export class NotImplementedError extends ProjectError {
   featureName: string;
 
-  name = "NotImplementedError";
+  // name = "NotImplementedError";
 
   constructor(featureName: string, options?: ErrorOptions, ...params: any[]) {
     const message = `Feature "${featureName}" is not implemented.`;
@@ -51,7 +52,7 @@ export class NotImplementedError extends ProjectError {
  * Account authentification errors.
  */
 export class AuthError extends ProjectError {
-  name = "AuthError";
+  // name = "AuthError";
 }
 
 /**
@@ -60,7 +61,7 @@ export class AuthError extends ProjectError {
 export class FieldsValidationError extends ProjectError {
   validationErrors: ErrorObject[];
 
-  name = "FieldsValidationError";
+  // name = "FieldsValidationError";
 
   constructor(
     validationErrors: ErrorObject[],
@@ -75,17 +76,6 @@ export class FieldsValidationError extends ProjectError {
     this.validationErrors = validationErrors;
   }
 }
-
-/**
- * @TODO: crash when created in client environment
- */
-export class ServerError extends ProjectError {
-  name = "ServerError";
-}
-
-export class DatabaseError extends ProjectError {}
-
-export class CodegenError extends ServerError {}
 
 /**
  * @TODO: crash when created in server environment

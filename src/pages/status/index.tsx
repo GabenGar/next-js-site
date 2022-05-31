@@ -1,16 +1,15 @@
 import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { createStaticProps } from "#server/requests";
 import { createSEOTags } from "#lib/seo";
 import { Page } from "#components/pages";
 import { InternalNav } from "#components/navigation";
 
-import type { GetStaticProps, InferGetStaticPropsType } from "next";
+import type { InferGetStaticPropsType } from "next";
 import type { ParsedUrlQuery } from "querystring";
-import type { BasePageProps } from "#types/pages";
 
-interface ITemplatePageProps extends BasePageProps {}
+interface IProps {}
 
-interface ITemplatePageParams extends ParsedUrlQuery {}
+interface IParams extends ParsedUrlQuery {}
 
 function StatusPage({
   localeInfo,
@@ -42,25 +41,8 @@ function StatusPage({
   );
 }
 
-export const getStaticProps: GetStaticProps<
-  ITemplatePageProps,
-  ITemplatePageParams
-> = async ({ locale, defaultLocale }) => {
-  const localization = await serverSideTranslations(locale!, [
-    "layout",
-    "components",
-    "common",
-  ]);
-
-  return {
-    props: {
-      ...localization,
-      localeInfo: {
-        locale: locale!,
-        defaultLocale: defaultLocale!,
-      },
-    },
-  };
-};
+export const getStaticProps = createStaticProps<IProps, IParams>({
+  extraLangNamespaces: ["common"],
+});
 
 export default StatusPage;

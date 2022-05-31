@@ -59,6 +59,10 @@
       "url": "./schema/localization/components.schema.json"
     },
     {
+      "fileMatch": ["public/locales/*/errors.json"],
+      "url": "./schema/localization/errors.schema.json"
+    },
+    {
       "fileMatch": ["public/locales/*/account.json"],
       "url": "./schema/localization/account.schema.json"
     },
