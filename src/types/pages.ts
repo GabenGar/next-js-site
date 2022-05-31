@@ -18,9 +18,10 @@ export interface IPageOptions {
 
 /**
  * Props shared across all pages.
+ * @TODO remove Record
  */
 export type BasePageProps<ExtraProps = unknown> = ExtraProps &
-  SSRConfig & {
+  SSRConfig &  Record<string, unknown> & {
     /**
      * This info has to be passed to generate links server-side.
      */
