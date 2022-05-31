@@ -16,10 +16,9 @@ import { SVGIcon } from "#components/icons";
 import styles from "./about.module.scss";
 
 import type { ParsedUrlQuery } from "querystring";
-import type { GetStaticProps, InferGetStaticPropsType } from "next";
-import type { BasePageProps } from "#types/pages";
+import type { InferGetStaticPropsType } from "next";
 
-interface IAboutPageProps extends BasePageProps {}
+interface IAboutPageProps {}
 
 interface IAboutPageParams extends ParsedUrlQuery {}
 
@@ -131,7 +130,9 @@ function AboutPage({
   );
 }
 
-export const getStaticProps: GetStaticProps<IAboutPageProps, IAboutPageParams> =
-  createStaticProps({ extraLangNamespaces: ["common"] });
+export const getStaticProps = createStaticProps<
+  IAboutPageProps,
+  IAboutPageParams
+>({ extraLangNamespaces: ["common"] });
 
 export default AboutPage;

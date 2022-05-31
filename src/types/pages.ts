@@ -19,22 +19,21 @@ export interface IPageOptions {
 /**
  * Props shared across all pages.
  */
-export interface BasePageProps extends SSRConfig {
-  /**
-   * This info has to be passed to generate links server-side.
-   */
-  localeInfo: {
-    locale: ISOLangString;
-    defaultLocale: ISOLangString;
+export type BasePageProps<ExtraProps = unknown> = ExtraProps &
+  SSRConfig & {
+    /**
+     * This info has to be passed to generate links server-side.
+     */
+    localeInfo: {
+      locale: ISOLangString;
+      defaultLocale: ISOLangString;
+    };
+    errors?: Array<string>;
+    schemaValidationErrors?: ISchemaValidationError[];
   };
-  errors?: Array<string>;
-  schemaValidationErrors?: ISchemaValidationError[];
-}
 
-export type ISlimProps<Props extends BasePageProps> = Omit<
-  Props,
-  "localeInfo" | "_nextI18Next"
-> & {
-  localeInfo?: ILocaleInfo;
-  _nextI18Next?: SSRConfig[keyof SSRConfig];
-};
+export type ISlimProps<Props> = Props &
+  Omit<Props, "localeInfo" | "_nextI18Next"> & {
+    localeInfo?: ILocaleInfo;
+    _nextI18Next?: SSRConfig[keyof SSRConfig];
+  };

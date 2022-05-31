@@ -18,6 +18,7 @@ import { Page } from "#components/pages";
 import { CountryCard } from "#components/frontend-mentor";
 import styles from "./all.module.scss";
 
+import type { ParsedUrlQuery } from "querystring";
 import type { NextPage, InferGetServerSidePropsType } from "next";
 import type { FormEvent } from "react";
 import type { Country } from "#lib/api/rest-countries";
@@ -26,6 +27,8 @@ import type { BasePageProps } from "#types/pages";
 interface IProps extends BasePageProps {
   countries: Country[];
 }
+
+interface IParams extends ParsedUrlQuery {}
 
 const limit = 25;
 
@@ -122,7 +125,7 @@ RESTCountriesAllPage.getLayout = function getLayout(page: NextPage) {
 };
 
 export const getServerSideProps = createServerSideProps<IProps>(
-  { extraLangNames: ["frontend-mentor"] },
+  { extraLangNamespaces: ["frontend-mentor"] },
   async () => {
     const countries = await allCountries();
 

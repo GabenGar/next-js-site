@@ -12,12 +12,12 @@ import type { BasePageProps, ISlimProps, IPageOptions } from "#types/pages";
  * @TODO stricter callback typing
  */
 export function createServerSideProps<
-  Props extends BasePageProps,
-  Params extends ParsedUrlQuery
+  OwnProps,
+  Params extends ParsedUrlQuery = ParsedUrlQuery
 >(
   options: IPageOptions,
-  callback: GetServerSideProps<ISlimProps<Props>, Params>
-): GetServerSideProps<Props, Params> {
+  callback: GetServerSideProps<ISlimProps<OwnProps>, Params>
+): GetServerSideProps<BasePageProps<OwnProps>, Params> {
   const { extraLangNamespaces } = options;
 
   async function decorated(...args: Parameters<typeof callback>) {
@@ -34,15 +34,13 @@ export function createServerSideProps<
 
     try {
       const result = await callback(context);
-
       // return non-props results
       if (!("props" in result)) {
         return result;
       }
 
       const slimProps = await result.props;
-      // @ts-expect-error prop typing
-      const newProps: Props = {
+      const newProps = {
         ...localization,
         localeInfo,
         ...slimProps,

@@ -8,9 +8,8 @@ import { FELogo } from "#components/icons/logos";
 
 import type { ParsedUrlQuery } from "querystring";
 import type { InferGetStaticPropsType } from "next";
-import type { BasePageProps } from "#types/pages";
 
-interface IHomePageProps extends BasePageProps {}
+interface IHomePageProps {}
 
 interface IHomePageParams extends ParsedUrlQuery {}
 

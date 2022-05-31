@@ -5,16 +5,16 @@ import type { GetStaticProps } from "next";
 import type { BasePageProps, ISlimProps, IPageOptions } from "#types/pages";
 
 export function createStaticProps<
-  Props extends BasePageProps,
+  OwnProps,
   Params extends ParsedUrlQuery = ParsedUrlQuery
 >(
   options: IPageOptions,
-  callback?: GetStaticProps<ISlimProps<Props>, Params>
-): GetStaticProps<Props, Params> {
+  callback?: GetStaticProps<ISlimProps<OwnProps>, Params>
+): GetStaticProps<BasePageProps<OwnProps>, Params> {
   const { extraLangNamespaces } = options;
 
   async function getStaticProps(
-    ...args: Parameters<GetStaticProps<ISlimProps<Props>, Params>>
+    ...args: Parameters<GetStaticProps<ISlimProps<OwnProps>, Params>>
   ) {
     const [context] = args;
     const { locale, defaultLocale } = context;
@@ -55,6 +55,6 @@ export function createStaticProps<
     };
   }
 
-  // @ts-expect-error some typing stuff
+  // @ts-expect-error typing error
   return getStaticProps;
 }
