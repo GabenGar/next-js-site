@@ -11,7 +11,7 @@ import type { ParsedUrlQuery } from "querystring";
 import type { BasePageProps } from "#types/pages";
 import type { BlogPost } from "#lib/blog";
 
-interface IBlogPageProps extends BasePageProps {
+interface IBlogPageProps {
   posts: BlogPost[];
 }
 

@@ -10,10 +10,9 @@ import styles from "./index.module.scss";
 
 import type { InferGetStaticPropsType } from "next";
 import type { ParsedUrlQuery } from "querystring";
-import type { BasePageProps } from "#types/pages";
 import type { LanguagesOverview } from "#lib/translation";
 
-interface IProps extends BasePageProps {
+interface IProps {
   totalCount: number;
   languagesOverview: LanguagesOverview;
 }

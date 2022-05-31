@@ -1,8 +1,8 @@
 import { Fragment } from "react";
 import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { createSEOTags } from "#lib/seo";
 import { allCountries } from "#lib/api/rest-countries";
+import { createServerSideProps } from "#server/requests";
 import { GalleryList } from "#components/lists";
 import { LocalNav } from "#components/fancy";
 import { RESTCountries as Layout } from "#components/layout/frontend-mentor";
@@ -10,18 +10,14 @@ import { Page } from "#components/pages";
 import { CountryCard } from "#components/frontend-mentor";
 
 import type {
-  GetServerSideProps,
   InferGetServerSidePropsType,
   NextPage,
 } from "next";
 import type { ParsedUrlQuery } from "querystring";
 import type { Country } from "#lib/api/rest-countries";
-import type { BasePageProps } from "#types/pages";
 
-interface IProps extends BasePageProps {
-  regions: {
-    [region: string]: Country[];
-  };
+interface IProps {
+  regions: Record<string, Country[]>;
 }
 
 interface IParams extends ParsedUrlQuery {}
@@ -68,36 +64,25 @@ RegionCountries.getLayout = function getLayout(page: NextPage) {
   return <Layout>{page}</Layout>;
 };
 
-export const getServerSideProps: GetServerSideProps<IProps, IParams> = async ({
-  locale,
-  defaultLocale,
-}) => {
-  const countries = await allCountries();
-  const regions = sortCountriesByRegions(countries);
+export const getServerSideProps = createServerSideProps<IProps, IParams>(
+  { extraLangNamespaces: ["frontend-mentor"] },
+  async () => {
+    const countries = await allCountries();
+    const regions = sortCountriesByRegions(countries);
 
-  if (!countries) {
+    if (!countries) {
+      return {
+        notFound: true,
+      };
+    }
+
     return {
-      notFound: true,
+      props: {
+        regions,
+      },
     };
   }
-
-  const localization = await serverSideTranslations(locale!, [
-    "layout",
-    "components",
-    "frontend-mentor",
-  ]);
-
-  return {
-    props: {
-      ...localization,
-      localeInfo: {
-        locale: locale!,
-        defaultLocale: defaultLocale!,
-      },
-      regions,
-    },
-  };
-};
+);
 
 function sortCountriesByRegions(countries: Country[]) {
   const regions: Record<string, Country[]> = {};

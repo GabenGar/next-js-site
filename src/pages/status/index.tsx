@@ -6,9 +6,8 @@ import { InternalNav } from "#components/navigation";
 
 import type { InferGetStaticPropsType } from "next";
 import type { ParsedUrlQuery } from "querystring";
-import type { BasePageProps } from "#types/pages";
 
-interface IProps extends BasePageProps {}
+interface IProps {}
 
 interface IParams extends ParsedUrlQuery {}
 

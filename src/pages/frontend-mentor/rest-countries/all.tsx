@@ -22,9 +22,8 @@ import type { ParsedUrlQuery } from "querystring";
 import type { NextPage, InferGetServerSidePropsType } from "next";
 import type { FormEvent } from "react";
 import type { Country } from "#lib/api/rest-countries";
-import type { BasePageProps } from "#types/pages";
 
-interface IProps extends BasePageProps {
+interface IProps {
   countries: Country[];
 }
 
@@ -124,7 +123,7 @@ RESTCountriesAllPage.getLayout = function getLayout(page: NextPage) {
   return <Layout>{page}</Layout>;
 };
 
-export const getServerSideProps = createServerSideProps<IProps>(
+export const getServerSideProps = createServerSideProps<IProps, IParams>(
   { extraLangNamespaces: ["frontend-mentor"] },
   async () => {
     const countries = await allCountries();

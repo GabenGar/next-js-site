@@ -32,8 +32,8 @@ export type BasePageProps<ExtraProps = unknown> = ExtraProps &
     schemaValidationErrors?: ISchemaValidationError[];
   };
 
-export type ISlimProps<Props> = Props &
-  Omit<Props, "localeInfo" | "_nextI18Next"> & {
+export type ISlimProps<ExtraProps> = ExtraProps &
+  Omit<ExtraProps, "localeInfo" | "_nextI18Next"> & {
     localeInfo?: ILocaleInfo;
     _nextI18Next?: SSRConfig[keyof SSRConfig];
   };

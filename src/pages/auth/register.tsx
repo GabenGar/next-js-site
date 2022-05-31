@@ -1,25 +1,24 @@
 import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { FOUND } from "#environment/constants/http";
 import { IS_INVITE_ONLY } from "#environment/derived";
-import { AuthError } from "#lib/errors";
 import { createSEOTags } from "#lib/seo";
 import { validateAccountInitFields, registerAccount } from "#lib/account";
-import { withSessionSSR, getReqBody, Redirect } from "#server/requests";
+import {
+  withSessionSSR,
+  getReqBody,
+  Redirect,
+  createServerSideProps,
+} from "#server/requests";
 import { Page } from "#components/pages";
 import { Form } from "#components/forms";
 import { ErrorsView } from "#components/errors";
-import {
-  FormSectionPassword,
-  Text,
-} from "#components/forms/sections";
+import { FormSectionPassword, Text } from "#components/forms/sections";
 import { LinkInternal } from "#components/links";
 
 import type { InferGetServerSidePropsType } from "next";
 import type { IAccountInit } from "#types/entities";
-import type { BasePageProps } from "#types/pages";
 
-interface RegisterPageProps extends BasePageProps {
+interface IProps {
   accCreds?: IAccountInit;
 }
 
@@ -54,12 +53,7 @@ function RegisterPage({
             {t("invite_code")}
           </Text>
         )}
-        <Text
-          id="acc-name"
-          name="name"
-          required
-          defaultValue={accCreds?.name}
-        >
+        <Text id="acc-name" name="name" required defaultValue={accCreds?.name}>
           {t("acc_name")}
         </Text>
         <FormSectionPassword
@@ -82,20 +76,16 @@ function RegisterPage({
   );
 }
 
-export const getServerSideProps = withSessionSSR<RegisterPageProps>(
-  async ({ req, locale, defaultLocale }) => {
+export const getServerSideProps = createServerSideProps<IProps>(
+  { extraLangNamespaces: ["auth"] },
+  // @ts-expect-error session typing error
+  withSessionSSR<IProps>(async (context) => {
+    const { req } = context;
     const { account_id } = req.session;
-    const localeInfo = { locale: locale!, defaultLocale: defaultLocale! };
 
     if (account_id) {
-      return new Redirect(localeInfo, "/account", FOUND);
+      return Redirect.fromContext(context, "/account", FOUND);
     }
-
-    const localization = await serverSideTranslations(locale!, [
-      "layout",
-      "components",
-      "auth",
-    ]);
 
     if (req.method === "POST") {
       const accInit = await getReqBody<IAccountInit>(req);
@@ -104,8 +94,6 @@ export const getServerSideProps = withSessionSSR<RegisterPageProps>(
       if (!validationResult.is_successful) {
         return {
           props: {
-            ...localization,
-            localeInfo,
             schemaValidationErrors: [...validationResult.errors],
             accInit,
           },
@@ -116,8 +104,6 @@ export const getServerSideProps = withSessionSSR<RegisterPageProps>(
         if (!accInit.invite) {
           return {
             props: {
-              ...localization,
-              localeInfo,
               errors: ["No invite key is provided."],
               accInit,
             },
@@ -127,30 +113,18 @@ export const getServerSideProps = withSessionSSR<RegisterPageProps>(
 
       const newAcc = await registerAccount(accInit);
 
-      if (newAcc instanceof AuthError) {
-        return {
-          props: {
-            ...localization,
-            localeInfo,
-            errors: [newAcc.message],
-            accInit,
-          },
-        };
-      }
-
       req.session.account_id = newAcc.id;
       await req.session.save();
 
-      return new Redirect(localeInfo, "/auth/success", FOUND);
+      return Redirect.fromContext(context, "/auth/success", FOUND);
     }
 
     return {
       props: {
-        ...localization,
-        localeInfo,
+
       },
     };
-  }
+  })
 );
 
 export default RegisterPage;

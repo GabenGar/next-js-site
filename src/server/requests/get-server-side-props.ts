@@ -1,4 +1,4 @@
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { getServerSideTranslations } from "#lib/translation";
 import { FOUND } from "#environment/constants/http";
 import { Redirect } from "#server/requests";
 import { ProjectError } from "#lib/errors";
@@ -23,9 +23,9 @@ export function createServerSideProps<
   async function decorated(...args: Parameters<typeof callback>) {
     const [context] = args;
     const { locale, defaultLocale } = context;
-    const localization = await serverSideTranslations(
+    const localization = await getServerSideTranslations(
       locale!,
-      ["layout", "components"].concat(extraLangNamespaces)
+      extraLangNamespaces
     );
     const localeInfo = {
       defaultLocale: defaultLocale!,

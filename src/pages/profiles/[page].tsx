@@ -8,7 +8,7 @@ import { getProfiles } from "#lib/account";
 import { ProjectURL } from "#lib/url";
 import { toJSON } from "#lib/json";
 import { countTable } from "#database";
-import { Redirect } from "#server/requests";
+import { Redirect, createServerSideProps } from "#server/requests";
 import { Page } from "#components/pages";
 import { CardList } from "#components/lists";
 import { ProfileCard } from "#components/entities/profiles";
@@ -27,7 +27,7 @@ import type { IAccountProfileClient } from "#types/entities";
 import type { BasePageProps } from "#types/pages";
 import type { IPagination } from "#lib/pagination";
 
-interface IProps extends BasePageProps {
+interface IProps {
   pagination: IPagination;
   profiles: IAccountProfileClient[];
 }
@@ -103,48 +103,39 @@ function Profiles({
 //   };
 // };
 
-export const getServerSideProps: GetServerSideProps<IProps, IParams> = async ({
-  locale,
-  defaultLocale,
-  params,
-}) => {
-  const localeInfo = { locale: locale!, defaultLocale: defaultLocale! };
+export const getServerSideProps = createServerSideProps<IProps, IParams>(
+  { extraLangNamespaces: ["common"] },
+  async (context) => {
+    const { params } = context;
 
-  if (!params?.page) {
-    const profileCount = await countTable({
-      schema: "accounts",
-      table: "profiles",
+    if (!params?.page) {
+      const profileCount = await countTable({
+        schema: "accounts",
+        table: "profiles",
+      });
+      const pageCount = Math.ceil(profileCount / limit);
+      const lastPage = `/profiles/${pageCount}`;
+
+      return Redirect.fromContext(context, lastPage, FOUND);
+    }
+
+    const { page } = params;
+
+    const { pagination, profiles } = await getProfiles({
+      currentPage: Number(page),
     });
-    const pageCount = Math.ceil(profileCount / limit);
-    const lastPage = `/profiles/${pageCount}`;
 
-    return new Redirect(localeInfo, lastPage, FOUND);
+    const props = {
+      pagination,
+      profiles,
+    };
+
+    // console.log(toJSON(props));
+
+    return {
+      props,
+    };
   }
-
-  const localization = await serverSideTranslations(locale!, [
-    "layout",
-    "components",
-    "common",
-  ]);
-
-  const { page } = params;
-
-  const { pagination, profiles } = await getProfiles({
-    currentPage: Number(page),
-  });
-
-  const props = {
-    ...localization,
-    localeInfo,
-    pagination,
-    profiles,
-  };
-
-  // console.log(toJSON(props));
-
-  return {
-    props,
-  };
-};
+);
 
 export default Profiles;

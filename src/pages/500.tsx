@@ -3,9 +3,8 @@ import { createStaticProps } from "#server/requests";
 
 import type { ParsedUrlQuery } from "querystring";
 import type { InferGetStaticPropsType } from "next";
-import type { BasePageProps } from "#types/pages";
 
-interface IProps extends BasePageProps {}
+interface IProps {}
 
 interface IParams extends ParsedUrlQuery {}
 

@@ -1,7 +1,7 @@
 import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { DAY } from "#environment/constants/durations";
 import { createSEOTags } from "#lib/seo";
+import { createServerSideProps } from "#server/requests";
 import { getTableIDs } from "#database";
 import { getProfile } from "#database/queries/account/profile";
 import { Page } from "#components/pages";
@@ -20,9 +20,8 @@ import type {
   InferGetServerSidePropsType,
 } from "next";
 import type { IAccountProfileClient } from "#types/entities";
-import type { BasePageProps } from "#types/pages";
 
-interface IProps extends BasePageProps {
+interface IProps {
   profile: IAccountProfileClient;
 }
 
@@ -98,38 +97,27 @@ function Profile({
 //   };
 // };
 
-export const getServerSideProps: GetServerSideProps<IProps, IParams> = async ({
-  locale,
-  defaultLocale,
-  params,
-}) => {
-  const localeInfo = { locale: locale!, defaultLocale: defaultLocale! };
+export const getServerSideProps = createServerSideProps<IProps, IParams>(
+  { extraLangNamespaces: ["common"] },
+  async ({ params }) => {
+    if (!params?.id) {
+      return {
+        notFound: true,
+        // revalidate: DAY / 1000,
+      };
+    }
 
-  if (!params?.id) {
+    const { id } = params;
+
+    const { account_id, ...profile } = await getProfile(Number(id));
+
     return {
-      notFound: true,
+      props: {
+        profile,
+      },
       // revalidate: DAY / 1000,
     };
   }
-
-  const localization = await serverSideTranslations(locale!, [
-    "layout",
-    "components",
-    "common",
-  ]);
-
-  const { id } = params;
-
-  const { account_id, ...profile } = await getProfile(Number(id));
-
-  return {
-    props: {
-      ...localization,
-      localeInfo,
-      profile,
-    },
-    // revalidate: DAY / 1000,
-  };
-};
+);
 
 export default Profile;

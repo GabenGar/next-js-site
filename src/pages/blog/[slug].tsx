@@ -1,21 +1,15 @@
 import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { createSEOTags } from "#lib/seo";
 import { getAllSlugs, getBlogPost } from "#lib/blog";
 import { createStaticProps } from "#server/requests";
 import { Page } from "#components/pages";
 import { BlogPostArticle } from "#components/entities/blog";
 
-import type {
-  GetStaticPaths,
-  GetStaticProps,
-  InferGetStaticPropsType,
-} from "next";
+import type { GetStaticPaths, InferGetStaticPropsType } from "next";
 import type { ParsedUrlQuery } from "querystring";
-import type { BasePageProps } from "#types/pages";
 import type { BlogPost } from "#lib/blog";
 
-interface BlogPostPageProps extends BasePageProps {
+interface BlogPostPageProps {
   post: BlogPost;
 }
 
@@ -67,8 +61,8 @@ export const getStaticPaths: GetStaticPaths<BlogPostPageParams> = async ({
 };
 
 export const getStaticProps = createStaticProps<
-BlogPostPageProps,
-BlogPostPageParams
+  BlogPostPageProps,
+  BlogPostPageParams
 >(
   {
     extraLangNamespaces: ["blog"],
@@ -76,7 +70,7 @@ BlogPostPageParams
   async ({ params }) => {
     const { slug } = params!;
 
-  const post = await getBlogPost(slug);
+    const post = await getBlogPost(slug);
 
     return {
       props: {

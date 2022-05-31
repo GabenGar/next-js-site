@@ -1,15 +1,14 @@
 import { useEffect } from "react";
 import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { createSEOTags } from "#lib/seo";
 import { ProjectURL } from "#lib/url";
+import { createStaticProps } from "#server/requests";
 import { setLocalStoreItem } from "#browser/store/local";
 import { Page } from "#components/pages";
 
-import type { InferGetStaticPropsType, GetStaticProps } from "next";
-import type { BasePageProps } from "#types/pages";
+import type { InferGetStaticPropsType } from "next";
 
-interface RegisterPageProps extends BasePageProps {}
+interface RegisterPageProps {}
 
 function AuthSuccessPage({
   localeInfo,
@@ -44,25 +43,8 @@ function AuthSuccessPage({
   );
 }
 
-export const getStaticProps: GetStaticProps<RegisterPageProps> = async ({
-  locale,
-  defaultLocale,
-}) => {
-  const localization = await serverSideTranslations(locale!, [
-    "layout",
-    "components",
-    "auth",
-  ]);
-
-  return {
-    props: {
-      ...localization,
-      localeInfo: {
-        locale: locale!,
-        defaultLocale: defaultLocale!,
-      },
-    },
-  };
-};
+export const getStaticProps = createStaticProps<RegisterPageProps>({
+  extraLangNamespaces: ["auth"],
+});
 
 export default AuthSuccessPage;

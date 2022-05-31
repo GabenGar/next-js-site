@@ -1,8 +1,8 @@
 import { Fragment } from "react";
 import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { createSEOTags } from "#lib/seo";
 import { countriesByCodes, countryByName } from "#lib/api/rest-countries";
+import { createServerSideProps } from "#server/requests";
 import { CardList } from "#components/lists";
 import { ImageCarousel } from "#components/image-carousel";
 import { FancyNumber, FancyArea } from "#components/number-view";
@@ -14,16 +14,11 @@ import { CountryCard } from "#components/frontend-mentor";
 import { isObjectEmpty } from "#lib/util";
 import styles from "./[full_name].module.scss";
 
-import type {
-  GetServerSideProps,
-  InferGetServerSidePropsType,
-  NextPage,
-} from "next";
+import type { InferGetServerSidePropsType, NextPage } from "next";
 import type { ParsedUrlQuery } from "querystring";
 import type { Country } from "#lib/api/rest-countries";
-import type { BasePageProps } from "#types/pages";
 
-interface IProps extends BasePageProps {
+interface IProps {
   country: Country;
   borderCountries: Country[] | null;
 }
@@ -275,39 +270,27 @@ RESTCountriesCountryDetail.getLayout = function getLayout(page: NextPage) {
   return <Layout>{page}</Layout>;
 };
 
-export const getServerSideProps: GetServerSideProps<IProps, IParams> = async ({
-  locale,
-  defaultLocale,
-  params,
-}) => {
-  const { full_name } = params!;
-  const country = await countryByName(full_name, true);
+export const getServerSideProps = createServerSideProps<IProps, IParams>(
+  { extraLangNamespaces: ["frontend-mentor"] },
+  async ({ params }) => {
+    const { full_name } = params!;
+    const country = await countryByName(full_name, true);
 
-  if (!country) {
+    if (!country) {
+      return {
+        notFound: true,
+      };
+    }
+
+    const borderCountries = country.borders?.length
+      ? await countriesByCodes(country.borders)
+      : null;
+
     return {
-      notFound: true,
+      props: {
+        country,
+        borderCountries,
+      },
     };
   }
-
-  const borderCountries = country.borders?.length
-    ? await countriesByCodes(country.borders)
-    : null;
-
-  const localization = await serverSideTranslations(locale!, [
-    "layout",
-    "components",
-    "frontend-mentor",
-  ]);
-
-  return {
-    props: {
-      ...localization,
-      localeInfo: {
-        locale: locale!,
-        defaultLocale: defaultLocale!,
-      },
-      country,
-      borderCountries,
-    },
-  };
-};
+);
