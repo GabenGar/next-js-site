@@ -15,6 +15,7 @@ import styles from "./index.module.scss";
 import type { InferGetServerSidePropsType } from "next";
 import type { IAccountClient } from "#types/entities";
 import type { BasePageProps } from "#types/pages";
+import { toJSON } from "#lib/json";
 
 interface AccountPageProps extends BasePageProps {
   account: IAccountClient;
@@ -78,13 +79,14 @@ export const getServerSideProps = withSessionSSR<AccountPageProps>(
   async ({ req, locale, defaultLocale }) => {
     const { account_id } = req.session;
     const localeInfo = { locale: locale!, defaultLocale: defaultLocale! };
-
+    console.log("Account ID: ", account_id);
+    
     if (!account_id) {
       return new Redirect(localeInfo, "/auth/login", FOUND);
     }
 
     const account = await getAccountDetails(account_id);
-
+    console.log("Account:\n", toJSON(account));
     if (!account) {
       req.session.destroy();
       
