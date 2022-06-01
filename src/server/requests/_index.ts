@@ -5,6 +5,6 @@ export { getReqBody, getMultipartReqBody } from "./get-req-body";
 export { Redirect } from "./ssr-redirect";
 export {
   createServerSideProps,
-  getProtectedProps,
+  createProtectedProps,
 } from "./get-server-side-props";
 export { createStaticProps } from "./get-static-props";

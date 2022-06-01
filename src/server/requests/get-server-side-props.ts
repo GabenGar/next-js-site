@@ -95,7 +95,7 @@ export function createServerSideProps<
 /**
  * @returns `getServerSideProps()` but auth sorted out.
  */
-export function getProtectedProps<
+export function createProtectedProps<
   OwnProps,
   Params extends ParsedUrlQuery = ParsedUrlQuery
 >(

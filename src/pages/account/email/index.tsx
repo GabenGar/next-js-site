@@ -1,15 +1,15 @@
 import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { FOUND } from "#environment/constants/http";
 import { IS_DEVELOPMENT } from "#environment/derived";
 import { createSEOTags } from "#lib/seo";
 import {
-  getAccountDetails,
   sendEmailConfirmation,
   validateEmailString,
-  toAccountClient
+  toAccountClient,
 } from "#lib/account";
-import { getReqBody, withSessionSSR, Redirect } from "#server/requests";
+import {
+  getReqBody,
+  createProtectedProps,
+} from "#server/requests";
 import { Page } from "#components/pages";
 import { Form } from "#components/forms";
 import { FormSectionEmail } from "#components/forms/sections";
@@ -17,9 +17,8 @@ import { ErrorsView } from "#components/errors";
 
 import type { InferGetServerSidePropsType } from "next";
 import type { IAccountClient } from "#types/entities";
-import type { BasePageProps } from "#types/pages";
 
-interface AccountEmailProps extends BasePageProps {
+interface AccountEmailProps {
   account: IAccountClient;
   newEmail?: string;
   isSent?: boolean;
@@ -73,37 +72,17 @@ function AccountEmailPage({
   );
 }
 
-export const getServerSideProps = withSessionSSR<AccountEmailProps>(
-  async ({ req, locale, defaultLocale }) => {
+export const getServerSideProps = createProtectedProps<AccountEmailProps>(
+  { extraLangNamespaces: ["account"] },
+  async (context, { account }) => {
+    const { req } = context;
     if (!IS_DEVELOPMENT) {
       return {
         notFound: true,
       };
     }
 
-    const localeInfo = { locale: locale!, defaultLocale: defaultLocale! };
-    const { account_id } = req.session;
-
-    if (!account_id) {
-      return new Redirect(localeInfo, "/auth/login", FOUND);
-    }
-
-    const account = await getAccountDetails(account_id);
-
-    if (!account) {
-      req.session.destroy();
-
-      return {
-        notFound: true,
-      };
-    }
-
     const accountClient = toAccountClient(account);
-    const localization = await serverSideTranslations(locale!, [
-      "layout",
-      "components",
-      "account",
-    ]);
 
     if (req.method === "POST") {
       const { new_email } = await getReqBody<{ new_email: string }>(req);
@@ -113,20 +92,16 @@ export const getServerSideProps = withSessionSSR<AccountEmailProps>(
       if (!result.isValid) {
         return {
           props: {
-            ...localization,
-            localeInfo,
             account: accountClient,
             schemaValidationErrors: result.schemaValidationErrors,
           },
         };
       }
 
-      const confirmation = await sendEmailConfirmation(new_email, account_id);
+      const confirmation = await sendEmailConfirmation(new_email, account.id);
 
       return {
         props: {
-          ...localization,
-          localeInfo,
           account: accountClient,
           isSent: true,
         },
@@ -135,8 +110,6 @@ export const getServerSideProps = withSessionSSR<AccountEmailProps>(
 
     return {
       props: {
-        ...localization,
-        localeInfo,
         account: accountClient,
       },
     };

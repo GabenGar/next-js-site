@@ -1,10 +1,8 @@
 import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { FOUND } from "#environment/constants/http";
 import { IS_DEVELOPMENT } from "#environment/derived";
-import { getAccountDetails, toAccountClient } from "#lib/account";
+import { toAccountClient } from "#lib/account";
 import { createSEOTags } from "#lib/seo";
-import { withSessionSSR, Redirect, getProtectedProps } from "#server/requests";
+import { createProtectedProps } from "#server/requests";
 import { LinkInternal } from "#components/links";
 import { Page } from "#components/pages";
 import { AccountCard } from "#components/cards";
@@ -73,7 +71,7 @@ function AccountPage({
   );
 }
 
-export const getServerSideProps = getProtectedProps<AccountPageProps>(
+export const getServerSideProps = createProtectedProps<AccountPageProps>(
   { extraLangNamespaces: ["account"] },
   async (context, { account }) => {
     return {

@@ -1,10 +1,10 @@
 import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { FOUND } from "#environment/constants/http";
-import { getAccountDetails, toAccountClient } from "#lib/account";
+import { toAccountClient } from "#lib/account";
 import { nowISO } from "#lib/dates";
 import { createSEOTags } from "#lib/seo";
-import { withSessionSSR, Redirect } from "#server/requests";
+import {
+  createProtectedProps,
+} from "#server/requests";
 import { Page } from "#components/pages";
 import { Article, ArticleBody, ArticleHeader } from "#components/articles";
 import { DL, DS } from "#components/lists/d-list";
@@ -13,9 +13,8 @@ import { Calendar } from "#components/calendar";
 
 import type { InferGetServerSidePropsType } from "next";
 import type { IAccountClient } from "#types/entities";
-import type { BasePageProps } from "#types/pages";
 
-interface ICalendarPageProps extends BasePageProps {
+interface ICalendarPageProps {
   account: IAccountClient;
 }
 
@@ -51,36 +50,13 @@ function CalendarPage({
   );
 }
 
-export const getServerSideProps = withSessionSSR<ICalendarPageProps>(
-  async ({ req, locale, defaultLocale }) => {
-    const { account_id } = req.session;
-    const localeInfo = { locale: locale!, defaultLocale: defaultLocale! };
-
-    if (!account_id) {
-      return new Redirect(localeInfo, "/auth/login", FOUND);
-    }
-
-    const account = await getAccountDetails(account_id);
-
-    if (!account) {
-      req.session.destroy();
-
-      return {
-        notFound: true,
-      };
-    }
-
+export const getServerSideProps = createProtectedProps<ICalendarPageProps>(
+  { extraLangNamespaces: ["account"] },
+  async (context, { account }) => {
     const accountClient = toAccountClient(account);
-    const localization = await serverSideTranslations(locale!, [
-      "layout",
-      "components",
-      "account",
-    ]);
 
     return {
       props: {
-        ...localization,
-        localeInfo,
         account: accountClient,
       },
     };
