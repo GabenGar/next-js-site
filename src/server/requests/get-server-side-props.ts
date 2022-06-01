@@ -95,7 +95,10 @@ export function createServerSideProps<
 /**
  * @returns `getServerSideProps()` but auth sorted out.
  */
-export function getProtectedProps<OwnProps, Params extends ParsedUrlQuery>(
+export function getProtectedProps<
+  OwnProps,
+  Params extends ParsedUrlQuery = ParsedUrlQuery
+>(
   options: IPageOptions,
   callback?: IProtectedCallback<OwnProps, Params>
 ): GetServerSideProps<BasePageProps<OwnProps>, Params> {
@@ -151,10 +154,13 @@ export function getProtectedProps<OwnProps, Params extends ParsedUrlQuery>(
         return result;
       }
 
+      const ownProps = await result.props;
+
       return {
         props: {
           ...localization,
           localeInfo,
+          ...ownProps,
         },
       };
     } catch (error) {
