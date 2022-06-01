@@ -1,9 +1,14 @@
+import { getIronSession } from "iron-session";
 import { withIronSessionApiRoute, withIronSessionSsr } from "iron-session/next";
 import { SECRET_KEY } from "#environment/vars";
 import { IS_DEVELOPMENT, SESSION_COOKIE } from "#environment/derived";
 
 import type { IronSessionOptions } from "iron-session";
-import type { GetServerSideProps, NextApiHandler } from "next";
+import type {
+  GetServerSideProps,
+  GetServerSidePropsContext,
+  NextApiHandler,
+} from "next";
 import type { ParsedUrlQuery } from "querystring";
 import type { APIResponse } from "#types/api";
 
@@ -15,6 +20,14 @@ export const sessionOptions: IronSessionOptions = {
   },
 };
 
+export async function getSSRSession<Params extends ParsedUrlQuery>(
+  context: GetServerSidePropsContext<Params>
+) {
+  const { req, res } = context;
+  const session = await getIronSession(req, res, sessionOptions);
+  return session;
+}
+
 export function withSessionRoute<Res>(
   handler: NextApiHandler<APIResponse<Res>>
 ) {
@@ -22,13 +35,11 @@ export function withSessionRoute<Res>(
 }
 
 export function withSessionSSR<
-  P extends Record<string, unknown>,
+  Props extends Record<string, unknown>,
   Q extends ParsedUrlQuery = ParsedUrlQuery
->(handler: GetServerSideProps<P, Q>) {
+>(handler: GetServerSideProps<Props, Q>) {
   // @ts-expect-error fix later
-  return withIronSessionSsr(handler, sessionOptions);
-}
+  const sessionCallback = withIronSessionSsr<Props>(handler, sessionOptions);
 
-// export function protectedPageSSR<P extends Record<string, unknown>>(
-//   handler: SSRCallback<P>
-// ) {}
+  return sessionCallback;
+}

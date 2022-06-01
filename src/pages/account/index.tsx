@@ -79,14 +79,13 @@ export const getServerSideProps = withSessionSSR<AccountPageProps>(
   async ({ req, locale, defaultLocale }) => {
     const { account_id } = req.session;
     const localeInfo = { locale: locale!, defaultLocale: defaultLocale! };
-    console.log("Account ID: ", account_id);
     
     if (!account_id) {
       return new Redirect(localeInfo, "/auth/login", FOUND);
     }
 
     const account = await getAccountDetails(account_id);
-    console.log("Account:\n", toJSON(account));
+
     if (!account) {
       req.session.destroy();
       
