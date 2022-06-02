@@ -1,7 +1,8 @@
 // @ts-check
-const path = require("path");
-const { PHASE_DEVELOPMENT_SERVER } = require("next/constants");
-const { i18n } = require("./next-i18next.config");
+import path from "path";
+import { fileURLToPath } from "url";
+import { PHASE_DEVELOPMENT_SERVER } from "next/constants.js";
+import { default as internalization } from "./next-i18next.config.js";
 
 // const sassVars = `$site-origin: '${process.env.NEXT_PUBLIC_SITE_ORIGIN}';`
 
@@ -16,22 +17,12 @@ const { i18n } = require("./next-i18next.config");
  * @property {Rewrite[]} fallback
  */
 
-/**
- * @returns {Promise<Rewrite[] | RewriteOBject>}
- */
-async function rewrites() {
-  return [
-    {
-      source: "/storage/yandex-disk/:path*",
-      destination: "https://downloader.disk.yandex.ru/disk/:path*",
-    },
-  ];
-}
+const { __dirname } = cjsDirname(import.meta.url);
 
 async function nextJSConfig(phase, { defaultConfig }) {
   /** @type import('next').NextConfig */
   const config = {
-    i18n,
+    i18n: internalization.i18n,
     reactStrictMode: true,
     swcMinify: true,
     eslint: {
@@ -80,4 +71,31 @@ async function nextJSConfig(phase, { defaultConfig }) {
   return config;
 }
 
-module.exports = nextJSConfig;
+/**
+ * @returns {Promise<Rewrite[] | RewriteOBject>}
+ */
+async function rewrites() {
+  return [
+    {
+      source: "/storage/yandex-disk/:path*",
+      destination: "https://downloader.disk.yandex.ru/disk/:path*",
+    },
+  ];
+}
+
+/**
+ * ESM equivalent of `__filename` and `__dirname`.
+ * @link https://nodejs.org/docs/latest-v12.x/api/esm.html#esm_no_require_exports_module_exports_filename_dirname
+ * @param {string} metaURL
+ */
+export function cjsDirname(metaURL) {
+  const __filename = fileURLToPath(metaURL);
+  const __dirname = path.dirname(__filename);
+
+  return {
+    __filename,
+    __dirname,
+  };
+}
+
+export default nextJSConfig;

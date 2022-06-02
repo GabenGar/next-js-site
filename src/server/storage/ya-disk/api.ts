@@ -1,5 +1,3 @@
-import { fromBuffer } from "file-type";
-import { Headers } from "node-fetch";
 import { CONFLICT } from "#environment/constants/http";
 import { FetchError } from "#lib/errors";
 import { yaDiskfetch } from "./fetch";
@@ -99,7 +97,6 @@ export async function uploadFile(uploadLink: ILink, file: Buffer) {
 
   const response = await fetch(uploadLink.href, {
     method: uploadLink.method,
-    // @ts-expect-error type stuff
     headers,
     body: file,
   });

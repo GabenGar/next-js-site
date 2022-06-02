@@ -6,7 +6,6 @@
 import "@testing-library/jest-dom/extend-expect";
 
 // add fetch polyfill for node
-import fetch, { Headers, Request, Response } from "node-fetch";
 // import { Blob } from "fetch-blob";
 
 if (!globalThis.fetch) {

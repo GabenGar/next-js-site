@@ -1,4 +1,3 @@
-import { Headers } from "node-fetch";
 import { YANDEX_DISK_ACCESS_TOKEN } from "#environment/vars";
 import { createFetch } from "#browser";
 

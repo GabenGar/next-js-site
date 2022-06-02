@@ -7,6 +7,10 @@
     "npm": "8.x"
   },
   "type": "module",
+  "imports": {
+    "#lib/*": "./src/lib/*",
+    "#server/*": "./src/server/*"
+  },
   "scripts": {
     "prepare": "husky install",
     "env": "node scripts/env.js",
@@ -42,7 +46,6 @@
     "next": "^12.1.6",
     "next-i18next": "^11.0.0",
     "next-seo": "^5.4.0",
-    "node-fetch": "^3.2.5",
     "node-pg-migrate": "^6.2.1",
     "nodemailer": "^6.7.2",
     "pg": "^8.7.1",
