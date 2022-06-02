@@ -1,10 +1,8 @@
 import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { FOUND } from "#environment/constants/http";
 import { IS_DEVELOPMENT } from "#environment/derived";
-import { getAccountDetails, toAccountClient } from "#lib/account";
+import { toAccountClient } from "#lib/account";
 import { createSEOTags } from "#lib/seo";
-import { withSessionSSR, Redirect } from "#server/requests";
+import { createProtectedProps } from "#server/requests";
 import { LinkInternal } from "#components/links";
 import { Page } from "#components/pages";
 import { AccountCard } from "#components/cards";
@@ -14,10 +12,8 @@ import styles from "./index.module.scss";
 
 import type { InferGetServerSidePropsType } from "next";
 import type { IAccountClient } from "#types/entities";
-import type { BasePageProps } from "#types/pages";
-import { toJSON } from "#lib/json";
 
-interface AccountPageProps extends BasePageProps {
+interface AccountPageProps {
   account: IAccountClient;
 }
 
@@ -75,36 +71,11 @@ function AccountPage({
   );
 }
 
-export const getServerSideProps = withSessionSSR<AccountPageProps>(
-  async ({ req, locale, defaultLocale }) => {
-    const { account_id } = req.session;
-    const localeInfo = { locale: locale!, defaultLocale: defaultLocale! };
-    console.log("Account ID: ", account_id);
-    
-    if (!account_id) {
-      return new Redirect(localeInfo, "/auth/login", FOUND);
-    }
-
-    const account = await getAccountDetails(account_id);
-    console.log("Account:\n", toJSON(account));
-    if (!account) {
-      req.session.destroy();
-      
-      return {
-        notFound: true,
-      };
-    }
-
-    const localization = await serverSideTranslations(locale!, [
-      "layout",
-      "components",
-      "account",
-    ]);
-
+export const getServerSideProps = createProtectedProps<AccountPageProps>(
+  { extraLangNamespaces: ["account"] },
+  async (context, { account }) => {
     return {
       props: {
-        ...localization,
-        localeInfo,
         account: toAccountClient(account),
       },
     };

@@ -20,3 +20,4 @@ export {
   getBlogComments,
   getAccountComments,
 } from "./comment";
+export type { IAuthInfo } from "./types";

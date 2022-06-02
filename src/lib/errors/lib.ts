@@ -55,6 +55,9 @@ export class AuthError extends ProjectError {
   // name = "AuthError";
 }
 
+export class SessionError extends AuthError {}
+export class AdminError extends AuthError {}
+
 /**
  * JSON schema validation errors.
  */

@@ -1,20 +1,19 @@
 import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { IS_DEVELOPMENT } from "#environment/derived";
 import { createSEOTags } from "#lib/seo";
+import { createAdminProps } from "#server/requests";
 import { Form } from "#components/forms";
 import { clearAccounts } from "#database/queries/account/admin";
 import { Page } from "#components/pages";
 
-import type { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import type { BasePageProps } from "#types/pages";
+import type { InferGetServerSidePropsType } from "next";
 
-interface TablesPageProps extends BasePageProps {}
+interface IProps {}
 
 function TablesPage({
   localeInfo,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const { t } = useTranslation();
+  const { t } = useTranslation("admin");
   const seoTags = createSEOTags({
     localeInfo,
     title: "Tables",
@@ -29,36 +28,23 @@ function TablesPage({
   );
 }
 
-export const getServerSideProps: GetServerSideProps<TablesPageProps> = async ({
-  req,
-  locale,
-  defaultLocale,
-}) => {
-  if (!IS_DEVELOPMENT) {
+export const getServerSideProps = createAdminProps<IProps>(
+  { extraLangNamespaces: ["admin"] },
+  async ({ req }) => {
+    if (!IS_DEVELOPMENT) {
+      return {
+        notFound: true,
+      };
+    }
+
+    if (req.method === "POST") {
+      await clearAccounts();
+    }
+
     return {
-      notFound: true,
+      props: {},
     };
   }
-
-  if (req.method === "POST") {
-    await clearAccounts();
-  }
-
-  const localization = await serverSideTranslations(locale!, [
-    "layout",
-    "components",
-    "admin",
-  ]);
-
-  return {
-    props: {
-      ...localization,
-      localeInfo: {
-        locale: locale!,
-        defaultLocale: defaultLocale!,
-      },
-    },
-  };
-};
+);
 
 export default TablesPage;

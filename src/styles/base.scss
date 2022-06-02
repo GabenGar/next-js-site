@@ -29,11 +29,10 @@ body {
   position: relative;
   display: grid;
   grid-template:
-  "header" auto
-  "main" 1fr
-  "footer" auto
-  / 100%
-  ;
+    "header" auto
+    "main" 1fr
+    "footer" auto
+    / 100%;
   justify-items: stretch;
   min-height: 100%;
   width: 100%;
@@ -47,6 +46,9 @@ h1 {
   background-color: var(--colour1-primary);
   padding: 0.5rem;
   margin: 0;
+
+  transition-duration: var(--duration-global);
+  transition-property: color, background-color;
 }
 
 h2 {

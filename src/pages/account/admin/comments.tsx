@@ -1,11 +1,7 @@
 import { useEffect } from "react";
 import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { FOUND } from "#environment/constants/http";
 import { createSEOTags } from "#lib/seo";
-import { getAccountDetails } from "#lib/account";
-import { ProjectURL } from "#lib/url";
-import { withSessionSSR } from "#server/requests";
+import { createAdminProps } from "#server/requests";
 import { useAppDispatch, useAppSelector } from "#browser/store/redux";
 import {
   getPendingCommentsAsync,
@@ -17,11 +13,10 @@ import { CardList } from "#components/lists";
 import { CommentCard } from "#components/entities/comments";
 
 import type { InferGetServerSidePropsType } from "next";
-import type { BasePageProps } from "#types/pages";
 
-interface AdminPageProps extends BasePageProps {}
+interface IProps {}
 
-function AdminPage({
+function CommentsPage({
   localeInfo,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { t } = useTranslation("admin");
@@ -53,49 +48,8 @@ function AdminPage({
   );
 }
 
-export const getServerSideProps = withSessionSSR<AdminPageProps>(
-  async ({ req, locale, defaultLocale }) => {
-    const { account_id } = req.session;
-    const localeInfo = { locale: locale!, defaultLocale: defaultLocale! };
+export const getServerSideProps = createAdminProps<IProps>({
+  extraLangNamespaces: ["admin"],
+});
 
-    if (!account_id) {
-      return {
-        redirect: {
-          statusCode: FOUND,
-          destination: new ProjectURL(localeInfo, "/auth/login").toString(),
-        },
-      };
-    }
-
-    const account = await getAccountDetails(account_id);
-
-    if (!account) {
-      req.session.destroy();
-
-      return {
-        notFound: true,
-      };
-    }
-
-    if (account.role !== "administrator") {
-      return {
-        notFound: true,
-      };
-    }
-
-    const localization = await serverSideTranslations(locale!, [
-      "layout",
-      "components",
-      "admin",
-    ]);
-
-    return {
-      props: {
-        ...localization,
-        localeInfo,
-      },
-    };
-  }
-);
-
-export default AdminPage;
+export default CommentsPage;

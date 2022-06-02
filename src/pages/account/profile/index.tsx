@@ -1,19 +1,12 @@
 import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { FOUND } from "#environment/constants/http";
 import { FieldsValidationError } from "#lib/errors";
 import {
   registerProfile,
-  getAccountDetails,
   toAccountClient,
   validateAccountProfileInitFields,
 } from "#lib/account";
 import { createSEOTags } from "#lib/seo";
-import {
-  withSessionSSR,
-  Redirect,
-  getMultipartReqBody,
-} from "#server/requests";
+import { getMultipartReqBody, createProtectedProps } from "#server/requests";
 import { Page } from "#components/pages";
 import { Form } from "#components/forms";
 import { FileInput, Text } from "#components/forms/sections";
@@ -28,13 +21,12 @@ import { Heading } from "#components/headings";
 import { DL, DS } from "#components/lists/d-list";
 import { DateTimeView } from "#components/dates";
 import { LinkInternal } from "#components/links";
+import { Image } from "#components/images";
 
 import type { InferGetServerSidePropsType } from "next";
 import type { IAccountClient, IAccountProfileInit } from "#types/entities";
-import type { BasePageProps } from "#types/pages";
-import { Image } from "#components/images";
 
-interface AccountPageProps extends BasePageProps {
+interface AccountPageProps {
   account: IAccountClient;
   newProfile?: IAccountProfileInit;
 }
@@ -119,31 +111,10 @@ function AccountPage({
   );
 }
 
-export const getServerSideProps = withSessionSSR<AccountPageProps>(
-  async ({ req, locale, defaultLocale }) => {
-    const { account_id } = req.session;
-    const localeInfo = { locale: locale!, defaultLocale: defaultLocale! };
-
-    if (!account_id) {
-      return new Redirect(localeInfo, "/auth/login", FOUND);
-    }
-
-    const account = await getAccountDetails(account_id);
-
-    if (!account) {
-      req.session.destroy();
-
-      return {
-        notFound: true,
-      };
-    }
-
+export const getServerSideProps = createProtectedProps<AccountPageProps>(
+  { extraLangNamespaces: ["account"] },
+  async ({ req }, { account }) => {
     const accountClient = toAccountClient(account);
-    const localization = await serverSideTranslations(locale!, [
-      "layout",
-      "components",
-      "account",
-    ]);
 
     const isFormSubmission =
       req.method === "POST" &&
@@ -152,8 +123,6 @@ export const getServerSideProps = withSessionSSR<AccountPageProps>(
     if (!isFormSubmission) {
       return {
         props: {
-          ...localization,
-          localeInfo,
           account: accountClient,
         },
       };
@@ -170,8 +139,6 @@ export const getServerSideProps = withSessionSSR<AccountPageProps>(
 
       return {
         props: {
-          ...localization,
-          localeInfo,
           account: accountClient,
           schemaValidationErrors: error.validationErrors,
         },
@@ -187,8 +154,6 @@ export const getServerSideProps = withSessionSSR<AccountPageProps>(
 
     return {
       props: {
-        ...localization,
-        localeInfo,
         account: accountClient,
       },
     };

@@ -1,9 +1,10 @@
-// export { ServerError, DatabaseError, CodegenError } from "#server/errors";
 export {
   ProjectError,
   ConfigurationError,
   NotImplementedError,
   AuthError,
+  SessionError,
+  AdminError,
   FieldsValidationError,
   ClientError,
 } from "./lib";
