@@ -1,9 +1,6 @@
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
-import { FOUND } from "#environment/constants/http";
-import { getAccountDetails } from "#lib/account";
 import { createSEOTags } from "#lib/seo";
-import { withSessionSSR, Redirect } from "#server/requests";
+import { createAdminProps } from "#server/requests";
 import { getInvites } from "#database/queries/account/admin";
 import { Page } from "#components/pages";
 import { Nav, NavList } from "#components/navigation";
@@ -15,10 +12,9 @@ import { DateTimeView } from "#components/dates";
 import { LinkInternal } from "#components/links";
 
 import type { InferGetServerSidePropsType } from "next";
-import type { BasePageProps } from "#types/pages";
 import type { IInvite } from "#codegen/schema/interfaces";
 
-interface IInvitesPageProps extends BasePageProps {
+interface IProps {
   invites: IInvite[];
 }
 
@@ -111,43 +107,13 @@ function InvitesPage({
   );
 }
 
-export const getServerSideProps = withSessionSSR<IInvitesPageProps>(
-  async ({ req, locale, defaultLocale }) => {
-    const { account_id } = req.session;
-    const localeInfo = { locale: locale!, defaultLocale: defaultLocale! };
-
-    if (!account_id) {
-      return new Redirect(localeInfo, "/auth/login", FOUND);
-    }
-
-    const account = await getAccountDetails(account_id);
-
-    if (!account) {
-      req.session.destroy();
-
-      return {
-        notFound: true,
-      };
-    }
-
-    if (account.role !== "administrator") {
-      return {
-        notFound: true,
-      };
-    }
-
+export const getServerSideProps = createAdminProps<IProps>(
+  { extraLangNamespaces: ["admin"] },
+  async () => {
     const invites = await getInvites();
-
-    const localization = await serverSideTranslations(locale!, [
-      "layout",
-      "components",
-      "admin",
-    ]);
 
     return {
       props: {
-        ...localization,
-        localeInfo,
         invites,
       },
     };

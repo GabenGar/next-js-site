@@ -1,9 +1,8 @@
 import { FOUND } from "#environment/constants/http";
 import { getServerSideTranslations } from "#lib/translation";
-import { ProjectError } from "#lib/errors";
-import { getAccountDetails } from "#lib/account";
+import { ProjectError, SessionError, AdminError } from "#lib/errors";
 import { Redirect } from "#server/requests";
-import { getSSRSession } from "./session";
+import { getAccountSession, getAdminSession } from "./session";
 
 import type { ParsedUrlQuery } from "querystring";
 import type {
@@ -12,11 +11,7 @@ import type {
   GetServerSidePropsResult,
 } from "next";
 import type { BasePageProps, ISlimProps, IPageOptions } from "#types/pages";
-import type { IAccount } from "#types/entities";
-
-interface IAuthInfo {
-  account: IAccount;
-}
+import type { IAuthInfo } from "#lib/account";
 
 interface IProtectedCallback<
   OwnProps,
@@ -40,7 +35,7 @@ export function createServerSideProps<
 ): GetServerSideProps<BasePageProps<OwnProps>, Params> {
   const { extraLangNamespaces } = options;
 
-  async function decorated(...args: Parameters<typeof callback>) {
+  async function getServerSideProps(...args: Parameters<typeof callback>) {
     const [context] = args;
     const { locale, defaultLocale } = context;
     const localization = await getServerSideTranslations(
@@ -85,11 +80,25 @@ export function createServerSideProps<
         return new Redirect(localeInfo, "/500", FOUND);
       }
 
+      if (error instanceof SessionError) {
+        console.error(error);
+
+        return new Redirect(localeInfo, "/auth/login", FOUND);
+      }
+
+      if (error instanceof AdminError) {
+        console.error(error);
+
+        return {
+          notFound: true,
+        } as const;
+      }
+
       return new Redirect(localeInfo, "/500", FOUND);
     }
   }
 
-  return decorated;
+  return getServerSideProps;
 }
 
 /**
@@ -102,86 +111,55 @@ export function createProtectedProps<
   options: IPageOptions,
   callback?: IProtectedCallback<OwnProps, Params>
 ): GetServerSideProps<BasePageProps<OwnProps>, Params> {
-  const { extraLangNamespaces } = options;
-
   async function getProtectedProps(
     ...args: Parameters<GetServerSideProps<BasePageProps<OwnProps>, Params>>
   ) {
     const [context] = args;
-    const { locale, defaultLocale } = context;
-    const localization = await getServerSideTranslations(
-      locale!,
-      extraLangNamespaces
-    );
-    const localeInfo = {
-      defaultLocale: defaultLocale!,
-      locale: locale!,
-    };
+    const { req, res } = context;
 
-    try {
-      const session = await getSSRSession(context);
-      const { account_id } = session;
+    const { account } = await getAccountSession(req, res);
 
-      if (!account_id) {
-        return new Redirect(localeInfo, "/auth/login", FOUND);
-      }
-
-      const account = await getAccountDetails(account_id);
-
-      // should be a logging scenario
-      // since non-existent ID is a server error
-      // or a hacking attempt
-      if (!account) {
-        session.destroy();
-
-        return {
-          notFound: true,
-        };
-      }
-
-      if (!callback) {
-        return {
-          props: {
-            ...localization,
-            localeInfo,
-          },
-        };
-      }
-
-      const result = await callback(context, { account });
-
-      if (!("props" in result)) {
-        return result;
-      }
-
-      const ownProps = await result.props;
-
+    if (!callback) {
       return {
-        props: {
-          ...localization,
-          localeInfo,
-          ...ownProps,
-        },
+        props: {},
       };
-    } catch (error) {
-      const isProperError = error instanceof Error;
-
-      // rethrow unknown errors
-      if (!isProperError) {
-        throw error;
-      }
-
-      const isProjectError = error instanceof ProjectError;
-
-      if (!isProjectError) {
-        console.error(error);
-
-        return new Redirect(localeInfo, "/500", FOUND);
-      }
-
-      return new Redirect(localeInfo, "/500", FOUND);
     }
+
+    const result = await callback(context, { account });
+
+    return result;
   }
-  // @ts-expect-error decorated types
-  return getProtectedProps;
+
+  // @ts-expect-error confused typing
+  return createServerSideProps(options, getProtectedProps);
+}
+
+export function createAdminProps<
+  OwnProps,
+  Params extends ParsedUrlQuery = ParsedUrlQuery
+>(
+  options: IPageOptions,
+  callback?: IProtectedCallback<OwnProps, Params>
+): GetServerSideProps<BasePageProps<OwnProps>, Params> {
+  async function getServerSideProps(
+    ...args: Parameters<IProtectedCallback<OwnProps, Params>>
+  ) {
+    const [context] = args;
+    const { req, res } = context;
+
+    const authInfo = await getAdminSession(req, res);
+
+    if (!callback) {
+      return {
+        props: {},
+      };
+    }
+
+    const result = await callback(context, authInfo);
+
+    return result;
+  }
+
+  // @ts-expect-error
+  return createServerSideProps(options, getServerSideProps);
 }

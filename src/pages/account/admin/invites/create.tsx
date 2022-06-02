@@ -1,9 +1,11 @@
 import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { FOUND } from "#environment/constants/http";
 import { createSEOTags } from "#lib/seo";
-import { getAccountDetails } from "#lib/account";
-import { getReqBody, withSessionSSR, Redirect } from "#server/requests";
+import {
+  getReqBody,
+  Redirect,
+  createAdminProps,
+} from "#server/requests";
 import { createInvite } from "#lib/account/admin";
 import { validateInviteInitFields } from "#codegen/schema/validations";
 import { Page } from "#components/pages";
@@ -13,11 +15,10 @@ import { Number, Select } from "#components/forms/sections";
 import { addWeeks, addMonths, nowISO, addYears } from "#lib/dates";
 
 import type { InferGetServerSidePropsType } from "next";
-import type { BasePageProps } from "#types/pages";
 import type { IInviteInit } from "#codegen/schema/interfaces";
 import type { IOptionProps } from "#components/forms/sections";
 
-interface IInviteCreationProps extends BasePageProps {
+interface IProps {
   inviteInit?: IInviteInit;
 }
 
@@ -79,36 +80,10 @@ function InviteCreationPage({
   );
 }
 
-export const getServerSideProps = withSessionSSR<IInviteCreationProps>(
-  async ({ req, locale, defaultLocale }) => {
-    const { account_id } = req.session;
-    const localeInfo = { locale: locale!, defaultLocale: defaultLocale! };
-
-    if (!account_id) {
-      return new Redirect(localeInfo, "/auth/login", FOUND);
-    }
-
-    const account = await getAccountDetails(account_id);
-
-    if (!account) {
-      req.session.destroy();
-
-      return {
-        notFound: true,
-      };
-    }
-
-    if (account.role !== "administrator") {
-      return {
-        notFound: true,
-      };
-    }
-
-    const localization = await serverSideTranslations(locale!, [
-      "layout",
-      "components",
-      "admin",
-    ]);
+export const getServerSideProps = createAdminProps<IProps>(
+  { extraLangNamespaces: ["admin"] },
+  async (context, { account }) => {
+    const { req } = context;
 
     if (req.method === "POST") {
       const inviteInit = await getReqBody<IInviteInit>(req);
@@ -117,8 +92,6 @@ export const getServerSideProps = withSessionSSR<IInviteCreationProps>(
       if (!validationResult.is_successful) {
         return {
           props: {
-            ...localization,
-            localeInfo,
             schemaValidationErrors: validationResult.errors,
             inviteInit,
           },
@@ -127,14 +100,11 @@ export const getServerSideProps = withSessionSSR<IInviteCreationProps>(
 
       const newInvite = await createInvite(inviteInit, account);
 
-      return new Redirect(localeInfo, "/account/admin/invites", FOUND);
+      return Redirect.fromContext(context, "/account/admin/invites", FOUND);
     }
 
     return {
-      props: {
-        ...localization,
-        localeInfo,
-      },
+      props: {},
     };
   }
 );

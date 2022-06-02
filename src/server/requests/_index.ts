@@ -6,5 +6,6 @@ export { Redirect } from "./ssr-redirect";
 export {
   createServerSideProps,
   createProtectedProps,
+  createAdminProps,
 } from "./get-server-side-props";
 export { createStaticProps } from "./get-static-props";
