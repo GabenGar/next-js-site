@@ -1,0 +1,29 @@
+{
+  "$id": "http://schemas.com/account/notification/base.schema.json",
+  "title": "Notification",
+  "description": "Notification for an account.",
+  "type": "object",
+  "required": ["id", "created_at", "updated_at", "account_id", "type", "data"],
+  "properties": {
+    "id": {
+      "$ref": "http://schemas.com/types/serial.schema.json"
+    },
+    "created_at": {
+      "$ref": "http://schemas.com/types/dates/iso-datetime.schema.json"
+    },
+    "updated_at": {
+      "$ref": "http://schemas.com/types/dates/iso-datetime.schema.json"
+    },
+    "account_id": {
+      "$ref": "http://schemas.com/types/serial.schema.json"
+    },
+    "type": {
+      "type": "string"
+    },
+    "data": {
+      "type": "object",
+      "description": "The data related to the notification's type."
+    }
+  },
+  "additionalProperties": false
+}
